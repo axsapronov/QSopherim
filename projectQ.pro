@@ -21,9 +21,13 @@ DEPENDPATH += \
          src/panel/rightpanel/ \
          src/panel/bottompanel/ \
          src/main \
+         src/modules/biblequote \
+         src/modules/format \
          src/defines \
          src/config \
-         src/moduleviewer
+         src/moduleviewer \
+         src/modules/processmodule \
+         src/common
 
 INCLUDEPATH += \
          src/main \
@@ -35,7 +39,11 @@ INCLUDEPATH += \
          src/dialogs/lansettings \
          src/moduleviewer \
          src/defines \
-         src/config
+         src/modules/biblequote \
+         src/modules/format \
+         src/modules/processmodule \
+         src/config \
+         src/common
 
 SOURCES  += \
          main.cpp \
@@ -46,8 +54,14 @@ SOURCES  += \
          rightpanel.cpp \
          bottompanel.cpp \
          config.cpp \
-    src/panel/leftpanel/leftpanel2.cpp \
-    src/moduleviewer/moduleviewer.cpp
+         leftpanel2.cpp \
+         moduleviewer.cpp \
+         biblequote.cpp \
+         format.cpp \
+         filecommon.cpp \
+         stringcommon.cpp \
+         processmodule.cpp
+
 
 HEADERS  += \
          mainwindow.h \
@@ -58,8 +72,13 @@ HEADERS  += \
          rightpanel.h \
          bottompanel.h \
          config.h \
-    src/panel/leftpanel/leftpanel2.h \
-    src/moduleviewer/moduleviewer.h
+         leftpanel2.h \
+         moduleviewer.h \
+         biblequote.h \
+         format.h \
+         filecommon.h \
+         stringcommon.h \
+         processmodule.h
 
 FORMS    += \
          mainwindow.ui \
@@ -68,8 +87,8 @@ FORMS    += \
          leftpanel.ui \
          rightpanel.ui \
          bottompanel.ui \
-    src/panel/leftpanel/leftpanel2.ui \
-    src/moduleviewer/moduleviewer.ui
+         leftpanel2.ui \
+         moduleviewer.ui
 
 RESOURCES += \
     resources/resources.qrc

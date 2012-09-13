@@ -27,6 +27,7 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="action_File_Open_Module_Test"/>
     <addaction name="separator"/>
     <addaction name="action_File_Close"/>
    </widget>
@@ -228,6 +229,14 @@
   <action name="action_About_About_Qt">
    <property name="text">
     <string>About Qt</string>
+   </property>
+  </action>
+  <action name="action_File_Open_Module_Test">
+   <property name="text">
+    <string>Open module(test)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
  </widget>

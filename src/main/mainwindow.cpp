@@ -9,9 +9,19 @@
   */
 
 #include "ui_mainwindow.h" /// ui
+#include "mainwindow.h" ///
+
+
+#include <QUrl> /// open home site
+#include <QCloseEvent>
+#include <QMessageBox>
+#include <QFileDialog> /// open module (test)
+#include <QDesktopServices> /// tray
+#include <QDesktopWidget> /// moved to center
+
+#include <QDebug>
 
 #include "defines.h" /// defines
-#include "mainwindow.h" ///
 #include "about.h" /// aboutdialog
 #include "settings.h"
 #include "config.h"
@@ -21,15 +31,11 @@
 #include "rightpanel.h" /// rightPanel
 #include "bottompanel.h" /// bottomPanel
 #include "moduleviewer.h"
+#include "processmodule.h"
 
-#include <QDesktopServices> /// tray
-#include <QUrl> /// open home site
-#include <QCloseEvent>
-#include <QMessageBox>
 
-#include <QDebug>
 
-#include <QDesktopWidget> /// moved to center
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -115,6 +121,7 @@ void MainWindow::createConnects()
 
     // menu file
     connect(ui->action_File_Close, SIGNAL(triggered()), this, SLOT(close()));
+    connect(ui->action_File_Open_Module_Test, SIGNAL(triggered()), SLOT(openModule()));
 
     // menu settings
     connect(ui->action_Settings_General, SIGNAL(triggered()), SLOT(showSettings()));
@@ -293,6 +300,16 @@ void MainWindow::showHelp()
 //    HtmlHelp(NULL, "help.chm", HH_DISPLAY_TOPIC, 0);
 }
 //------------------------------------------------------------------------------
+void MainWindow::openModule()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open module(test)"), "",
+                                                    tr("test module (*.ini)"));
+    if (!fileName.isEmpty())
+    {
+//        ProjectOpen(fileName);
+        ProcessModule(fileName, "biblequote");
+    }
+}
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

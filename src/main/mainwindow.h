@@ -20,6 +20,7 @@ class LeftPanel2;
 class RightPanel;
 class BottomPanel;
 class ModuleViewer;
+class ProcessModule;
 
 class MainWindow : public QMainWindow
 {
@@ -71,6 +72,12 @@ private slots:
       Show help
       */
     void showHelp();
+    /**
+      @brief
+      Open module
+      test function
+      */
+    void openModule();
 
 protected:
     void closeEvent(QCloseEvent *);
