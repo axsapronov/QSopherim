@@ -50,10 +50,6 @@
     </widget>
     <addaction name="action_Settings_General"/>
     <addaction name="mSettingsLanguage"/>
-    <addaction name="separator"/>
-    <addaction name="action_Settings_Module"/>
-    <addaction name="action_Settings_Lan"/>
-    <addaction name="action_Settings_Font"/>
    </widget>
    <widget class="QMenu" name="mSearch">
     <property name="title">
@@ -126,7 +122,7 @@
   </action>
   <action name="action_Settings_General">
    <property name="text">
-    <string>General</string>
+    <string>Settings</string>
    </property>
   </action>
   <action name="action_Settings_Module">

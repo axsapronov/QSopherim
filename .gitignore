@@ -3,6 +3,14 @@
 *.lo
 *.o
 
+# settings
+*.user
+#
+
+# Vim
+*.*~
+*.md.*
+*.*.swp
 # Compiled Dynamic libraries
 *.so
 
