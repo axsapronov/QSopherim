@@ -20,6 +20,7 @@
 #include "leftpanel2.h"
 #include "rightpanel.h" /// rightPanel
 #include "bottompanel.h" /// bottomPanel
+#include "moduleviewer.h"
 
 #include <QDesktopServices> /// tray
 #include <QUrl> /// open home site
@@ -60,7 +61,7 @@ void MainWindow::init()
     GUI_RightPanel = new RightPanel(this);
     GUI_LeftPanel = new LeftPanel(this);
     GUI_LeftPanel2 = new LeftPanel2(this);
-//    GUI_BottomPanel = new BottomPanel(this);
+    //    GUI_BottomPanel = new BottomPanel(this);
 
     GUI_RightPanel->setMinimumWidth(200);
     GUI_LeftPanel->setMinimumWidth(200);
@@ -70,7 +71,8 @@ void MainWindow::init()
     addDockWidget(Qt::RightDockWidgetArea, GUI_RightPanel);
 //    addDockWidget(Qt::BottomDockWidgetArea, GUI_BottomPanel);
 
-
+    GUI_ModuleViewer = new ModuleViewer(this);
+    setCentralWidget(GUI_ModuleViewer);
     /// load settings
     // replace to QString t_lang = GUI_Settings->getAppLang()
     // and switch t_lang?

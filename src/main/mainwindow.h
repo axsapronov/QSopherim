@@ -19,6 +19,7 @@ class LeftPanel;
 class LeftPanel2;
 class RightPanel;
 class BottomPanel;
+class ModuleViewer;
 
 class MainWindow : public QMainWindow
 {
@@ -83,6 +84,7 @@ private:
     LeftPanel *GUI_LeftPanel;
     LeftPanel2 *GUI_LeftPanel2;
     BottomPanel *GUI_BottomPanel;
+    ModuleViewer *GUI_ModuleViewer;
 
     //tray
     QSystemTrayIcon *trIcon;

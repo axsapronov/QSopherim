@@ -22,7 +22,8 @@ DEPENDPATH += \
          src/panel/bottompanel/ \
          src/main \
          src/defines \
-         src/config
+         src/config \
+         src/moduleviewer
 
 INCLUDEPATH += \
          src/main \
@@ -32,6 +33,7 @@ INCLUDEPATH += \
          src/panel/rightpanel/ \
          src/panel/bottompanel/ \
          src/dialogs/lansettings \
+         src/moduleviewer \
          src/defines \
          src/config
 
@@ -44,7 +46,8 @@ SOURCES  += \
          rightpanel.cpp \
          bottompanel.cpp \
          config.cpp \
-    src/panel/leftpanel/leftpanel2.cpp
+    src/panel/leftpanel/leftpanel2.cpp \
+    src/moduleviewer/moduleviewer.cpp
 
 HEADERS  += \
          mainwindow.h \
@@ -55,7 +58,8 @@ HEADERS  += \
          rightpanel.h \
          bottompanel.h \
          config.h \
-    src/panel/leftpanel/leftpanel2.h
+    src/panel/leftpanel/leftpanel2.h \
+    src/moduleviewer/moduleviewer.h
 
 FORMS    += \
          mainwindow.ui \
@@ -64,7 +68,8 @@ FORMS    += \
          leftpanel.ui \
          rightpanel.ui \
          bottompanel.ui \
-    src/panel/leftpanel/leftpanel2.ui
+    src/panel/leftpanel/leftpanel2.ui \
+    src/moduleviewer/moduleviewer.ui
 
 RESOURCES += \
     resources/resources.qrc
