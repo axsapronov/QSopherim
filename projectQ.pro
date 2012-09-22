@@ -6,8 +6,8 @@
 
 QT       += core gui
 
-TARGET = projectQ
-TEMPLATE = app
+TARGET      = projectQ
+TEMPLATE    = app
 DESTDIR     = build/bin
 OBJECTS_DIR = build/obj
 MOC_DIR     = build/moc
@@ -22,12 +22,16 @@ DEPENDPATH += \
          src/panel/bottompanel/ \
          src/main \
          src/modules/biblequote \
+         src/modules/biblemodule \
          src/modules/format \
+         src/modules/metainfo \
+         src/modules/ \
          src/defines \
          src/config \
          src/moduleviewer \
          src/modules/processmodule \
-         src/common
+         src/common \
+         src/core
 
 INCLUDEPATH += \
          src/main \
@@ -37,13 +41,17 @@ INCLUDEPATH += \
          src/panel/rightpanel/ \
          src/panel/bottompanel/ \
          src/dialogs/lansettings \
+         src/modules/metainfo \
          src/moduleviewer \
          src/defines \
          src/modules/biblequote \
+         src/modules/biblemodule \
          src/modules/format \
          src/modules/processmodule \
          src/config \
-         src/common
+         src/modules/ \
+         src/common \
+         src/core
 
 SOURCES  += \
          main.cpp \
@@ -60,7 +68,10 @@ SOURCES  += \
          format.cpp \
          filecommon.cpp \
          stringcommon.cpp \
-         processmodule.cpp
+         processmodule.cpp \
+         biblemodule.cpp \
+         metainfo.cpp \
+         debughelper.cpp
 
 
 HEADERS  += \
@@ -78,7 +89,11 @@ HEADERS  += \
          format.h \
          filecommon.h \
          stringcommon.h \
-         processmodule.h
+         processmodule.h \
+         biblemodule.h \
+         metainfo.h \
+         moduledefinition.h \
+         debughelper.h
 
 FORMS    += \
          mainwindow.ui \

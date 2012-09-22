@@ -1,7 +1,12 @@
-#include "processmodule.h"
 
+#include "processmodule.h"
+#include "moduledefinition.h"
+
+
+#include "debughelper.h"
 #include <QString>
 #include <QDebug>
+
 
 //------------------------------------------------------------------------------
 ProcessModule::ProcessModule()
@@ -9,21 +14,34 @@ ProcessModule::ProcessModule()
 
 }
 //------------------------------------------------------------------------------
-ProcessModule::ProcessModule(QString pathToModule, QString typeModule)
+ProcessModule::ProcessModule(QString pathToModule, int typeModule)
 {
-    qDebug() << pathToModule << typeModule;
-}
-//------------------------------------------------------------------------------
-bool ProcessModule::processing(QString pathToModule, QString type)
-{
-    qDebug() << pathToModule << type;
-    return true;
+    myDebug() << processing(pathToModule, typeModule);
 }
 //------------------------------------------------------------------------------
 ProcessModule::~ProcessModule()
 {
 
 }
+//------------------------------------------------------------------------------
+bool ProcessModule::processing(QString pathToModule, int type)
+{
+    myDebug() << pathToModule << type;
+    switch (type)
+    {
+    case OBVCore::Type_BibleQuoteModule:
+        myDebug() << "this is biblequote module";
+        m_biblequote = BibleQuoteModule(pathToModule);
+        break;
+    case OBVCore::Type_SwordBibleModule:
+        myDebug() << "this is sword module";
+        break;
+    default:
+        myDebug() << "unknown module type";
+    }
+    return true;
+}
+
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

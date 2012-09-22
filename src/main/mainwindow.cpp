@@ -32,7 +32,8 @@
 #include "bottompanel.h" /// bottomPanel
 #include "moduleviewer.h"
 #include "processmodule.h"
-
+#include "moduledefinition.h"
+#include "debughelper.h"
 
 
 
@@ -111,7 +112,8 @@ void MainWindow::init()
 //------------------------------------------------------------------------------
 void MainWindow::debug()
 {
-
+    QString fileName = "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
+    ProcessModule(fileName, OBVCore::Type_BibleQuoteModule);
 }
 //------------------------------------------------------------------------------
 void MainWindow::createConnects()
@@ -270,7 +272,7 @@ void MainWindow::showSettings()
 //------------------------------------------------------------------------------
 void MainWindow::closeEvent(QCloseEvent *e)
 {
-    //    qDebug()<< "closeEvent()";
+    //    myDebug()<< "closeEvent()";
     saveSettings();
     e -> accept();
 }
@@ -278,7 +280,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 void MainWindow::saveSettings()
 {
     Config *config = Config::configuration();
-    //    qDebug() << "src = start to save settings";
+    //    myDebug() << "src = start to save settings";
     //    config -> setSideBarPage(helpDock -> tabWidget() -> currentIndex());
     //    config -> setWindowGeometry(saveGeometry());
     //    config -> setMainWindowState(saveState());
@@ -287,9 +289,9 @@ void MainWindow::saveSettings()
     //    QStringList lst;
     //    QList<HelpWindow*> browsers = tabs -> browsers();
     //    foreach (HelpWindow *browser, browsers){
-    //        //        qDebug() << "src = " << browser -> source().toString();
+    //        //        myDebug() << "src = " << browser -> source().toString();
     //        lst << relatifyFileName(browser -> source().toString(), config -> PrjDir());
-    //        //        qDebug() << "lst = " << lst;
+    //        //        myDebug() << "lst = " << lst;
     //    }
     //    config -> setSource(lst);
     config -> saveSettings();
@@ -307,7 +309,7 @@ void MainWindow::openModule()
     if (!fileName.isEmpty())
     {
 //        ProjectOpen(fileName);
-        ProcessModule(fileName, "biblequote");
+//        ProcessModule(fileName, OBVCore::BibleQuoteModule);
     }
 }
 //------------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 #include "ui_settings.h"
 #include "defines.h"
 #include "config.h"
-
+#include "debughelper.h"
 
 #include <QDebug>
 #include <QMessageBox>
@@ -24,7 +24,7 @@ Settings::~Settings()
 void Settings::debug()
 {
 
-    qDebug() << "debug: appwsettings";
+    myDebug() << "debug: appwsettings";
 }
 ///----------------------------------------------------------------------------
 void Settings::init()
@@ -70,7 +70,7 @@ void Settings::loadSettings()
 
     //    QDir::currentPath();
 
-    //    qDebug() << settings->value("language/lang");
+    //    myDebug() << settings->value("language/lang");
     //    if (lang.isEmpty())
     //        lang = "Russian";
     //    setAPPLang(lang);
