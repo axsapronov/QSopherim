@@ -1,8 +1,9 @@
 #include "config.h"
-
-
+#include "debughelper.h"
 #include <QSettings>
-#include <QtDebug>
+
+#include <QDir>
+
 
 static Config *static_configuration = 0;
 Config::Config()
@@ -41,6 +42,13 @@ void Config::loadSettings()
     appLang = settings.value("language/lang").toString();
     if (appLang.isEmpty())
         appLang = "Russian";
+
+    QDir dir;
+    dir.mkpath(getAppDir() + "bible");
+    dir.mkpath(getAppDir() + "dictionary");
+    dir.mkpath(getAppDir() + "other");
+
+//    myDebug() << QString(getAppDir() + bibleDir);
 
 //        setAppLogLevel( settings.value(QString("LogLevel-Application") ).toInt() );
 //        setPrjLogLevel( settings.value(QString("LogLevel-Project") ).toInt() );

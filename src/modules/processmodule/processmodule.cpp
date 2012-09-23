@@ -58,5 +58,6 @@ bool ProcessModule::processing(QString pathToModule, int type)
 void ProcessModule::createFolderForModule(QString shortname)
 {
     myDebug() << shortname;
+
 }
 //------------------------------------------------------------------------------
