@@ -1,10 +1,14 @@
 #include "biblequote.h"
-#include <debughelper.h>
+#include "debughelper.h"
+#include "filecommon.h"
+
 #include <QTextCodec>
 #include <QString>
 BibleQuoteModule::BibleQuoteModule(QString pathToModule)
 {
+    //        DEBUG_FUNC_NAME;
     parseModule(pathToModule);
+    myDebug() << readInfo(pathToModule).name() << readInfo(pathToModule).shortName();
 
 }
 ///-----------------------------------------------------------------------------
@@ -30,29 +34,9 @@ MetaInfo BibleQuoteModule::readInfo(QFile &file)
     m_moduleName.clear();
     m_moduleShortName.clear();
     int countlines = 0;
-//    ModuleSettings *settings = m_settings->getModuleSettings(m_moduleID);
 
-    if(m_codec == NULL)
-    {
-//        QString encoding;
-        QString encoding = "UTF-8";
-//        if(settings == NULL)
-//        {
-//            encoding = m_settings->encoding;
-//        }
-//        else
-//        {
-//            if(settings->encoding == "Default" || settings->encoding.isEmpty())
-//            {
-//                encoding = m_settings->encoding;
-//            }
-//            else
-//            {
-//                encoding = settings->encoding;
-//            }
-//        }
-        m_codec = QTextCodec::codecForName(encoding.toStdString().c_str());
-    }
+    QString encoding = getEncodingFromFile(file.fileName());
+    m_codec = QTextCodec::codecForName(encoding.toStdString().c_str());
 
     QTextDecoder *decoder = m_codec->makeDecoder();
     while(!file.atEnd())
@@ -65,12 +49,17 @@ MetaInfo BibleQuoteModule::readInfo(QFile &file)
         if(!line.startsWith("//"))
         {
             countlines++;
-        } else {
+        }
+        else
+        {
             continue;
         }
-        if(line.contains("BibleName", Qt::CaseInsensitive))
+
+        if(line.contains("BibleName", Qt::CaseInsensitive) and m_moduleName.isEmpty())
         {
-            m_moduleName = formatFromIni(line.remove(QRegExp("BibleName(\\s*)=(\\s*)", Qt::CaseInsensitive)));
+            m_moduleName = formatFromIni(line.
+                                         remove(QRegExp("BibleName(\\s*)=(\\s*)",
+                                                        Qt::CaseInsensitive)));
             if(m_moduleName.isEmpty())
             {
                 useShortName = true;
@@ -78,18 +67,21 @@ MetaInfo BibleQuoteModule::readInfo(QFile &file)
             if(useShortName && !m_moduleShortName.isEmpty())
             {
                 break;
-            } else if(!useShortName)
-            {
-                break;
             }
+            /// what is ?
+//            else if(!useShortName)
+//            {
+//                break;
+//            }
         }
-        if(line.contains("BibleShortName", Qt::CaseInsensitive))
+        if(line.contains("BibleShortName", Qt::CaseInsensitive) and m_moduleShortName.isEmpty())
         {
-            m_moduleShortName = formatFromIni(line.remove(QRegExp("BibleShortName(\\s*)=(\\s*)", Qt::CaseInsensitive)));
+            m_moduleShortName = formatFromIni(line.
+                                              remove(QRegExp("BibleShortName(\\s*)=(\\s*)",
+                                                             Qt::CaseInsensitive)));
             if(useShortName)
                 break;
         }
-
     }
     file.close();
     if(useShortName)
@@ -101,8 +93,6 @@ MetaInfo BibleQuoteModule::readInfo(QFile &file)
         myWarning() << "invalid ini File " << file.fileName();
     }
 
-    m_moduleName = "f";
-    m_moduleShortName = "ff";
     MetaInfo ret;
     ret.setName(m_moduleName);
     ret.setShortName(m_moduleShortName);

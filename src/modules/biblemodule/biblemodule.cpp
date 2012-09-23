@@ -9,7 +9,7 @@ BibleModule::BibleModule()
 ///-----------------------------------------------------------------------------
 BibleModule::~BibleModule()
 {
-    DEBUG_FUNC_NAME;
+//    DEBUG_FUNC_NAME;
 //    m_versification.clear();
 }
 ///-----------------------------------------------------------------------------
