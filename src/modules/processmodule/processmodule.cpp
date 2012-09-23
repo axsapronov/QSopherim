@@ -1,26 +1,39 @@
 
 #include "processmodule.h"
 #include "moduledefinition.h"
-
-
 #include "debughelper.h"
-#include <QString>
+
+#include <QObject>
 
 //------------------------------------------------------------------------------
 ProcessModule::ProcessModule()
 {
-
+    init();
+    createConnects();
 }
 //------------------------------------------------------------------------------
 ProcessModule::ProcessModule(QString pathToModule, int typeModule)
 {
 //    myDebug() << processing(pathToModule, typeModule);
+    init();
+    createConnects();
     processing(pathToModule, typeModule);
 }
 //------------------------------------------------------------------------------
 ProcessModule::~ProcessModule()
 {
 
+}
+//------------------------------------------------------------------------------
+void ProcessModule::createConnects()
+{
+    connect(m_biblequote, SIGNAL(createFolderForModule(QString)), SLOT(createFolderForModule(QString)));
+}
+//------------------------------------------------------------------------------
+void ProcessModule::init()
+{
+    m_biblequote = new BibleQuoteModule();
+//    connect(m_biblequote, SIGNAL(createFolderForModule(QString)), SLOT(createFolderForModule(QString)));
 }
 //------------------------------------------------------------------------------
 bool ProcessModule::processing(QString pathToModule, int type)
@@ -30,7 +43,7 @@ bool ProcessModule::processing(QString pathToModule, int type)
     {
     case OBVCore::Type_BibleQuoteModule:
 //        myDebug() << "this is biblequote module";
-        m_biblequote = BibleQuoteModule(pathToModule);
+        m_biblequote->parseModule(pathToModule);
         break;
     case OBVCore::Type_SwordBibleModule:
 //        myDebug() << "this is sword module";
@@ -41,8 +54,9 @@ bool ProcessModule::processing(QString pathToModule, int type)
     }
     return true;
 }
-
 //------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
+void ProcessModule::createFolderForModule(QString shortname)
+{
+    myDebug() << shortname;
+}
 //------------------------------------------------------------------------------

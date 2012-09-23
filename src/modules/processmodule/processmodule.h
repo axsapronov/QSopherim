@@ -1,13 +1,14 @@
 #ifndef __PROCESSMODULE__H
 #define __PROCESSMODULE__H
-
-#include <QString>
+#include <QObject>
 
 #include "biblequote.h"
+#include <QString>
 
 
-class ProcessModule
+class ProcessModule: public QObject
 {
+    Q_OBJECT
 
 public:
     explicit ProcessModule(QString pathToModule, int typeModule);
@@ -16,8 +17,12 @@ public:
     ~ProcessModule();
 
     bool processing(QString pathToModule, int type);
+private slots:
+    void createFolderForModule(QString shortname);
 private:
-    BibleQuoteModule m_biblequote;
+    BibleQuoteModule* m_biblequote;
+    void createConnects();
+    void init();
 };
 
 

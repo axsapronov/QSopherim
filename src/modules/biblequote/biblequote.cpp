@@ -8,8 +8,6 @@ BibleQuoteModule::BibleQuoteModule(QString pathToModule)
 {
     //        DEBUG_FUNC_NAME;
     parseModule(pathToModule);
-    myDebug() << readInfo(pathToModule).name() << readInfo(pathToModule).shortName();
-
 }
 ///-----------------------------------------------------------------------------
 BibleQuoteModule::BibleQuoteModule()
@@ -24,8 +22,10 @@ BibleQuoteModule::~BibleQuoteModule()
 ///-----------------------------------------------------------------------------
 void BibleQuoteModule::parseModule(QString pathToModule)
 {
-    myDebug() << "Parse module: " << pathToModule;
-    //    emit createFolderForModule();
+//    myDebug() << "Parse module: " << pathToModule;
+    MetaInfo parseInfo = readInfo(pathToModule);
+    myDebug() << readInfo(pathToModule).name() << readInfo(pathToModule).shortName();
+    emit createFolderForModule(parseInfo.shortName());
 }
 ///-----------------------------------------------------------------------------
 MetaInfo BibleQuoteModule::readInfo(QFile &file)

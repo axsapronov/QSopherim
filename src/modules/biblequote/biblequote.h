@@ -4,11 +4,14 @@
 #include "biblemodule.h"
 
 #include <QString>
+#include <QObject>
 
 class BibleModule;
 
 class BibleQuoteModule: public BibleModule
 {
+    Q_OBJECT
+
 public:
     BibleQuoteModule(QString pathToModule);
     BibleQuoteModule();
@@ -18,6 +21,9 @@ public:
     MetaInfo readInfo(const QString &fileName);
 
     void parseModule(QString pathToModule);
+
+signals:
+    void createFolderForModule(QString shortname);
 
 private:
     inline QString formatFromIni(QString input);

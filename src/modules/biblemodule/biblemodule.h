@@ -1,13 +1,19 @@
 #ifndef __BIBLEMODULE__H
 #define __BIBLEMODULE__H
 
+#include <QObject>
+
 #include <QString>
 #include <QSharedPointer>
 #include <QFile>
 
+
 #include "metainfo.h"
-class BibleModule
+
+class BibleModule :public QObject
 {
+    Q_OBJECT
+
 public:
     BibleModule();
     virtual ~BibleModule();
@@ -32,8 +38,8 @@ public:
     virtual void clearData();
 
     virtual void parseModule(QString pathToModule);
-signals:
-    void createFolderForModule(QString shortname);
+//signals:
+//    virtual void createFolderForModule(QString shortname);
 protected:
 //    QSharedPointer<Versification> m_versification;
 
