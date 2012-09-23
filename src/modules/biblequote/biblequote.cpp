@@ -1,6 +1,8 @@
 #include "biblequote.h"
 #include "debughelper.h"
 #include "filecommon.h"
+#include "moduledefinition.h"
+#include "config.h"
 
 #include <QTextCodec>
 #include <QString>
@@ -24,8 +26,20 @@ void BibleQuoteModule::parseModule(QString pathToModule)
 {
 //    myDebug() << "Parse module: " << pathToModule;
     MetaInfo parseInfo = readInfo(pathToModule);
-    myDebug() << readInfo(pathToModule).name() << readInfo(pathToModule).shortName();
+//    myDebug() << readInfo(pathToModule).name() << readInfo(pathToModule).shortName();
+
+    // добавить еще обработку типа
     emit createFolderForModule(parseInfo.shortName());
+
+    if (createIniFile(parseInfo))
+    {
+        createBookFiles(pathToModule);
+    }
+    else
+    {
+        myWarning() << "this module is created";
+    }
+
 }
 ///-----------------------------------------------------------------------------
 MetaInfo BibleQuoteModule::readInfo(QFile &file)
@@ -96,6 +110,7 @@ MetaInfo BibleQuoteModule::readInfo(QFile &file)
     MetaInfo ret;
     ret.setName(m_moduleName);
     ret.setShortName(m_moduleShortName);
+    ret.type = OBVCore::Type_BibleQuoteModule;
     return ret;
     return MetaInfo();
 }
@@ -113,6 +128,50 @@ QString BibleQuoteModule::formatFromIni(QString input)
 {
     return input.trimmed();
 }
+///-----------------------------------------------------------------------------
+bool BibleQuoteModule::createIniFile(MetaInfo info)
+{
+    /// добавить обработку типа
+    QString text =
+            "////Module for projectQ"
+            "\nModuleName = " + info.name() +
+            "\nModuleShortName = " + info.shortName() +
+            "\nModuleLanguage = " + info.language;
+
+    return createEmpty(Config::configuration()->getAppDir() + "bible/" +
+                info.shortName() + "/module.ini", text);
+
+    return false;
+}
+///-----------------------------------------------------------------------------
+bool BibleQuoteModule::createBookFiles(QString pathToFiles)
+{
+    Q_UNUSED (pathToFiles)
+    return false;
+}
+///-----------------------------------------------------------------------------
+int BibleQuoteModule::moduleID() const
+{
+    return m_moduleID;
+}
+///-----------------------------------------------------------------------------
+QString BibleQuoteModule::modulePath() const
+{
+    return m_modulePath;
+}
+///-----------------------------------------------------------------------------
+QString BibleQuoteModule::moduleName(bool preferShortName) const
+{
+    return m_moduleName;
+}
+///-----------------------------------------------------------------------------
+QString BibleQuoteModule::uid() const
+{
+    return m_uid;
+}
+///-----------------------------------------------------------------------------
+///-----------------------------------------------------------------------------
+///-----------------------------------------------------------------------------
 ///-----------------------------------------------------------------------------
 ///-----------------------------------------------------------------------------
 ///-----------------------------------------------------------------------------

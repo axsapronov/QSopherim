@@ -22,6 +22,11 @@ public:
 
     void parseModule(QString pathToModule);
 
+    int moduleID() const;
+    QString modulePath() const;
+    QString moduleName(bool preferShortName = false) const;
+    QString uid() const;
+
 signals:
     void createFolderForModule(QString shortname);
 
@@ -41,8 +46,10 @@ private:
     QString m_moduleShortName;
     bool m_chapterZero;
 
-
     QStringList m_bookPath;
+
+    bool createIniFile(MetaInfo info);
+    bool createBookFiles(QString pathToFiles);
 };
 
 #endif // __BIBLEQUOTE__H

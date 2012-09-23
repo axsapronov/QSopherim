@@ -235,7 +235,7 @@ bool createEmptyHtml(QString fileName, QString title, QString text)
 ///----------------------------------------------------------------------------
 bool createEmpty(QString fileName, QString text)
 {
-    bool ret = true;
+    bool ret = false;
     QFile file(fileName);
     if (!file.exists())
     {
@@ -247,6 +247,7 @@ bool createEmpty(QString fileName, QString text)
             ts.setCodec("UTF-8");
             ts << text;
             file.close();
+            ret = true;
         }
         else
         {

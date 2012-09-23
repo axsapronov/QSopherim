@@ -31,7 +31,10 @@ DEPENDPATH += \
          src/moduleviewer \
          src/modules/processmodule \
          src/common \
-         src/core
+         src/core \
+         src/core/verse \
+         src/core/verse/versification \
+         src/core/link
 
 INCLUDEPATH += \
          src/main \
@@ -51,7 +54,10 @@ INCLUDEPATH += \
          src/config \
          src/modules/ \
          src/common \
-         src/core
+         src/core \
+         src/core/verse \
+         src/core/verse/versification \
+         src/core/link
 
 SOURCES  += \
          main.cpp \
@@ -71,7 +77,25 @@ SOURCES  += \
          processmodule.cpp \
          biblemodule.cpp \
          metainfo.cpp \
-         debughelper.cpp
+         debughelper.cpp \
+    src/core/verse/chapter.cpp \
+    src/core/verse/book.cpp \
+    src/core/verse/range.cpp \
+    src/core/verse/ranges.cpp \
+    src/core/verse/rangeenum.cpp \
+    src/core/verse/textrange.cpp \
+    src/core/verse/textranges.cpp \
+    src/core/verse/verse.cpp \
+    src/core/verse/versification.cpp \
+    src/core/verse/versificationextendeddata.cpp \
+    src/core/verse/versification/versification_kjv.cpp \
+    src/core/verse/versification/versification_biblequote.cpp \
+    src/core/verse/versification/bookv11n.cpp \
+    src/core/link/strongurl.cpp \
+    src/core/link/verseurl.cpp \
+    src/core/link/verseurlrange.cpp \
+    src/core/link/biblelink.cpp \
+    src/core/link/url.cpp
 
 
 HEADERS  += \
@@ -93,7 +117,26 @@ HEADERS  += \
          biblemodule.h \
          metainfo.h \
          moduledefinition.h \
-         debughelper.h
+         debughelper.h \
+    src/core/verse/chapter.h \
+    src/core/verse/book.h \
+    src/core/verse/range.h \
+    src/core/verse/ranges.h \
+    src/core/verse/rangeenum.h \
+    src/core/verse/textrange.h \
+    src/core/verse/textranges.h \
+    src/core/verse/verse.h \
+    src/core/verse/versification.h \
+    src/core/verse/versificationextendeddata.h \
+    src/core/verse/versification/versification_kjv.h \
+    src/core/verse/versification/versification_biblequote.h \
+    src/core/verse/versification/bookv11n.h \
+    src/core/link/strongurl.h \
+    src/core/link/verseurl.h  \
+    src/core/link/verseurlrange.h  \
+    src/core/link/biblelink.h  \
+    src/core/link/url.h
+
 
 FORMS    += \
          mainwindow.ui \
