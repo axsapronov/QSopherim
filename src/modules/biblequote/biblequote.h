@@ -3,10 +3,15 @@
 
 #include "biblemodule.h"
 
+
+#include "src/core/verse/chapter.h"
+#include "book.h"
+
 #include <QString>
 #include <QObject>
 
 class BibleModule;
+
 
 class BibleQuoteModule: public BibleModule
 {
@@ -15,10 +20,12 @@ class BibleQuoteModule: public BibleModule
 public:
     BibleQuoteModule(QString pathToModule);
     BibleQuoteModule();
-    virtual ~BibleQuoteModule();
+    ~BibleQuoteModule();
 
     MetaInfo readInfo(QFile &file);
     MetaInfo readInfo(const QString &fileName);
+    int loadBibleData(const int moduleID, const QString &path);
+    int readBook(const int id);
 
     void parseModule(QString pathToModule);
 
@@ -35,12 +42,13 @@ private:
     QString indexPath() const;
     int m_moduleID;
     QString m_verseSign;
+    QString m_bookCount;
     QString m_chapterSign;
     QString m_removeHtml;
     QTextCodec *m_codec;
     QString m_uid;
 
-////    Book m_book;
+    Book m_book;
     QString m_modulePath;
     QString m_moduleName;
     QString m_moduleShortName;
