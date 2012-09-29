@@ -11,6 +11,7 @@
 #include <QDebug>
 
 /**
+  \brief
   @function
   Auto detect encoding file
   @param filepath  QString of file path
@@ -174,5 +175,14 @@ void addWordToDict(QString filePath, QString word, QString description);
   @return str_to_pos
   */
 QString findPosWord(QString file, QString text);
-
+/**
+  \brief
+  @function
+  Create empty xml file.
+  @param file_path
+  @return bool
+  */
+bool createEmptyXML(QString fileName);
+bool addBookToXML(QString fileName, QString namebook, QStringList textchapter);
+bool endXML(QString fileName);
 #endif // __FILECOMMON__H

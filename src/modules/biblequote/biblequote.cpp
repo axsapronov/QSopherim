@@ -144,7 +144,7 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
             "\nModuleChapterZero = " + m_chapterZero;
 
 
-    myDebug() << m_bookPath;
+//    myDebug() << m_bookPath;
     QString t_pathToIniFile = QString(Config::configuration()->getAppDir() + "bible/" +
                                       info.shortName() + "/module.ini");
     if (QFile::exists(t_pathToIniFile))
@@ -159,9 +159,20 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
 ///-----------------------------------------------------------------------------
 bool BibleQuoteModule::createBookFiles(QString pathToFiles)
 {
-    Q_UNUSED (pathToFiles)
 
+    QString t_pathToXmlFile = QString(Config::configuration()->getAppDir() + "bible/" +
+                                      m_moduleShortName + "/text.xml");
 
+    if (QFile::exists(t_pathToXmlFile))
+    {
+        QFile::remove(t_pathToXmlFile);
+    }
+    createEmptyXML(t_pathToXmlFile);
+    for (int i = 0; i < m_bookPath.size(); i++)
+    {
+        readBook(i);
+    }
+    endXML(t_pathToXmlFile);
     return false;
 }
 ///-----------------------------------------------------------------------------
@@ -327,13 +338,14 @@ int BibleQuoteModule::readBook(const int id)
         QTextDecoder *decoder = m_codec->makeDecoder();
         while(!file.atEnd()) {
             const QByteArray byteline = file.readLine();
+
             QString line = decoder->toUnicode(byteline);
 
             //filterout
 //            if(m_settings->getModuleSettings(m_moduleID)->biblequote_removeHtml == true && removeHtml2.size() > 0) {
-//                foreach(const QString & r, removeHtml2) {
-//                    line = line.remove(r, Qt::CaseInsensitive);
-//                }
+                foreach(const QString & r, removeHtml2) {
+                    line = line.remove(r, Qt::CaseInsensitive);
+                }
 //            }
             out2 += line;
             if(chapterstarted == false && line.contains(m_chapterSign)) {
@@ -341,7 +353,7 @@ int BibleQuoteModule::readBook(const int id)
             }
             if(chapterstarted == true && line.contains(m_chapterSign)) {
                 ccount2++;
-                chapterText << out;
+//                myDebug() << out;
                 out = line;
             } else if(chapterstarted == true) {
                 out += line;
@@ -389,6 +401,12 @@ int BibleQuoteModule::readBook(const int id)
         }
         m_book.addChapter(c);
     }
+//    myDebug() << chapterText;
+
+    QString t_pathToXmlFile = QString(Config::configuration()->getAppDir() + "bible/" +
+                                      m_moduleShortName + "/text.xml");
+//    myDebug() << t_pathToXmlFile;
+    addBookToXML(t_pathToXmlFile, m_bookPath.at(id), chapterText);
     file.close();
     return 0;
 

@@ -1,5 +1,6 @@
 #include "filecommon.h"
 
+#include "debughelper.h"
 
 
 ///----------------------------------------------------------------------------
@@ -534,6 +535,101 @@ QString findPosWord(QString file, QString text)
     }
     return t_output_str;
 }
-
 ///----------------------------------------------------------------------------
+bool createEmptyXML(QString fileName)
+{
+    bool ret = false;
+    QFile file(fileName);
+    if (!file.exists())
+    {
+        //create file if it's not exist
+        if (file.open(QIODevice::ReadWrite))
+        {
+            //try to open or create file
+            QTextStream ts(&file);
+            ts.setCodec("UTF-8");
+            ts << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl;
+            ts << "<!DOCTYPE xbel>" << endl;
+            ts << "<xbel version=\"1.0\">" << endl;
+            file.close();
+            ret = true;
+        }
+        else
+        {
+            ret = false;
+        }
+    }
+    return ret;
+}
+///----------------------------------------------------------------------------
+bool addBookToXML(QString fileName, QString namebook, QStringList textchapter)
+{
+    bool ret = false;
+//    myDebug() << getTextFromHtmlFile(fileName);
+//    myDebug() << "\n\n\n\n";
+    QFile file(fileName);
+    if (file.exists())
+    {
+        //create file if it's not exist
+        if (file.open(QIODevice::Append))
+        {
+            //try to open or create file
+            QString tab = "    ";
+            QTextStream ts(&file);
+            ts.setCodec(getCodecOfEncoding(getEncodingFromFile(fileName)));
+
+            //                  <?xml version="1.0" encoding="UTF-8"?>
+            //                  <!DOCTYPE xbel>
+            //                  <xbel version="1.0">
+            //                      <book name="Name of book" shortname="ShortName">
+            //                          <chapter number="1">Text _\/_ (br) </chapter>
+            //                          <chapter number="*"> text</chapter>
+            //                      </book>
+            //                      <book name="Name of book" shortname="ShortName">
+            //                          <chapter ...?>
+            //                       </book>
+            //                  </xbel>
+            ts << tab << "<book name=\"" << namebook << "\">" << endl;
+            for (int i = 0; i < textchapter.size(); i++)
+            {
+                ts << tab << tab << "<chapter number=\"" << i
+                   << "\">" << textchapter.at(i) << "</chapter>"
+                   << endl;
+            }
+
+            ts << tab << "</book>" << endl;
+            file.close();
+            ret = true;
+        }
+        else
+        {
+            ret = false;
+        }
+    }
+    return ret;
+}
+///----------------------------------------------------------------------------
+bool endXML(QString fileName)
+{
+    bool ret = false;
+    QFile file(fileName);
+    if (file.exists())
+    {
+        //create file if it's not exist
+        if (file.open(QIODevice::Append))
+        {
+            //try to open or create file
+            QTextStream ts(&file);
+            ts.setCodec("UTF-8");
+            ts << "</xbel>" << endl;
+            file.close();
+            ret = true;
+        }
+        else
+        {
+            ret = false;
+        }
+    }
+    return ret;
+}
 ///----------------------------------------------------------------------------
