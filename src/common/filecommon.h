@@ -9,6 +9,8 @@
 #include <QTextCodec>
 
 #include <QDebug>
+#include "book.h"
+
 
 /**
   \brief
@@ -183,6 +185,6 @@ QString findPosWord(QString file, QString text);
   @return bool
   */
 bool createEmptyXML(QString fileName);
-bool addBookToXML(QString fileName, QString namebook, QStringList textchapter);
+bool addBookToXML(QString fileName, QString namebook, Book mbook);
 bool endXML(QString fileName);
 #endif // __FILECOMMON__H

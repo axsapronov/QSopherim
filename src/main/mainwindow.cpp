@@ -113,7 +113,8 @@ void MainWindow::init()
 void MainWindow::debug()
 {
     QString fileName;
-    fileName = "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
+//    fileName = "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
+    fileName = "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
 //    fileName = "/home/files/Documents/Bible/unrar/NT_Russian_Kassian/Bibleqt.ini";
 //    fileName = "/home/files/Documents/Bible/unrar/Makarij/bibleqt.ini";
     ProcessModule(fileName, OBVCore::Type_BibleQuoteModule);

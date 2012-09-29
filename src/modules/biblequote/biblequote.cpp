@@ -24,10 +24,10 @@ BibleQuoteModule::~BibleQuoteModule()
 ///-----------------------------------------------------------------------------
 void BibleQuoteModule::parseModule(QString pathToModule)
 {
-//    myDebug() << "Parse module: " << pathToModule;
+    //    myDebug() << "Parse module: " << pathToModule;
     MetaInfo parseInfo = readInfo(pathToModule);
     loadBibleData(1, pathToModule);
-//    myDebug() << readInfo(pathToModule).name() << readInfo(pathToModule).shortName();
+    //    myDebug() << readInfo(pathToModule).name() << readInfo(pathToModule).shortName();
 
     // добавить еще обработку типа
     emit createFolderForModule(parseInfo.shortName());
@@ -84,10 +84,10 @@ MetaInfo BibleQuoteModule::readInfo(QFile &file)
                 break;
             }
             /// what is ?
-//            else if(!useShortName)
-//            {
-//                break;
-//            }
+            //            else if(!useShortName)
+            //            {
+            //                break;
+            //            }
         }
         if(line.contains("BibleShortName", Qt::CaseInsensitive) and m_moduleShortName.isEmpty())
         {
@@ -144,7 +144,7 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
             "\nModuleChapterZero = " + m_chapterZero;
 
 
-//    myDebug() << m_bookPath;
+    //    myDebug() << m_bookPath;
     QString t_pathToIniFile = QString(Config::configuration()->getAppDir() + "bible/" +
                                       info.shortName() + "/module.ini");
     if (QFile::exists(t_pathToIniFile))
@@ -223,12 +223,12 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
     QFile file;
     file.setFileName(path);
     QString encoding;
-//    ModuleSettings *settings = m_settings->getModuleSettings(m_moduleID);
-//    if(settings->encoding == "Default" || settings->encoding.isEmpty()) {
-//        encoding = m_settings->encoding;
-//    } else {
-//        encoding = settings->encoding;
-//    }
+    //    ModuleSettings *settings = m_settings->getModuleSettings(m_moduleID);
+    //    if(settings->encoding == "Default" || settings->encoding.isEmpty()) {
+    //        encoding = m_settings->encoding;
+    //    } else {
+    //        encoding = settings->encoding;
+    //    }
     m_codec = getCodecOfEncoding(getEncodingFromFile(path));
     QTextDecoder *decoder = m_codec->makeDecoder();
     if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -303,16 +303,16 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
 
         }
     }
-//    m_versification = settings->loadVersification();
-//    if(settings->noV11N()) {
-//        myDebug() << "load new versification";
-//        m_versification = QSharedPointer<Versification>(new Versification_BibleQuote(bookFullName, bookShortName, bookCount));
-//        settings->v11n = m_versification.toWeakRef();
-//        settings->versificationName = "";
-//        settings->versificationFile = m_settings->v11nFile(path);
+    //    m_versification = settings->loadVersification();
+    //    if(settings->noV11N()) {
+    //        myDebug() << "load new versification";
+    //        m_versification = QSharedPointer<Versification>(new Versification_BibleQuote(bookFullName, bookShortName, bookCount));
+    //        settings->v11n = m_versification.toWeakRef();
+    //        settings->versificationName = "";
+    //        settings->versificationFile = m_settings->v11nFile(path);
 
-//    }
-//    settings->getV11n()->extendedData.setHasChapterZeor(m_chapterZero);
+    //    }
+    //    settings->getV11n()->extendedData.setHasChapterZeor(m_chapterZero);
     return 0;
 }
 
@@ -327,6 +327,8 @@ int BibleQuoteModule::readBook(const int id)
     QFile file;
     file.setFileName(path);
 
+    QString tab = "    ";
+
     QString out;
     QString out2;
     bool chapterstarted = false;
@@ -334,33 +336,48 @@ int BibleQuoteModule::readBook(const int id)
     QStringList chapterText;
     const QStringList removeHtml2 = m_removeHtml.split(" ");
 
-    if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    if(file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
         QTextDecoder *decoder = m_codec->makeDecoder();
-        while(!file.atEnd()) {
+        while(!file.atEnd())
+        {
             const QByteArray byteline = file.readLine();
 
+
             QString line = decoder->toUnicode(byteline);
+//            line.remove("\n").remove("\r");
+//            line.remove(m_verseSign);
 
             //filterout
-//            if(m_settings->getModuleSettings(m_moduleID)->biblequote_removeHtml == true && removeHtml2.size() > 0) {
-                foreach(const QString & r, removeHtml2) {
-                    line = line.remove(r, Qt::CaseInsensitive);
-                }
-//            }
+            //            if(m_settings->getModuleSettings(m_moduleID)->biblequote_removeHtml == true && removeHtml2.size() > 0) {
+            foreach(const QString & r, removeHtml2)
+            {
+                line = line.remove(r, Qt::CaseInsensitive);
+            }
+            //            }
             out2 += line;
-            if(chapterstarted == false && line.contains(m_chapterSign)) {
+            if(chapterstarted == false && line.contains(m_chapterSign))
+            {
                 chapterstarted = true;
             }
-            if(chapterstarted == true && line.contains(m_chapterSign)) {
+            if(chapterstarted == true && line.contains(m_chapterSign))
+            {
                 ccount2++;
-//                myDebug() << out;
+//                                myDebug() << out;
                 out = line;
-            } else if(chapterstarted == true) {
+            }
+            else if(chapterstarted == true)
+            {
                 out += line;
             }
         }
-        chapterText << out;
-    } else {
+
+        chapterText << out2.split(m_chapterSign);
+
+        myDebug() << chapterText.at(5);
+    }
+    else
+    {
         //becauce windows filename are case insensensitive
         //there are some filename typos in the ini files
         //and you cannot open this files on linux
@@ -368,27 +385,32 @@ int BibleQuoteModule::readBook(const int id)
         QDir d(info.absoluteDir());
         QStringList list = d.entryList();
 
-        foreach(QString f, list) {
+        foreach(QString f, list)
+        {
             QFileInfo info2(f);
-            if(info2.baseName().compare(info.baseName(), Qt::CaseInsensitive) == 0) {
+            if(info2.baseName().compare(info.baseName(), Qt::CaseInsensitive) == 0)
+            {
                 m_bookPath.replace(id, f.remove(m_modulePath + "/"));
                 return readBook(id);
             }
         }
         return 1;
     }
-    if(ccount2 == 0) {
+    if(ccount2 == 0)
+    {
         chapterText << out2;
         ccount2 = 1;
     }
 
     //todo: its slow
-    for(int i = 0; i < chapterText.size() - 1; i++) {
+    for(int i = 0; i < chapterText.size() - 1; i++)
+    {
         Chapter c(i);
         const QStringList rawVerseList = chapterText.at(i + 1).split(m_verseSign);
-        for(int j = 0; j < rawVerseList.size(); j++) { //split removes versesign but it is needed
+        for(int j = 0; j < rawVerseList.size(); j++)
+        { //split removes versesign but it is needed
             QString verseText = rawVerseList.at(j);
-            //myDebug() << verseText;
+//            myDebug() << verseText;
 
             if(verseText.contains("<p>") && !verseText.contains("</p>"))
                 verseText.remove("<p>", Qt::CaseInsensitive);
@@ -401,12 +423,13 @@ int BibleQuoteModule::readBook(const int id)
         }
         m_book.addChapter(c);
     }
-//    myDebug() << chapterText;
+    //    myDebug() << chapterText;
 
     QString t_pathToXmlFile = QString(Config::configuration()->getAppDir() + "bible/" +
                                       m_moduleShortName + "/text.xml");
-//    myDebug() << t_pathToXmlFile;
-    addBookToXML(t_pathToXmlFile, m_bookPath.at(id), chapterText);
+    //    myDebug() << t_pathToXmlFile;
+//    qDebug() << m_book.size();
+    addBookToXML(t_pathToXmlFile, m_bookPath.at(id), m_book);
     file.close();
     return 0;
 

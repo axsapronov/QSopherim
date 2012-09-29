@@ -562,11 +562,11 @@ bool createEmptyXML(QString fileName)
     return ret;
 }
 ///----------------------------------------------------------------------------
-bool addBookToXML(QString fileName, QString namebook, QStringList textchapter)
+bool addBookToXML(QString fileName, QString namebook, Book mbook)
 {
     bool ret = false;
-//    myDebug() << getTextFromHtmlFile(fileName);
-//    myDebug() << "\n\n\n\n";
+    //    myDebug() << getTextFromHtmlFile(fileName);
+    //    myDebug() << "\n\n\n\n";
     QFile file(fileName);
     if (file.exists())
     {
@@ -590,11 +590,17 @@ bool addBookToXML(QString fileName, QString namebook, QStringList textchapter)
             //                       </book>
             //                  </xbel>
             ts << tab << "<book name=\"" << namebook << "\">" << endl;
-            for (int i = 0; i < textchapter.size(); i++)
+            for (int i = 0; i < mbook.size(); i++)
             {
+
                 ts << tab << tab << "<chapter number=\"" << i
-                   << "\">" << textchapter.at(i) << "</chapter>"
-                   << endl;
+                   << "\">";
+                for (int j = 0; j < mbook.getChapter(i).verseCount(); j++)
+                {
+                    ts << tab << tab << tab << mbook.getChapter(i).data().value(j).data();
+                }
+
+                ts  << "</chapter>" << endl;
             }
 
             ts << tab << "</book>" << endl;
