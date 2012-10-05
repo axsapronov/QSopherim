@@ -45,10 +45,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     init();
-    createActions(); // create action for tray
-    createTrayIcon(); // add actionts to tray menu
-    createConnects(); // moved func
-    trIcon->show();  //display tray
 
 
     debug();
@@ -77,6 +73,9 @@ void MainWindow::init()
     addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel2);
     addDockWidget(Qt::RightDockWidgetArea, GUI_RightPanel);
 //    addDockWidget(Qt::BottomDockWidgetArea, GUI_BottomPanel);
+
+    prModule = new ProcessModule();
+
 
     GUI_ModuleViewer = new ModuleViewer(this);
     setCentralWidget(GUI_ModuleViewer);
@@ -108,6 +107,12 @@ void MainWindow::init()
     //               rect.height() / 2 - this->height() / 2);
     /// maximized
     this->showMaximized();
+
+    createActions(); // create action for tray
+    createTrayIcon(); // add actionts to tray menu
+    createConnects(); // moved func
+    trIcon->show();  //display tray
+
 }
 //------------------------------------------------------------------------------
 void MainWindow::debug()
@@ -117,7 +122,9 @@ void MainWindow::debug()
     fileName = "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
 //    fileName = "/home/files/Documents/Bible/unrar/NT_Russian_Kassian/Bibleqt.ini";
 //    fileName = "/home/files/Documents/Bible/unrar/Makarij/bibleqt.ini";
-    ProcessModule(fileName, OBVCore::Type_BibleQuoteModule);
+//    prModule = new ProcessModule(fileName, OBVCore::Type_BibleQuoteModule);
+    prModule->processing(fileName, OBVCore::Type_BibleQuoteModule);
+
 }
 //------------------------------------------------------------------------------
 void MainWindow::createConnects()
@@ -146,6 +153,12 @@ void MainWindow::createConnects()
     connect(ui->action_About_About_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(ui->action_About_Site, SIGNAL(triggered()), this, SLOT(aboutOpenSite()));
     connect(ui->action_About_Help, SIGNAL(triggered()), SLOT(showHelp()));
+
+    /// other
+    connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));
+//    connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));
+//    connect(QO)
+//    connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));
 }
 //------------------------------------------------------------------------------
 void MainWindow::showHide(QSystemTrayIcon::ActivationReason r)
@@ -317,6 +330,12 @@ void MainWindow::openModule()
     }
 }
 //------------------------------------------------------------------------------
+void MainWindow::processFinish()
+{
+
+    myDebug() << "Process finish";
+
+}
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

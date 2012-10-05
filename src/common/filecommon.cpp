@@ -577,30 +577,18 @@ bool addBookToXML(QString fileName, QString namebook, Book mbook)
             QString tab = "    ";
             QTextStream ts(&file);
             ts.setCodec(getCodecOfEncoding(getEncodingFromFile(fileName)));
-
-            //                  <?xml version="1.0" encoding="UTF-8"?>
-            //                  <!DOCTYPE xbel>
-            //                  <xbel version="1.0">
-            //                      <book name="Name of book" shortname="ShortName">
-            //                          <chapter number="1">Text _\/_ (br) </chapter>
-            //                          <chapter number="*"> text</chapter>
-            //                      </book>
-            //                      <book name="Name of book" shortname="ShortName">
-            //                          <chapter ...?>
-            //                       </book>
-            //                  </xbel>
             ts << tab << "<book name=\"" << namebook << "\">" << endl;
             for (int i = 0; i < mbook.size(); i++)
             {
 
-                ts << tab << tab << "<chapter number=\"" << i
-                   << "\">";
+                ts << tab << tab << "<chapter number=\"" << i + 1
+                   << "\">" << endl;
                 for (int j = 0; j < mbook.getChapter(i).verseCount(); j++)
                 {
                     ts << tab << tab << tab << mbook.getChapter(i).data().value(j).data();
                 }
 
-                ts  << "</chapter>" << endl;
+                ts  << tab << tab << "</chapter>" << endl;
             }
 
             ts << tab << "</book>" << endl;

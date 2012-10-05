@@ -374,7 +374,7 @@ int BibleQuoteModule::readBook(const int id)
 
         chapterText << out2.split(m_chapterSign);
 
-        myDebug() << chapterText.at(5);
+//        myDebug() << chapterText.at(5);
     }
     else
     {

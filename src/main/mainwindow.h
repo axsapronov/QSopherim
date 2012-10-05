@@ -79,6 +79,8 @@ private slots:
       */
     void openModule();
 
+    void processFinish();
+
 protected:
     void closeEvent(QCloseEvent *);
 private:
@@ -101,6 +103,7 @@ private:
     QAction *restoreAction;
     QAction *quitAction;
 
+    ProcessModule* prModule;
     /**
       @function
       debug function
