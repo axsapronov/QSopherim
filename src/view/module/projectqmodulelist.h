@@ -17,6 +17,7 @@ public:
     int getCurNumberModule();
 
     void refreshList();
+    int getSize();
 private:
     QVector<ProjectQModule>* moduleList;
     int cur_int;

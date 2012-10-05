@@ -98,4 +98,8 @@ QStringList ProjectQModuleList::getModuleFilesList(QStringList files)
     return list;
 }
 //------------------------------------------------------------------------------
+int ProjectQModuleList::getSize()
+{
+    return moduleList->size();
+}
 //------------------------------------------------------------------------------

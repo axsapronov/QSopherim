@@ -69,11 +69,11 @@ void MainWindow::init()
 
     GUI_RightPanel->setMinimumWidth(200);
     GUI_LeftPanel->setMinimumWidth(200);
-//    GUI_BottomPanel->setMinimumHeight(100);
+    //    GUI_BottomPanel->setMinimumHeight(100);
     addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel);
     addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel2);
     addDockWidget(Qt::RightDockWidgetArea, GUI_RightPanel);
-//    addDockWidget(Qt::BottomDockWidgetArea, GUI_BottomPanel);
+    //    addDockWidget(Qt::BottomDockWidgetArea, GUI_BottomPanel);
 
     prModule = new ProcessModule();
 
@@ -119,12 +119,12 @@ void MainWindow::init()
 void MainWindow::debug()
 {
     QString fileName;
-//    fileName = "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
-    fileName = "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
-//    fileName = "/home/files/Documents/Bible/unrar/NT_Russian_Kassian/Bibleqt.ini";
-//    fileName = "/home/files/Documents/Bible/unrar/Makarij/bibleqt.ini";
-//    prModule = new ProcessModule(fileName, OBVCore::Type_BibleQuoteModule);
-    prModule->processing(fileName, OBVCore::Type_BibleQuoteModule);
+//        fileName = "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
+        fileName = "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
+    //    fileName = "/home/files/Documents/Bible/unrar/NT_Russian_Kassian/Bibleqt.ini";
+    //    fileName = "/home/files/Documents/Bible/unrar/Makarij/bibleqt.ini";
+    //    prModule = new ProcessModule(fileName, OBVCore::Type_BibleQuoteModule);
+        prModule->processing(fileName, OBVCore::Type_BibleQuoteModule);
 
 }
 //------------------------------------------------------------------------------
@@ -157,9 +157,9 @@ void MainWindow::createConnects()
 
     /// other
     connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));
-//    connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));
-//    connect(QO)
-//    connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));
+    //    connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));
+    //    connect(QO)
+    //    connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));
 }
 //------------------------------------------------------------------------------
 void MainWindow::showHide(QSystemTrayIcon::ActivationReason r)
@@ -317,7 +317,7 @@ void MainWindow::saveSettings()
 //------------------------------------------------------------------------------
 void MainWindow::showHelp()
 {
-//    HtmlHelp(NULL, "help.chm", HH_DISPLAY_TOPIC, 0);
+    //    HtmlHelp(NULL, "help.chm", HH_DISPLAY_TOPIC, 0);
 }
 //------------------------------------------------------------------------------
 void MainWindow::openModule()
@@ -326,24 +326,28 @@ void MainWindow::openModule()
                                                     tr("test module (*.ini)"));
     if (!fileName.isEmpty())
     {
-//        ProjectOpen(fileName);
-//        ProcessModule(fileName, OBVCore::BibleQuoteModule);
+        //        ProjectOpen(fileName);
+        //        ProcessModule(fileName, OBVCore::BibleQuoteModule);
     }
 }
 //------------------------------------------------------------------------------
 void MainWindow::processFinish()
 {
     myDebug() << "Process finish";
-//    ProjectQModule* test = new ProjectQModule();
-//    test->setChapterValue(5);
-//    test->setModuleName("fasf");
+    //    ProjectQModule* test = new ProjectQModule();
+    //    test->setChapterValue(5);
+    //    test->setModuleName("fasf");
     ProjectQModuleList* list = new ProjectQModuleList();
-//    list->AddModule(test);
+    //    list->AddModule(test);
     list->refreshList();
-//    myDebug() << list->getCurNumberModule();
-//    myDebug() << list->getModule(0).getModuleName();
+//        myDebug() << list->getCurNumberModule();
+    //    myDebug() << list->getModule(0).getModuleName();
 
-    myDebug() << list->getModule(0).getModuleInfo();
+    for (int i = 0; i < list->getSize(); i++ )
+    {
+        myDebug() << list->getModule(i).getModuleInfo();
+    }
+
 
     GUI_LeftPanel->refreshBookList();
 }
