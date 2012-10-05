@@ -57,7 +57,8 @@ INCLUDEPATH += \
          src/core \
          src/core/verse \
          src/core/verse/versification \
-         src/core/link
+         src/core/link \
+         src/view/module
 
 SOURCES  += \
          main.cpp \
@@ -95,7 +96,9 @@ SOURCES  += \
     src/core/link/verseurl.cpp \
     src/core/link/verseurlrange.cpp \
     src/core/link/biblelink.cpp \
-    src/core/link/url.cpp
+    src/core/link/url.cpp \
+    src/view/module/projectqmodule.cpp \
+    src/view/module/projectqmodulelist.cpp
 
 
 HEADERS  += \
@@ -135,7 +138,9 @@ HEADERS  += \
     src/core/link/verseurl.h  \
     src/core/link/verseurlrange.h  \
     src/core/link/biblelink.h  \
-    src/core/link/url.h
+    src/core/link/url.h \
+    src/view/module/projectqmodule.h \
+    src/view/module/projectqmodulelist.h
 
 
 FORMS    += \

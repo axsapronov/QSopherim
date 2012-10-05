@@ -34,6 +34,7 @@
 #include "processmodule.h"
 #include "moduledefinition.h"
 #include "debughelper.h"
+#include "projectqmodulelist.h"
 
 
 
@@ -333,7 +334,15 @@ void MainWindow::openModule()
 void MainWindow::processFinish()
 {
 
+
     myDebug() << "Process finish";
+    ProjectQModule* test = new ProjectQModule();
+    test->setChapterValue(5);
+    test->setModuleName("fasf");
+    ProjectQModuleList* list = new ProjectQModuleList();
+    list->AddModule(test);
+    myDebug() << list->getCurNumberModule();
+    myDebug() << list->getModule(0).getModuleName();
     GUI_LeftPanel->refreshBookList();
 
 }
