@@ -1,5 +1,12 @@
 #include "projectqmodulelist.h"
+#include "debughelper.h"
+#include "filecommon.h"
+#include "config.h"
+
 #include <QVector>
+#include <QDir>
+#include <QStringList>
+#include <QDirIterator>
 
 ProjectQModuleList::ProjectQModuleList()
 {
@@ -30,7 +37,63 @@ ProjectQModule ProjectQModuleList::getModule(int id)
 void ProjectQModuleList::init()
 {
     moduleList = new QVector<ProjectQModule>;
-    cur_int = 0;
+    cur_int = -1;
+}
+//------------------------------------------------------------------------------
+void ProjectQModuleList::refreshList()
+{
+    /*
+     *P.S. для удобства добавить в settings файл модуля
+     *пункт с путем до модуля, относительно curdir
+     *пройти по внутренним папкам, и если нашел модуль,
+     *то глянуть, есть ли такой уже
+     *если нет, то
+     *создать его
+     *и добавить в список
+     */
+    QString t_pathToIniFile = QString(Config::configuration()->getAppDir() + "bible/");
+    findModules(t_pathToIniFile);
+}
+//------------------------------------------------------------------------------
+void ProjectQModuleList::findModules(QString dir)
+{
+    if (!dir.isEmpty())
+    {
+        QStringList files;
+        files = recursiveFind(dir);
+        files = getModuleFilesList(files);
+        for (int i = 0; i < files.size(); i++)
+        {
+            myDebug() << getModuleInfo(files.at(i));
+        }
+    }
+}
+//------------------------------------------------------------------------------
+QStringList ProjectQModuleList::recursiveFind(QString directory)
+{
+    //// подумать, нужен ли чистый рекурсивный поиск
+    //// если нет, то сюда вставить обработку getModuleFilesList
+    QStringList list;
+    QDirIterator iterator (directory, QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
+    while(iterator.hasNext())
+    {
+        iterator.next();
+        list << iterator.fileInfo().absoluteFilePath();
+    }
+    return list;
+}
+//------------------------------------------------------------------------------
+QStringList ProjectQModuleList::getModuleFilesList(QStringList files)
+{
+    QStringList list;
+    for(int i = 0; i < files.size(); i++)
+    {
+        if(files.at(i).indexOf(".ini") >= 0)
+        {
+            list << files.at(i);
+        }
+    }
+    return list;
 }
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

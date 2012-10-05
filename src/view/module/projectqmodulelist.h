@@ -12,14 +12,18 @@ public:
     explicit ProjectQModuleList();
     ProjectQModule getNextModule();
     ProjectQModule getModule(int id);
+
     void AddModule(ProjectQModule*);
     int getCurNumberModule();
+
+    void refreshList();
 private:
     QVector<ProjectQModule>* moduleList;
     int cur_int;
-
     void init();
-
+    QStringList recursiveFind(QString directory);
+    void findModules(QString dir);
+    QStringList getModuleFilesList(QStringList files);
     //
 };
 

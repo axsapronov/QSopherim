@@ -333,8 +333,6 @@ void MainWindow::openModule()
 //------------------------------------------------------------------------------
 void MainWindow::processFinish()
 {
-
-
     myDebug() << "Process finish";
     ProjectQModule* test = new ProjectQModule();
     test->setChapterValue(5);
@@ -343,8 +341,8 @@ void MainWindow::processFinish()
     list->AddModule(test);
     myDebug() << list->getCurNumberModule();
     myDebug() << list->getModule(0).getModuleName();
+    list->refreshList();
     GUI_LeftPanel->refreshBookList();
-
 }
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

@@ -627,3 +627,46 @@ bool endXML(QString fileName)
     return ret;
 }
 ///----------------------------------------------------------------------------
+QStringList getModuleInfo(QString fileName)
+{
+
+    QStringList list;
+    list.append(getParamModule(fileName, "ModuleName"));
+    list.append(getParamModule(fileName, "ModuleShortName"));
+    //    list.append(getParamModule(fileName, "ModuleLanguage"));
+    list.append(getParamModule(fileName, "BooksValue"));
+    //    list.append(getParamModule(fileName, "ModuleShortName"));
+
+    return list;
+}
+///----------------------------------------------------------------------------
+QString getParamModule(QString filename, QString param)
+{
+    // translate to hindi
+    QString str= "";
+    QString line;
+    QString parama = param + " = ";
+    QFile file(filename);
+    file.close();
+    if (file.open(QIODevice::ReadOnly))
+    {
+        QTextStream stream( &file );
+        do {
+            line = stream.readLine();
+            if (line.indexOf(parama) >= 0)
+            {
+                str = line.remove(parama);
+            }
+        } while (str.isEmpty() and !line.isNull());
+        file.close();
+    }
+    else
+    {
+        qDebug() << "Error";
+    }
+    return str;
+}
+///----------------------------------------------------------------------------
+///----------------------------------------------------------------------------
+///----------------------------------------------------------------------------
+///----------------------------------------------------------------------------
