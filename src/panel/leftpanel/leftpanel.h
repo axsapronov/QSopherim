@@ -14,6 +14,7 @@ class LeftPanel : public QDockWidget
 public:
     explicit LeftPanel(QWidget *parent = 0);
     ~LeftPanel();
+    void refreshBookList();
 
 private:
     Ui::LeftPanel *ui;

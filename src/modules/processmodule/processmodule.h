@@ -25,6 +25,7 @@ private:
     BibleQuoteModule* m_biblequote;
     void createConnects();
     void init();
+    QString p_pathToModule;
 };
 
 

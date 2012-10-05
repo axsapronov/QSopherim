@@ -40,12 +40,13 @@ void ProcessModule::init()
 //------------------------------------------------------------------------------
 bool ProcessModule::processing(QString pathToModule, int type)
 {
+    p_pathToModule = pathToModule;
     //    myDebug() << pathToModule << type;
     switch (type)
     {
     case OBVCore::Type_BibleQuoteModule:
         //        myDebug() << "this is biblequote module";
-        m_biblequote->parseModule(pathToModule);
+        m_biblequote->parseModule(p_pathToModule);
         emit signal_processOk();
         break;
     case OBVCore::Type_SwordBibleModule:
@@ -65,4 +66,8 @@ void ProcessModule::createFolderForModule(QString shortname)
     QDir dir;
     dir.mkpath(Config::configuration()->getAppDir() + "bible/" + shortname);
 }
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

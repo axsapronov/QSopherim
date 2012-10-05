@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>427</width>
-    <height>281</height>
+    <width>370</width>
+    <height>581</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,6 +21,55 @@
        <attribute name="title">
         <string>Tab 1</string>
        </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0" colspan="5">
+         <widget class="QLineEdit" name="LE"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QComboBox" name="comB"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="comB_2"/>
+        </item>
+        <item row="1" column="2">
+         <widget class="QComboBox" name="comB_4"/>
+        </item>
+        <item row="1" column="3">
+         <widget class="QComboBox" name="comB_3"/>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QTableView" name="tableBook"/>
+        </item>
+        <item row="2" column="2" colspan="2">
+         <widget class="QTableView" name="tableChapter"/>
+        </item>
+        <item row="2" column="5">
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>27</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="5">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>24</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">

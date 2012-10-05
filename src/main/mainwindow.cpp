@@ -334,6 +334,7 @@ void MainWindow::processFinish()
 {
 
     myDebug() << "Process finish";
+    GUI_LeftPanel->refreshBookList();
 
 }
 //------------------------------------------------------------------------------
