@@ -64,7 +64,9 @@ void ProjectQModuleList::findModules(QString dir)
         files = getModuleFilesList(files);
         for (int i = 0; i < files.size(); i++)
         {
-            myDebug() << getModuleInfo(files.at(i));
+            ProjectQModule module(getModuleInfo(files.at(i)));
+            AddModule(&module);
+//            myDebug() << getModuleInfo(files.at(i));
         }
     }
 }

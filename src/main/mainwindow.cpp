@@ -334,14 +334,17 @@ void MainWindow::openModule()
 void MainWindow::processFinish()
 {
     myDebug() << "Process finish";
-    ProjectQModule* test = new ProjectQModule();
-    test->setChapterValue(5);
-    test->setModuleName("fasf");
+//    ProjectQModule* test = new ProjectQModule();
+//    test->setChapterValue(5);
+//    test->setModuleName("fasf");
     ProjectQModuleList* list = new ProjectQModuleList();
-    list->AddModule(test);
-    myDebug() << list->getCurNumberModule();
-    myDebug() << list->getModule(0).getModuleName();
+//    list->AddModule(test);
     list->refreshList();
+//    myDebug() << list->getCurNumberModule();
+//    myDebug() << list->getModule(0).getModuleName();
+
+    myDebug() << list->getModule(0).getModuleInfo();
+
     GUI_LeftPanel->refreshBookList();
 }
 //------------------------------------------------------------------------------
