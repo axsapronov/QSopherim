@@ -103,3 +103,17 @@ int ProjectQModuleList::getSize()
     return moduleList->size();
 }
 //------------------------------------------------------------------------------
+ProjectQModule ProjectQModuleList::getModuleWithName(QString name)
+{
+    for (int i = 0; moduleList->size(); i++)
+    {
+        if (name == getModule(i).getModuleName())
+        {
+//            ProjectQModule *m = *getModule(i);
+//            return *(getModule(i));
+            return getModule(i);
+        }
+    }
+    return ProjectQModule();
+}
+//------------------------------------------------------------------------------

@@ -11,15 +11,12 @@
 #include "ui_mainwindow.h" /// ui
 #include "mainwindow.h" ///
 
-
 #include <QUrl> /// open home site
 #include <QCloseEvent>
 #include <QMessageBox>
 #include <QFileDialog> /// open module (test)
 #include <QDesktopServices> /// tray
 #include <QDesktopWidget> /// moved to center
-
-#include <QDebug>
 
 #include "defines.h" /// defines
 #include "about.h" /// aboutdialog
@@ -37,17 +34,12 @@
 #include "projectqmodulelist.h"
 
 
-
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     init();
-
-
     debug();
 }
 //------------------------------------------------------------------------------
@@ -62,17 +54,17 @@ void MainWindow::init()
     GUI_Settings = new Settings(this);
 
     /// panel init
-    GUI_RightPanel = new RightPanel(this);
+    GUI_RightPanel = new RightPanel();
     GUI_LeftPanel = new LeftPanel(this);
-    GUI_LeftPanel2 = new LeftPanel2(this);
+//    GUI_LeftPanel2 = new LeftPanel2(this);
     //    GUI_BottomPanel = new BottomPanel(this);
 
     GUI_RightPanel->setMinimumWidth(200);
     GUI_LeftPanel->setMinimumWidth(200);
     //    GUI_BottomPanel->setMinimumHeight(100);
     addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel);
-    addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel2);
-    addDockWidget(Qt::RightDockWidgetArea, GUI_RightPanel);
+//    addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel2);
+//    addDockWidget(Qt::RightDockWidgetArea, GUI_RightPanel);
     //    addDockWidget(Qt::BottomDockWidgetArea, GUI_BottomPanel);
 
     prModule = new ProcessModule();
@@ -345,11 +337,9 @@ void MainWindow::processFinish()
 
     for (int i = 0; i < list->getSize(); i++ )
     {
-        myDebug() << list->getModule(i).getModuleInfo();
+//        myDebug() << list->getModule(i).getModuleInfo();
     }
-
-
-    GUI_LeftPanel->refreshBookList();
+    GUI_LeftPanel->refreshBookList(list);
 }
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
