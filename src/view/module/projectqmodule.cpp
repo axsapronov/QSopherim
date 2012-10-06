@@ -18,6 +18,7 @@ ProjectQModule::ProjectQModule(ProjectQModuleInfo list)
     bookValue = list.bookValue;
     modulePath = list.modulePath;
     bookList = list.bookList;
+    numberOfChaptersInBook = list.numberOfChaptersInBook;
 //    myDebug() << getBookList().size();
 //    myDebug() << this;
 }
@@ -59,6 +60,7 @@ void ProjectQModule::init()
     moduleShortName = "";
     modulePath = "";
     bookList.clear();
+    numberOfChaptersInBook.clear();
 }
 //------------------------------------------------------------------------------
 ProjectQModuleInfo ProjectQModule::getModuleInfo()
@@ -69,6 +71,7 @@ ProjectQModuleInfo ProjectQModule::getModuleInfo()
     list.bookValue = bookValue;
     list.modulePath = modulePath;
     list.bookList = bookList;
+    list.numberOfChaptersInBook = numberOfChaptersInBook;
 //    myDebug() << "fasf" <<  this;
 
 //    list << moduleName
@@ -93,7 +96,7 @@ QString ProjectQModule::getModulePath()
 QStringList ProjectQModule::getBookList()
 {
 //    myDebug() << bookList.size();
-    myDebug() << "fasf" << this;
+//    myDebug() << "fasf" << this;
     return bookList;
 }
 //------------------------------------------------------------------------------
@@ -102,4 +105,18 @@ void ProjectQModule::setBookList(QStringList newlist)
     bookList = newlist;
 }
 //------------------------------------------------------------------------------
+QHash<QString, int> ProjectQModule::getNumberOfChaptersInBooks()
+{
+    return numberOfChaptersInBook;
+}
+//------------------------------------------------------------------------------
+void ProjectQModule::setNumberOfChaptersInBooks(QHash<QString, int> newP)
+{
+    numberOfChaptersInBook = newP;
+}
+//------------------------------------------------------------------------------
+int ProjectQModule::getValueChapterForBookFromModule(QString nameOfBook)
+{
+    return numberOfChaptersInBook.value(nameOfBook);
+}
 //------------------------------------------------------------------------------

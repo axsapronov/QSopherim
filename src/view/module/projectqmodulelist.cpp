@@ -65,8 +65,10 @@ void ProjectQModuleList::findModules(QString dir)
         files = getModuleFilesList(files);
         for (int i = 0; i < files.size(); i++)
         {
+
             ProjectQModule* module = new ProjectQModule(getModuleInfo(files.at(i)));
 //            myDebug() <<  module.getBookList().size();
+
             AddModule(module);
             //            myDebug() << getModuleInfo(files.at(i));
         }
@@ -110,12 +112,7 @@ ProjectQModule* ProjectQModuleList::getModuleWithName(QString name)
     for (int i = 0; moduleList.size(); i++)
     {
         if (name == getModule(i)->getModuleName())
-        {
-            //            ProjectQModule *m = *getModule(i);
-            //            myDebug() << "yes" << i;
-            //            return *(getModule(i));
             return getModule(i);
-        }
     }
     ProjectQModule *tes = new ProjectQModule();
     return tes;

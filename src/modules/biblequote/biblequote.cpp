@@ -149,8 +149,13 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
     {
         text.append(m_bookList.at(i) + ":");
     }
-//            "\nBookList = " + m_bookList;
 
+    text.append("\nNumberChapter = ");
+    for(int i = 0; i < m_bookList.size(); i++)
+    {
+        QString str = m_bookList.at(i) + "^" + QString::number(m_bookList.at(i).size()) + "::";
+        text.append(str);
+    }
 
     //    myDebug() << m_bookPath;
     QString t_pathToIniFile = QString(Config::configuration()->getAppDir() + "bible/" +
@@ -355,8 +360,8 @@ int BibleQuoteModule::readBook(const int id)
 
 
             QString line = decoder->toUnicode(byteline);
-//            line.remove("\n").remove("\r");
-//            line.remove(m_verseSign);
+            //            line.remove("\n").remove("\r");
+            //            line.remove(m_verseSign);
 
             //filterout
             //            if(m_settings->getModuleSettings(m_moduleID)->biblequote_removeHtml == true && removeHtml2.size() > 0) {
@@ -373,7 +378,7 @@ int BibleQuoteModule::readBook(const int id)
             if(chapterstarted == true && line.contains(m_chapterSign))
             {
                 ccount2++;
-//                                myDebug() << out;
+                //                                myDebug() << out;
                 out = line;
             }
             else if(chapterstarted == true)
@@ -384,7 +389,7 @@ int BibleQuoteModule::readBook(const int id)
 
         chapterText << out2.split(m_chapterSign);
 
-//        myDebug() << chapterText.at(5);
+        //        myDebug() << chapterText.at(5);
     }
     else
     {
@@ -420,7 +425,7 @@ int BibleQuoteModule::readBook(const int id)
         for(int j = 0; j < rawVerseList.size(); j++)
         { //split removes versesign but it is needed
             QString verseText = rawVerseList.at(j);
-//            myDebug() << verseText;
+            //            myDebug() << verseText;
 
             if(verseText.contains("<p>") && !verseText.contains("</p>"))
                 verseText.remove("<p>", Qt::CaseInsensitive);
@@ -438,7 +443,7 @@ int BibleQuoteModule::readBook(const int id)
     QString t_pathToXmlFile = QString(Config::configuration()->getAppDir() + "bible/" +
                                       m_moduleShortName + "/text.xml");
     //    myDebug() << t_pathToXmlFile;
-//    qDebug() << m_book.size();
+    //    qDebug() << m_book.size();
     /// надо брать название книги, а не путь к ней
     m_bookList << m_bookPath.at(id);
     addBookToXML(t_pathToXmlFile, m_bookPath.at(id), m_book);

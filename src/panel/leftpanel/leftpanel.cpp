@@ -39,6 +39,7 @@ void LeftPanel::refreshList(ProjectQModuleList* list)
     }
     typeModel = new QStringListModel(items, this);
     ui->comBModules->setModel(typeModel);
+    refreshBookList(ui->comBModules->currentText());
 }
 //------------------------------------------------------------------------------
 void LeftPanel::refreshBookList(ProjectQModuleList* list)
@@ -83,11 +84,17 @@ void LeftPanel::refreshBookList(ProjectQModuleList* list)
 void LeftPanel::refreshChapterList(QModelIndex moind)
 {
 //    myDebug() << moind.data(0).toString();
-    int chapterValue = moduleList->getModuleWithName(moind.data(0).toString())->getBookValue();
+//    int chapterValue = moduleList->getValueChapterForBookFromModule(moind.data(0).toString());
+    int chapterValue = moduleList->getModuleWithName(ui->comBModules->currentText())
+            ->getValueChapterForBookFromModule(moind.data(0).toString());
+//    myDebug() << moduleList->getModuleWithName(ui->comBModules->currentText())->getValueChapterForBookFromModule();
+//    int chapterValue = moduleList->getModuleWithName(moind.data(0).toString())->getBookValue();
     modelChapters->clear();
+//    myDebug() << chapterValue;
     for (int i = 0; i < chapterValue; i++)
     {
         modelChapters->setItem(i, 0, new QStandardItem(QString::number(i + 1)));
+//        myDebug() << "yes";
     }
     ui->tableChapter->setModel(modelChapters);
     ui->tableChapter->resizeColumnsToContents();

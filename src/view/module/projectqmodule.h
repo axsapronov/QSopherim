@@ -3,7 +3,7 @@
 
 #include <QString>
 #include <QStringList>
-
+#include <QHash>
 
 class ProjectQModuleInfo
 {
@@ -13,6 +13,7 @@ public:
     QString modulePath;
     QStringList bookList;
     int bookValue;
+    QHash<QString, int> numberOfChaptersInBook;
 };
 
 class ProjectQModule
@@ -37,12 +38,20 @@ public:
 
     QStringList getBookList();
     void setBookList(QStringList);
+
+    QHash<QString, int> getNumberOfChaptersInBooks();
+    void setNumberOfChaptersInBooks(QHash<QString, int>);
+
+    int getValueChapterForBookFromModule(QString nameOfBook);
+
+
 private:
     QString moduleName;
     QString moduleShortName;
     QString modulePath;
     QStringList bookList;
     int bookValue;
+    QHash<QString, int> numberOfChaptersInBook;
 
     void init();
 

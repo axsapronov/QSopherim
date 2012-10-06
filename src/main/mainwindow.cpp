@@ -333,6 +333,7 @@ void MainWindow::processFinish()
     //    test->setChapterValue(5);
     //    test->setModuleName("fasf");
     ProjectQModuleList* list = new ProjectQModuleList();
+
     //    list->AddModule(test);
     list->refreshList();
     //        myDebug() << list->getCurNumberModule();

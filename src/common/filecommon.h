@@ -8,6 +8,8 @@
 #include <QDir>
 #include <QTextCodec>
 
+#include <QHash>
+
 #include <QDebug>
 #include "book.h"
 #include "projectqmodule.h" /// ProjectQModuleInfo
@@ -191,4 +193,6 @@ bool endXML(QString fileName);
 ProjectQModuleInfo getModuleInfo(QString fileName);
 QString getParamModule(QString filename, QString param); // возвращает параметр из файла. Вид файла    "PARAM = VALUE"
 QStringList getBookList(QString filaPath);
+QHash<QString, int> getNumberOfChaptersInBook(QString filename);
+QStringList removeEmptyQStringFromQStringList(QStringList *list);
 #endif // __FILECOMMON__H

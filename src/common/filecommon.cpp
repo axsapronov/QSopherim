@@ -637,8 +637,12 @@ ProjectQModuleInfo getModuleInfo(QString fileName)
     list.bookValue = getParamModule(fileName, "BooksValue").toInt();
     list.modulePath = getParamModule(fileName, "PathToModule");
 
+
     list.bookList = getBookList(fileName);
-//    myDebug() << list.bookList.size();
+
+    list.numberOfChaptersInBook = getNumberOfChaptersInBook(fileName);
+//    myDebug() << list.numberOfChaptersInBook.size();
+    //    myDebug() << list.bookList.size();
     //    list.append(getParamModule(fileName, "ModuleShortName"));
 
     return list;
@@ -681,5 +685,38 @@ QStringList getBookList(QString file)
     return bookList;
 }
 ///----------------------------------------------------------------------------
+QHash<QString, int> getNumberOfChaptersInBook(QString filename)
+{
+
+    QStringList bookList;
+    QString param = "NumberChapter";
+    //     translate to hindi
+    QString str = getParamModule(filename, param);
+    bookList << str.split("::");
+    bookList = removeEmptyQStringFromQStringList(&bookList);
+    QHash<QString, int> list;
+
+
+
+    for (int i = 0; i < bookList.size(); i++)
+    {
+        QStringList test;
+        test << bookList.at(i).split("^");
+//        myDebug() <<  bookList.at(i) << test.size();
+
+        list[test.at(0)] = test.at(1).toInt();
+    }
+    return list;
+}
 ///----------------------------------------------------------------------------
+QStringList removeEmptyQStringFromQStringList(QStringList *list)
+{
+    QStringList listn;
+    for(int i = 0; i < list->size(); i++)
+    {
+        if(!list->at(i).isEmpty())
+            listn << list->at(i);
+    }
+    return listn;
+}
 ///----------------------------------------------------------------------------
