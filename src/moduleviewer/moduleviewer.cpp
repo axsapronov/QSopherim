@@ -3,12 +3,22 @@
 
 #include <QMenu>
 #include <QContextMenuEvent>
-
+static ModuleViewer *static_viewer = 0;
 
 ModuleViewer::ModuleViewer(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ModuleViewer)
 {
+
+    if( !static_viewer)
+    {
+        static_viewer = this;
+    }
+    else
+    {
+        qWarning( "Multiple viewers not allowed!" );
+    }
+
     ui->setupUi(this);
     createActions();
     ui->viewer->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -36,30 +46,46 @@ void ModuleViewer::createActions()
     cutAct->setShortcuts(QKeySequence::Cut);
     cutAct->setStatusTip(tr("Cut the current selection's contents to the "
                             "clipboard"));
-//    connect(cutAct, SIGNAL(triggered()), this, SLOT(cut()));
+    //    connect(cutAct, SIGNAL(triggered()), this, SLOT(cut()));
 
     copyAct = new QAction(tr("&Copy"), this);
     copyAct->setShortcuts(QKeySequence::Copy);
     copyAct->setStatusTip(tr("Copy the current selection's contents to the "
                              "clipboard"));
-//    connect(copyAct, SIGNAL(triggered()), this, SLOT(copy()));
+    //    connect(copyAct, SIGNAL(triggered()), this, SLOT(copy()));
 
     pasteAct = new QAction(tr("&Paste"), this);
     pasteAct->setShortcuts(QKeySequence::Paste);
     pasteAct->setStatusTip(tr("Paste the clipboard's contents into the current "
                               "selection"));
-//    connect(pasteAct, SIGNAL(triggered()), this, SLOT(paste()));
+    //    connect(pasteAct, SIGNAL(triggered()), this, SLOT(paste()));
 }
 ///-----------------------------------------------------------------------------
 void ModuleViewer::showContextMenu(QPoint pt)
 {
-//    QMenu *menu = ui->viewer->createStandardContextMenu();
+    //    QMenu *menu = ui->viewer->createStandardContextMenu();
     QMenu menu(this);
     menu.addAction(cutAct);
     menu.exec(ui->viewer->mapToGlobal(pt));
-//    delete menu;
+    //    delete menu;
 }
 ///-----------------------------------------------------------------------------
+ModuleViewer *ModuleViewer::viewer()
+{
+    Q_ASSERT( static_viewer );
+    return static_viewer;
+}
+///-----------------------------------------------------------------------------
+void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberchapter)
+{
 
+}
+///-----------------------------------------------------------------------------
+void ModuleViewer::getTextChapter(QString pathToFile, QString nameBook, int numberchapter)
+{
+
+}
 ///-----------------------------------------------------------------------------
 ///-----------------------------------------------------------------------------
+///-----------------------------------------------------------------------------
+

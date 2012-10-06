@@ -20,6 +20,10 @@ public:
     explicit ModuleViewer(QWidget *parent = 0);
     ~ModuleViewer();
 
+    static ModuleViewer *viewer();
+
+    void showChapter(QString pathToFile, QString nameBook, int numberchapter);
+
 private slots:
     void showContextMenu(QPoint pt);
 protected:
@@ -32,6 +36,8 @@ private:
     QAction *cutAct;
     QAction *copyAct;
     QAction *pasteAct;
+
+    void getTextChapter(QString pathToFile, QString nameBook, int numberchapter);
 
     void createActions();
 };

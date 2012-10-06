@@ -10,6 +10,7 @@
 
 #include <QDebug>
 #include "book.h"
+#include "projectqmodule.h" /// ProjectQModuleInfo
 
 
 /**
@@ -187,6 +188,7 @@ QString findPosWord(QString file, QString text);
 bool createEmptyXML(QString fileName);
 bool addBookToXML(QString fileName, QString namebook, Book mbook);
 bool endXML(QString fileName);
-QStringList getModuleInfo(QString fileName);
+ProjectQModuleInfo getModuleInfo(QString fileName);
 QString getParamModule(QString filename, QString param); // возвращает параметр из файла. Вид файла    "PARAM = VALUE"
+QStringList getBookList(QString filaPath);
 #endif // __FILECOMMON__H

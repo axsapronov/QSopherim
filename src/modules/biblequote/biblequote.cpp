@@ -141,7 +141,15 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
             "\nBooksValue = " + m_bookCount +
             "\nModuleVerseSign = " + m_verseSign +
             "\nModuleChapterSign = " + m_chapterSign +
-            "\nModuleChapterZero = " + m_chapterZero;
+            "\nModuleChapterZero = " + m_chapterZero +
+            "\nPathToModule = " + "bible/" + info.shortName() + "/module.ini";
+
+    text.append("\nBookList = ");
+    for(int i = 0; i < m_bookList.size(); i++)
+    {
+        text.append(m_bookList.at(i) + ":");
+    }
+//            "\nBookList = " + m_bookList;
 
 
     //    myDebug() << m_bookPath;
@@ -210,6 +218,7 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
     m_verseSign = "";
     m_bookCount = "";
     m_chapterZero = false;
+    m_bookList.clear();
 
     m_uid = path;
 
@@ -313,6 +322,7 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
 
     //    }
     //    settings->getV11n()->extendedData.setHasChapterZeor(m_chapterZero);
+    m_bookList = bookFullName;
     return 0;
 }
 
@@ -429,6 +439,8 @@ int BibleQuoteModule::readBook(const int id)
                                       m_moduleShortName + "/text.xml");
     //    myDebug() << t_pathToXmlFile;
 //    qDebug() << m_book.size();
+    /// надо брать название книги, а не путь к ней
+    m_bookList << m_bookPath.at(id);
     addBookToXML(t_pathToXmlFile, m_bookPath.at(id), m_book);
     file.close();
     return 0;

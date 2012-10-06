@@ -15,7 +15,7 @@ ProjectQModuleList::ProjectQModuleList()
 //------------------------------------------------------------------------------
 void ProjectQModuleList::AddModule(ProjectQModule * module)
 {
-    moduleList->push_back(*module);
+    moduleList.push_back(module);
     cur_int++;
 }
 //------------------------------------------------------------------------------
@@ -24,19 +24,20 @@ int ProjectQModuleList::getCurNumberModule()
     return this->cur_int;
 }
 //------------------------------------------------------------------------------
-ProjectQModule ProjectQModuleList::getNextModule()
+ProjectQModule* ProjectQModuleList::getNextModule()
 {
-    return this->moduleList->at(cur_int + 1);
+    return this->moduleList.at(cur_int + 1);
 }
 //------------------------------------------------------------------------------
-ProjectQModule ProjectQModuleList::getModule(int id)
+ProjectQModule* ProjectQModuleList::getModule(int id)
 {
-    return moduleList->at(id);
+    return moduleList.at(id);
 }
 //------------------------------------------------------------------------------
 void ProjectQModuleList::init()
 {
-    moduleList = new QVector<ProjectQModule>;
+//    moduleList = new QVector<ProjectQModule*>;
+    moduleList.clear();
     cur_int = -1;
 }
 //------------------------------------------------------------------------------
@@ -64,9 +65,10 @@ void ProjectQModuleList::findModules(QString dir)
         files = getModuleFilesList(files);
         for (int i = 0; i < files.size(); i++)
         {
-            ProjectQModule module(getModuleInfo(files.at(i)));
-            AddModule(&module);
-//            myDebug() << getModuleInfo(files.at(i));
+            ProjectQModule* module = new ProjectQModule(getModuleInfo(files.at(i)));
+//            myDebug() <<  module.getBookList().size();
+            AddModule(module);
+            //            myDebug() << getModuleInfo(files.at(i));
         }
     }
 }
@@ -100,20 +102,31 @@ QStringList ProjectQModuleList::getModuleFilesList(QStringList files)
 //------------------------------------------------------------------------------
 int ProjectQModuleList::getSize()
 {
-    return moduleList->size();
+    return moduleList.size();
 }
 //------------------------------------------------------------------------------
-ProjectQModule ProjectQModuleList::getModuleWithName(QString name)
+ProjectQModule* ProjectQModuleList::getModuleWithName(QString name)
 {
-    for (int i = 0; moduleList->size(); i++)
+    for (int i = 0; moduleList.size(); i++)
     {
-        if (name == getModule(i).getModuleName())
+        if (name == getModule(i)->getModuleName())
         {
-//            ProjectQModule *m = *getModule(i);
-//            return *(getModule(i));
+            //            ProjectQModule *m = *getModule(i);
+            //            myDebug() << "yes" << i;
+            //            return *(getModule(i));
             return getModule(i);
         }
     }
-    return ProjectQModule();
+    ProjectQModule *tes = new ProjectQModule();
+    return tes;
 }
+//------------------------------------------------------------------------------
+QStringList ProjectQModuleList::getModuleBooks(QString nameOfbook)
+{
+    QStringList bookList = getModuleWithName(nameOfbook)->getBookList();
+    return bookList;
+}
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

@@ -56,15 +56,15 @@ void MainWindow::init()
     /// panel init
     GUI_RightPanel = new RightPanel();
     GUI_LeftPanel = new LeftPanel(this);
-//    GUI_LeftPanel2 = new LeftPanel2(this);
+    //    GUI_LeftPanel2 = new LeftPanel2(this);
     //    GUI_BottomPanel = new BottomPanel(this);
 
     GUI_RightPanel->setMinimumWidth(200);
     GUI_LeftPanel->setMinimumWidth(200);
     //    GUI_BottomPanel->setMinimumHeight(100);
     addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel);
-//    addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel2);
-//    addDockWidget(Qt::RightDockWidgetArea, GUI_RightPanel);
+    //    addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel2);
+    //    addDockWidget(Qt::RightDockWidgetArea, GUI_RightPanel);
     //    addDockWidget(Qt::BottomDockWidgetArea, GUI_BottomPanel);
 
     prModule = new ProcessModule();
@@ -110,14 +110,17 @@ void MainWindow::init()
 //------------------------------------------------------------------------------
 void MainWindow::debug()
 {
-    QString fileName;
-//        fileName = "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
-        fileName = "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
-    //    fileName = "/home/files/Documents/Bible/unrar/NT_Russian_Kassian/Bibleqt.ini";
-    //    fileName = "/home/files/Documents/Bible/unrar/Makarij/bibleqt.ini";
-    //    prModule = new ProcessModule(fileName, OBVCore::Type_BibleQuoteModule);
-        prModule->processing(fileName, OBVCore::Type_BibleQuoteModule);
+    QStringList fileName;
 
+    fileName << "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
+//    fileName << "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
+//    fileName << "/home/files/Documents/Bible/unrar/NT_Russian_Kassian/Bibleqt.ini";
+//    fileName << "/home/files/Documents/Bible/unrar/Makarij/bibleqt.ini";
+
+    for (int i = 0; i < fileName.size(); i++)
+    {
+        prModule->processing(fileName.at(i), OBVCore::Type_BibleQuoteModule);
+    }
 }
 //------------------------------------------------------------------------------
 void MainWindow::createConnects()
@@ -332,14 +335,14 @@ void MainWindow::processFinish()
     ProjectQModuleList* list = new ProjectQModuleList();
     //    list->AddModule(test);
     list->refreshList();
-//        myDebug() << list->getCurNumberModule();
+    //        myDebug() << list->getCurNumberModule();
     //    myDebug() << list->getModule(0).getModuleName();
 
     for (int i = 0; i < list->getSize(); i++ )
     {
-//        myDebug() << list->getModule(i).getModuleInfo();
+        //        myDebug() << list->getModule(i).getModuleInfo();
     }
-    GUI_LeftPanel->refreshBookList(list);
+    GUI_LeftPanel->refreshList(list);
 }
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

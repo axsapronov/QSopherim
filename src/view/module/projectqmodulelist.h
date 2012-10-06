@@ -10,17 +10,20 @@ class ProjectQModuleList
 
 public:
     explicit ProjectQModuleList();
-    ProjectQModule getNextModule();
-    ProjectQModule getModule(int id);
+    ProjectQModule* getNextModule();
+    ProjectQModule* getModule(int id);
 
     void AddModule(ProjectQModule*);
     int getCurNumberModule();
 
     void refreshList();
     int getSize();
-    ProjectQModule getModuleWithName(QString name);
+    ProjectQModule* getModuleWithName(QString name);
+    QStringList getModuleBooks(QString);
+
+
 private:
-    QVector<ProjectQModule>* moduleList;
+    QVector<ProjectQModule*> moduleList;
     int cur_int;
     void init();
     QStringList recursiveFind(QString directory);

@@ -4,11 +4,22 @@
 #include <QString>
 #include <QStringList>
 
+
+class ProjectQModuleInfo
+{
+public:
+    QString moduleName;
+    QString moduleShortName;
+    QString modulePath;
+    QStringList bookList;
+    int bookValue;
+};
+
 class ProjectQModule
 {
 public:
     ProjectQModule();
-    ProjectQModule(QStringList list);
+    ProjectQModule(ProjectQModuleInfo list);
 
     QString getModuleName();
     void setModuleName(QString);
@@ -16,14 +27,22 @@ public:
     QString getModuleShortName();
     void setModuleShortName(QString);
 
-    int getChapterValue();
-    void setChapterValue(int);
+    int getBookValue();
+    void setBookValue(int);
 
-    QStringList getModuleInfo();
+    QString getModulePath();
+    void setModulePath(QString newpath);
+
+    ProjectQModuleInfo getModuleInfo();
+
+    QStringList getBookList();
+    void setBookList(QStringList);
 private:
     QString moduleName;
     QString moduleShortName;
-    int chapterValue;
+    QString modulePath;
+    QStringList bookList;
+    int bookValue;
 
     void init();
 

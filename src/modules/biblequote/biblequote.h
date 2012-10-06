@@ -49,6 +49,7 @@ private:
     QString m_uid;
 
     Book m_book;
+    QStringList m_bookList;
     QString m_modulePath;
     QString m_moduleName;
     QString m_moduleShortName;

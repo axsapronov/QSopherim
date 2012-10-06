@@ -627,14 +627,18 @@ bool endXML(QString fileName)
     return ret;
 }
 ///----------------------------------------------------------------------------
-QStringList getModuleInfo(QString fileName)
+ProjectQModuleInfo getModuleInfo(QString fileName)
 {
 
-    QStringList list;
-    list.append(getParamModule(fileName, "ModuleName"));
-    list.append(getParamModule(fileName, "ModuleShortName"));
+    ProjectQModuleInfo list;
+    list.moduleName = getParamModule(fileName, "ModuleName");
+    list.moduleShortName = getParamModule(fileName, "ModuleShortName");
     //    list.append(getParamModule(fileName, "ModuleLanguage"));
-    list.append(getParamModule(fileName, "BooksValue"));
+    list.bookValue = getParamModule(fileName, "BooksValue").toInt();
+    list.modulePath = getParamModule(fileName, "PathToModule");
+
+    list.bookList = getBookList(fileName);
+//    myDebug() << list.bookList.size();
     //    list.append(getParamModule(fileName, "ModuleShortName"));
 
     return list;
@@ -643,7 +647,7 @@ QStringList getModuleInfo(QString fileName)
 QString getParamModule(QString filename, QString param)
 {
     // translate to hindi
-    QString str= "";
+    QString str = "";
     QString line;
     QString parama = param + " = ";
     QFile file(filename);
@@ -667,6 +671,15 @@ QString getParamModule(QString filename, QString param)
     return str;
 }
 ///----------------------------------------------------------------------------
+QStringList getBookList(QString file)
+{
+    QStringList bookList;
+    QString param = "BookList";
+    // translate to hindi
+    QString str = getParamModule(file, param);
+    bookList << str.split(":");
+    return bookList;
+}
 ///----------------------------------------------------------------------------
 ///----------------------------------------------------------------------------
 ///----------------------------------------------------------------------------

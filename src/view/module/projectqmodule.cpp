@@ -1,22 +1,30 @@
 #include "projectqmodule.h"
-
+#include "debughelper.h"
 
 ProjectQModule::ProjectQModule()
 {
     init();
 }
 //------------------------------------------------------------------------------
-ProjectQModule::ProjectQModule(QStringList list)
+ProjectQModule::ProjectQModule(ProjectQModuleInfo list)
 {
     init();
-    moduleName = list.at(0);
-    moduleShortName = list.at(1);
-    chapterValue = list.at(2).toInt();
+//    moduleName = list.at(0);
+//    moduleShortName = list.at(1);
+//    chapterValue = list.at(2).toInt();
+//    modulePath = list.at(3);
+    moduleName = list.moduleName;
+    moduleShortName  = list.moduleShortName;
+    bookValue = list.bookValue;
+    modulePath = list.modulePath;
+    bookList = list.bookList;
+//    myDebug() << getBookList().size();
+//    myDebug() << this;
 }
 //------------------------------------------------------------------------------
-int ProjectQModule::getChapterValue()
+int ProjectQModule::getBookValue()
 {
-   return this->chapterValue;
+   return this->bookValue;
 }
 //------------------------------------------------------------------------------
 QString ProjectQModule::getModuleName()
@@ -29,9 +37,9 @@ QString ProjectQModule::getModuleShortName()
     return this->moduleShortName;
 }
 //------------------------------------------------------------------------------
-void ProjectQModule::setChapterValue(int newvalue)
+void ProjectQModule::setBookValue(int newvalue)
 {
-    this->chapterValue = newvalue;
+    this->bookValue = newvalue;
 }
 //------------------------------------------------------------------------------
 void ProjectQModule::setModuleName(QString newname)
@@ -46,17 +54,52 @@ void ProjectQModule::setModuleShortName(QString newname)
 //------------------------------------------------------------------------------
 void ProjectQModule::init()
 {
-    chapterValue = 0;
+    bookValue = 0;
     moduleName = "";
     moduleShortName = "";
+    modulePath = "";
+    bookList.clear();
 }
 //------------------------------------------------------------------------------
-QStringList ProjectQModule::getModuleInfo()
+ProjectQModuleInfo ProjectQModule::getModuleInfo()
 {
-    QStringList list;
-    list << moduleName << moduleShortName << QString::number(chapterValue);
+    ProjectQModuleInfo list;
+    list.moduleName = moduleName;
+    list.moduleShortName = moduleShortName;
+    list.bookValue = bookValue;
+    list.modulePath = modulePath;
+    list.bookList = bookList;
+//    myDebug() << "fasf" <<  this;
+
+//    list << moduleName
+//         << moduleShortName
+//         << QString::number(chapterValue)
+//         << modulePath;
 //    list << append(moduleName).append(moduleShortName).append(chapterValue);
 
     return list;
 }
+//------------------------------------------------------------------------------
+void ProjectQModule::setModulePath(QString newPath)
+{
+    modulePath = newPath;
+}
+//------------------------------------------------------------------------------
+QString ProjectQModule::getModulePath()
+{
+    return modulePath;
+}
+//------------------------------------------------------------------------------
+QStringList ProjectQModule::getBookList()
+{
+//    myDebug() << bookList.size();
+    myDebug() << "fasf" << this;
+    return bookList;
+}
+//------------------------------------------------------------------------------
+void ProjectQModule::setBookList(QStringList newlist)
+{
+    bookList = newlist;
+}
+//------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

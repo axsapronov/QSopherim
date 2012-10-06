@@ -6,6 +6,7 @@
 
 class QStandardItemModel;
 class QModelIndex;
+class QStringListModel;
 
 namespace Ui {
     class LeftPanel;
@@ -19,14 +20,20 @@ public:
     explicit LeftPanel(QWidget *parent = 0);
     ~LeftPanel();
     void refreshBookList(ProjectQModuleList* list);
+    void refreshList(ProjectQModuleList* list);
 
 private slots:
     void refreshChapterList(QModelIndex);
+    void refreshBookList(QString);
+    void showChapter(QModelIndex);
 private:
     Ui::LeftPanel *ui;
     QStandardItemModel *modelModules;
+    QStandardItemModel *modelBooks;
     QStandardItemModel *modelChapters;
     ProjectQModuleList *moduleList;
+
+    QStringListModel *typeModel;
     void init();
     void createConnects();
 };
