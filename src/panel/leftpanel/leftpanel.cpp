@@ -124,11 +124,19 @@ void LeftPanel::showChapter(QModelIndex ind)
 //    ui->tableBook->itemDelegate
 
     int t_curBook;
+
+    QString t_nameOfBook;
     QModelIndexList selectedList = ui->tableBook->selectionModel()->selectedRows();
     for( int i = 0; i < selectedList.count(); i++)
     {
         t_curBook = selectedList.at(i).row();
+        t_nameOfBook = selectedList.at(i).data(0).toString();
     }
+
+    QString t_pathToModule = Config::configuration()->getAppDir() +
+            moduleList->getModuleWithName(ui->comBModules->currentText())->getModulePath();
+
+    ModuleViewer::viewer()->showChapter(t_pathToModule, t_nameOfBook, ind.row());
 
 
 //    QString t_pathToIniFile = QString(Config::configuration()->getAppDir() + "bible/" +

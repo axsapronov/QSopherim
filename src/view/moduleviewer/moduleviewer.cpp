@@ -1,5 +1,6 @@
 #include "moduleviewer.h"
 #include "ui_moduleviewer.h"
+#include "debughelper.h"
 
 #include <QMenu>
 #include <QContextMenuEvent>
@@ -78,7 +79,7 @@ ModuleViewer *ModuleViewer::viewer()
 ///-----------------------------------------------------------------------------
 void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberchapter)
 {
-
+    myDebug() << pathToFile << nameBook << numberchapter;
 }
 ///-----------------------------------------------------------------------------
 void ModuleViewer::getTextChapter(QString pathToFile, QString nameBook, int numberchapter)

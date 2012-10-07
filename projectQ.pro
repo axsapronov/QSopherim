@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui xml
 
 TARGET      = projectQ
 TEMPLATE    = app
@@ -28,13 +28,14 @@ DEPENDPATH += \
          src/modules/ \
          src/defines \
          src/config \
-         src/moduleviewer \
+         src/view/moduleviewer \
          src/modules/processmodule \
          src/common \
          src/core \
          src/core/verse \
          src/core/verse/versification \
-         src/core/link
+         src/core/link \
+         src/xmlread/
 
 INCLUDEPATH += \
          src/main \
@@ -45,7 +46,7 @@ INCLUDEPATH += \
          src/panel/bottompanel/ \
          src/dialogs/lansettings \
          src/modules/metainfo \
-         src/moduleviewer \
+         src/view/moduleviewer \
          src/defines \
          src/modules/biblequote \
          src/modules/biblemodule \
@@ -58,7 +59,8 @@ INCLUDEPATH += \
          src/core/verse \
          src/core/verse/versification \
          src/core/link \
-         src/view/module
+         src/view/module \
+         src/xmlread/
 
 SOURCES  += \
          main.cpp \
@@ -98,7 +100,8 @@ SOURCES  += \
     src/core/link/biblelink.cpp \
     src/core/link/url.cpp \
     src/view/module/projectqmodule.cpp \
-    src/view/module/projectqmodulelist.cpp
+    src/view/module/projectqmodulelist.cpp \
+    src/xmlread/projectqxmlhandler.cpp
 
 
 HEADERS  += \
@@ -140,7 +143,8 @@ HEADERS  += \
     src/core/link/biblelink.h  \
     src/core/link/url.h \
     src/view/module/projectqmodule.h \
-    src/view/module/projectqmodulelist.h
+    src/view/module/projectqmodulelist.h \
+    src/xmlread/projectqxmlhandler.h
 
 
 FORMS    += \
