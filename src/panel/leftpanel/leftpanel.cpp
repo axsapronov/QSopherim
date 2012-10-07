@@ -123,6 +123,8 @@ void LeftPanel::showChapter(QModelIndex ind)
 //    myDebug() << ind.data(0).toString();
 //    ui->tableBook->itemDelegate
 
+    /// так как выделение с книги может спадать, то надо запоминать последнюю книгу
+
     int t_curBook;
 
     QString t_nameOfBook;
@@ -135,6 +137,7 @@ void LeftPanel::showChapter(QModelIndex ind)
 
     QString t_pathToModule = Config::configuration()->getAppDir() +
             moduleList->getModuleWithName(ui->comBModules->currentText())->getModulePath();
+    t_pathToModule.replace("module.ini", "text.xml");
 
     ModuleViewer::viewer()->showChapter(t_pathToModule, t_nameOfBook, ind.row());
 

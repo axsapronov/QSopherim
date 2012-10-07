@@ -41,16 +41,15 @@ bool CSaxHandler::startElement(const QString &namespaceURI,
                                const QString &qName,
                                const QXmlAttributes &attributes)
 {
-
     if(nodeStack.isEmpty())
         return false;
 
     // текущий элемент
-    CNode* node=nodeStack.top();
+    CNode* node = nodeStack.top();
 
     // обрабатываемый элемент
     if(node)
-        node=node->getNode(localName);
+        node = node->getNode(localName);
 
     // инициализация реквизитов
     if(node)

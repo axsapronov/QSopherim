@@ -1,9 +1,11 @@
 #include "moduleviewer.h"
 #include "ui_moduleviewer.h"
 #include "debughelper.h"
+#include "cnode.h"
 
 #include <QMenu>
 #include <QContextMenuEvent>
+
 static ModuleViewer *static_viewer = 0;
 
 ModuleViewer::ModuleViewer(QWidget *parent) :
@@ -80,6 +82,27 @@ ModuleViewer *ModuleViewer::viewer()
 void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberchapter)
 {
     myDebug() << pathToFile << nameBook << numberchapter;
+
+    CNode node;
+    node.readDocument(pathToFile);
+
+//    QXmlSimpleReader* parser 		= new QXmlSimpleReader();
+//    MyXmlContentHandler* handler 	= new MyXmlContentHandler();
+
+
+//    parser->setContentHandler(handler);
+
+//    std::cout<<	"Starting parsing"<<std::endl;
+
+//    if(parser->parse(new QXmlInputSource(new QFile("myWidgets.xml"))))
+//    {
+//    std::cout<<"Parsed Successfully!"<< std::endl;
+//    }
+//    else
+//    {
+//    std::cout<<"Parsing Failed..."<< std::endl;
+//    }
+
 }
 ///-----------------------------------------------------------------------------
 void ModuleViewer::getTextChapter(QString pathToFile, QString nameBook, int numberchapter)

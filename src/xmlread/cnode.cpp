@@ -86,7 +86,7 @@ bool CNode::readFromDevice(QIODevice* device)
 
     QXmlSimpleReader reader;
     reader.setContentHandler(&handler);
-    bool ok=reader.parse(xmlInputSource);
+    bool ok = reader.parse(xmlInputSource);
 
     device->close();
     return true;
