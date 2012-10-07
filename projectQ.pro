@@ -101,7 +101,9 @@ SOURCES  += \
     src/core/link/url.cpp \
     src/view/module/projectqmodule.cpp \
     src/view/module/projectqmodulelist.cpp \
-    src/xmlread/projectqxmlhandler.cpp
+    src/xmlread/projectqxmlhandler.cpp \
+         csaxhandler.cpp \
+         cnode.cpp
 
 
 HEADERS  += \
@@ -144,8 +146,9 @@ HEADERS  += \
     src/core/link/url.h \
     src/view/module/projectqmodule.h \
     src/view/module/projectqmodulelist.h \
-    src/xmlread/projectqxmlhandler.h
-
+    src/xmlread/projectqxmlhandler.h \
+         csaxhandler.h \
+         cnode.h
 
 FORMS    += \
          mainwindow.ui \
