@@ -2,9 +2,13 @@
 #include "ui_moduleviewer.h"
 #include "debughelper.h"
 #include "cnode.h"
+#include "filecommon.h"
+
 
 #include <QMenu>
 #include <QContextMenuEvent>
+#include <QXmlStreamReader>
+
 
 static ModuleViewer *static_viewer = 0;
 
@@ -83,8 +87,38 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
 {
     myDebug() << pathToFile << nameBook << numberchapter;
 
-    CNode node;
-    node.readDocument(pathToFile);
+//    CNode node;
+//    node.readDocument(pathToFile);
+
+    QXmlStreamReader xmlReader;
+//    QString str = QFile(pathToFile).readAll();
+    xmlReader.addData(getTextFromHtmlFile(pathToFile));
+    while(!xmlReader.atEnd())
+    {
+        if(xmlReader.isStartElement())
+        {
+
+            QStringList sl;
+            sl << xmlReader.name().toString();
+            QXmlStreamAttributes attrs = xmlReader.attributes();
+//            qDebug() << attrs.value("name");
+            if (attrs.value("name") == nameBook)
+            {
+                while(!xmlReader.atEnd())
+                {
+                    if (xmlReader.attributes().value("number") ==
+                            QString::number(numberchapter))
+                    {
+                        ui->viewer->setText(xmlReader.readElementText());
+//                        qDebug() << xmlReader.readElementText();
+                        myDebug() << "r";
+                    }
+                    xmlReader.readNext();
+                }
+            }
+        }
+        xmlReader.readNext();
+    }
 
 //    QXmlSimpleReader* parser 		= new QXmlSimpleReader();
 //    MyXmlContentHandler* handler 	= new MyXmlContentHandler();

@@ -446,7 +446,7 @@ int BibleQuoteModule::readBook(const int id)
     //    qDebug() << m_book.size();
     /// надо брать название книги, а не путь к ней
     m_bookList << m_bookPath.at(id);
-    addBookToXML(t_pathToXmlFile, m_bookPath.at(id), m_book);
+    addBookToXML(t_pathToXmlFile, m_bookList.at(id), m_book);
     file.close();
     return 0;
 

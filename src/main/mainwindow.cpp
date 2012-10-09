@@ -112,10 +112,10 @@ void MainWindow::debug()
 {
     QStringList fileName;
 
-    fileName << "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
+//    fileName << "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
 //    fileName << "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
 //    fileName << "/home/files/Documents/Bible/unrar/NT_Russian_Kassian/Bibleqt.ini";
-//    fileName << "/home/files/Documents/Bible/unrar/Makarij/bibleqt.ini";
+    fileName << "/home/files/Documents/Bible/unrar/Makarij/bibleqt.ini";
 
     for (int i = 0; i < fileName.size(); i++)
     {
