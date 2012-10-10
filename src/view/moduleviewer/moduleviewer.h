@@ -27,7 +27,7 @@ public:
 private slots:
     void showContextMenu(QPoint pt);
 protected:
-    void contextMenuEvent(QContextMenuEvent *event);
+//    void contextMenuEvent(QContextMenuEvent *event);
 
 
 private:
@@ -40,6 +40,8 @@ private:
     void createConnects();
     void loadViewSettings();
 
+    QString curBook;
+    QString curChapter;
 //    void getTextChapter(QString pathToFile, QString nameBook, int numberchapter);
 
     void createActions();

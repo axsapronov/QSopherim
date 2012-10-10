@@ -27,14 +27,47 @@ ModuleViewer::~ModuleViewer()
     delete ui;
 }
 //------------------------------------------------------------------------------
-void ModuleViewer::contextMenuEvent(QContextMenuEvent *event)
-{
-    QMenu menu(this);
-    menu.addAction(cutAct);
-    menu.addAction(copyAct);
-    menu.addAction(pasteAct);
-    menu.exec(event->globalPos());
-}
+//void ModuleViewer::contextMenuEvent(QContextMenuEvent *event)
+//{
+//    /// Добавить в контексное меню информацию о текущем расположении (Модуль:Книга:Глава:Номер стиха)
+
+//    QMenu *menu = new QMenu(this);
+//    menu->addAction(cutAct);
+//    menu->addAction(copyAct);
+//    menu->addAction(pasteAct);
+
+//    menu->addSeparator();
+//    QAction *act = new QAction(tr("YYYAAAAZ"), this);
+//    menu->addAction(act);
+
+//        QPoint lastPos = event->pos();
+//        QTextCursor cursor = cursorForPosition(lastPos);
+//        QString zeile = cursor.block().text();
+//        int pos = cursor.columnNumber();
+//        int end = zeile.indexOf(QRegExp("\\W+"), pos);
+//        int begin = zeile.lastIndexOf(QRegExp("\\W+"), pos);
+//        zeile = zeile.mid(begin + 1, end - begin - 1);
+//        QStringList liste = getWordPropositions(zeile);
+//        qDebug() << liste;
+//        if (!liste.isEmpty())
+//        {
+//            menu -> addSeparator();
+//            QAction *a;
+//            //replace this  to TextEditBQella
+//            a = menu->addAction(tr("Add .."), this, SLOT(slot_addWord(lastPos)));
+//            a = menu->addAction(tr("Ignore .."), this, SLOT(slot_ignoreWord(lastPos)));
+//            for (int i = 0; i < qMin(int(MaxWords), liste.size()); ++i)
+//            {
+//                misspelledWordsActs[i]->setText(liste.at(i).trimmed());
+//                misspelledWordsActs[i]->setVisible(true);
+//                menu -> addAction(misspelledWordsActs[i]);
+//            }
+
+//        } // if  misspelled
+
+
+//    menu->exec(event->globalPos());
+//}
 //------------------------------------------------------------------------------
 void ModuleViewer::createActions()
 {
@@ -45,24 +78,31 @@ void ModuleViewer::createActions()
     //    connect(cutAct, SIGNAL(triggered()), this, SLOT(cut()));
 
     copyAct = new QAction(tr("&Copy"), this);
-    copyAct->setShortcuts(QKeySequence::Copy);
-    copyAct->setStatusTip(tr("Copy the current selection's contents to the "
-                             "clipboard"));
-    //    connect(copyAct, SIGNAL(triggered()), this, SLOT(copy()));
+//    copyAct->setShortcuts(QKeySequence::Copy);
+//    copyAct->setStatusTip(tr("Copy the current selection's contents to the "
+//                             "clipboard"));
+//    //    connect(copyAct, SIGNAL(triggered()), this, SLOT(copy()));
 
     pasteAct = new QAction(tr("&Paste"), this);
-    pasteAct->setShortcuts(QKeySequence::Paste);
-    pasteAct->setStatusTip(tr("Paste the clipboard's contents into the current "
-                              "selection"));
+//    pasteAct->setShortcuts(QKeySequence::Paste);
+//    pasteAct->setStatusTip(tr("Paste the clipboard's contents into the current "
+//                              "selection"));
     //    connect(pasteAct, SIGNAL(triggered()), this, SLOT(paste()));
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::showContextMenu(QPoint pt)
 {
     //    QMenu *menu = ui->viewer->createStandardContextMenu();
-    QMenu menu(this);
-    menu.addAction(cutAct);
-    menu.exec(ui->viewer->mapToGlobal(pt));
+    QMenu *menu = new QMenu(this);
+    menu->addAction(cutAct);
+    menu->addAction(copyAct);
+    menu->addAction(pasteAct);
+
+    menu->addSeparator();
+//    QString str = curBook + ":" + curChapter;
+    QAction *act = new QAction(QString(curBook + ":" + curChapter), this);
+    menu->addAction(act);
+    menu->exec(ui->viewer->mapToGlobal(pt));
     //    delete menu;
 }
 //------------------------------------------------------------------------------
@@ -107,6 +147,8 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
         xmlReader.readNext();
 //        xmlReader.readNext();
     }
+    curBook = nameBook;
+    curChapter = QString::number(numberchapter);
 
 }
 //------------------------------------------------------------------------------
