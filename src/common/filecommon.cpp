@@ -585,7 +585,10 @@ bool addBookToXML(QString fileName, QString namebook, Book mbook)
                    << "\">" << endl;
                 for (int j = 0; j < mbook.getChapter(i).verseCount(); j++)
                 {
-                    ts << tab << tab << tab << mbook.getChapter(i).data().value(j).data();
+                    QString text = mbook.getChapter(i).data().value(j).data();
+
+                    QString str = getClearText(&text);
+                            ts << tab << tab << tab << str;
                 }
 
                 ts  << tab << tab << "</chapter>" << endl;
@@ -641,7 +644,7 @@ ProjectQModuleInfo getModuleInfo(QString fileName)
     list.bookList = getBookList(fileName);
 
     list.numberOfChaptersInBook = getNumberOfChaptersInBook(fileName);
-//    myDebug() << list.numberOfChaptersInBook.size();
+    //    myDebug() << list.numberOfChaptersInBook.size();
     //    myDebug() << list.bookList.size();
     //    list.append(getParamModule(fileName, "ModuleShortName"));
 
@@ -702,7 +705,7 @@ QHash<QString, int> getNumberOfChaptersInBook(QString filename)
     {
         QStringList test;
         test << bookList.at(i).split("^");
-//        myDebug() <<  bookList.at(i) << test.size();
+        //        myDebug() <<  bookList.at(i) << test.size();
 
         list[test.at(0)] = test.at(1).toInt();
     }
@@ -720,3 +723,23 @@ QStringList removeEmptyQStringFromQStringList(QStringList *list)
     return listn;
 }
 ///----------------------------------------------------------------------------
+QString getClearText(QString *text)
+{
+    QString clearText = *text;
+    QRegExp rx("(<[^>]*>)");
+//    QRegExp rxp("(<[Pp].*?>)");
+//    QRegExp rxi("( [a-zA-Z:]+=)|(\"[^\"]*\")");
+    //    QRegExp regP("(<[a-zA-Z]+) [^>]*");  // убирает атрибуты у p Тега
+//    // html атрибуты  (?:[\w]*) *= *"(?:(?:(?:(?:(?:\\\W)*\\\W)*[^"]*)\\\W)*[^"]*")
+//    // все теги </?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)/?>+(.*?|[\s\S]*?)+</?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)/?>
+//    </?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)/?>+(.*?|[\s\S]*?)+</?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)/?>
+    clearText.remove(rx);
+    QString tab = "    ";
+    clearText.remove(tab);
+//    myDebug() << clearText;
+
+
+    return clearText;
+
+}
+

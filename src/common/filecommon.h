@@ -195,4 +195,5 @@ QString getParamModule(QString filename, QString param); // возвращает
 QStringList getBookList(QString filaPath);
 QHash<QString, int> getNumberOfChaptersInBook(QString filename);
 QStringList removeEmptyQStringFromQStringList(QStringList *list);
+QString getClearText(QString *text);
 #endif // __FILECOMMON__H

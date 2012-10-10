@@ -85,7 +85,7 @@ ModuleViewer *ModuleViewer::viewer()
 ///-----------------------------------------------------------------------------
 void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberchapter)
 {
-    myDebug() << pathToFile << nameBook << numberchapter;
+//    myDebug() << pathToFile << nameBook << numberchapter;
 
 //    CNode node;
 //    node.readDocument(pathToFile);
@@ -109,9 +109,11 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
                     if (xmlReader.attributes().value("number") ==
                             QString::number(numberchapter))
                     {
-                        ui->viewer->setText(xmlReader.readElementText());
+                        QString str = xmlReader.readElementText();
+                        str.remove("    ");
+                        ui->viewer->setText(str);
 //                        qDebug() << xmlReader.readElementText();
-                        myDebug() << "r";
+//                        myDebug() << "r";
                     }
                     xmlReader.readNext();
                 }

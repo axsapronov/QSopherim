@@ -139,7 +139,8 @@ void LeftPanel::showChapter(QModelIndex ind)
             moduleList->getModuleWithName(ui->comBModules->currentText())->getModulePath();
     t_pathToModule.replace("module.ini", "text.xml");
 
-    ModuleViewer::viewer()->showChapter(t_pathToModule, t_nameOfBook, ind.row());
+    ModuleViewer::viewer()->showChapter(t_pathToModule, t_nameOfBook,
+                                        ind.row() + 1);
 
 
 //    QString t_pathToIniFile = QString(Config::configuration()->getAppDir() + "bible/" +
