@@ -30,7 +30,8 @@ void LeftPanel::refreshList(ProjectQModuleList* list)
 
 //    this->modelModules = new QStandardItemModel(moduleList->getSize(), 1, this);
     //* Rows and 1 Columns
-
+    modelBooks->clear();
+    modelChapters->clear();
     moduleList = list;
     QStringList items;
     for (int i = 0; i < list->getSize(); i++)
@@ -46,6 +47,8 @@ void LeftPanel::refreshBookList(ProjectQModuleList* list)
 {
 //    moduleList = list;
     myDebug() << "refresh";
+
+
     //    myDebug() << list->getSize();
     /*
      *Принимает лист модулей
@@ -83,6 +86,7 @@ void LeftPanel::refreshBookList(ProjectQModuleList* list)
 //------------------------------------------------------------------------------
 void LeftPanel::refreshChapterList(QModelIndex moind)
 {
+    modelChapters->clear();
 //    myDebug() << moind.data(0).toString();
 //    int chapterValue = moduleList->getValueChapterForBookFromModule(moind.data(0).toString());
     int chapterValue = moduleList->getModuleWithName(ui->comBModules->currentText())
@@ -108,8 +112,11 @@ void LeftPanel::init()
     modelModules = new QStandardItemModel(0, 0, this);
     modelBooks = new QStandardItemModel(0, 0, this);
     modelChapters = new QStandardItemModel(0, 0, this);
+    modelClear = new QStandardItemModel(0, 0, this);
     moduleList = new ProjectQModuleList();
     lastNameOfBook = "";
+    ui->tableBook->reset();
+    ui->tableChapter->reset();
 }
 //------------------------------------------------------------------------------
 void LeftPanel::createConnects()
@@ -172,6 +179,8 @@ void LeftPanel::showChapter(QModelIndex ind)
 //------------------------------------------------------------------------------
 void LeftPanel::refreshBookList(QString nameOfBook)
 {
+    modelBooks->clear();
+    modelChapters->clear();
     QStringList bookList = moduleList->getModuleBooks(nameOfBook);
 //    myDebug() << moduleList->getModuleWithName(ui->comBModules->currentText());
 //    myDebug() << bookList.size();

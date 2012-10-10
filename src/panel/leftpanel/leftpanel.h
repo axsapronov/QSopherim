@@ -31,6 +31,7 @@ private:
     QStandardItemModel *modelModules;
     QStandardItemModel *modelBooks;
     QStandardItemModel *modelChapters;
+    QStandardItemModel *modelClear;
     ProjectQModuleList *moduleList;
 
     QString lastNameOfBook;
