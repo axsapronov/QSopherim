@@ -101,6 +101,24 @@ void ModuleViewer::showContextMenu(QPoint pt)
     menu->addSeparator();
 //    QString str = curBook + ":" + curChapter;
     QAction *act = new QAction(QString(curBook + ":" + curChapter), this);
+
+// bold text
+//    QTextDocument *document = ui->viewer->document();
+//      QTextCursor cursor(document);
+
+//      for(int i = 0; i < 20 ; i++)
+//      {
+//      cursor.movePosition(QTextCursor::Down);
+//      }
+//      cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
+
+//      QTextCharFormat format;
+//      format.setFontWeight(QFont::Bold);
+
+//      cursor.mergeCharFormat(format);
+
+
+
     menu->addAction(act);
     menu->exec(ui->viewer->mapToGlobal(pt));
     //    delete menu;
@@ -178,6 +196,7 @@ void ModuleViewer::createConnects()
 {
     connect(ui->viewer, SIGNAL(customContextMenuRequested(QPoint)),
             this,SLOT(showContextMenu(QPoint)));
+
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::loadViewSettings()
@@ -185,8 +204,11 @@ void ModuleViewer::loadViewSettings()
     ui->viewer->setFontFamily(Config::configuration()->getFontFamily());
     ui->viewer->setFontPointSize(Config::configuration()->getFontSize());
 
+
 }
 //------------------------------------------------------------------------------
+
+
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
