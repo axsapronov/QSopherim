@@ -39,17 +39,21 @@ void Settings::init()
     ui->LEBibleFolder->setText(Config::configuration()->getBibleDir());
     ui->LEDictFolder->setText(Config::configuration()->getDictDir());
     ui->LEOtherFolder->setText(Config::configuration()->getOtherDir());
+    // font
+    ui->sBFontSize->setValue(Config::configuration()->getFontSize());
+    ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
+    //    ui->sBFontSize->setValue(Config);
 
     /// create QSettings
-//    settings = new QSettings("settings.conf",QSettings::NativeFormat);
+    //    settings = new QSettings("settings.conf",QSettings::NativeFormat);
     //    QString value = "Russian";
     //    settings->setValue("language/lang", value);
-//    settings->sync();
+    //    settings->sync();
 }
 ///----------------------------------------------------------------------------
 void Settings::loadSettings()
 {
-//    QString lang = settings->value("language/lang").toString();
+    //    QString lang = settings->value("language/lang").toString();
     QString lang = Config::configuration()->getAppLang();
 
     setAPPLang(lang);
@@ -64,6 +68,10 @@ void Settings::loadSettings()
     ui->LEBibleFolder->setText(t_folderbible);
     ui->LEDictFolder->setText(t_folderdict);
     ui->LEOtherFolder->setText(t_folderother);
+
+    ui->sBFontSize->setValue(Config::configuration()->getFontSize());
+    ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
+
 
 
     /// replace to AppDir/*  if empty
@@ -84,6 +92,12 @@ void Settings::saveSettings()
     Config::configuration()->setBibleDir(ui->LEBibleFolder->text());
     Config::configuration()->setDictDir(ui->LEDictFolder->text());
     Config::configuration()->setOtherDir(ui->LEOtherFolder->text());
+
+    Config::configuration()->setFontFamily(ui->fontComB->currentText());
+    Config::configuration()->setFontSize(ui->sBFontSize->value());
+    //    ui->sBFontSize->setValue(Config::configuration()->getFontSize());
+
+    //    ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
 }
 ///----------------------------------------------------------------------------
 void Settings::createConnect()
@@ -96,36 +110,43 @@ void Settings::createConnect()
 ///----------------------------------------------------------------------------
 void Settings::accept()
 {
-    int ret = QMessageBox::warning(this, tr(GL_PROG_NAME),
-                                   tr("Settings has been modified.\n"
-                                      "Do you want to save your changes?"),
-                                   QMessageBox::Save
-                                   | QMessageBox::Discard
-                                   | QMessageBox::Cancel,
-                                   QMessageBox::Save);
-    QMessageBox msgBox;
-    switch (ret)
+    if (getModifySettings())
     {
-    case QMessageBox::Save:
-        // Save was clicked
-        saveSettings();
+        int ret = QMessageBox::warning(this, tr(GL_PROG_NAME),
+                                       tr("Settings has been modified.\n"
+                                          "Do you want to save your changes?"),
+                                       QMessageBox::Save
+                                       | QMessageBox::Discard
+                                       | QMessageBox::Cancel,
+                                       QMessageBox::Save);
+        QMessageBox msgBox;
+        switch (ret)
+        {
+        case QMessageBox::Save:
+            // Save was clicked
+            saveSettings();
 
-        msgBox.setText("Settings has been modified. Please restart the"
-                       "application for the entry into force of the settings");
-        msgBox.exec();
+//            msgBox.setText("Settings has been modified. Please restart the"
+//                           "application for the entry into force of the settings");
+            msgBox.exec();
 
+            QWidget::hide();
+            break;
+        case QMessageBox::Discard:
+            setParams();
+            QWidget::hide();
+            break;
+        case QMessageBox::Cancel:
+            // Cancel was clicked
+            break;
+        default:
+            // should never be reached
+            break;
+        }
+    }
+    else
+    {
         QWidget::hide();
-        break;
-    case QMessageBox::Discard:
-        setParams();
-        QWidget::hide();
-        break;
-    case QMessageBox::Cancel:
-        // Cancel was clicked
-        break;
-    default:
-        // should never be reached
-        break;
     }
 }
 ///----------------------------------------------------------------------------
@@ -142,10 +163,19 @@ void Settings::setAPPLang(QString new_lang)
 ///----------------------------------------------------------------------------
 bool Settings::getModifySettings()
 {
-    if (getAPPLang() != ui->comBLanguage->currentText())
+    if (ui->LEBibleFolder->text() != Config::configuration()->getBibleDir())
+        return true;
+    if (ui->LEDictFolder->text() != Config::configuration()->getDictDir())
+        return true;
+    if (ui->LEOtherFolder->text() != Config::configuration()->getOtherDir())
         return true;
 
-    return false;
+    if (ui->sBFontSize->value() != Config::configuration()->getFontSize())
+        return true;
+    if (ui->fontComB->currentText() != Config::configuration()->getFontFamily())
+        return true;
+
+
 }
 ///----------------------------------------------------------------------------
 void Settings::setParams()
@@ -155,7 +185,7 @@ void Settings::setParams()
     ui->LEOtherFolder->setText(Config::configuration()->getOtherDir());
     ui->LEDictFolder->setText(Config::configuration()->getDictDir());
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void Settings::browseBibleDir()
 {
     QFileDialog::Options options = QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly;
@@ -168,7 +198,7 @@ void Settings::browseBibleDir()
         ui->LEBibleFolder->setText(directory);
     }
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void Settings::browseDictDir()
 {
     QFileDialog::Options options = QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly;
@@ -181,7 +211,7 @@ void Settings::browseDictDir()
         ui->LEDictFolder->setText(directory);
     }
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void Settings::browseOtherDir()
 {
     QFileDialog::Options options = QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly;
@@ -194,8 +224,6 @@ void Settings::browseOtherDir()
         ui->LEOtherFolder->setText(directory);
     }
 }
-///-----------------------------------------------------------------------------
-
 ///----------------------------------------------------------------------------
 ///----------------------------------------------------------------------------
 ///----------------------------------------------------------------------------

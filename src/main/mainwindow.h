@@ -104,6 +104,9 @@ private:
     QAction *quitAction;
 
     ProcessModule* prModule;
+
+    void loadModulesFromFolder();
+
     /**
       @function
       debug function

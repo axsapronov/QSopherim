@@ -23,6 +23,8 @@
 #include "settings.h"
 #include "config.h"
 
+#include "filecommon.h"
+
 #include "leftpanel.h" /// leftPanel
 #include "leftpanel2.h"
 #include "rightpanel.h" /// rightPanel
@@ -112,15 +114,16 @@ void MainWindow::debug()
 {
     QStringList fileName;
 
-//    fileName << "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
-    fileName << "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
+    fileName << "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
+//    fileName << "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
 //    fileName << "/home/files/Documents/Bible/unrar/NT_Russian_Kassian/Bibleqt.ini";
 //    fileName << "/home/files/Documents/Bible/unrar/Makarij/bibleqt.ini";
 
-    for (int i = 0; i < fileName.size(); i++)
-    {
-        prModule->processing(fileName.at(i), OBVCore::Type_BibleQuoteModule);
-    }
+    loadModulesFromFolder();
+//    for (int i = 0; i < fileName.size(); i++)
+//    {
+//        prModule->processing(fileName.at(i), OBVCore::Type_BibleQuoteModule);
+//    }
 
     // > 62
     // < 60
@@ -353,5 +356,14 @@ void MainWindow::processFinish()
     GUI_LeftPanel->refreshList(list);
 }
 //------------------------------------------------------------------------------
+void MainWindow::loadModulesFromFolder()
+{
+    QStringList listModules = getListModulesFromPath(Config::configuration()->getBibleDir());
+    for (int i = 0; i < listModules.size(); i++)
+    {
+        prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
+    }
+}
+
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

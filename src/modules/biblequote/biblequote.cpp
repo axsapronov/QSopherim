@@ -11,17 +11,17 @@ BibleQuoteModule::BibleQuoteModule(QString pathToModule)
     //        DEBUG_FUNC_NAME;
     parseModule(pathToModule);
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 BibleQuoteModule::BibleQuoteModule()
 {
 
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 BibleQuoteModule::~BibleQuoteModule()
 {
 
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void BibleQuoteModule::parseModule(QString pathToModule)
 {
     //    myDebug() << "Parse module: " << pathToModule;
@@ -30,19 +30,26 @@ void BibleQuoteModule::parseModule(QString pathToModule)
     //    myDebug() << readInfo(pathToModule).name() << readInfo(pathToModule).shortName();
 
     // добавить еще обработку типа
-    emit createFolderForModule(parseInfo.shortName());
-
-    if (createIniFile(parseInfo))
+    QDir d(Config::configuration()->getAppDir() + "bible/" + parseInfo.shortName());
+    if (!d.exists())
     {
-        createBookFiles(pathToModule);
+        emit createFolderForModule(parseInfo.shortName());
+        if (createIniFile(parseInfo))
+        {
+            createBookFiles(pathToModule);
+        }
+        else
+        {
+            myWarning() << "this module is created";
+        }
     }
     else
     {
-        myWarning() << "this module is created";
+        myDebug() << "This module is exist";
     }
 
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 MetaInfo BibleQuoteModule::readInfo(QFile &file)
 {
     bool useShortName = false;
@@ -115,7 +122,7 @@ MetaInfo BibleQuoteModule::readInfo(QFile &file)
     return ret;
     return MetaInfo();
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 MetaInfo BibleQuoteModule::readInfo(const QString &fileName)
 {
     QFile file(fileName);
@@ -124,12 +131,12 @@ MetaInfo BibleQuoteModule::readInfo(const QString &fileName)
     return readInfo(file);
     return MetaInfo();
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QString BibleQuoteModule::formatFromIni(QString input)
 {
     return input.trimmed();
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 bool BibleQuoteModule::createIniFile(MetaInfo info)
 {
     /// добавить обработку типа
@@ -153,7 +160,9 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
     text.append("\nNumberChapter = ");
     for(int i = 0; i < m_bookList.size(); i++)
     {
-        QString str = m_bookList.at(i) + "^" + QString::number(m_bookList.at(i).size()) + "::";
+        QString str = m_bookList.at(i) + "^" + QString::number(m_bookCountSize[i])
+                + "::" ;
+        //        QString str = m_bookList.at(i) + "^" + QString::number(m_bookList.at(i).size()) + "::";
         text.append(str);
     }
 
@@ -169,7 +178,7 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
 
     return false;
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 bool BibleQuoteModule::createBookFiles(QString pathToFiles)
 {
 
@@ -188,27 +197,27 @@ bool BibleQuoteModule::createBookFiles(QString pathToFiles)
     endXML(t_pathToXmlFile);
     return false;
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 int BibleQuoteModule::moduleID() const
 {
     return m_moduleID;
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QString BibleQuoteModule::modulePath() const
 {
     return m_modulePath;
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QString BibleQuoteModule::moduleName(bool preferShortName) const
 {
     return m_moduleName;
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QString BibleQuoteModule::uid() const
 {
     return m_uid;
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
 {
     QStringList bookFullName;
@@ -328,11 +337,12 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
 
     //    }
     //    settings->getV11n()->extendedData.setHasChapterZeor(m_chapterZero);
+    m_bookCountSize = bookCount;
     m_bookList = bookFullName;
     return 0;
 }
 
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 int BibleQuoteModule::readBook(const int id)
 {
     m_book.clear();
@@ -370,7 +380,7 @@ int BibleQuoteModule::readBook(const int id)
             {
                 line = line.remove(r, Qt::CaseInsensitive);
             }
-//            line.replace(m_chapterSign, getEndOfTag(m_chapterSign));
+            //            line.replace(m_chapterSign, getEndOfTag(m_chapterSign));
             //            }
             out2 += line;
             if(chapterstarted == false && line.contains(m_chapterSign))
@@ -389,8 +399,10 @@ int BibleQuoteModule::readBook(const int id)
             }
         }
         ///  chapter_tag is ANAME
-        out2.remove(QRegExp("=\\d+>")); // hindi remove text =NUMBERCHAPTER>
-
+        if (m_chapterSign != getEndOfTag(m_chapterSign))
+            out2.remove(QRegExp("=\\d+>")); // hindi remove text =NUMBERCHAPTER>
+        out2.remove("^&к");
+        //        out2 = getClearText(&out2);
         chapterText << out2.split(m_chapterSign);
     }
     else
@@ -453,7 +465,7 @@ int BibleQuoteModule::readBook(const int id)
     return 0;
 
 }
-///-----------------------------------------------------------------------------
-///-----------------------------------------------------------------------------
-///-----------------------------------------------------------------------------
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------

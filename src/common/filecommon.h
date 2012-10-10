@@ -9,6 +9,7 @@
 #include <QTextCodec>
 
 #include <QHash>
+#include <QDirIterator>
 
 #include <QDebug>
 #include "book.h"
@@ -197,4 +198,6 @@ QHash<QString, int> getNumberOfChaptersInBook(QString filename);
 QStringList removeEmptyQStringFromQStringList(QStringList *list);
 QString getClearText(QString *text);
 QString getEndOfTag(QString tag);
+QStringList getListModulesFromPath(QString path);
+QStringList recursiveFind(QString directory);
 #endif // __FILECOMMON__H

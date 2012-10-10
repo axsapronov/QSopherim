@@ -32,12 +32,12 @@ ModuleViewer::ModuleViewer(QWidget *parent) :
     connect(ui->viewer, SIGNAL(customContextMenuRequested(QPoint)),
             this,SLOT(showContextMenu(QPoint)));
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 ModuleViewer::~ModuleViewer()
 {
     delete ui;
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void ModuleViewer::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu menu(this);
@@ -46,7 +46,7 @@ void ModuleViewer::contextMenuEvent(QContextMenuEvent *event)
     menu.addAction(pasteAct);
     menu.exec(event->globalPos());
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void ModuleViewer::createActions()
 {
     cutAct = new QAction(tr("Cu&t"), this);
@@ -67,7 +67,7 @@ void ModuleViewer::createActions()
                               "selection"));
     //    connect(pasteAct, SIGNAL(triggered()), this, SLOT(paste()));
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void ModuleViewer::showContextMenu(QPoint pt)
 {
     //    QMenu *menu = ui->viewer->createStandardContextMenu();
@@ -76,13 +76,13 @@ void ModuleViewer::showContextMenu(QPoint pt)
     menu.exec(ui->viewer->mapToGlobal(pt));
     //    delete menu;
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 ModuleViewer *ModuleViewer::viewer()
 {
     Q_ASSERT( static_viewer );
     return static_viewer;
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberchapter)
 {
 //    myDebug() << pathToFile << nameBook << numberchapter;
@@ -98,6 +98,7 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
             QStringList sl;
             sl << xmlReader.name().toString();
             QXmlStreamAttributes attrs = xmlReader.attributes();
+//            myDebug() << "yes0" << nameBook << attrs.value("name");
             if (attrs.value("name") == nameBook)
             {
                 while(!xmlReader.atEnd() and !flag)
@@ -114,15 +115,16 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
                 }
             }
         }
-        xmlReader.readNextStartElement();
+        xmlReader.readNext();
+//        xmlReader.readNext();
     }
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void ModuleViewer::getTextChapter(QString pathToFile, QString nameBook, int numberchapter)
 {
 
 }
-///-----------------------------------------------------------------------------
-///-----------------------------------------------------------------------------
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 

@@ -711,7 +711,7 @@ QHash<QString, int> getNumberOfChaptersInBook(QString filename)
     }
     return list;
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QStringList removeEmptyQStringFromQStringList(QStringList *list)
 {
     QStringList listn;
@@ -722,7 +722,7 @@ QStringList removeEmptyQStringFromQStringList(QStringList *list)
     }
     return listn;
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QString getClearText(QString *text)
 {
     QString clearText = *text;
@@ -742,16 +742,45 @@ QString getClearText(QString *text)
     return clearText;
 
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QString getEndOfTag(QString tag)
 {
     QString newtag = tag;
-
-
     if(newtag[newtag.length() - 1] != QChar(62))
     {
+//        myDebug() << newtag[newtag.length()-1];
         newtag = newtag + "><";
     }
     return newtag;
 }
-///-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+QStringList getListModulesFromPath(QString path)
+{
+    QStringList files = recursiveFind(path);
+    QStringList list;
+    for(int i = 0; i < files.size(); i++)
+    {
+        if(files.at(i).indexOf(".ini") >= 0)
+        {
+            list << files.at(i);
+        }
+    }
+    return list;
+}
+//------------------------------------------------------------------------------
+QStringList recursiveFind(QString directory)
+{
+    //// подумать, нужен ли чистый рекурсивный поиск
+    //// если нет, то сюда вставить обработку getModuleFilesList
+    QStringList list;
+    QDirIterator iterator (directory, QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
+    while(iterator.hasNext())
+    {
+        iterator.next();
+        list << iterator.fileInfo().absoluteFilePath();
+    }
+    return list;
+}
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------

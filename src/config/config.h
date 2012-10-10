@@ -2,6 +2,7 @@
 #define __CONFIG__H
 
 #include <QString>
+#include <QColor>
 //====================== class Config ============================
 
 class Config
@@ -25,6 +26,16 @@ public:
     QString getOtherDir();
     QString getAppLang();
 
+    // settings font
+    int getFontSize();
+    QColor getFontColor();
+    QString getFontFamily();
+
+    void setFontSize(int  newSize);
+    void setFontColor(QColor newColor);
+    void setFontFamily(QString newFamily);
+
+
     static Config *configuration();
 
 private:
@@ -34,6 +45,11 @@ private:
     QString otherDir;
     QString dictDir;
     QString appLang;
+
+    // settings font
+    QColor fontColor;
+    int fontSize;
+    QString fontFamily;
 };
 
 #endif // __CONFIG__H

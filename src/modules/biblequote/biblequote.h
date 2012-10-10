@@ -44,6 +44,7 @@ private:
     QString m_verseSign;
     QString m_bookCount;
     QString m_chapterSign;
+    QMap<int, int> m_bookCountSize;
     QString m_removeHtml;
     QTextCodec *m_codec;
     QString m_uid;
