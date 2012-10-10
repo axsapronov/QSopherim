@@ -36,6 +36,9 @@ private:
     QAction *cutAct;
     QAction *copyAct;
     QAction *pasteAct;
+    void init();
+    void createConnects();
+    void loadViewSettings();
 
     void getTextChapter(QString pathToFile, QString nameBook, int numberchapter);
 

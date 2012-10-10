@@ -17,20 +17,9 @@ ModuleViewer::ModuleViewer(QWidget *parent) :
     ui(new Ui::ModuleViewer)
 {
 
-    if( !static_viewer)
-    {
-        static_viewer = this;
-    }
-    else
-    {
-        qWarning( "Multiple viewers not allowed!" );
-    }
-
     ui->setupUi(this);
-    createActions();
-    ui->viewer->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(ui->viewer, SIGNAL(customContextMenuRequested(QPoint)),
-            this,SLOT(showContextMenu(QPoint)));
+    init();
+
 }
 //------------------------------------------------------------------------------
 ModuleViewer::~ModuleViewer()
@@ -124,6 +113,37 @@ void ModuleViewer::getTextChapter(QString pathToFile, QString nameBook, int numb
 {
 
 }
+//------------------------------------------------------------------------------
+void ModuleViewer::init()
+{
+
+    if( !static_viewer)
+    {
+        static_viewer = this;
+    }
+    else
+    {
+        qWarning( "Multiple viewers not allowed!" );
+    }
+    createActions();
+    createConnects();
+
+    ui->viewer->setContextMenuPolicy(Qt::CustomContextMenu);
+    loadViewSettings();
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::createConnects()
+{
+    connect(ui->viewer, SIGNAL(customContextMenuRequested(QPoint)),
+            this,SLOT(showContextMenu(QPoint)));
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::loadViewSettings()
+{
+    ui->viewer->setFontFamily(Config::configuration()->getFontFamily());
+    ui->viewer->setFontPointSize(Config::configuration()->getFontSize());
+}
+//------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
