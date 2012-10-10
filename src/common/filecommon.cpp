@@ -711,7 +711,7 @@ QHash<QString, int> getNumberOfChaptersInBook(QString filename)
     }
     return list;
 }
-///----------------------------------------------------------------------------
+///-----------------------------------------------------------------------------
 QStringList removeEmptyQStringFromQStringList(QStringList *list)
 {
     QStringList listn;
@@ -722,7 +722,7 @@ QStringList removeEmptyQStringFromQStringList(QStringList *list)
     }
     return listn;
 }
-///----------------------------------------------------------------------------
+///-----------------------------------------------------------------------------
 QString getClearText(QString *text)
 {
     QString clearText = *text;
@@ -742,4 +742,16 @@ QString getClearText(QString *text)
     return clearText;
 
 }
+///-----------------------------------------------------------------------------
+QString getEndOfTag(QString tag)
+{
+    QString newtag = tag;
 
+
+    if(newtag[newtag.length() - 1] != QChar(62))
+    {
+        newtag = newtag + "><";
+    }
+    return newtag;
+}
+///-----------------------------------------------------------------------------

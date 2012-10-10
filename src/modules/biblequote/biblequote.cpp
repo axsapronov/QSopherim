@@ -261,7 +261,8 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
             if(line.contains("BibleShortName", Qt::CaseInsensitive)) {
                 m_moduleShortName = formatFromIni(line.remove(QRegExp("BibleShortName(\\s*)=(\\s*)", Qt::CaseInsensitive)));
             }
-            if(line.contains("ChapterSign", Qt::CaseInsensitive)) {
+            if(line.contains("ChapterSign", Qt::CaseInsensitive))
+            {
                 m_chapterSign = formatFromIni(line.remove(QRegExp("ChapterSign(\\s*)=(\\s*)", Qt::CaseInsensitive)));
             }
             if(line.contains("HTMLFilter", Qt::CaseInsensitive)) {
@@ -369,6 +370,7 @@ int BibleQuoteModule::readBook(const int id)
             {
                 line = line.remove(r, Qt::CaseInsensitive);
             }
+//            line.replace(m_chapterSign, getEndOfTag(m_chapterSign));
             //            }
             out2 += line;
             if(chapterstarted == false && line.contains(m_chapterSign))
@@ -386,10 +388,10 @@ int BibleQuoteModule::readBook(const int id)
                 out += line;
             }
         }
+        ///  chapter_tag is ANAME
+        out2.remove(QRegExp("=\\d+>")); // hindi remove text =NUMBERCHAPTER>
 
         chapterText << out2.split(m_chapterSign);
-
-        //        myDebug() << chapterText.at(5);
     }
     else
     {

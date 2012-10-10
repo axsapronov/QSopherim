@@ -196,4 +196,5 @@ QStringList getBookList(QString filaPath);
 QHash<QString, int> getNumberOfChaptersInBook(QString filename);
 QStringList removeEmptyQStringFromQStringList(QStringList *list);
 QString getClearText(QString *text);
+QString getEndOfTag(QString tag);
 #endif // __FILECOMMON__H
