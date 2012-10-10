@@ -87,58 +87,35 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
 {
 //    myDebug() << pathToFile << nameBook << numberchapter;
 
-//    CNode node;
-//    node.readDocument(pathToFile);
-
     QXmlStreamReader xmlReader;
-//    QString str = QFile(pathToFile).readAll();
     xmlReader.addData(getTextFromHtmlFile(pathToFile));
-    while(!xmlReader.atEnd())
+
+    bool flag = false;
+    while(!xmlReader.atEnd() and !flag)
     {
         if(xmlReader.isStartElement())
         {
-
             QStringList sl;
             sl << xmlReader.name().toString();
             QXmlStreamAttributes attrs = xmlReader.attributes();
-//            qDebug() << attrs.value("name");
             if (attrs.value("name") == nameBook)
             {
-                while(!xmlReader.atEnd())
+                while(!xmlReader.atEnd() and !flag)
                 {
                     if (xmlReader.attributes().value("number") ==
                             QString::number(numberchapter))
                     {
+                        flag = true;
                         QString str = xmlReader.readElementText();
                         str.remove("    ");
                         ui->viewer->setText(str);
-//                        qDebug() << xmlReader.readElementText();
-//                        myDebug() << "r";
                     }
                     xmlReader.readNext();
                 }
             }
         }
-        xmlReader.readNext();
+        xmlReader.readNextStartElement();
     }
-
-//    QXmlSimpleReader* parser 		= new QXmlSimpleReader();
-//    MyXmlContentHandler* handler 	= new MyXmlContentHandler();
-
-
-//    parser->setContentHandler(handler);
-
-//    std::cout<<	"Starting parsing"<<std::endl;
-
-//    if(parser->parse(new QXmlInputSource(new QFile("myWidgets.xml"))))
-//    {
-//    std::cout<<"Parsed Successfully!"<< std::endl;
-//    }
-//    else
-//    {
-//    std::cout<<"Parsing Failed..."<< std::endl;
-//    }
-
 }
 ///-----------------------------------------------------------------------------
 void ModuleViewer::getTextChapter(QString pathToFile, QString nameBook, int numberchapter)

@@ -98,7 +98,8 @@ void LeftPanel::refreshChapterList(QModelIndex moind)
     }
     ui->tableChapter->setModel(modelChapters);
     ui->tableChapter->resizeColumnsToContents();
-//    myDebug() << chapterValue;
+    lastNameOfBook = moind.data(0).toString();
+            //    myDebug() << chapterValue;
 }
 //------------------------------------------------------------------------------
 void LeftPanel::init()
@@ -108,6 +109,7 @@ void LeftPanel::init()
     modelBooks = new QStandardItemModel(0, 0, this);
     modelChapters = new QStandardItemModel(0, 0, this);
     moduleList = new ProjectQModuleList();
+    lastNameOfBook = "";
 }
 //------------------------------------------------------------------------------
 void LeftPanel::createConnects()
@@ -139,7 +141,8 @@ void LeftPanel::showChapter(QModelIndex ind)
             moduleList->getModuleWithName(ui->comBModules->currentText())->getModulePath();
     t_pathToModule.replace("module.ini", "text.xml");
 
-    ModuleViewer::viewer()->showChapter(t_pathToModule, t_nameOfBook,
+//    myDebug() << lastNameOfBook;
+    ModuleViewer::viewer()->showChapter(t_pathToModule, lastNameOfBook,
                                         ind.row() + 1);
 
 

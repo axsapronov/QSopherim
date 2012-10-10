@@ -33,6 +33,8 @@ private:
     QStandardItemModel *modelChapters;
     ProjectQModuleList *moduleList;
 
+    QString lastNameOfBook;
+
     QStringListModel *typeModel;
     void init();
     void createConnects();
