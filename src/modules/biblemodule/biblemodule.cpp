@@ -77,6 +77,7 @@ void BibleModule::clearData()
 //------------------------------------------------------------------------------
 void BibleModule::parseModule(QString pathToModule)
 {
+    Q_UNUSED(pathToModule)
     myWarning() << "calling BibleModule";
 }
 //------------------------------------------------------------------------------

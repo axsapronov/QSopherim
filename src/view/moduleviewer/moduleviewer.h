@@ -40,7 +40,7 @@ private:
     void createConnects();
     void loadViewSettings();
 
-    void getTextChapter(QString pathToFile, QString nameBook, int numberchapter);
+//    void getTextChapter(QString pathToFile, QString nameBook, int numberchapter);
 
     void createActions();
 };

@@ -7,6 +7,8 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QColorDialog>
+
 Settings::Settings(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Settings)
@@ -42,6 +44,9 @@ void Settings::init()
     // font
     ui->sBFontSize->setValue(Config::configuration()->getFontSize());
     ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
+    fontColor = Config::configuration()->getFontColor();
+
+
     //    ui->sBFontSize->setValue(Config);
 
     /// create QSettings
@@ -71,6 +76,7 @@ void Settings::loadSettings()
 
     ui->sBFontSize->setValue(Config::configuration()->getFontSize());
     ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
+    fontColor = Config::configuration()->getFontColor();
 
 
 
@@ -95,6 +101,7 @@ void Settings::saveSettings()
 
     Config::configuration()->setFontFamily(ui->fontComB->currentText());
     Config::configuration()->setFontSize(ui->sBFontSize->value());
+    Config::configuration()->setFontColor(fontColor);
     //    ui->sBFontSize->setValue(Config::configuration()->getFontSize());
 
     //    ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
@@ -105,6 +112,8 @@ void Settings::createConnect()
     connect(ui->pBBibleFolder, SIGNAL(clicked()), SLOT(browseBibleDir()));
     connect(ui->pBOtherFolder, SIGNAL(clicked()), SLOT(browseOtherDir()));
     connect(ui->pBDictFolder, SIGNAL(clicked()), SLOT(browseDictDir()));
+
+    connect(ui->pBColor, SIGNAL(clicked()), SLOT(selectFontColor()));
 
 }
 ///----------------------------------------------------------------------------
@@ -128,7 +137,7 @@ void Settings::accept()
 
 //            msgBox.setText("Settings has been modified. Please restart the"
 //                           "application for the entry into force of the settings");
-            msgBox.exec();
+//            msgBox.exec();
 
             QWidget::hide();
             break;
@@ -169,13 +178,14 @@ bool Settings::getModifySettings()
         return true;
     if (ui->LEOtherFolder->text() != Config::configuration()->getOtherDir())
         return true;
-
     if (ui->sBFontSize->value() != Config::configuration()->getFontSize())
         return true;
     if (ui->fontComB->currentText() != Config::configuration()->getFontFamily())
         return true;
+    if (fontColor != Config::configuration()->getFontColor())
+        return true;
 
-
+    return false;
 }
 ///----------------------------------------------------------------------------
 void Settings::setParams()
@@ -225,6 +235,13 @@ void Settings::browseOtherDir()
     }
 }
 ///----------------------------------------------------------------------------
+void Settings::selectFontColor()
+{
+    QColor fontColor = QColorDialog::getColor(Config::configuration()->getFontColor(), this);
+
+    if (!fontColor.isValid())
+        return;
+}
 ///----------------------------------------------------------------------------
 ///----------------------------------------------------------------------------
 ///----------------------------------------------------------------------------

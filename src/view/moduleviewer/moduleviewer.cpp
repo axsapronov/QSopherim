@@ -107,16 +107,16 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
         xmlReader.readNext();
 //        xmlReader.readNext();
     }
-}
-//------------------------------------------------------------------------------
-void ModuleViewer::getTextChapter(QString pathToFile, QString nameBook, int numberchapter)
-{
 
 }
+//------------------------------------------------------------------------------
+//void ModuleViewer::getTextChapter(QString pathToFile, QString nameBook, int numberchapter)
+//{
+
+//}
 //------------------------------------------------------------------------------
 void ModuleViewer::init()
 {
-
     if( !static_viewer)
     {
         static_viewer = this;
@@ -142,6 +142,7 @@ void ModuleViewer::loadViewSettings()
 {
     ui->viewer->setFontFamily(Config::configuration()->getFontFamily());
     ui->viewer->setFontPointSize(Config::configuration()->getFontSize());
+
 }
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

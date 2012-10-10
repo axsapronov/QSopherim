@@ -274,6 +274,13 @@
          </property>
         </spacer>
        </item>
+       <item row="1" column="3">
+        <widget class="QPushButton" name="pBColor">
+         <property name="text">
+          <string>Select color</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2">

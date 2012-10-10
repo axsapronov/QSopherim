@@ -181,11 +181,11 @@ QStringList getListWord(QString filename)
 
             if (!str2.isEmpty())
             {
-                int count2;
+//                int count2;
                 if (count %2 != 0)
                     count++;
 
-                count2 = count;
+//                count2 = count;
                 //                streamIdx << str2 << "\r\n" << QString::number(count2) + "\r\n";
             }
             count += (str.length()) *2;

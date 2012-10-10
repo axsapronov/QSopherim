@@ -46,6 +46,7 @@ void LeftPanel::refreshList(ProjectQModuleList* list)
 void LeftPanel::refreshBookList(ProjectQModuleList* list)
 {
 //    moduleList = list;
+    Q_UNUSED (list)
     myDebug() << "refresh";
 
 
@@ -134,13 +135,13 @@ void LeftPanel::showChapter(QModelIndex ind)
 
     /// так как выделение с книги может спадать, то надо запоминать последнюю книгу
 
-    int t_curBook;
+//    int t_curBook;
 
     QString t_nameOfBook;
     QModelIndexList selectedList = ui->tableBook->selectionModel()->selectedRows();
     for( int i = 0; i < selectedList.count(); i++)
     {
-        t_curBook = selectedList.at(i).row();
+//        t_curBook = selectedList.at(i).row();
         t_nameOfBook = selectedList.at(i).data(0).toString();
     }
 

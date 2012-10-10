@@ -41,6 +41,8 @@ bool CSaxHandler::startElement(const QString &namespaceURI,
                                const QString &qName,
                                const QXmlAttributes &attributes)
 {
+    Q_UNUSED (namespaceURI)
+    Q_UNUSED (qName)
     if(nodeStack.isEmpty())
         return false;
 
@@ -72,6 +74,8 @@ bool CSaxHandler::endElement(const QString &namespaceURI,
                              const QString &localName,
                              const QString &qName)
 {
+    Q_UNUSED (namespaceURI)
+    Q_UNUSED (qName)
     if(nodeStack.isEmpty())
         return false;
 

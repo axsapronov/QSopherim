@@ -59,12 +59,14 @@ private slots:
        Browse path to other modules
        */
     void browseOtherDir();
+    void selectFontColor();
 private:
     Ui::Settings *ui;
     QString APP_Lang;
     QString folderBible;
     QString folderDict;
     QString folderOther;
+    QColor fontColor;
     /**
       @function
       Debug function

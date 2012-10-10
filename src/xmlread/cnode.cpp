@@ -19,6 +19,8 @@ CNode::CNode(){
 //------------------------------------------------------------------------------
 void CNode::setRequisites(const QString &name,const QXmlAttributes &attributes)
 {
+    Q_UNUSED (name)
+    Q_UNUSED (attributes)
      // ничего не делается - для типов, не содержащих реквизиты
 }
 //------------------------------------------------------------------------------
@@ -34,11 +36,14 @@ CNode* CNode::getNode(const QString &name)
 // проверка, является ли элемент текстовым
 bool CNode::isTextElement(const QString &name)
 {
+    Q_UNUSED (name)
     return false;
 }
 //------------------------------------------------------------------------------
 bool CNode::writeNode(QXmlStreamWriter& writer,const QString& nsUri)
 {
+    Q_UNUSED (writer)
+    Q_UNUSED (nsUri)
     return true;
 }
 //------------------------------------------------------------------------------
@@ -86,7 +91,7 @@ bool CNode::readFromDevice(QIODevice* device)
 
     QXmlSimpleReader reader;
     reader.setContentHandler(&handler);
-    bool ok = reader.parse(xmlInputSource);
+    reader.parse(xmlInputSource);
 
     device->close();
     return true;

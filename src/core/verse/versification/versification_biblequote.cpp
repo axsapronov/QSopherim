@@ -30,5 +30,7 @@ Versification_BibleQuote::Versification_BibleQuote(const QStringList &fullNames,
 }
 bool Versification_BibleQuote::filter(const int bookID, VersificationFilterFlags flags) const
 {
+    Q_UNUSED (bookID)
+    Q_UNUSED (flags)
     return true;
 }

@@ -95,6 +95,7 @@ int Versification::bookCount(VersificationFilterFlags flags) const
 }
 bool Versification::filter(const int bookID, VersificationFilterFlags flags) const
 {
+    Q_UNUSED (bookID)
     if(flags.testFlag(Versification::ReturnAll) || (flags.testFlag(Versification::ReturnOT) && flags.testFlag(Versification::ReturnNT)))
         return true;
     return true;

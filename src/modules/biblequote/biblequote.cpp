@@ -181,7 +181,7 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
 //------------------------------------------------------------------------------
 bool BibleQuoteModule::createBookFiles(QString pathToFiles)
 {
-
+    Q_UNUSED (pathToFiles)
     QString t_pathToXmlFile = QString(Config::configuration()->getAppDir() + "bible/" +
                                       m_moduleShortName + "/text.xml");
 
@@ -210,6 +210,7 @@ QString BibleQuoteModule::modulePath() const
 //------------------------------------------------------------------------------
 QString BibleQuoteModule::moduleName(bool preferShortName) const
 {
+    Q_UNUSED (preferShortName)
     return m_moduleName;
 }
 //------------------------------------------------------------------------------

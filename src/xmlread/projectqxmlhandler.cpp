@@ -11,8 +11,11 @@ bool ProjectQXMLHandler::startElement(const QString & namespaceURI,
                                       const QString & qName,
                                       const QXmlAttributes & atts )
 {
-    myDebug() << "Read Start Tag : " << localName << endl;
-    myDebug() << "Tag Attributes: " << endl;
+    Q_UNUSED (namespaceURI)
+    Q_UNUSED (localName)
+    Q_UNUSED (qName)
+//    myDebug() << "Read Start Tag : " << localName << endl;
+//    myDebug() << "Tag Attributes: " << endl;
 
 
     for(int index = 0 ; index < atts.length(); index++)
