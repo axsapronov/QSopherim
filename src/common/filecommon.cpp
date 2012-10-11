@@ -810,6 +810,9 @@ QHash<int, QString> getNoteOfParams(QString curPath,
         {
             //            QString text = "<note " + str1 + str2 + str3;
             //            hash[count] = strat.remove(text).remove("</note>");
+            /// remove tag before text
+            int pos = line.indexOf(">");
+            line.remove(0, pos + 1);
             hash[count] = line;
         }
     }
