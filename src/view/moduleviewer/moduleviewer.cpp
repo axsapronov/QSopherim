@@ -290,15 +290,25 @@ void ModuleViewer::setCurLine()
 
 //    myDebug() << "start: " << firstLine << " end: " << lastLine;
 }
+////------------------------------------------------------------------------------
+//int ModuleViewer::getLastSelectLineFirst()
+//{
+//    return lastSelectLineFirst;
+//}
+////------------------------------------------------------------------------------
+//int ModuleViewer::getLastSelectLineLast()
+//{
+//    return lastSelectLineLast;
+//}
 //------------------------------------------------------------------------------
-int ModuleViewer::getLastSelectLineFirst()
+QString ModuleViewer::getLastSelectLineFirst()
 {
-    return lastSelectLineFirst;
+    return QString::number(lastSelectLineFirst);
 }
 //------------------------------------------------------------------------------
-int ModuleViewer::getLastSelectLineLast()
+QString ModuleViewer::getLastSelectLineLast()
 {
-    return lastSelectLineLast;
+    return QString::number(lastSelectLineLast);
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::setLastSelectLineFirst(int firstlast)

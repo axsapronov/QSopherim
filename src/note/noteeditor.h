@@ -19,6 +19,9 @@ public:
     void setBookName(QString bookName);
     void setChapterValue(QString chapterValue);
     void setPath(QString name);
+    void setFirstVerse(QString first);
+    void setLastVerse(QString last);
+
 private slots:
     void saveNote();
 
@@ -31,6 +34,8 @@ private:
     QString m_bookName;
     QString m_chapterValue;
     QString m_path;
+    QString m_verseFirst;
+    QString m_verseLast;
 
     void setTextToLabel();
     void addTextNotes(QString text);

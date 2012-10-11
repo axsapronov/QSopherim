@@ -20,12 +20,18 @@ NoteEditor::~NoteEditor()
 //------------------------------------------------------------------------------
 void NoteEditor::saveNote()
 {
-//    myDebug() << "saveNote";
+    //    myDebug() << "saveNote";
 
     QString textNote = ui->textEditor->toPlainText();
     //    myDebug() << textNote;
-//    myDebug() << m_path;
+    //    myDebug() << m_path;
     addTextNotes(textNote);
+
+    m_verseFirst = "";
+    m_verseLast = "";
+    m_moduleName = "";
+    m_bookName = "";
+    m_chapterValue = "";
 
     QWidget::hide();
 }
@@ -81,6 +87,8 @@ void NoteEditor::addTextNotes(QString text)
         QString noteText = tab + "<note module=\"" + m_moduleName
                 + "\" book=\"" + m_bookName
                 + "\" chapter=\"" + m_chapterValue
+                + "\" versebegin=\"" + m_verseFirst
+                + "\" verseend=\"" + m_verseLast
                 + "\">"
                 + text
                 + "</note>\n"
@@ -108,11 +116,23 @@ void NoteEditor::addTextNotes(QString text)
                    << "<note module=\"" << m_moduleName
                    << "\" book=\"" << m_bookName
                    << "\" chapter=\"" << m_chapterValue
+                   << "\" versebegin=\"" + m_verseFirst
+                   << "\" verseend=\"" + m_verseLast
                    << "\">"
                    << text
                    << "</note>" << endl
                    << "</xml>";
         }
     }
+}
+//------------------------------------------------------------------------------
+void NoteEditor::setFirstVerse(QString first)
+{
+    m_verseFirst = first;
+}
+//------------------------------------------------------------------------------
+void NoteEditor::setLastVerse(QString last)
+{
+    m_verseLast = last;
 }
 //------------------------------------------------------------------------------

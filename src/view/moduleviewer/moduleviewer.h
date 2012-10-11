@@ -36,10 +36,10 @@ public:
 
     void showChapter(QString pathToFile, QString nameBook, int numberchapter);
 
-    int getLastSelectLineFirst();
+    QString getLastSelectLineFirst();
     void setLastSelectLineFirst(int firstlast);
 
-    int getLastSelectLineLast();
+    QString getLastSelectLineLast();
     void setLastSelectLineLast(int lastlast);
 
 private slots:

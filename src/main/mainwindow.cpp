@@ -358,10 +358,17 @@ void MainWindow::loadModulesFromFolder()
 //------------------------------------------------------------------------------
 void MainWindow::createNote()
 {
+    if (GUI_ModuleViewer->getModuleName().isEmpty())
+        return;
+    if (GUI_ModuleViewer->getChapterValue().isEmpty())
+        return;
+
     GUI_NoteEditor->setPath(GUI_ModuleViewer->getPath());
     GUI_NoteEditor->setModuleName(GUI_ModuleViewer->getModuleName());
     GUI_NoteEditor->setBookName(GUI_ModuleViewer->getBookName());
     GUI_NoteEditor->setChapterValue(GUI_ModuleViewer->getChapterValue());
+    GUI_NoteEditor->setFirstVerse(GUI_ModuleViewer->getLastSelectLineFirst());
+    GUI_NoteEditor->setLastVerse(GUI_ModuleViewer->getLastSelectLineLast());
     GUI_NoteEditor->show();
 }
 //------------------------------------------------------------------------------
