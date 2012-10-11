@@ -171,6 +171,7 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
     curBook = nameBook;
     curPath = pathToFile;
     curChapter = QString::number(numberchapter);
+    ui->LAStatus->setText(curModule + " : " + curBook + " : " + curChapter );
 }
 //------------------------------------------------------------------------------
 //void ModuleViewer::getTextChapter(QString pathToFile, QString nameBook, int numberchapter)
