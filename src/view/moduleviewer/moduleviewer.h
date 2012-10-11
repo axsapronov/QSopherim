@@ -4,7 +4,7 @@
 #include <QWidget>
 
 namespace Ui {
-    class ModuleViewer;
+class ModuleViewer;
 }
 
 QT_BEGIN_NAMESPACE
@@ -42,12 +42,15 @@ public:
     QString getLastSelectLineLast();
     void setLastSelectLineLast(int lastlast);
 
+signals:
+    void showNoteList(QString, QString, QString, QString, QString);
+
 private slots:
     void showContextMenu(QPoint pt);
     void setCurLine();
 protected:
-//    void contextMenuEvent(QContextMenuEvent *event);
-
+    //    void contextMenuEvent(QContextMenuEvent *event);
+    void mouseMoveEvent (QMouseEvent* event);
 
 private:
     Ui::ModuleViewer *ui;
@@ -57,6 +60,7 @@ private:
     QAction *pasteAct;
     void init();
     void createConnects();
+    void createActions();
     void loadViewSettings();
 
     QString curModule;
@@ -66,9 +70,10 @@ private:
     int lastSelectLineFirst;
     int lastSelectLineLast;
 
-//    void getTextChapter(QString pathToFile, QString nameBook, int numberchapter);
+    void showNoteList();
 
-    void createActions();
+    //    void getTextChapter(QString pathToFile, QString nameBook, int numberchapter);
+
 };
 
 #endif // MODULEVIEWER_H

@@ -181,11 +181,11 @@ QStringList getListWord(QString filename)
 
             if (!str2.isEmpty())
             {
-//                int count2;
+                //                int count2;
                 if (count %2 != 0)
                     count++;
 
-//                count2 = count;
+                //                count2 = count;
                 //                streamIdx << str2 << "\r\n" << QString::number(count2) + "\r\n";
             }
             count += (str.length()) *2;
@@ -588,7 +588,7 @@ bool addBookToXML(QString fileName, QString namebook, Book mbook)
                     QString text = mbook.getChapter(i).data().value(j).data();
 
                     QString str = getClearText(&text);
-                            ts << tab << tab << tab << str;
+                    ts << tab << tab << tab << str;
                 }
 
                 ts  << tab << tab << "</chapter>" << endl;
@@ -727,16 +727,16 @@ QString getClearText(QString *text)
 {
     QString clearText = *text;
     QRegExp rx("(<[^>]*>)");
-//    QRegExp rxp("(<[Pp].*?>)");
-//    QRegExp rxi("( [a-zA-Z:]+=)|(\"[^\"]*\")");
+    //    QRegExp rxp("(<[Pp].*?>)");
+    //    QRegExp rxi("( [a-zA-Z:]+=)|(\"[^\"]*\")");
     //    QRegExp regP("(<[a-zA-Z]+) [^>]*");  // убирает атрибуты у p Тега
-//    // html атрибуты  (?:[\w]*) *= *"(?:(?:(?:(?:(?:\\\W)*\\\W)*[^"]*)\\\W)*[^"]*")
-//    // все теги </?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)/?>+(.*?|[\s\S]*?)+</?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)/?>
-//    </?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)/?>+(.*?|[\s\S]*?)+</?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)/?>
+    //    // html атрибуты  (?:[\w]*) *= *"(?:(?:(?:(?:(?:\\\W)*\\\W)*[^"]*)\\\W)*[^"]*")
+    //    // все теги </?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)/?>+(.*?|[\s\S]*?)+</?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)/?>
+    //    </?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)/?>+(.*?|[\s\S]*?)+</?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)/?>
     clearText.remove(rx);
     QString tab = "    ";
     clearText.remove(tab);
-//    myDebug() << clearText;
+    //    myDebug() << clearText;
 
 
     return clearText;
@@ -748,7 +748,7 @@ QString getEndOfTag(QString tag)
     QString newtag = tag;
     if(newtag[newtag.length() - 1] != QChar(62))
     {
-//        myDebug() << newtag[newtag.length()-1];
+        //        myDebug() << newtag[newtag.length()-1];
         newtag = newtag + "><";
     }
     return newtag;
@@ -782,5 +782,39 @@ QStringList recursiveFind(QString directory)
     return list;
 }
 //------------------------------------------------------------------------------
+QHash<int, QString> getNoteOfParams(QString curPath,
+                                    QString curModule,
+                                    QString curBook,
+                                    QString curChapter,
+                                    QString firstVerse)
+{
+    QHash<int, QString> hash;
+    Q_UNUSED (firstVerse)
+
+    QString text = getTextFromHtmlFile(curPath);
+    QStringList list;
+    int count = 0;
+    text.remove("<xml>").remove("</xml>");
+
+    list << text.split("</note>");
+    list = removeEmptyQStringFromQStringList(&list);
+    for (int i = 0; i < list.size(); i++)
+    {
+        QString str1 = "module=\"" + curModule + "\"";
+        QString str2 = "book=\"" + curBook + "\"";
+        QString str3 = "chapter=\"" + curChapter + "\"";
+        QString line = list.at(i);
+        if (line.contains(str1) &&
+                line.contains(str2) &&
+                line.contains(str3))
+        {
+            //            QString text = "<note " + str1 + str2 + str3;
+            //            hash[count] = strat.remove(text).remove("</note>");
+            hash[count] = line;
+        }
+    }
+    return hash;
+}
+
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

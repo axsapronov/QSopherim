@@ -8,4 +8,7 @@
         <file>images/qt-logo.png</file>
     </qresource>
     <qresource prefix="/other"/>
+    <qresource prefix="/images">
+        <file>images/img.png</file>
+    </qresource>
 </RCC>

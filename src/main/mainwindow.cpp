@@ -29,7 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     init();
-    debug();
+    loadModulesFromFolder();
+//    debug();
 }
 //------------------------------------------------------------------------------
 MainWindow::~MainWindow()
@@ -45,14 +46,14 @@ void MainWindow::init()
     /// panel init
     GUI_RightPanel = new RightPanel();
     GUI_LeftPanel = new LeftPanel(this);
-    //    GUI_LeftPanel2 = new LeftPanel2(this);
+    GUI_LeftPanel2 = new LeftPanel2(this);
     //    GUI_BottomPanel = new BottomPanel(this);
 
     GUI_RightPanel->setMinimumWidth(200);
     GUI_LeftPanel->setMinimumWidth(200);
     //    GUI_BottomPanel->setMinimumHeight(100);
     addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel);
-    //    addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel2);
+    addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel2);
     //    addDockWidget(Qt::RightDockWidgetArea, GUI_RightPanel);
     //    addDockWidget(Qt::BottomDockWidgetArea, GUI_BottomPanel);
 
@@ -96,29 +97,43 @@ void MainWindow::init()
     createConnects(); // moved func
     trIcon->show();  //display tray
 
+    setMouseTracking(true);
+
 }
 //------------------------------------------------------------------------------
 void MainWindow::debug()
 {
     QStringList fileName;
 
-    fileName << "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
-//    fileName << "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
-//    fileName << "/home/files/Documents/Bible/unrar/NT_Russian_Kassian/Bibleqt.ini";
-//    fileName << "/home/files/Documents/Bible/unrar/Makarij/bibleqt.ini";
+//    fileName << "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
+    //    fileName << "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
+    //    fileName << "/home/files/Documents/Bible/unrar/NT_Russian_Kassian/Bibleqt.ini";
+    //    fileName << "/home/files/Documents/Bible/unrar/Makarij/bibleqt.ini";
 
-    loadModulesFromFolder();
-//    for (int i = 0; i < fileName.size(); i++)
+
+//    QString str;
+//    QString l1 = "module=\"Пятикнижие (перевод архим. Макария)\"";
+//    QString l2
+////    str = "<note module=\"Пятикнижие (перевод архим. Макария)\" book=\"Левит\" chapter=\"3\" versebegin=\"0\" verseend=\"1\">gsadgsad";
+//    myDebug() << str;
+//    if (str.contains(l1) &&
+//            && )
 //    {
-//        prModule->processing(fileName.at(i), OBVCore::Type_BibleQuoteModule);
+//        myDebug() << "yes";
 //    }
+
+//    loadModulesFromFolder();
+    //    for (int i = 0; i < fileName.size(); i++)
+    //    {
+    //        prModule->processing(fileName.at(i), OBVCore::Type_BibleQuoteModule);
+    //    }
 
     // > 62
     // < 60
-//    for (int i = 0; i < 255; i++)
-//    {
-//        myDebug() << QChar(i) << i;
-//    }
+    //    for (int i = 0; i < 255; i++)
+    //    {
+    //        myDebug() << QChar(i) << i;
+    //    }
 }
 //------------------------------------------------------------------------------
 void MainWindow::createConnects()
@@ -152,6 +167,10 @@ void MainWindow::createConnects()
 
     /// other
     connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));
+
+
+    connect(GUI_ModuleViewer, SIGNAL(showNoteList(QString,QString,QString,QString,QString)),
+            GUI_LeftPanel2, SLOT(showNoteList(QString,QString,QString,QString,QString)));
     //    connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));
     //    connect(QO)
     //    connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));
@@ -175,7 +194,7 @@ void MainWindow::showHide(QSystemTrayIcon::ActivationReason r)
 void MainWindow::createTrayIcon()
 {
     trIcon = new QSystemTrayIcon();  //init
-    trIcon->setIcon(QIcon(":/images/img.png"));  //set ico
+    trIcon->setIcon(QIcon(":/images/images/img.png"));  //set ico
 
     trayIconMenu = new QMenu(this);  // create menu
     trayIconMenu->addAction(minimizeAction);
@@ -328,7 +347,7 @@ void MainWindow::openModule()
 //------------------------------------------------------------------------------
 void MainWindow::processFinish()
 {
-//    myDebug() << "Process finish";
+    //    myDebug() << "Process finish";
     //    ProjectQModule* test = new ProjectQModule();
     //    test->setChapterValue(5);
     //    test->setModuleName("fasf");
@@ -354,7 +373,6 @@ void MainWindow::loadModulesFromFolder()
         prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
     }
 }
-
 //------------------------------------------------------------------------------
 void MainWindow::createNote()
 {

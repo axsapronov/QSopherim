@@ -9,7 +9,7 @@ class QModelIndex;
 class QStringListModel;
 
 namespace Ui {
-    class LeftPanel;
+class LeftPanel;
 }
 class ProjectQModuleList;
 class LeftPanel : public QDockWidget
@@ -21,6 +21,7 @@ public:
     ~LeftPanel();
     void refreshBookList(ProjectQModuleList* list);
     void refreshList(ProjectQModuleList* list);
+
 
 private slots:
     void refreshChapterList(QModelIndex);

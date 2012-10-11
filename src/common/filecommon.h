@@ -200,4 +200,9 @@ QString getClearText(QString *text);
 QString getEndOfTag(QString tag);
 QStringList getListModulesFromPath(QString path);
 QStringList recursiveFind(QString directory);
+QHash<int, QString> getNoteOfParams(QString curPath,
+                                    QString curModule,
+                                    QString curBook,
+                                    QString curChapter,
+                                    QString firstVerse);
 #endif // __FILECOMMON__H

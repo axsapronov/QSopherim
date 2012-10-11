@@ -101,6 +101,7 @@ private slots:
 
 protected:
     void closeEvent(QCloseEvent *);
+
 private:
     Ui::MainWindow *ui;
 

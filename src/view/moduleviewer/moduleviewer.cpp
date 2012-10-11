@@ -21,6 +21,7 @@ ModuleViewer::ModuleViewer(QWidget *parent) :
 
     ui->setupUi(this);
     init();
+
 }
 //------------------------------------------------------------------------------
 ModuleViewer::~ModuleViewer()
@@ -193,6 +194,8 @@ void ModuleViewer::init()
     createConnects();
 
     ui->viewer->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    setMouseTracking(true);
     loadViewSettings();
 }
 //------------------------------------------------------------------------------
@@ -290,6 +293,7 @@ void ModuleViewer::setCurLine()
     cursor.setPosition(end, QTextCursor::KeepAnchor);
     lastSelectLineLast = cursor.blockNumber();
 
+    showNoteList();
 //    myDebug() << "start: " << firstLine << " end: " << lastLine;
 }
 ////------------------------------------------------------------------------------
@@ -323,6 +327,32 @@ void ModuleViewer::setLastSelectLineLast(int firstlast)
     lastSelectLineLast = firstlast;
 }
 //------------------------------------------------------------------------------
+void ModuleViewer::mouseMoveEvent(QMouseEvent *ev)
+{
+//    myDebug() << ev->pos();
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::showNoteList()
+{
+    /* по названию модуля
+     * книги
+     *главы
+     *и номера начального стиха
+     *получаем список заметок
+     *создаем лист для каждой из заметок
+     *в элемент листа пишем по 50 первых символов
+     *при нажатии на элемент листа
+     *открываем диалог с редактированием заметки
+     */
+    QString path = curPath;
+    path.replace("text.xml", "notes.xml");
+    emit showNoteList(curModule,
+                      curBook,
+                      curChapter,
+                      path,
+                      QString::number(lastSelectLineFirst));
+
+}
 //------------------------------------------------------------------------------
 
 
