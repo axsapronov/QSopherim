@@ -285,6 +285,7 @@ void ModuleViewer::setCurLine()
         return; // No selection available
 
     cursor.setPosition(start);
+    /// first line is empty
     lastSelectLineFirst = cursor.blockNumber();
     cursor.setPosition(end, QTextCursor::KeepAnchor);
     lastSelectLineLast = cursor.blockNumber();

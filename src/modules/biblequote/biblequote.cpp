@@ -391,7 +391,6 @@ int BibleQuoteModule::readBook(const int id)
             if(chapterstarted == true && line.contains(m_chapterSign))
             {
                 ccount2++;
-                //                                myDebug() << out;
                 out = line;
             }
             else if(chapterstarted == true)
@@ -437,10 +436,13 @@ int BibleQuoteModule::readBook(const int id)
     {
         Chapter c(i);
         const QStringList rawVerseList = chapterText.at(i + 1).split(m_verseSign);
-        for(int j = 0; j < rawVerseList.size(); j++)
+        for(int j = 0; j < rawVerseList.size() - 1; j++)
         {
             // split removes versesign but it is needed
-            QString verseText = rawVerseList.at(j);
+            QString verseText = rawVerseList.at(j + 1);
+
+//            if (!verseText.contains(m_verseSign))
+//                verseText = "";
             //            myDebug() << verseText;
 
             if(verseText.contains("<p>") && !verseText.contains("</p>"))
