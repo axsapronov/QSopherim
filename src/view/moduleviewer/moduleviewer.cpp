@@ -9,6 +9,8 @@
 #include <QContextMenuEvent>
 #include <QXmlStreamReader>
 
+#include <QTextCursor>
+#include <QTextDocumentFragment>
 
 static ModuleViewer *static_viewer = 0;
 
@@ -19,7 +21,6 @@ ModuleViewer::ModuleViewer(QWidget *parent) :
 
     ui->setupUi(this);
     init();
-
 }
 //------------------------------------------------------------------------------
 ModuleViewer::~ModuleViewer()
@@ -100,7 +101,11 @@ void ModuleViewer::showContextMenu(QPoint pt)
 
     menu->addSeparator();
 //    QString str = curBook + ":" + curChapter;
-    QAction *act = new QAction(QString(curBook + ":" + curChapter), this);
+    QAction *act = new QAction(QString(curModule
+                                       + " : "
+                                       + curBook
+                                       + " : "
+                                       + curChapter), this);
 
 // bold text
 //    QTextDocument *document = ui->viewer->document();
@@ -145,7 +150,6 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
             QStringList sl;
             sl << xmlReader.name().toString();
             QXmlStreamAttributes attrs = xmlReader.attributes();
-//            myDebug() << "yes0" << nameBook << attrs.value("name");
             if (attrs.value("name") == nameBook)
             {
                 while(!xmlReader.atEnd() and !flag)
@@ -163,11 +167,10 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
             }
         }
         xmlReader.readNext();
-//        xmlReader.readNext();
     }
     curBook = nameBook;
+    curPath = pathToFile;
     curChapter = QString::number(numberchapter);
-
 }
 //------------------------------------------------------------------------------
 //void ModuleViewer::getTextChapter(QString pathToFile, QString nameBook, int numberchapter)
@@ -196,20 +199,118 @@ void ModuleViewer::createConnects()
 {
     connect(ui->viewer, SIGNAL(customContextMenuRequested(QPoint)),
             this,SLOT(showContextMenu(QPoint)));
-
+    connect(ui->viewer, SIGNAL(selectionChanged()), SLOT(setCurLine()));
+//    connect(ui->viewer, SIGNAL(textChanged()), SLOT(setCurLine()));
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::loadViewSettings()
 {
     ui->viewer->setFontFamily(Config::configuration()->getFontFamily());
     ui->viewer->setFontPointSize(Config::configuration()->getFontSize());
-
-
 }
 //------------------------------------------------------------------------------
+void ModuleViewer::setModuleName(QString newModule)
+{
+    curModule = newModule;
+}
+//------------------------------------------------------------------------------
+QString ModuleViewer::getModuleName()
+{
+    return curModule;
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::setBookName(QString newBook)
+{
+    curBook = newBook;
+}
+//------------------------------------------------------------------------------
+QString ModuleViewer::getBookName()
+{
+    return curBook;
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::setChapterValue(QString newChap)
+{
+    curChapter = newChap;
+}
+//------------------------------------------------------------------------------
+QString ModuleViewer::getChapterValue()
+{
+    return curChapter;
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::setPath(QString newPath)
+{
+    curPath = newPath;
+}
+//------------------------------------------------------------------------------
+QString ModuleViewer::getPath()
+{
+    return curPath;
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::setCurLine()
+{
+/// count select lines
+//    QTextCursor cursor = ui->viewer->textCursor();
+//    int selectedLines = 0; //<--- this is it
+//    if(!cursor.selection().isEmpty())
+//    {
+//        QString str = cursor.selection().toPlainText();
+//        selectedLines = str.count("\n")+1;
+//    }
+
+//    myDebug() << selectedLines;
+
+/// current line
+//    QTextCursor cursor      = ui->viewer->textCursor();
+////     Current line text
+////    QString cur_line_text   = cursor.block().text().trimmed();
+
+//    // Current line
+//    int     cur_line_number = cursor.blockNumber();
+
+//    // Current column
+//    int     cur_line_column = cursor.columnNumber();
+
+//    myDebug() << cur_line_number << cur_line_column;
 
 
+    QTextCursor cursor = ui->viewer->textCursor();
+    int start = cursor.selectionStart();
+    int end = cursor.selectionEnd();
+
+    if(!cursor.hasSelection())
+        return; // No selection available
+
+    cursor.setPosition(start);
+    lastSelectLineFirst = cursor.blockNumber();
+    cursor.setPosition(end, QTextCursor::KeepAnchor);
+    lastSelectLineLast = cursor.blockNumber();
+
+//    myDebug() << "start: " << firstLine << " end: " << lastLine;
+}
+//------------------------------------------------------------------------------
+int ModuleViewer::getLastSelectLineFirst()
+{
+    return lastSelectLineFirst;
+}
+//------------------------------------------------------------------------------
+int ModuleViewer::getLastSelectLineLast()
+{
+    return lastSelectLineLast;
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::setLastSelectLineFirst(int firstlast)
+{
+    lastSelectLineFirst = firstlast;
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::setLastSelectLineLast(int firstlast)
+{
+    lastSelectLineLast = firstlast;
+}
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
+
 

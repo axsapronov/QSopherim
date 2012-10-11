@@ -13,6 +13,21 @@ class QAction;
 class QMenu;
 QT_END_NAMESPACE
 
+
+#include "settings.h"
+#include "about.h" /// aboutdialog
+#include "leftpanel.h" /// leftPanel
+#include "leftpanel2.h"
+#include "rightpanel.h" /// rightPanel
+#include "bottompanel.h" /// bottomPanel
+#include "moduleviewer.h"
+#include "processmodule.h"
+#include "moduledefinition.h"
+#include "debughelper.h"
+#include "projectqmodulelist.h"
+#include "noteeditor.h"
+
+
 class AboutDialog;
 class Settings;
 class LeftPanel;
@@ -21,6 +36,7 @@ class RightPanel;
 class BottomPanel;
 class ModuleViewer;
 class ProcessModule;
+class NoteEditor;
 
 class MainWindow : public QMainWindow
 {
@@ -81,6 +97,8 @@ private slots:
 
     void processFinish();
 
+    void createNote();
+
 protected:
     void closeEvent(QCloseEvent *);
 private:
@@ -94,6 +112,7 @@ private:
     LeftPanel2 *GUI_LeftPanel2;
     BottomPanel *GUI_BottomPanel;
     ModuleViewer *GUI_ModuleViewer;
+    NoteEditor *GUI_NoteEditor;
 
     //tray
     QSystemTrayIcon *trIcon;
@@ -104,6 +123,8 @@ private:
     QAction *quitAction;
 
     ProcessModule* prModule;
+
+
 
     void loadModulesFromFolder();
 

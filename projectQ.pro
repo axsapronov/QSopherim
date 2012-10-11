@@ -35,7 +35,8 @@ DEPENDPATH += \
          src/core/verse \
          src/core/verse/versification \
          src/core/link \
-         src/xmlread/
+         src/xmlread/ \
+         src/note
 
 INCLUDEPATH += \
          src/main \
@@ -60,7 +61,8 @@ INCLUDEPATH += \
          src/core/verse/versification \
          src/core/link \
          src/view/module \
-         src/xmlread/
+         src/xmlread/ \
+         src/note
 
 SOURCES  += \
          main.cpp \
@@ -104,6 +106,7 @@ SOURCES  += \
 #    src/xmlread/projectqxmlhandler.cpp \
 #         csaxhandler.cpp \
 #         cnode.cpp
+    src/note/noteeditor.cpp
 
 
 HEADERS  += \
@@ -149,6 +152,7 @@ HEADERS  += \
 #    src/xmlread/projectqxmlhandler.h \
 #         csaxhandler.h \
 #         cnode.h
+    src/note/noteeditor.h
 
 FORMS    += \
          mainwindow.ui \
@@ -158,7 +162,8 @@ FORMS    += \
          rightpanel.ui \
          bottompanel.ui \
          leftpanel2.ui \
-         moduleviewer.ui
+         moduleviewer.ui \
+    src/note/noteeditor.ui
 
 RESOURCES += \
     resources/resources.qrc

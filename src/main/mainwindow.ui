@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>503</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="mFile">
@@ -70,11 +70,18 @@
     <addaction name="action_About_About_Qt"/>
     <addaction name="action_About_Site"/>
    </widget>
+   <widget class="QMenu" name="menuOther">
+    <property name="title">
+     <string>Other</string>
+    </property>
+    <addaction name="actionAction_Other_Create_Note"/>
+   </widget>
    <addaction name="mFile"/>
    <addaction name="mView"/>
    <addaction name="mSettings"/>
    <addaction name="mSearch"/>
    <addaction name="mAbout"/>
+   <addaction name="menuOther"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -83,6 +90,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="action_Settings_General"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="toolBar">
@@ -95,6 +103,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionAction_Other_Create_Note"/>
   </widget>
   <action name="action_About_Help">
    <property name="text">
@@ -237,6 +246,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionAction_Other_Create_Note">
+   <property name="text">
+    <string>Create note</string>
    </property>
   </action>
  </widget>

@@ -150,6 +150,7 @@ void LeftPanel::showChapter(QModelIndex ind)
     t_pathToModule.replace("module.ini", "text.xml");
 
 //    myDebug() << lastNameOfBook;
+    ModuleViewer::viewer()->setModuleName(ui->comBModules->currentText());
     ModuleViewer::viewer()->showChapter(t_pathToModule, lastNameOfBook,
                                         ind.row() + 1);
 

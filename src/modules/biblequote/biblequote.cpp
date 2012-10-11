@@ -45,7 +45,7 @@ void BibleQuoteModule::parseModule(QString pathToModule)
     }
     else
     {
-        myDebug() << "This module is exist";
+//        myDebug() << "This module is exist";
     }
 
 }
@@ -438,7 +438,8 @@ int BibleQuoteModule::readBook(const int id)
         Chapter c(i);
         const QStringList rawVerseList = chapterText.at(i + 1).split(m_verseSign);
         for(int j = 0; j < rawVerseList.size(); j++)
-        { //split removes versesign but it is needed
+        {
+            // split removes versesign but it is needed
             QString verseText = rawVerseList.at(j);
             //            myDebug() << verseText;
 

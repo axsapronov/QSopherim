@@ -19,21 +19,8 @@
 #include <QDesktopWidget> /// moved to center
 
 #include "defines.h" /// defines
-#include "about.h" /// aboutdialog
-#include "settings.h"
 #include "config.h"
-
 #include "filecommon.h"
-
-#include "leftpanel.h" /// leftPanel
-#include "leftpanel2.h"
-#include "rightpanel.h" /// rightPanel
-#include "bottompanel.h" /// bottomPanel
-#include "moduleviewer.h"
-#include "processmodule.h"
-#include "moduledefinition.h"
-#include "debughelper.h"
-#include "projectqmodulelist.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -73,6 +60,7 @@ void MainWindow::init()
 
 
     GUI_ModuleViewer = new ModuleViewer(this);
+    GUI_NoteEditor = new NoteEditor(this);
     setCentralWidget(GUI_ModuleViewer);
     /// load settings
     // replace to QString t_lang = GUI_Settings->getAppLang()
@@ -154,6 +142,8 @@ void MainWindow::createConnects()
     // menu search
 
 
+    // toolbar
+    connect(ui->actionAction_Other_Create_Note, SIGNAL(triggered()), SLOT(createNote()));
     // menu about
     connect(ui->action_About_About, SIGNAL(triggered()), GUI_About, SLOT(show()));
     connect(ui->action_About_About_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
@@ -338,7 +328,7 @@ void MainWindow::openModule()
 //------------------------------------------------------------------------------
 void MainWindow::processFinish()
 {
-    myDebug() << "Process finish";
+//    myDebug() << "Process finish";
     //    ProjectQModule* test = new ProjectQModule();
     //    test->setChapterValue(5);
     //    test->setModuleName("fasf");
@@ -366,4 +356,12 @@ void MainWindow::loadModulesFromFolder()
 }
 
 //------------------------------------------------------------------------------
+void MainWindow::createNote()
+{
+    GUI_NoteEditor->setPath(GUI_ModuleViewer->getPath());
+    GUI_NoteEditor->setModuleName(GUI_ModuleViewer->getModuleName());
+    GUI_NoteEditor->setBookName(GUI_ModuleViewer->getBookName());
+    GUI_NoteEditor->setChapterValue(GUI_ModuleViewer->getChapterValue());
+    GUI_NoteEditor->show();
+}
 //------------------------------------------------------------------------------

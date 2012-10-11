@@ -22,10 +22,29 @@ public:
 
     static ModuleViewer *viewer();
 
+    void setModuleName(QString newModule);
+    QString getModuleName();
+
+    void setBookName(QString newmodule);
+    QString getBookName();
+
+    void setChapterValue(QString newchapter);
+    QString getChapterValue();
+
+    void setPath(QString newPath);
+    QString getPath();
+
     void showChapter(QString pathToFile, QString nameBook, int numberchapter);
+
+    int getLastSelectLineFirst();
+    void setLastSelectLineFirst(int firstlast);
+
+    int getLastSelectLineLast();
+    void setLastSelectLineLast(int lastlast);
 
 private slots:
     void showContextMenu(QPoint pt);
+    void setCurLine();
 protected:
 //    void contextMenuEvent(QContextMenuEvent *event);
 
@@ -40,8 +59,13 @@ private:
     void createConnects();
     void loadViewSettings();
 
+    QString curModule;
     QString curBook;
     QString curChapter;
+    QString curPath;
+    int lastSelectLineFirst;
+    int lastSelectLineLast;
+
 //    void getTextChapter(QString pathToFile, QString nameBook, int numberchapter);
 
     void createActions();
