@@ -21,6 +21,7 @@ public:
     void setPath(QString name);
     void setFirstVerse(QString first);
     void setLastVerse(QString last);
+    void editNote(QString text);
 
 private slots:
     void saveNote();

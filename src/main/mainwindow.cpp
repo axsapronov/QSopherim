@@ -171,6 +171,7 @@ void MainWindow::createConnects()
 
     connect(GUI_ModuleViewer, SIGNAL(showNoteList(QString,QString,QString,QString,QString)),
             GUI_LeftPanel2, SLOT(showNoteList(QString,QString,QString,QString,QString)));
+
     //    connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));
     //    connect(QO)
     //    connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));

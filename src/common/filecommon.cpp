@@ -806,7 +806,8 @@ QHash<int, QString> getNoteOfParams(QString curPath,
         QString line = list.at(i);
         if (line.contains(str1) &&
                 line.contains(str2) &&
-                line.contains(str3))
+                line.contains(str3) &&
+                getVerseNumberFromNote(&line) == firstVerse)
         {
             //            QString text = "<note " + str1 + str2 + str3;
             //            hash[count] = strat.remove(text).remove("</note>");
@@ -820,4 +821,16 @@ QHash<int, QString> getNoteOfParams(QString curPath,
 }
 
 //------------------------------------------------------------------------------
+QString getVerseNumberFromNote(QString* line)
+{
+
+    QString str = *line;
+    QString t_str ="versebegin=\"";
+    int pos = str.indexOf(t_str);
+    int pos2 = str.indexOf("\"", pos + t_str.length());
+
+    str = str.mid(pos + t_str.length(), pos2  - pos - t_str.length());
+    return str;
+}
+
 //------------------------------------------------------------------------------

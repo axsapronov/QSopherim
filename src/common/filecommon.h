@@ -205,4 +205,5 @@ QHash<int, QString> getNoteOfParams(QString curPath,
                                     QString curBook,
                                     QString curChapter,
                                     QString firstVerse);
+QString getVerseNumberFromNote(QString* line);
 #endif // __FILECOMMON__H

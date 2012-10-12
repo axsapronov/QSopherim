@@ -136,3 +136,9 @@ void NoteEditor::setLastVerse(QString last)
     m_verseLast = last;
 }
 //------------------------------------------------------------------------------
+void NoteEditor::editNote(QString text)
+{
+    ui->textEditor->setPlainText(text);
+    show();
+}
+//------------------------------------------------------------------------------
