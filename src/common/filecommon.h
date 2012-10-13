@@ -10,11 +10,30 @@
 
 #include <QHash>
 #include <QDirIterator>
+#include <QXmlStreamReader>
 
 #include <QDebug>
 #include "book.h"
 #include "projectqmodule.h" /// ProjectQModuleInfo
 
+
+typedef struct StrongList
+{
+    int number;
+    QString text;
+} StrongList;
+
+//class StrongList
+//{
+//public:
+//    StrongList()
+//    {
+
+//    };
+
+//    int number;
+//    QString text;
+//};
 
 /**
   \brief
@@ -206,4 +225,8 @@ QHash<int, QString> getNoteOfParams(QString curPath,
                                     QString curChapter,
                                     QString firstVerse);
 QString getVerseNumberFromNote(QString* line);
+QVector<StrongList> getListStrongs(QString path);
+void createListStrongs(QString path);
+void writeXmlStrongFile(QHash<int, StrongList> *strong);
+QString getCoolLine(QString str);
 #endif // __FILECOMMON__H

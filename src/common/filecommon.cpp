@@ -717,9 +717,14 @@ QStringList removeEmptyQStringFromQStringList(QStringList *list)
     QStringList listn;
     for(int i = 0; i < list->size(); i++)
     {
-        if(!list->at(i).isEmpty())
+        if(!list->at(i).isEmpty()
+                && list->at(i) != ""
+                && list->at(i) != " ")
+        {
             listn << list->at(i);
+        }
     }
+    //    myDebug() << listn;
     return listn;
 }
 //------------------------------------------------------------------------------
@@ -832,5 +837,104 @@ QString getVerseNumberFromNote(QString* line)
     str = str.mid(pos + t_str.length(), pos2  - pos - t_str.length());
     return str;
 }
+//------------------------------------------------------------------------------
+QVector<StrongList> getListStrongs(QString pathToFile)
+{
+    QVector<StrongList> list;
+    QXmlStreamReader xmlReader;
+    xmlReader.addData(getTextFromHtmlFile(pathToFile));
 
+
+    while(!xmlReader.atEnd())
+    {
+        if(xmlReader.isStartElement())
+        {
+            StrongList t_list;
+            QXmlStreamAttributes attrs = xmlReader.attributes();
+            if (xmlReader.name().toString() == "strong")
+            {
+                t_list.number = attrs.value("number").toString().toInt();
+                QString str = xmlReader.readElementText();
+                str.remove("    ");
+                t_list.text = str;
+            }
+            list.push_back(t_list);
+        }
+        xmlReader.readNext();
+    }
+
+    return list;
+}
+//------------------------------------------------------------------------------
+void createListStrongs(QString path)
+{
+    QString text = getTextFromHtmlFile(path);
+    QStringList list;
+    QHash<int, StrongList> strong;
+    list = text.split("<h4>");
+
+    for (int i = 0; i < list.size() - 1; i++)
+    {
+        QString line = list.at(i + 1);
+        QStringList t_strong;
+        t_strong = line.split("</h4>");
+        StrongList t_list;
+        t_list.number = t_strong.at(0).toInt();
+        t_list.text = getCoolLine(t_strong.at(1));
+        strong[i] = t_list;
+    }
+    writeXmlStrongFile(&strong);
+}
+//------------------------------------------------------------------------------
+void writeXmlStrongFile(QHash<int, StrongList> *strong)
+{
+    QString path;
+    path = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/strongs/strong.xml";
+    QFile file(path);
+    if (file.exists())
+        file.remove();
+
+    if(file.open(QIODevice::WriteOnly))
+    {
+        QString tab = "    ";
+        QTextStream ts(&file);
+        ts.setCodec(getCodecOfEncoding("UTF-8"));
+        ts << "<xml>" << endl;
+
+        for (int i = 0; i < strong->size(); i++)
+        {
+            ///    <strong number='value'> text </strong>
+            StrongList t_list = strong->value(i);
+            ts << tab
+               << "<strong number=\""
+               << t_list.number
+               << "\">"
+               << t_list.text
+               << tab << "</strong>"
+               << endl;
+        }
+        ts << "</xml>" << endl;
+    }
+}
+//------------------------------------------------------------------------------
+QString getCoolLine(QString str)
+{
+    QString t_str = getClearText(&str);
+
+    QStringList list;
+    list << t_str.split("\n");
+    list = removeEmptyQStringFromQStringList(&list);
+    //    myDebug() << list;
+    QString tab = "    ";
+    t_str = "";
+    for (int i = 0; i < list.size(); i++)
+    {
+        if (!list.at(i).isEmpty())
+        {
+            //            myDebug() << list.at(i);
+            t_str.append(QString(tab + tab + list.at(i)));
+        }
+    }
+    return t_str;
+}
 //------------------------------------------------------------------------------

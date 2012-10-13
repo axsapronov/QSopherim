@@ -2,10 +2,13 @@
 #define MODULEVIEWER_H
 
 #include <QWidget>
+class StrongList;
 
 namespace Ui {
 class ModuleViewer;
 }
+
+
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -42,6 +45,8 @@ public:
     QString getLastSelectLineLast();
     void setLastSelectLineLast(int lastlast);
 
+    void setStrongList(QString path);
+
 signals:
     void showNoteList(QString, QString, QString, QString, QString);
 
@@ -55,6 +60,9 @@ protected:
 
 private:
     Ui::ModuleViewer *ui;
+
+
+    QVector<StrongList> m_list;
 
     QAction *cutAct;
     QAction *copyAct;
@@ -72,7 +80,9 @@ private:
     int lastSelectLineLast;
 
     void showNoteList();
+    void showStrong();
 
+//    QHash<int, QHash<QString, QString> > getListStrongWord(QString word);
     //    void getTextChapter(QString pathToFile, QString nameBook, int numberchapter);
 
 };

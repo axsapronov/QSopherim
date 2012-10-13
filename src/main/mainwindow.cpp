@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     init();
     loadModulesFromFolder();
-//    debug();
+    debug();
 }
 //------------------------------------------------------------------------------
 MainWindow::~MainWindow()
@@ -118,6 +118,17 @@ void MainWindow::debug()
     //    fileName << "/home/files/Documents/Bible/unrar/NT_Russian_Kassian/Bibleqt.ini";
     //    fileName << "/home/files/Documents/Bible/unrar/Makarij/bibleqt.ini";
 
+    QString fileStrong;
+    fileStrong = "/home/files/Documents/Bible/oteh/Strongs/HEBREW.HTM";
+    createListStrongs(fileStrong);
+    fileStrong = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/strongs/strong.xml";
+    GUI_ModuleViewer->setStrongList(fileStrong);
+
+//    QString str = "";
+//    if (str.isEmpty())
+//    {
+//        myDebug() << "yes";
+//    }
 
 //    QString str;
 //    QString l1 = "module=\"Пятикнижие (перевод архим. Макария)\"";

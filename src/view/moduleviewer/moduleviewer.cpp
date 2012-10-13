@@ -147,6 +147,11 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
     QXmlStreamReader xmlReader;
     xmlReader.addData(getTextFromHtmlFile(pathToFile));
 
+    /* если есть стронги,
+     *то надо их при чтении xml'я
+     *обрабатыванит и приписывать соответств слову
+     */
+
     bool flag = false;
     while(!xmlReader.atEnd() and !flag)
     {
@@ -298,6 +303,7 @@ void ModuleViewer::setCurLine()
     lastSelectLineLast = cursor.blockNumber();
 
     showNoteList();
+//    showStrong();
 //    myDebug() << "start: " << firstLine << " end: " << lastLine;
 }
 ////------------------------------------------------------------------------------
@@ -383,5 +389,47 @@ bool ModuleViewer::eventFilter(QObject *obj, QEvent *event)
 //void ModuleViewer::mouseMoveEvent(QMouseEvent *ev)
 //{
 //    myDebug() << ev->pos();
+//}
+//------------------------------------------------------------------------------
+void ModuleViewer::showStrong()
+{
+
+    /* по слову
+     *получаем список стронгов
+     * добавляем текст в label
+     */
+
+    QString path = curPath;
+//        fileName << "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
+//    QString path = "/home/files/Documents/Bible/strong/strong/"
+//    QString path = curPath;
+//    path.replace("text.xml", "notes.xml");
+
+
+//    emit showNoteList(curModule,
+//                      curBook,
+//                      curChapter,
+//                      path,
+//                      QString::number(lastSelectLineFirst));
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::setStrongList(QString path)
+{
+    m_list = getListStrongs(path);
+    int i = 5;
+//    myDebug() << m_list.size() << m_list.at(i).number
+//                 << m_list.at(i).text;
+}
+//------------------------------------------------------------------------------
+//QHash<int, QHash<QString, QString> > ModuleViewer::getListStrongWord(QString word)
+//{
+////    int count = 0;
+//    QHash<int, QString> list;
+////    for(int i = 0; i < m_list.size(); i++)
+////    {
+////        list[count] = m_list[i][word];
+////    }
+
+//    return list;
 //}
 //------------------------------------------------------------------------------
