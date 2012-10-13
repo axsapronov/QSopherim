@@ -50,7 +50,8 @@ private slots:
     void setCurLine();
 protected:
     //    void contextMenuEvent(QContextMenuEvent *event);
-    void mouseMoveEvent (QMouseEvent* event);
+    bool eventFilter(QObject *obj, QEvent *ev);
+//    void mouseMoveEvent (QMouseEvent* event);
 
 private:
     Ui::ModuleViewer *ui;

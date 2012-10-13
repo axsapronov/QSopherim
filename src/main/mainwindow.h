@@ -27,17 +27,6 @@ QT_END_NAMESPACE
 #include "projectqmodulelist.h"
 #include "noteeditor.h"
 
-
-class AboutDialog;
-class Settings;
-class LeftPanel;
-class LeftPanel2;
-class RightPanel;
-class BottomPanel;
-class ModuleViewer;
-class ProcessModule;
-class NoteEditor;
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -101,6 +90,7 @@ private slots:
 
 protected:
     void closeEvent(QCloseEvent *);
+//    void mouseMoveEvent(QMouseEvent *);
 
 private:
     Ui::MainWindow *ui;

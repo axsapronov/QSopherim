@@ -20,6 +20,10 @@ ModuleViewer::ModuleViewer(QWidget *parent) :
 {
 
     ui->setupUi(this);
+//    setMouseTracking(true);
+    ui->viewer->viewport()->setMouseTracking(true);
+//    setMouseTracking(true);
+//    ui->viewer->viewport()->installEventFilter(this);
     init();
 
 }
@@ -195,7 +199,7 @@ void ModuleViewer::init()
 
     ui->viewer->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    setMouseTracking(true);
+//    setMouseTracking(true);
     loadViewSettings();
 }
 //------------------------------------------------------------------------------
@@ -327,11 +331,6 @@ void ModuleViewer::setLastSelectLineLast(int firstlast)
     lastSelectLineLast = firstlast;
 }
 //------------------------------------------------------------------------------
-void ModuleViewer::mouseMoveEvent(QMouseEvent *ev)
-{
-//    myDebug() << ev->pos();
-}
-//------------------------------------------------------------------------------
 void ModuleViewer::showNoteList()
 {
     /* по названию модуля
@@ -354,5 +353,35 @@ void ModuleViewer::showNoteList()
 
 }
 //------------------------------------------------------------------------------
-
-
+bool ModuleViewer::eventFilter(QObject *obj, QEvent *event)
+{
+    if(event->type() == QEvent::MouseMove)
+    {
+//        QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+//        myDebug() << mEvent->pos();
+        setCurLine();
+        return true;
+    }
+    if (event->type() == QEvent::MouseButtonPress)
+    {
+        setCurLine();
+        return true;
+    }
+    if (event->type() == QEvent::MouseButtonRelease)
+    {
+        setCurLine();
+        return true;
+    }
+//    if (event->type() == QEvent::MouseTrackingChange)
+//    {
+//        setCurLine();
+//        return true;
+//    }
+    else return QObject::eventFilter(obj, event);
+}
+//------------------------------------------------------------------------------
+//void ModuleViewer::mouseMoveEvent(QMouseEvent *ev)
+//{
+//    myDebug() << ev->pos();
+//}
+//------------------------------------------------------------------------------

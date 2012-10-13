@@ -60,9 +60,15 @@ void MainWindow::init()
     prModule = new ProcessModule();
 
 
+//    ui->centralWidget->setMouseTracking(true);
     GUI_ModuleViewer = new ModuleViewer(this);
     GUI_NoteEditor = new NoteEditor(this);
-    setCentralWidget(GUI_ModuleViewer);
+
+//    GUI_ModuleViewer->setMouseTracking(true);
+    this->setCentralWidget(GUI_ModuleViewer);
+//    centralWidget()->setAttribute(Qt::WA_TransparentForMouseEvents);
+//    setMouseTracking(true);
+
     /// load settings
     // replace to QString t_lang = GUI_Settings->getAppLang()
     // and switch t_lang?
@@ -97,7 +103,9 @@ void MainWindow::init()
     createConnects(); // moved func
     trIcon->show();  //display tray
 
-    setMouseTracking(true);
+//    setMouseTracking(true);
+//    qApplicationobject->installEventFilter(this);
+//    qApp->installEventFilter(this);
 
 }
 //------------------------------------------------------------------------------
@@ -309,6 +317,19 @@ void MainWindow::closeEvent(QCloseEvent *e)
     saveSettings();
     e -> accept();
 }
+//------------------------------------------------------------------------------
+//void MainWindow::mouseMoveEvent(QMouseEvent *e)
+//{
+//    //    myDebug()<< "closeEvent()";
+////    saveSettings();
+////    e -> accept();
+////    int x = e->pos().x() - GUI_NoteEditor->geometry().x();
+////    int y = e->pos().y() - GUI_NoteEditor->geometry().y();
+//////    myDebug() << e->pos() - GUI_NoteEditor->geometry().x;
+////    myDebug() << e->pos();
+////    myDebug() << x << y;
+////    GUI_NoteEditor->mouseMoveEvent(e);
+//}
 //------------------------------------------------------------------------------
 void MainWindow::saveSettings()
 {

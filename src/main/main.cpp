@@ -16,7 +16,6 @@ int main(int argc, char *argv[])
 //    a.setOrganizationName(GL_AUTHOR);
     a.setApplicationName(GL_PROG_NAME);
 
-
     Config *conf = new Config();
     conf -> setAppDir(QDir::currentPath() + "/");
     conf -> loadSettings();
