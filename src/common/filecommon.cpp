@@ -981,4 +981,17 @@ QString getNextWord(QString str, int pos)
     return t_str;
 }
 //------------------------------------------------------------------------------
+QString getShortLang(QString str)
+{
+    if (str == "Russian")
+        return "ru";
+    if (str == "English")
+        return "en";
+    if (str == "Deutch")
+        return "de";
+    if (str == "Français")
+        return "fr";
+
+    return "en";
+}
 //------------------------------------------------------------------------------

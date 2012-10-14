@@ -25,7 +25,7 @@ ModuleViewer::ModuleViewer(QWidget *parent) :
     //    setMouseTracking(true);
     //    ui->viewer->viewport()->installEventFilter(this);
     init();
-//    debug();
+    //    debug();
 
 }
 //------------------------------------------------------------------------------
@@ -175,8 +175,8 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
                         str.remove("    ");
                         if (strong)
                         {
-//                            str.replace(",", ", ")
-//                                    .replace(".", ". ");
+                            //                            str.replace(",", ", ")
+                            //                                    .replace(".", ". ");
                             str = fillStrongList(str);
                         }
                         ui->viewer->setText(str);
@@ -446,16 +446,21 @@ QString ModuleViewer::fillStrongList(QString str)
 {
     int r = 0;
     QString t_str = "";
-    QString ret = str;
+
     //    str.remove("\n").remove("\r");
     bool flag = false;
-//    bool flag2 = false;
+    //    bool flag2 = false;
     bool flag3 = false;
     int count;
     int precount;
     QVector<int> vect;
 
-//    str.replace(QRegExp("\d,"))
+    //    str.replace(QRegExp("\d,"))
+    str.replace(",", " ,");
+    str.replace(".", " .");
+    str.replace(":", " :");
+    QString ret = str;
+
     while (str.length() > r)
     {
         flag = false;
@@ -477,7 +482,7 @@ QString ModuleViewer::fillStrongList(QString str)
         if(flag3 && !flag)
         {
             m_strongs[t_str] = vect;
-            myDebug() << vect.size() << t_str;
+//            myDebug() << vect.size() << t_str;
             vect.clear();
             flag3 = false;
         }
@@ -489,10 +494,10 @@ QString ModuleViewer::fillStrongList(QString str)
 //------------------------------------------------------------------------------
 void ModuleViewer::debug()
 {
-//    QString str =
-        QString str;
-//        str = "сотворил 01254 0333 0332 Бог ";
-        str = "В начале 07225 сотворил 01254 08804 0853 Бог 0430 небо 08064 и 0853 землю 0776.";
+    //    QString str =
+    QString str;
+    //        str = "сотворил 01254 0333 0332 Бог ";
+    str = "В начале 07225 сотворил 01254 08804 0853 Бог 0430 небо 08064 и 0853 землю 0776.";
 
     fillStrongList(str);
 }

@@ -18,6 +18,8 @@
 #include <QDesktopServices> /// tray
 #include <QDesktopWidget> /// moved to center
 
+#include <QTranslator>
+
 #include "defines.h" /// defines
 #include "config.h"
 #include "filecommon.h"
@@ -258,11 +260,21 @@ void MainWindow::setLangEn()
     QString t_lang = "English";
     if (Config::configuration()->getAppLang() != t_lang)
     {
+        /// remove translate
+        QString lan = "projectQ_" + getShortLang(Config::configuration()->getAppLang());
+        QTranslator translator2;
+        translator2.load(lan,":lang/lang");
+
+        qApp->removeTranslator(&translator2);
+        ui->retranslateUi(this);
+
+        /// set new translate
         Config::configuration()->setAppLang(t_lang);
-        QMessageBox msgBox;
-        msgBox.setText("Settings has been modified. Please restart the"
-                       "application for the entry into force of the settings");
-        msgBox.exec();
+        QTranslator translator;
+        lan = "projectQ_" + getShortLang(t_lang);
+        translator.load(lan,":lang/lang");
+        qApp->installTranslator(&translator);
+        ui->retranslateUi(this);
     }
 }
 
@@ -276,11 +288,21 @@ void MainWindow::setLangRu()
     QString t_lang = "Russian";
     if (Config::configuration()->getAppLang() != t_lang)
     {
+        /// remove translate
+        QString lan = "projectQ_" + getShortLang(Config::configuration()->getAppLang());
+        QTranslator translator2;
+        translator2.load(lan,":lang/lang");
+
+        qApp->removeTranslator(&translator2);
+        ui->retranslateUi(this);
+
+        /// set new translate
         Config::configuration()->setAppLang(t_lang);
-        QMessageBox msgBox;
-        msgBox.setText("Settings has been modified. Please restart the"
-                       "application for the entry into force of the settings");
-        msgBox.exec();
+        QTranslator translator;
+        lan = "projectQ_" + getShortLang(t_lang);
+        translator.load(lan,":lang/lang");
+        qApp->installTranslator(&translator);
+        ui->retranslateUi(this);
     }
 }
 //------------------------------------------------------------------------------
@@ -293,11 +315,21 @@ void MainWindow::setLangDe()
     QString t_lang = "Deutch";
     if (Config::configuration()->getAppLang() != t_lang)
     {
+        /// remove translate
+        QString lan = "projectQ_" + getShortLang(Config::configuration()->getAppLang());
+        QTranslator translator2;
+        translator2.load(lan,":lang/lang");
+
+        qApp->removeTranslator(&translator2);
+        ui->retranslateUi(this);
+
+        /// set new translate
         Config::configuration()->setAppLang(t_lang);
-        QMessageBox msgBox;
-        msgBox.setText("Settings has been modified. Please restart the"
-                       "application for the entry into force of the settings");
-        msgBox.exec();
+        QTranslator translator;
+        lan = "projectQ_" + getShortLang(t_lang);
+        translator.load(lan,":lang/lang");
+        qApp->installTranslator(&translator);
+        ui->retranslateUi(this);
     }
 }
 //------------------------------------------------------------------------------
@@ -311,11 +343,21 @@ void MainWindow::setLangFr()
     QString t_lang = "Français";
     if (Config::configuration()->getAppLang() != t_lang)
     {
+        /// remove translate
+        QString lan = "projectQ_" + getShortLang(Config::configuration()->getAppLang());
+        QTranslator translator2;
+        translator2.load(lan,":lang/lang");
+
+        qApp->removeTranslator(&translator2);
+        ui->retranslateUi(this);
+
+        /// set new translate
         Config::configuration()->setAppLang(t_lang);
-        QMessageBox msgBox;
-        msgBox.setText("Settings has been modified. Please restart the"
-                       "application for the entry into force of the settings");
-        msgBox.exec();
+        QTranslator translator;
+        lan = "projectQ_" + getShortLang(t_lang);
+        translator.load(lan,":lang/lang");
+        qApp->installTranslator(&translator);
+        ui->retranslateUi(this);
     }
 }
 //------------------------------------------------------------------------------

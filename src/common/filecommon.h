@@ -230,4 +230,5 @@ void createListStrongs(QString path);
 void writeXmlStrongFile(QHash<int, StrongList> *strong);
 QString getCoolLine(QString str);
 QString getNextWord(QString str, int pos);
+QString getShortLang(QString str);
 #endif // __FILECOMMON__H
