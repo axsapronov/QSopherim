@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     init();
     loadModulesFromFolder();
-    debug();
+//    debug();
 }
 //------------------------------------------------------------------------------
 MainWindow::~MainWindow()
@@ -124,6 +124,13 @@ void MainWindow::debug()
     fileStrong = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/strongs/strong.xml";
     GUI_ModuleViewer->setStrongList(fileStrong);
 
+
+    QHash<QString, QVector<int> > hash;
+
+    QString str;
+    str = "fsa2f fsaf asfas f4 f43 3 2 23d23 sfsd";
+    myDebug() << getNextWord(str, 6);
+
 //    QString str = "";
 //    if (str.isEmpty())
 //    {
@@ -149,10 +156,11 @@ void MainWindow::debug()
 
     // > 62
     // < 60
-    //    for (int i = 0; i < 255; i++)
-    //    {
-    //        myDebug() << QChar(i) << i;
-    //    }
+//    // " " 127
+//        for (int i = 0; i < 255; i++)
+//        {
+//            myDebug() << QChar(i) << i;
+//        }
 }
 //------------------------------------------------------------------------------
 void MainWindow::createConnects()
@@ -380,7 +388,7 @@ void MainWindow::openModule()
 //------------------------------------------------------------------------------
 void MainWindow::processFinish()
 {
-    //    myDebug() << "Process finish";
+//        myDebug() << "Process finish";
     //    ProjectQModule* test = new ProjectQModule();
     //    test->setChapterValue(5);
     //    test->setModuleName("fasf");
@@ -403,6 +411,7 @@ void MainWindow::loadModulesFromFolder()
     QStringList listModules = getListModulesFromPath(Config::configuration()->getBibleDir());
     for (int i = 0; i < listModules.size(); i++)
     {
+//        myDebug() << listModules.at(i);
         prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
     }
 }

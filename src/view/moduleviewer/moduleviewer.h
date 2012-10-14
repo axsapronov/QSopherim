@@ -2,6 +2,7 @@
 #define MODULEVIEWER_H
 
 #include <QWidget>
+#include <QHash>
 class StrongList;
 
 namespace Ui {
@@ -61,8 +62,8 @@ protected:
 private:
     Ui::ModuleViewer *ui;
 
-
     QVector<StrongList> m_list;
+    QHash< QString, QVector<int> > m_strongs;
 
     QAction *cutAct;
     QAction *copyAct;
@@ -81,6 +82,9 @@ private:
 
     void showNoteList();
     void showStrong();
+    void debug();
+
+    QString fillStrongList(QString str);
 
 //    QHash<int, QHash<QString, QString> > getListStrongWord(QString word);
     //    void getTextChapter(QString pathToFile, QString nameBook, int numberchapter);

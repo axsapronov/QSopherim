@@ -321,24 +321,27 @@ QString getTextFromHtmlFile(QString filePath)
     QFile file(filePath);
     //    qDebug() << filePath;
     file.close();
-    if (file.open(QIODevice::ReadOnly))
+    if (file.exists())
     {
-        QTextStream stream(&file);
-        QString encoding = getEncodingFromFile(filePath);
-        stream.setCodec(getCodecOfEncoding(encoding));
-        str = stream.readAll();
-        //        //        qDebug() << "str = " << str;
-        //        int body = QString("<body>").length();
-        //        int posBegin = str.indexOf("<body>");
+        if (file.open(QIODevice::ReadOnly))
+        {
+            QTextStream stream(&file);
+            QString encoding = getEncodingFromFile(filePath);
+            stream.setCodec(getCodecOfEncoding(encoding));
+            str = stream.readAll();
+            //        //        qDebug() << "str = " << str;
+            //        int body = QString("<body>").length();
+            //        int posBegin = str.indexOf("<body>");
 
-        //        int posEnd = str.indexOf("</body>");
-        //        str = str.mid(posBegin + body,
-        //                      posEnd - posBegin - body);
-        file.close();
-    }
-    else
-    {
-        qDebug() << "Error: not open file(getTextFromHtmlFile):" << filePath;
+            //        int posEnd = str.indexOf("</body>");
+            //        str = str.mid(posBegin + body,
+            //                      posEnd - posBegin - body);
+            file.close();
+        }
+        else
+        {
+            myDebug() << "Error: not open file(getTextFromHtmlFile):" << filePath;
+        }
     }
 
     return str;
@@ -765,7 +768,8 @@ QStringList getListModulesFromPath(QString path)
     QStringList list;
     for(int i = 0; i < files.size(); i++)
     {
-        if(files.at(i).indexOf(".ini") >= 0)
+        if(files.at(i).indexOf(".ini") >= 0
+                or files.at(i).indexOf(".INI") >= 0)
         {
             list << files.at(i);
         }
@@ -937,4 +941,44 @@ QString getCoolLine(QString str)
     }
     return t_str;
 }
+//------------------------------------------------------------------------------
+QString getNextWord(QString str, int pos)
+{
+    /// translate to hindi
+    QString t_str = "";
+    bool flag1 = false;
+    bool flag2 = false;
+
+    str.append(" ");
+
+    if (pos == 0)
+    {
+        flag1 = true;
+    }
+    else
+    {
+        int j = 0;
+        while (str.at(pos + j) != ' ' and str.length() >= pos + j )
+        {
+            j++;
+        }
+        pos += j + 1;
+        flag1 = true;
+    }
+
+    for (int i = pos; i < str.length(); i++)
+    {
+        if (str.at(i) != ' ')
+            t_str.append(str.at(i));
+
+        if (str.at(i) == ' ' && flag1 && !flag2)
+            flag2 = true;
+
+        if (flag2 && flag1)
+            break;
+    }
+
+    return t_str;
+}
+//------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

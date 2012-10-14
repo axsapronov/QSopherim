@@ -20,11 +20,12 @@ ModuleViewer::ModuleViewer(QWidget *parent) :
 {
 
     ui->setupUi(this);
-//    setMouseTracking(true);
+    //    setMouseTracking(true);
     ui->viewer->viewport()->setMouseTracking(true);
-//    setMouseTracking(true);
-//    ui->viewer->viewport()->installEventFilter(this);
+    //    setMouseTracking(true);
+    //    ui->viewer->viewport()->installEventFilter(this);
     init();
+//    debug();
 
 }
 //------------------------------------------------------------------------------
@@ -84,15 +85,15 @@ void ModuleViewer::createActions()
     //    connect(cutAct, SIGNAL(triggered()), this, SLOT(cut()));
 
     copyAct = new QAction(tr("&Copy"), this);
-//    copyAct->setShortcuts(QKeySequence::Copy);
-//    copyAct->setStatusTip(tr("Copy the current selection's contents to the "
-//                             "clipboard"));
-//    //    connect(copyAct, SIGNAL(triggered()), this, SLOT(copy()));
+    //    copyAct->setShortcuts(QKeySequence::Copy);
+    //    copyAct->setStatusTip(tr("Copy the current selection's contents to the "
+    //                             "clipboard"));
+    //    //    connect(copyAct, SIGNAL(triggered()), this, SLOT(copy()));
 
     pasteAct = new QAction(tr("&Paste"), this);
-//    pasteAct->setShortcuts(QKeySequence::Paste);
-//    pasteAct->setStatusTip(tr("Paste the clipboard's contents into the current "
-//                              "selection"));
+    //    pasteAct->setShortcuts(QKeySequence::Paste);
+    //    pasteAct->setStatusTip(tr("Paste the clipboard's contents into the current "
+    //                              "selection"));
     //    connect(pasteAct, SIGNAL(triggered()), this, SLOT(paste()));
 }
 //------------------------------------------------------------------------------
@@ -105,27 +106,27 @@ void ModuleViewer::showContextMenu(QPoint pt)
     menu->addAction(pasteAct);
 
     menu->addSeparator();
-//    QString str = curBook + ":" + curChapter;
+    //    QString str = curBook + ":" + curChapter;
     QAction *act = new QAction(QString(curModule
                                        + " : "
                                        + curBook
                                        + " : "
                                        + curChapter), this);
 
-// bold text
-//    QTextDocument *document = ui->viewer->document();
-//      QTextCursor cursor(document);
+    // bold text
+    //    QTextDocument *document = ui->viewer->document();
+    //      QTextCursor cursor(document);
 
-//      for(int i = 0; i < 20 ; i++)
-//      {
-//      cursor.movePosition(QTextCursor::Down);
-//      }
-//      cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
+    //      for(int i = 0; i < 20 ; i++)
+    //      {
+    //      cursor.movePosition(QTextCursor::Down);
+    //      }
+    //      cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
 
-//      QTextCharFormat format;
-//      format.setFontWeight(QFont::Bold);
+    //      QTextCharFormat format;
+    //      format.setFontWeight(QFont::Bold);
 
-//      cursor.mergeCharFormat(format);
+    //      cursor.mergeCharFormat(format);
 
 
 
@@ -142,7 +143,7 @@ ModuleViewer *ModuleViewer::viewer()
 //------------------------------------------------------------------------------
 void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberchapter)
 {
-//    myDebug() << pathToFile << nameBook << numberchapter;
+    //    myDebug() << pathToFile << nameBook << numberchapter;
 
     QXmlStreamReader xmlReader;
     xmlReader.addData(getTextFromHtmlFile(pathToFile));
@@ -151,6 +152,8 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
      *то надо их при чтении xml'я
      *обрабатыванит и приписывать соответств слову
      */
+
+    bool strong = true;
 
     bool flag = false;
     while(!xmlReader.atEnd() and !flag)
@@ -170,6 +173,12 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
                         flag = true;
                         QString str = xmlReader.readElementText();
                         str.remove("    ");
+                        if (strong)
+                        {
+//                            str.replace(",", ", ")
+//                                    .replace(".", ". ");
+                            str = fillStrongList(str);
+                        }
                         ui->viewer->setText(str);
                     }
                     xmlReader.readNext();
@@ -204,7 +213,7 @@ void ModuleViewer::init()
 
     ui->viewer->setContextMenuPolicy(Qt::CustomContextMenu);
 
-//    setMouseTracking(true);
+    //    setMouseTracking(true);
     loadViewSettings();
 }
 //------------------------------------------------------------------------------
@@ -213,7 +222,7 @@ void ModuleViewer::createConnects()
     connect(ui->viewer, SIGNAL(customContextMenuRequested(QPoint)),
             this,SLOT(showContextMenu(QPoint)));
     connect(ui->viewer, SIGNAL(selectionChanged()), SLOT(setCurLine()));
-//    connect(ui->viewer, SIGNAL(textChanged()), SLOT(setCurLine()));
+    //    connect(ui->viewer, SIGNAL(textChanged()), SLOT(setCurLine()));
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::loadViewSettings()
@@ -264,29 +273,29 @@ QString ModuleViewer::getPath()
 //------------------------------------------------------------------------------
 void ModuleViewer::setCurLine()
 {
-/// count select lines
-//    QTextCursor cursor = ui->viewer->textCursor();
-//    int selectedLines = 0; //<--- this is it
-//    if(!cursor.selection().isEmpty())
-//    {
-//        QString str = cursor.selection().toPlainText();
-//        selectedLines = str.count("\n")+1;
-//    }
+    /// count select lines
+    //    QTextCursor cursor = ui->viewer->textCursor();
+    //    int selectedLines = 0; //<--- this is it
+    //    if(!cursor.selection().isEmpty())
+    //    {
+    //        QString str = cursor.selection().toPlainText();
+    //        selectedLines = str.count("\n")+1;
+    //    }
 
-//    myDebug() << selectedLines;
+    //    myDebug() << selectedLines;
 
-/// current line
-//    QTextCursor cursor      = ui->viewer->textCursor();
-////     Current line text
-////    QString cur_line_text   = cursor.block().text().trimmed();
+    /// current line
+    //    QTextCursor cursor      = ui->viewer->textCursor();
+    ////     Current line text
+    ////    QString cur_line_text   = cursor.block().text().trimmed();
 
-//    // Current line
-//    int     cur_line_number = cursor.blockNumber();
+    //    // Current line
+    //    int     cur_line_number = cursor.blockNumber();
 
-//    // Current column
-//    int     cur_line_column = cursor.columnNumber();
+    //    // Current column
+    //    int     cur_line_column = cursor.columnNumber();
 
-//    myDebug() << cur_line_number << cur_line_column;
+    //    myDebug() << cur_line_number << cur_line_column;
 
 
     QTextCursor cursor = ui->viewer->textCursor();
@@ -303,8 +312,8 @@ void ModuleViewer::setCurLine()
     lastSelectLineLast = cursor.blockNumber();
 
     showNoteList();
-//    showStrong();
-//    myDebug() << "start: " << firstLine << " end: " << lastLine;
+    //    showStrong();
+    //    myDebug() << "start: " << firstLine << " end: " << lastLine;
 }
 ////------------------------------------------------------------------------------
 //int ModuleViewer::getLastSelectLineFirst()
@@ -363,8 +372,8 @@ bool ModuleViewer::eventFilter(QObject *obj, QEvent *event)
 {
     if(event->type() == QEvent::MouseMove)
     {
-//        QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-//        myDebug() << mEvent->pos();
+        //        QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+        //        myDebug() << mEvent->pos();
         setCurLine();
         return true;
     }
@@ -378,11 +387,11 @@ bool ModuleViewer::eventFilter(QObject *obj, QEvent *event)
         setCurLine();
         return true;
     }
-//    if (event->type() == QEvent::MouseTrackingChange)
-//    {
-//        setCurLine();
-//        return true;
-//    }
+    //    if (event->type() == QEvent::MouseTrackingChange)
+    //    {
+    //        setCurLine();
+    //        return true;
+    //    }
     else return QObject::eventFilter(obj, event);
 }
 //------------------------------------------------------------------------------
@@ -400,25 +409,25 @@ void ModuleViewer::showStrong()
      */
 
     QString path = curPath;
-//        fileName << "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
-//    QString path = "/home/files/Documents/Bible/strong/strong/"
-//    QString path = curPath;
-//    path.replace("text.xml", "notes.xml");
+    //        fileName << "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
+    //    QString path = "/home/files/Documents/Bible/strong/strong/"
+    //    QString path = curPath;
+    //    path.replace("text.xml", "notes.xml");
 
 
-//    emit showNoteList(curModule,
-//                      curBook,
-//                      curChapter,
-//                      path,
-//                      QString::number(lastSelectLineFirst));
+    //    emit showNoteList(curModule,
+    //                      curBook,
+    //                      curChapter,
+    //                      path,
+    //                      QString::number(lastSelectLineFirst));
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::setStrongList(QString path)
 {
     m_list = getListStrongs(path);
     int i = 5;
-//    myDebug() << m_list.size() << m_list.at(i).number
-//                 << m_list.at(i).text;
+    //    myDebug() << m_list.size() << m_list.at(i).number
+    //                 << m_list.at(i).text;
 }
 //------------------------------------------------------------------------------
 //QHash<int, QHash<QString, QString> > ModuleViewer::getListStrongWord(QString word)
@@ -432,4 +441,59 @@ void ModuleViewer::setStrongList(QString path)
 
 //    return list;
 //}
+//------------------------------------------------------------------------------
+QString ModuleViewer::fillStrongList(QString str)
+{
+    int r = 0;
+    QString t_str = "";
+    QString ret = str;
+    //    str.remove("\n").remove("\r");
+    bool flag = false;
+//    bool flag2 = false;
+    bool flag3 = false;
+    int count;
+    int precount;
+    QVector<int> vect;
+
+//    str.replace(QRegExp("\d,"))
+    while (str.length() > r)
+    {
+        flag = false;
+        t_str = getNextWord(str, r);
+        r += t_str.length();
+
+        if (t_str.isEmpty())
+            break;
+
+        count = t_str.toInt(&flag);
+        if(flag and count != precount)
+        {
+            ret.remove(t_str);
+            vect.push_back(count);
+            precount = count;
+            flag3 = true;
+        }
+
+        if(flag3 && !flag)
+        {
+            m_strongs[t_str] = vect;
+            myDebug() << vect.size() << t_str;
+            vect.clear();
+            flag3 = false;
+        }
+    }
+
+    ret.replace("  ", " ");
+    return ret;
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::debug()
+{
+//    QString str =
+        QString str;
+//        str = "сотворил 01254 0333 0332 Бог ";
+        str = "В начале 07225 сотворил 01254 08804 0853 Бог 0430 небо 08064 и 0853 землю 0776.";
+
+    fillStrongList(str);
+}
 //------------------------------------------------------------------------------
