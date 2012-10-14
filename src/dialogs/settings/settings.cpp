@@ -93,6 +93,10 @@ void Settings::loadSettings()
 ///----------------------------------------------------------------------------
 void Settings::saveSettings()
 {
+    if (ui->comBLanguage->currentText() != Config::configuration()->getAppLang())
+    {
+        emit sRetranslateGUI(ui->comBLanguage->currentText());
+    }
     Config::configuration()->setAppLang(ui->comBLanguage->currentText());
     /// save module settings
     Config::configuration()->setBibleDir(ui->LEBibleFolder->text());
@@ -128,12 +132,13 @@ void Settings::accept()
                                        | QMessageBox::Discard
                                        | QMessageBox::Cancel,
                                        QMessageBox::Save);
-        QMessageBox msgBox;
+//        QMessageBox msgBox;
         switch (ret)
         {
         case QMessageBox::Save:
             // Save was clicked
             saveSettings();
+
 
 //            msgBox.setText("Settings has been modified. Please restart the"
 //                           "application for the entry into force of the settings");
@@ -172,6 +177,8 @@ void Settings::setAPPLang(QString new_lang)
 ///----------------------------------------------------------------------------
 bool Settings::getModifySettings()
 {
+    if (ui->comBLanguage->currentText() != Config::configuration()->getAppLang())
+        return true;
     if (ui->LEBibleFolder->text() != Config::configuration()->getBibleDir())
         return true;
     if (ui->LEDictFolder->text() != Config::configuration()->getDictDir())

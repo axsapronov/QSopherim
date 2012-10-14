@@ -88,6 +88,9 @@ private slots:
 
     void createNote();
 
+    void retranslate(QString t_str);
+
+
 protected:
     void closeEvent(QCloseEvent *);
 //    void mouseMoveEvent(QMouseEvent *);
@@ -146,7 +149,6 @@ private:
       */
     void saveSettings();
 
-    void retranslate(QString t_str);
 
 };
 

@@ -44,6 +44,9 @@ public:
 
     void retranslate();
 
+signals:
+    void sRetranslateGUI(QString);
+
 private slots:
     void accept();
     /**
