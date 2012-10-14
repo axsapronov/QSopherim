@@ -23,6 +23,8 @@ public:
     void setLastVerse(QString last);
     void editNote(QString text);
 
+    void retranslate();
+
 private slots:
     void saveNote();
 

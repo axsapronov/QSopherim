@@ -14,6 +14,7 @@ class RightPanel : public QDockWidget
 public:
     explicit RightPanel(QWidget *parent = 0);
     ~RightPanel();
+    void retranslate();
 
 private:
     Ui::RightPanel *ui;

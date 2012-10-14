@@ -35,9 +35,6 @@ class AboutDialog : public QDialog
 public:
     explicit AboutDialog(QWidget *parent = 0);
     ~AboutDialog();
-protected:
-    void changeEvent(QEvent *);
-public slots:
     void retranslate();
 private:
     Ui::AboutDialog *ui;

@@ -14,6 +14,7 @@ class BottomPanel : public QDockWidget
 public:
     explicit BottomPanel(QWidget *parent = 0);
     ~BottomPanel();
+    void retranslate();
 
 private:
     Ui::BottomPanel *ui;

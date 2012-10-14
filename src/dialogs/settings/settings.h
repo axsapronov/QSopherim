@@ -42,6 +42,8 @@ public:
       */
     void setAPPLang(QString new_lang);
 
+    void retranslate();
+
 private slots:
     void accept();
     /**
@@ -60,6 +62,7 @@ private slots:
        */
     void browseOtherDir();
     void selectFontColor();
+
 private:
     Ui::Settings *ui;
     QString APP_Lang;

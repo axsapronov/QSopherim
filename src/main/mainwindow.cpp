@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     init();
     loadModulesFromFolder();
-//    debug();
+    //    debug();
 }
 //------------------------------------------------------------------------------
 MainWindow::~MainWindow()
@@ -62,14 +62,14 @@ void MainWindow::init()
     prModule = new ProcessModule();
 
 
-//    ui->centralWidget->setMouseTracking(true);
+    //    ui->centralWidget->setMouseTracking(true);
     GUI_ModuleViewer = new ModuleViewer(this);
     GUI_NoteEditor = new NoteEditor(this);
 
-//    GUI_ModuleViewer->setMouseTracking(true);
+    //    GUI_ModuleViewer->setMouseTracking(true);
     this->setCentralWidget(GUI_ModuleViewer);
-//    centralWidget()->setAttribute(Qt::WA_TransparentForMouseEvents);
-//    setMouseTracking(true);
+    //    centralWidget()->setAttribute(Qt::WA_TransparentForMouseEvents);
+    //    setMouseTracking(true);
 
     /// load settings
     // replace to QString t_lang = GUI_Settings->getAppLang()
@@ -105,9 +105,9 @@ void MainWindow::init()
     createConnects(); // moved func
     trIcon->show();  //display tray
 
-//    setMouseTracking(true);
-//    qApplicationobject->installEventFilter(this);
-//    qApp->installEventFilter(this);
+    //    setMouseTracking(true);
+    //    qApplicationobject->installEventFilter(this);
+    //    qApp->installEventFilter(this);
 
 }
 //------------------------------------------------------------------------------
@@ -115,7 +115,7 @@ void MainWindow::debug()
 {
     QStringList fileName;
 
-//    fileName << "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
+    //    fileName << "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
     //    fileName << "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
     //    fileName << "/home/files/Documents/Bible/unrar/NT_Russian_Kassian/Bibleqt.ini";
     //    fileName << "/home/files/Documents/Bible/unrar/Makarij/bibleqt.ini";
@@ -133,24 +133,24 @@ void MainWindow::debug()
     str = "fsa2f fsaf asfas f4 f43 3 2 23d23 sfsd";
     myDebug() << getNextWord(str, 6);
 
-//    QString str = "";
-//    if (str.isEmpty())
-//    {
-//        myDebug() << "yes";
-//    }
+    //    QString str = "";
+    //    if (str.isEmpty())
+    //    {
+    //        myDebug() << "yes";
+    //    }
 
-//    QString str;
-//    QString l1 = "module=\"Пятикнижие (перевод архим. Макария)\"";
-//    QString l2
-////    str = "<note module=\"Пятикнижие (перевод архим. Макария)\" book=\"Левит\" chapter=\"3\" versebegin=\"0\" verseend=\"1\">gsadgsad";
-//    myDebug() << str;
-//    if (str.contains(l1) &&
-//            && )
-//    {
-//        myDebug() << "yes";
-//    }
+    //    QString str;
+    //    QString l1 = "module=\"Пятикнижие (перевод архим. Макария)\"";
+    //    QString l2
+    ////    str = "<note module=\"Пятикнижие (перевод архим. Макария)\" book=\"Левит\" chapter=\"3\" versebegin=\"0\" verseend=\"1\">gsadgsad";
+    //    myDebug() << str;
+    //    if (str.contains(l1) &&
+    //            && )
+    //    {
+    //        myDebug() << "yes";
+    //    }
 
-//    loadModulesFromFolder();
+    //    loadModulesFromFolder();
     //    for (int i = 0; i < fileName.size(); i++)
     //    {
     //        prModule->processing(fileName.at(i), OBVCore::Type_BibleQuoteModule);
@@ -158,11 +158,11 @@ void MainWindow::debug()
 
     // > 62
     // < 60
-//    // " " 127
-//        for (int i = 0; i < 255; i++)
-//        {
-//            myDebug() << QChar(i) << i;
-//        }
+    //    // " " 127
+    //        for (int i = 0; i < 255; i++)
+    //        {
+    //            myDebug() << QChar(i) << i;
+    //        }
 }
 //------------------------------------------------------------------------------
 void MainWindow::createConnects()
@@ -260,21 +260,7 @@ void MainWindow::setLangEn()
     QString t_lang = "English";
     if (Config::configuration()->getAppLang() != t_lang)
     {
-        /// remove translate
-        QString lan = "projectQ_" + getShortLang(Config::configuration()->getAppLang());
-        QTranslator translator2;
-        translator2.load(lan,":lang/lang");
-
-        qApp->removeTranslator(&translator2);
-        ui->retranslateUi(this);
-
-        /// set new translate
-        Config::configuration()->setAppLang(t_lang);
-        QTranslator translator;
-        lan = "projectQ_" + getShortLang(t_lang);
-        translator.load(lan,":lang/lang");
-        qApp->installTranslator(&translator);
-        ui->retranslateUi(this);
+        retranslate(t_lang);
     }
 }
 
@@ -288,21 +274,7 @@ void MainWindow::setLangRu()
     QString t_lang = "Russian";
     if (Config::configuration()->getAppLang() != t_lang)
     {
-        /// remove translate
-        QString lan = "projectQ_" + getShortLang(Config::configuration()->getAppLang());
-        QTranslator translator2;
-        translator2.load(lan,":lang/lang");
-
-        qApp->removeTranslator(&translator2);
-        ui->retranslateUi(this);
-
-        /// set new translate
-        Config::configuration()->setAppLang(t_lang);
-        QTranslator translator;
-        lan = "projectQ_" + getShortLang(t_lang);
-        translator.load(lan,":lang/lang");
-        qApp->installTranslator(&translator);
-        ui->retranslateUi(this);
+        retranslate(t_lang);
     }
 }
 //------------------------------------------------------------------------------
@@ -315,21 +287,7 @@ void MainWindow::setLangDe()
     QString t_lang = "Deutch";
     if (Config::configuration()->getAppLang() != t_lang)
     {
-        /// remove translate
-        QString lan = "projectQ_" + getShortLang(Config::configuration()->getAppLang());
-        QTranslator translator2;
-        translator2.load(lan,":lang/lang");
-
-        qApp->removeTranslator(&translator2);
-        ui->retranslateUi(this);
-
-        /// set new translate
-        Config::configuration()->setAppLang(t_lang);
-        QTranslator translator;
-        lan = "projectQ_" + getShortLang(t_lang);
-        translator.load(lan,":lang/lang");
-        qApp->installTranslator(&translator);
-        ui->retranslateUi(this);
+        retranslate(t_lang);
     }
 }
 //------------------------------------------------------------------------------
@@ -343,21 +301,7 @@ void MainWindow::setLangFr()
     QString t_lang = "Français";
     if (Config::configuration()->getAppLang() != t_lang)
     {
-        /// remove translate
-        QString lan = "projectQ_" + getShortLang(Config::configuration()->getAppLang());
-        QTranslator translator2;
-        translator2.load(lan,":lang/lang");
-
-        qApp->removeTranslator(&translator2);
-        ui->retranslateUi(this);
-
-        /// set new translate
-        Config::configuration()->setAppLang(t_lang);
-        QTranslator translator;
-        lan = "projectQ_" + getShortLang(t_lang);
-        translator.load(lan,":lang/lang");
-        qApp->installTranslator(&translator);
-        ui->retranslateUi(this);
+        retranslate(t_lang);
     }
 }
 //------------------------------------------------------------------------------
@@ -430,7 +374,7 @@ void MainWindow::openModule()
 //------------------------------------------------------------------------------
 void MainWindow::processFinish()
 {
-//        myDebug() << "Process finish";
+    //        myDebug() << "Process finish";
     //    ProjectQModule* test = new ProjectQModule();
     //    test->setChapterValue(5);
     //    test->setModuleName("fasf");
@@ -453,7 +397,7 @@ void MainWindow::loadModulesFromFolder()
     QStringList listModules = getListModulesFromPath(Config::configuration()->getBibleDir());
     for (int i = 0; i < listModules.size(); i++)
     {
-//        myDebug() << listModules.at(i);
+        //        myDebug() << listModules.at(i);
         prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
     }
 }
@@ -472,5 +416,35 @@ void MainWindow::createNote()
     GUI_NoteEditor->setFirstVerse(GUI_ModuleViewer->getLastSelectLineFirst());
     GUI_NoteEditor->setLastVerse(GUI_ModuleViewer->getLastSelectLineLast());
     GUI_NoteEditor->show();
+}
+//------------------------------------------------------------------------------
+void MainWindow::retranslate(QString t_lang)
+{
+    /// remove translate
+    QString lan = "projectQ_" + getShortLang(Config::configuration()->getAppLang());
+    QTranslator translator2;
+    translator2.load(lan,":lang/lang");
+
+    qApp->removeTranslator(&translator2);
+    ui->retranslateUi(this);
+
+    /// set new translate
+    Config::configuration()->setAppLang(t_lang);
+    QTranslator translator;
+    lan = "projectQ_" + getShortLang(t_lang);
+    translator.load(lan,":lang/lang");
+    qApp->installTranslator(&translator);
+
+    ui->retranslateUi(this);
+
+    GUI_About->retranslate();    // about dialog
+    GUI_Settings->retranslate();
+    GUI_RightPanel->retranslate();
+    GUI_LeftPanel->retranslate();
+    GUI_LeftPanel2->retranslate();
+//    GUI_BottomPanel->retranslate();
+    GUI_ModuleViewer->retranslate();
+    GUI_NoteEditor->retranslate();
+
 }
 //------------------------------------------------------------------------------

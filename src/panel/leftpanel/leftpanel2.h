@@ -19,6 +19,7 @@ public:
     explicit LeftPanel2(QWidget *parent = 0);
     ~LeftPanel2();
 
+    void retranslate();
 signals:
     void editNote();
 

@@ -146,6 +146,8 @@ private:
       */
     void saveSettings();
 
+    void retranslate(QString t_str);
+
 };
 
 #endif // MAINWINDOW_H

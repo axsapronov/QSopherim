@@ -47,6 +47,7 @@ public:
     void setLastSelectLineLast(int lastlast);
 
     void setStrongList(QString path);
+    void retranslate();
 
 signals:
     void showNoteList(QString, QString, QString, QString, QString);

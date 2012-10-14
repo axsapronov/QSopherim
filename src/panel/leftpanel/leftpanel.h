@@ -3,6 +3,7 @@
 
 #include <QDockWidget>
 #include <QModelIndex>
+#include <QTranslator>
 
 class QStandardItemModel;
 class QModelIndex;
@@ -22,6 +23,7 @@ public:
     void refreshBookList(ProjectQModuleList* list);
     void refreshList(ProjectQModuleList* list);
 
+    void retranslate();
 
 private slots:
     void refreshChapterList(QModelIndex);

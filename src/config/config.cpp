@@ -1,7 +1,7 @@
 #include "config.h"
 #include "debughelper.h"
 #include <QSettings>
-
+#include "filecommon.h"
 #include <QDir>
 
 

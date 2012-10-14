@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QColor>
+#include <QTranslator>
 //====================== class Config ============================
 
 class Config
@@ -34,7 +35,6 @@ public:
     void setFontSize(int  newSize);
     void setFontColor(QColor newColor);
     void setFontFamily(QString newFamily);
-
 
     static Config *configuration();
 
