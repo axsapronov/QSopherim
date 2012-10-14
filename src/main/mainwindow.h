@@ -77,19 +77,13 @@ private slots:
       Show help
       */
     void showHelp();
-    /**
-      @brief
-      Open module
-      test function
-      */
-    void openModule();
 
     void processFinish();
 
     void createNote();
 
     void retranslate(QString t_str);
-
+    void loadModulesFromFolder();
 
 protected:
     void closeEvent(QCloseEvent *);
@@ -120,7 +114,7 @@ private:
 
 
 
-    void loadModulesFromFolder();
+
 
     /**
       @function

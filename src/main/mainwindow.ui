@@ -114,6 +114,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionAction_Other_Create_Note"/>
+   <addaction name="actionAction_Other_Update_List_Module"/>
   </widget>
   <action name="action_About_Help">
    <property name="text">
@@ -261,6 +262,11 @@
   <action name="actionAction_Other_Create_Note">
    <property name="text">
     <string>Create note</string>
+   </property>
+  </action>
+  <action name="actionAction_Other_Update_List_Module">
+   <property name="text">
+    <string>Update list module</string>
    </property>
   </action>
  </widget>

@@ -144,6 +144,7 @@ void Settings::accept()
 //                           "application for the entry into force of the settings");
 //            msgBox.exec();
 
+            emit sReLoadModules();
             QWidget::hide();
             break;
         case QMessageBox::Discard:

@@ -105,10 +105,6 @@ void MainWindow::init()
     createConnects(); // moved func
     trIcon->show();  //display tray
 
-    //    setMouseTracking(true);
-    //    qApplicationobject->installEventFilter(this);
-    //    qApp->installEventFilter(this);
-
 }
 //------------------------------------------------------------------------------
 void MainWindow::debug()
@@ -172,7 +168,6 @@ void MainWindow::createConnects()
 
     // menu file
     connect(ui->action_File_Close, SIGNAL(triggered()), this, SLOT(close()));
-    connect(ui->action_File_Open_Module_Test, SIGNAL(triggered()), SLOT(openModule()));
 
     // menu settings
     connect(ui->action_Settings_General, SIGNAL(triggered()), SLOT(showSettings()));
@@ -188,6 +183,8 @@ void MainWindow::createConnects()
 
     // toolbar
     connect(ui->actionAction_Other_Create_Note, SIGNAL(triggered()), SLOT(createNote()));
+    connect(ui->actionAction_Other_Update_List_Module, SIGNAL(triggered()), SLOT(loadModulesFromFolder()));
+
     // menu about
     connect(ui->action_About_About, SIGNAL(triggered()), GUI_About, SLOT(show()));
     connect(ui->action_About_About_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
@@ -203,7 +200,7 @@ void MainWindow::createConnects()
 
     connect(GUI_Settings, SIGNAL(sRetranslateGUI(QString)),
             SLOT(retranslate(QString)));
-
+    connect(GUI_Settings, SIGNAL(sReLoadModules()), SLOT(loadModulesFromFolder()));
     //    connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));
     //    connect(QO)
     //    connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));
@@ -364,34 +361,10 @@ void MainWindow::showHelp()
     //    HtmlHelp(NULL, "help.chm", HH_DISPLAY_TOPIC, 0);
 }
 //------------------------------------------------------------------------------
-void MainWindow::openModule()
-{
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open module(test)"), "",
-                                                    tr("test module (*.ini)"));
-    if (!fileName.isEmpty())
-    {
-        //        ProjectOpen(fileName);
-        //        ProcessModule(fileName, OBVCore::BibleQuoteModule);
-    }
-}
-//------------------------------------------------------------------------------
 void MainWindow::processFinish()
 {
-    //        myDebug() << "Process finish";
-    //    ProjectQModule* test = new ProjectQModule();
-    //    test->setChapterValue(5);
-    //    test->setModuleName("fasf");
     ProjectQModuleList* list = new ProjectQModuleList();
-
-    //    list->AddModule(test);
     list->refreshList();
-    //        myDebug() << list->getCurNumberModule();
-    //    myDebug() << list->getModule(0).getModuleName();
-
-    for (int i = 0; i < list->getSize(); i++ )
-    {
-        //        myDebug() << list->getModule(i).getModuleInfo();
-    }
     GUI_LeftPanel->refreshList(list);
 }
 //------------------------------------------------------------------------------

@@ -46,6 +46,7 @@ public:
 
 signals:
     void sRetranslateGUI(QString);
+    void sReLoadModules();
 
 private slots:
     void accept();
