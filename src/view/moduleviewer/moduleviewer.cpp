@@ -153,7 +153,7 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
      *обрабатыванит и приписывать соответств слову
      */
 
-    bool strong = true;
+    bool strong = false;
 
     bool flag = false;
     while(!xmlReader.atEnd() and !flag)
