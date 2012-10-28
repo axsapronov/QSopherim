@@ -49,6 +49,15 @@ public:
     void setStrongList(QString path);
     void retranslate();
 
+public slots:
+
+    /**
+     * @brief updateFontSettings
+     * @function
+     * Update font settings
+     */
+    void updateFontSettings();
+
 signals:
     void showNoteList(QString, QString, QString, QString, QString);
 
@@ -69,6 +78,7 @@ private:
     QAction *cutAct;
     QAction *copyAct;
     QAction *pasteAct;
+
     void init();
     void createConnects();
     void createActions();

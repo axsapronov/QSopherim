@@ -232,6 +232,10 @@ void MainWindow::createConnects()
     connect(GUI_LeftPanel2, SIGNAL(SIGNAL_ShowChapterFromJournal(QString,QString,QString)),
             GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
 
+    // connect settings and module viewer
+    connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadFontSettings()), GUI_ModuleViewer,
+            SLOT(updateFontSettings()));
+
 }
 //------------------------------------------------------------------------------
 void MainWindow::showHide(QSystemTrayIcon::ActivationReason r)

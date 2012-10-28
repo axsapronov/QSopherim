@@ -510,3 +510,12 @@ void ModuleViewer::retranslate()
     ui->retranslateUi(this);
 }
 //------------------------------------------------------------------------------
+void ModuleViewer::updateFontSettings()
+{
+    loadViewSettings();
+    showChapter(curPath, curBook, curChapter.toInt());
+
+//    ui->viewer->reload();
+//    ui->viewer->update();
+}
+//------------------------------------------------------------------------------

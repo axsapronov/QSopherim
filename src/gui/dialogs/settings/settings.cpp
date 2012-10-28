@@ -145,6 +145,7 @@ void Settings::accept()
 //            msgBox.exec();
 
             emit SIGNAL_ReLoadModules();
+            emit SIGNAL_ReLoadFontSettings();
             QWidget::hide();
             break;
         case QMessageBox::Discard:

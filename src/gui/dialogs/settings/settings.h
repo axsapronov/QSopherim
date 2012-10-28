@@ -47,6 +47,7 @@ public:
 signals:
     void SIGNAL_RetranslateGUI(QString);
     void SIGNAL_ReLoadModules();
+    void SIGNAL_ReLoadFontSettings();
 
 private slots:
     void accept();
