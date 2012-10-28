@@ -61,6 +61,7 @@
     </widget>
     <addaction name="action_Settings_General"/>
     <addaction name="mSettingsLanguage"/>
+    <addaction name="action_Settings_Module"/>
    </widget>
    <widget class="QMenu" name="mSearch">
     <property name="title">
@@ -144,11 +145,6 @@
   <action name="action_Settings_General">
    <property name="text">
     <string>Settings</string>
-   </property>
-  </action>
-  <action name="action_Settings_Module">
-   <property name="text">
-    <string>Module</string>
    </property>
   </action>
   <action name="action_Settings_Lan">
@@ -267,6 +263,11 @@
   <action name="actionAction_Other_Update_List_Module">
    <property name="text">
     <string>Update list module</string>
+   </property>
+  </action>
+  <action name="action_Settings_Module">
+   <property name="text">
+    <string>Manager modules</string>
    </property>
   </action>
  </widget>

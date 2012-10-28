@@ -1,36 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>NoteEditor</class>
- <widget class="QDialog" name="NoteEditor">
+ <class>ManagerModules</class>
+ <widget class="QDialog" name="ManagerModules">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>569</width>
+    <height>492</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0">
-    <widget class="QPlainTextEdit" name="textEditor"/>
+   <item row="0" column="0">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Download modules</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Remove modules</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>First modules</string>
+      </attribute>
+     </widget>
+    </widget>
    </item>
-   <item row="2" column="0">
+   <item row="1" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="LACur">
-     <property name="text">
-      <string/>
      </property>
     </widget>
    </item>
@@ -41,7 +53,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>NoteEditor</receiver>
+   <receiver>ManagerModules</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -57,7 +69,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>NoteEditor</receiver>
+   <receiver>ManagerModules</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

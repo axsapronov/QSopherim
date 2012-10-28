@@ -15,11 +15,12 @@ RCC_DIR     = build/rc
 UI_DIR      = build/ui
 
 DEPENDPATH += \
-         src/dialogs/about \
-         src/dialogs/settings \
-         src/panel/leftpanel/ \
-         src/panel/rightpanel/ \
-         src/panel/bottompanel/ \
+         src/gui/dialogs/about \
+         src/gui/dialogs/settings \
+         src/gui/panel/leftpanel/ \
+         src/gui/panel/rightpanel/ \
+         src/gui/panel/bottompanel/ \
+         src/gui/dialogs/lansettings \
          src/main \
          src/modules/biblequote \
          src/modules/biblemodule \
@@ -28,7 +29,7 @@ DEPENDPATH += \
          src/modules/ \
          src/defines \
          src/config \
-         src/view/moduleviewer \
+         src/gui/view/moduleviewer \
          src/modules/processmodule \
          src/common \
          src/core \
@@ -36,18 +37,18 @@ DEPENDPATH += \
          src/core/verse/versification \
          src/core/link \
          src/xmlread/ \
-         src/note
+         src/gui/note
 
 INCLUDEPATH += \
          src/main \
-         src/dialogs/about \
-         src/dialogs/settings \
-         src/panel/leftpanel/ \
-         src/panel/rightpanel/ \
-         src/panel/bottompanel/ \
-         src/dialogs/lansettings \
+         src/gui/dialogs/about \
+         src/gui/dialogs/settings \
+         src/gui/panel/leftpanel/ \
+         src/gui/panel/rightpanel/ \
+         src/gui/panel/bottompanel/ \
+         src/gui/dialogs/lansettings \
          src/modules/metainfo \
-         src/view/moduleviewer \
+         src/gui/view/moduleviewer \
          src/defines \
          src/modules/biblequote \
          src/modules/biblemodule \
@@ -61,8 +62,9 @@ INCLUDEPATH += \
          src/core/verse/versification \
          src/core/link \
          src/view/module \
+         src/gui/view/module \
          src/xmlread/ \
-         src/note
+         src/gui/note
 
 SOURCES  += \
          main.cpp \
@@ -103,10 +105,8 @@ SOURCES  += \
     src/core/link/url.cpp \
     src/view/module/projectqmodule.cpp \
     src/view/module/projectqmodulelist.cpp \
-#    src/xmlread/projectqxmlhandler.cpp \
-#         csaxhandler.cpp \
-#         cnode.cpp
-    src/note/noteeditor.cpp
+    src/gui/note/noteeditor.cpp \
+    src/gui/dialogs/managermodules/managermodules.cpp
 
 
 HEADERS  += \
@@ -149,10 +149,8 @@ HEADERS  += \
     src/core/link/url.h \
     src/view/module/projectqmodule.h \
     src/view/module/projectqmodulelist.h \
-#    src/xmlread/projectqxmlhandler.h \
-#         csaxhandler.h \
-#         cnode.h
-    src/note/noteeditor.h
+    src/gui/note/noteeditor.h \
+    src/gui/dialogs/managermodules/managermodules.h
 
 FORMS    += \
          mainwindow.ui \
@@ -163,7 +161,8 @@ FORMS    += \
          bottompanel.ui \
          leftpanel2.ui \
          moduleviewer.ui \
-    src/note/noteeditor.ui
+    src/gui/note/noteeditor.ui \
+    src/gui/dialogs/managermodules/managermodules.ui
 
 RESOURCES += \
     resources/resources.qrc

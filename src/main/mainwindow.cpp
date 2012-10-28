@@ -37,6 +37,24 @@ MainWindow::MainWindow(QWidget *parent) :
 //------------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
+    GUI_About->deleteLater();
+    GUI_Settings->deleteLater();
+    GUI_RightPanel->deleteLater();
+    GUI_LeftPanel->deleteLater();
+    GUI_LeftPanel2->deleteLater();
+    GUI_RightPanel->deleteLater();
+    GUI_ModuleViewer->deleteLater();
+    GUI_NoteEditor->deleteLater();
+    GUI_ManagerModules->deleteLater();
+
+    delete trayIconMenu;
+    delete trIcon;
+    delete minimizeAction;
+    delete maximizeAction;
+    delete restoreAction;
+    delete quitAction;
+    delete prModule;
+
     delete ui;
 }
 //------------------------------------------------------------------------------
@@ -44,6 +62,8 @@ void MainWindow::init()
 {
     GUI_About = new AboutDialog(this);
     GUI_Settings = new Settings(this);
+
+    GUI_ManagerModules = new ManagerModules(this);
 
     /// panel init
     GUI_RightPanel = new RightPanel();
@@ -171,6 +191,9 @@ void MainWindow::createConnects()
 
     // menu settings
     connect(ui->action_Settings_General, SIGNAL(triggered()), SLOT(showSettings()));
+
+    // manager module
+    connect(ui->action_Settings_Module, SIGNAL(triggered()), SLOT(showModuleManager()));
 
     //menu settings -> lang
     connect(ui->action_Settings_Language_Russian, SIGNAL(triggered()), SLOT(setLangRu()) );
@@ -316,6 +339,12 @@ void MainWindow::showSettings()
     GUI_Settings->show();
 }
 //------------------------------------------------------------------------------
+void MainWindow::showModuleManager()
+{
+    //set sett
+    GUI_ManagerModules->show();
+}
+//------------------------------------------------------------------------------
 void MainWindow::closeEvent(QCloseEvent *e)
 {
     //    myDebug()<< "closeEvent()";
@@ -418,7 +447,7 @@ void MainWindow::retranslate(QString t_lang)
     GUI_RightPanel->retranslate();
     GUI_LeftPanel->retranslate();
     GUI_LeftPanel2->retranslate();
-//    GUI_BottomPanel->retranslate();
+    //    GUI_BottomPanel->retranslate();
     GUI_ModuleViewer->retranslate();
     GUI_NoteEditor->retranslate();
 
