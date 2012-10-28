@@ -33,7 +33,7 @@ void BibleQuoteModule::parseModule(QString pathToModule)
     QDir d(Config::configuration()->getAppDir() + "bible/" + parseInfo.shortName());
     if (!d.exists())
     {
-        emit createFolderForModule(parseInfo.shortName());
+        emit SIGNAL_CreateFolderForModule(parseInfo.shortName());
         if (createIniFile(parseInfo))
         {
             createBookFiles(pathToModule);

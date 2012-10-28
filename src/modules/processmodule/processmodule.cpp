@@ -29,7 +29,7 @@ ProcessModule::~ProcessModule()
 //------------------------------------------------------------------------------
 void ProcessModule::createConnects()
 {
-    connect(m_biblequote, SIGNAL(createFolderForModule(QString)), SLOT(createFolderForModule(QString)));
+    connect(m_biblequote, SIGNAL(SIGNAL_CreateFolderForModule(QString)), SLOT(createFolderForModule(QString)));
 }
 //------------------------------------------------------------------------------
 void ProcessModule::init()
@@ -47,7 +47,7 @@ bool ProcessModule::processing(QString pathToModule, int type)
     case OBVCore::Type_BibleQuoteModule:
         //        myDebug() << "this is biblequote module";
         m_biblequote->parseModule(p_pathToModule);
-        emit signal_processOk();
+        emit SIGNAL_ProcessOk();
         break;
     case OBVCore::Type_SwordBibleModule:
         //        myDebug() << "this is sword module";

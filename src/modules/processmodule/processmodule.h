@@ -18,7 +18,7 @@ public:
 
     bool processing(QString pathToModule, int type);
 signals:
-    void signal_processOk();
+    void SIGNAL_ProcessOk();
 private slots:
     void createFolderForModule(QString shortname);
 private:

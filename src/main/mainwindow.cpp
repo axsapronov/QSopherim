@@ -215,18 +215,23 @@ void MainWindow::createConnects()
     connect(ui->action_About_Help, SIGNAL(triggered()), SLOT(showHelp()));
 
     /// other
-    connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));
+    connect(prModule, SIGNAL(SIGNAL_ProcessOk()), SLOT(processFinish()));
 
 
     connect(GUI_ModuleViewer, SIGNAL(showNoteList(QString,QString,QString,QString,QString)),
             GUI_LeftPanel2, SLOT(showNoteList(QString,QString,QString,QString,QString)));
 
-    connect(GUI_Settings, SIGNAL(sRetranslateGUI(QString)),
+    connect(GUI_Settings, SIGNAL(SIGNAL_RetranslateGUI(QString)),
             SLOT(retranslate(QString)));
-    connect(GUI_Settings, SIGNAL(sReLoadModules()), SLOT(loadModulesFromFolder()));
-    //    connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));
-    //    connect(QO)
-    //    connect(prModule, SIGNAL(signal_processOk()), SLOT(processFinish()));
+    connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadModules()), SLOT(loadModulesFromFolder()));
+
+    // connect fron left1 to left2 panels
+    connect(GUI_LeftPanel, SIGNAL(SIGNAL_AddRecordToJournal(QString,QString,QString)),
+            GUI_LeftPanel2, SLOT(addRecordToJournal(QString,QString,QString)));
+
+    connect(GUI_LeftPanel2, SIGNAL(SIGNAL_ShowChapterFromJournal(QString,QString,QString)),
+            GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
+
 }
 //------------------------------------------------------------------------------
 void MainWindow::showHide(QSystemTrayIcon::ActivationReason r)

@@ -35,7 +35,7 @@ public:
     QString uid() const;
 
 signals:
-    void createFolderForModule(QString shortname);
+    void SIGNAL_CreateFolderForModule(QString shortname);
 
 private:
     inline QString formatFromIni(QString input);
