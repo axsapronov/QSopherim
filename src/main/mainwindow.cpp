@@ -426,8 +426,8 @@ void MainWindow::loadDictFromFolder()
                 , ".idx");
     for (int i = 0; i < listModules.size(); i++)
     {
-                myDebug() << listModules.at(i);
-//        prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
+//                myDebug() << listModules.at(i);
+        prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteDictModule);
     }
 }
 //------------------------------------------------------------------------------

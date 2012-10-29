@@ -106,7 +106,8 @@ SOURCES  += \
     src/view/module/projectqmodule.cpp \
     src/view/module/projectqmodulelist.cpp \
     src/gui/note/noteeditor.cpp \
-    src/gui/dialogs/managermodules/managermodules.cpp
+    src/gui/dialogs/managermodules/managermodules.cpp \
+    src/modules/biblequote/biblequotedictmodule/biblequotedictmodule.cpp
 
 
 HEADERS  += \
@@ -150,7 +151,8 @@ HEADERS  += \
     src/view/module/projectqmodule.h \
     src/view/module/projectqmodulelist.h \
     src/gui/note/noteeditor.h \
-    src/gui/dialogs/managermodules/managermodules.h
+    src/gui/dialogs/managermodules/managermodules.h \
+    src/modules/biblequote/biblequotedictmodule/biblequotedictmodule.h
 
 FORMS    += \
          mainwindow.ui \

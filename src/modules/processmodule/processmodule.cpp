@@ -24,7 +24,7 @@ ProcessModule::ProcessModule(QString pathToModule, int typeModule)
 //------------------------------------------------------------------------------
 ProcessModule::~ProcessModule()
 {
-
+    m_biblequote->deleteLater();
 }
 //------------------------------------------------------------------------------
 void ProcessModule::createConnects()
@@ -35,6 +35,7 @@ void ProcessModule::createConnects()
 void ProcessModule::init()
 {
     m_biblequote = new BibleQuoteModule();
+    m_biblequotedictmodule = new BibleQuoteDictModule();
     //    connect(m_biblequote, SIGNAL(createFolderForModule(QString)), SLOT(createFolderForModule(QString)));
 }
 //------------------------------------------------------------------------------
@@ -47,6 +48,10 @@ bool ProcessModule::processing(QString pathToModule, int type)
     case OBVCore::Type_BibleQuoteModule:
         //        myDebug() << "this is biblequote module";
         m_biblequote->parseModule(p_pathToModule);
+        emit SIGNAL_ProcessOk();
+        break;
+    case OBVCore::Type_BibleQuoteDictModule:
+        m_biblequotedictmodule->parseModule(p_pathToModule);
         emit SIGNAL_ProcessOk();
         break;
     case OBVCore::Type_SwordBibleModule:
