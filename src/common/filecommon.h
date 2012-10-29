@@ -217,7 +217,7 @@ QHash<QString, int> getNumberOfChaptersInBook(QString filename);
 QStringList removeEmptyQStringFromQStringList(QStringList *list);
 QString getClearText(QString *text);
 QString getEndOfTag(QString tag);
-QStringList getListModulesFromPath(QString path);
+QStringList getListModulesFromPath(QString path, QString format=".ini");
 QStringList recursiveFind(QString directory);
 QHash<int, QString> getNoteOfParams(QString curPath,
                                     QString curModule,

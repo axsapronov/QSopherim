@@ -97,8 +97,26 @@ private slots:
 
     void createNote();
 
+    /**
+     * @brief retranslate
+     * Retranslate gui
+     * @param t_str
+     */
     void retranslate(QString t_str);
+
+    /**
+     * @brief loadModulesFromFolder
+     * @functon
+     * Load modules from path and add to list in app
+     */
     void loadModulesFromFolder();
+
+    /**
+     * @brief loadDictFromFolder
+     * @function
+     * Load dictionaryes from path and add to list in app
+     */
+    void loadDictFromFolder();
 
 protected:
     void closeEvent(QCloseEvent *);

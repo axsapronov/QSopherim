@@ -32,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     init();
     loadModulesFromFolder();
+    loadDictFromFolder();
+
     //    debug();
 }
 //------------------------------------------------------------------------------
@@ -124,6 +126,7 @@ void MainWindow::init()
     createTrayIcon(); // add actionts to tray menu
     createConnects(); // moved func
     trIcon->show();  //display tray
+
 
 }
 //------------------------------------------------------------------------------
@@ -413,6 +416,18 @@ void MainWindow::loadModulesFromFolder()
     {
         //        myDebug() << listModules.at(i);
         prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
+    }
+}
+//------------------------------------------------------------------------------
+void MainWindow::loadDictFromFolder()
+{
+    QStringList listModules = getListModulesFromPath(
+                Config::configuration()->getDictDir()
+                , ".idx");
+    for (int i = 0; i < listModules.size(); i++)
+    {
+                myDebug() << listModules.at(i);
+//        prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
     }
 }
 //------------------------------------------------------------------------------

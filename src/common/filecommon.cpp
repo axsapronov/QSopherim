@@ -762,14 +762,14 @@ QString getEndOfTag(QString tag)
     return newtag;
 }
 //------------------------------------------------------------------------------
-QStringList getListModulesFromPath(QString path)
+QStringList getListModulesFromPath(QString path, QString format)
 {
     QStringList files = recursiveFind(path);
     QStringList list;
     for(int i = 0; i < files.size(); i++)
     {
-        if(files.at(i).indexOf(".ini") >= 0
-                or files.at(i).indexOf(".INI") >= 0)
+        if(files.at(i).indexOf(format) >= 0
+                or files.at(i).indexOf(format.toUpper()) >= 0)
         {
             list << files.at(i);
         }
