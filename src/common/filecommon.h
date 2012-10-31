@@ -12,6 +12,8 @@
 #include <QDirIterator>
 #include <QXmlStreamReader>
 
+#include <QStringList>
+
 #include <QDebug>
 #include "book.h"
 #include "projectqmodule.h" /// ProjectQModuleInfo
@@ -22,6 +24,13 @@ typedef struct StrongList
     int number;
     QString text;
 } StrongList;
+
+
+typedef struct WordDictList
+{
+    QString word;
+    QString text;
+} WordDictList;
 
 //class StrongList
 //{
@@ -231,4 +240,5 @@ void writeXmlStrongFile(QHash<int, StrongList> *strong);
 QString getCoolLine(QString str);
 QString getNextWord(QString str, int pos);
 QString getShortLang(QString str);
+
 #endif // __FILECOMMON__H
