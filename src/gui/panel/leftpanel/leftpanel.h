@@ -39,6 +39,8 @@ private slots:
     void refreshChapterList(QModelIndex);
     void refreshBookList(QString);
     void showChapter(QModelIndex);
+
+    void refreshWordListFromDict(QString);
 private:
     Ui::LeftPanel *ui;
     QStandardItemModel *modelModules;
@@ -57,6 +59,8 @@ private:
      */
     void init();
     void createConnects();
+
+
 };
 
 #endif // LEFTPANEL_H

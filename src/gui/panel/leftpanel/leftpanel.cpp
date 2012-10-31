@@ -145,6 +145,7 @@ void LeftPanel::createConnects()
     connect(ui->comBModules, SIGNAL(activated(QString)), SLOT(refreshBookList(QString)));
     connect(ui->tableBook, SIGNAL(clicked(QModelIndex)), SLOT(refreshChapterList(QModelIndex)));
     connect(ui->tableChapter, SIGNAL(clicked(QModelIndex)), SLOT(showChapter(QModelIndex)));
+    connect(ui->comBDictList, SIGNAL(activated(QString)), SLOT(refreshWordListFromDict(QString)));
 }
 //------------------------------------------------------------------------------
 void LeftPanel::showChapter(QModelIndex ind)
@@ -168,6 +169,7 @@ void LeftPanel::showChapter(QModelIndex ind)
     emit SIGNAL_AddRecordToJournal(ui->comBModules->currentText(),
                                    m_lastNameOfBook ,
                                    QString::number(ind.row() + 1));
+
 }
 //------------------------------------------------------------------------------
 void LeftPanel::refreshBookList(QString nameOfBook)
@@ -208,4 +210,18 @@ void LeftPanel::showChapterFromJournal(QString module, QString book, QString cha
                                         chapter.toInt());
 }
 //------------------------------------------------------------------------------
+void LeftPanel::refreshWordListFromDict(QString curText)
+{
+    QString t_pathToFile = QString(Config::configuration()->getAppDir() + "dictionary/" +
+                                      curText + "/dict.xml");
+
+//    myDebug() << t_pathToFile;
+
+//    t_pathToFile = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/dictionary/bibleinfo/dict.xml";
+//    t_pathToFile = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/dictionary/vikhlyantsev/dict.xml";
+
+    QStringList wordList = getListWord(t_pathToFile);
+//    myDebug() << wordList.size() << wordList;
+    ui->comBWordList->addItems(wordList);
+}
 //------------------------------------------------------------------------------

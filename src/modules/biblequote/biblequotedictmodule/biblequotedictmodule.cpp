@@ -62,7 +62,7 @@ bool BibleQuoteDictModule::createIniFile()
     /// добавить обработку типа
     QString text =
             "////Module for projectQ"
-            "\nName = " + m_name +
+            "\nModuleName = " + m_name +
             "\nAuthor = " + m_author +
             "\nRevision = " + m_revision +
             "\nLanguage = " + m_language+
@@ -110,7 +110,7 @@ void BibleQuoteDictModule::writeDictFile(QHash<int, WordDictList> *wordList)
 
     QString path;
     path = QString(Config::configuration()->getAppDir() + "dictionary/" +
-                   m_name + "/" + m_name + ".xml");
+                   m_name + "/dict.xml");
     myDebug() << path;
     QFile file(path);
     if (file.exists())

@@ -130,81 +130,29 @@ QStringList getFillType()
 ///----------------------------------------------------------------------------
 QStringList getListWord(QString filename)
 {
-    QStringList list;
-    QFile file(filename);
-    if (file.open(QIODevice::ReadOnly))
-    {
-        QTextStream streamInput(&file);
-        streamInput.setCodec(getCodecOfEncoding(getEncodingFromFile(filename)));
-        QString line;
+    QStringList r_list;
+    QXmlStreamReader xmlReader;
+    xmlReader.addData(getTextFromHtmlFile(filename));
 
-        /// split bad string
-        do
+    while(!xmlReader.atEnd())
+    {
+        if(xmlReader.isStartElement())
         {
-            line = streamInput.readLine() + "\r\n";
+            QStringList sl;
+            sl << xmlReader.name().toString();
+            QXmlStreamAttributes attrs = xmlReader.attributes();
+            //         myDebug() << attrs.value("name").toString();
+            r_list.append(attrs.value("name").toString());
         }
-        while (line.indexOf("<h4>") == -1
-               and !streamInput.atEnd());
-        int count;
-        QString str, str2;
-        do
-        {
-            /// edit to standart
-            /// replace tag to standart
-            //            line.replace(tagBegin, "<h4>");
-            //            line.replace(tagEnd, "</h4>");
 
-            int h4 = QString("<h4>").length();
+//        if (xmlReader.isEndElement())
+//        {
 
-            int posH4_1 = line.indexOf("<h4>");
-            int posH4_2 = line.indexOf("<h4>", posH4_1);
-
-            /// split text  mid <h4> and <h4>
-            /// if the text in multiple lines
-            while ((posH4_2 == -1 or posH4_1 == posH4_2)
-                   and !streamInput.atEnd())
-            {
-                line.append(streamInput.readLine() + "\r\n");
-                posH4_2 = line.indexOf("<h4>", posH4_1 + h4);
-            }
-            str = line.mid(posH4_1,
-                           posH4_2 - posH4_1);
-
-            int posBegin = str.indexOf("<h4>");
-            int posEnd = str.indexOf("</h4>");
-            str2 = line.mid(posBegin + QString("<h4>").length(),
-                            posEnd - posBegin - QString("<h4>").length());
-            if (!str.isEmpty())
-            {
-                //                streamDict << str;
-            }
-
-            if (!str2.isEmpty())
-            {
-                //                int count2;
-                if (count %2 != 0)
-                    count++;
-
-                //                count2 = count;
-                //                streamIdx << str2 << "\r\n" << QString::number(count2) + "\r\n";
-            }
-            count += (str.length()) *2;
-            list << QString(str).remove("\r\n");
-            line.remove(str);
-            //            QString sttt = str2 + "<|>" + str;
-
-            line.append(streamInput.readLine() + "\r\n");
-            line.remove("</body>")
-                    .remove("</html>")
-                    .remove("<body>");
-        } while (!streamInput.atEnd());
-        file.close();
+//        }
+        xmlReader.readNext();
     }
-    else
-    {
-        qDebug() << "Error: not open file for read word list:" << filename;
-    }
-    return list;
+    r_list = removeEmptyQStringFromQStringList(&r_list);
+    return r_list;
 }
 
 ///----------------------------------------------------------------------------
@@ -638,10 +586,6 @@ ProjectQModuleInfo getModuleInfo(QString fileName)
 
     ProjectQModuleInfo list;
     list.moduleName = getParamModule(fileName, "ModuleName");
-    if (list.moduleName.isEmpty())
-    {
-        list.moduleName = getParamModule(fileName, "Name");
-    }
     list.moduleShortName = getParamModule(fileName, "ModuleShortName");
     //    list.append(getParamModule(fileName, "ModuleLanguage"));
     list.bookValue = getParamModule(fileName, "BooksValue").toInt();
