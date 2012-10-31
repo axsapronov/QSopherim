@@ -638,6 +638,10 @@ ProjectQModuleInfo getModuleInfo(QString fileName)
 
     ProjectQModuleInfo list;
     list.moduleName = getParamModule(fileName, "ModuleName");
+    if (list.moduleName.isEmpty())
+    {
+        list.moduleName = getParamModule(fileName, "Name");
+    }
     list.moduleShortName = getParamModule(fileName, "ModuleShortName");
     //    list.append(getParamModule(fileName, "ModuleLanguage"));
     list.bookValue = getParamModule(fileName, "BooksValue").toInt();

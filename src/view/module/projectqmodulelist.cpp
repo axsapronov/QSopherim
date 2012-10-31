@@ -41,7 +41,7 @@ void ProjectQModuleList::init()
     cur_int = -1;
 }
 //------------------------------------------------------------------------------
-void ProjectQModuleList::refreshList()
+void ProjectQModuleList::refreshList(QString what)
 {
     /*
      *P.S. для удобства добавить в settings файл модуля
@@ -52,7 +52,7 @@ void ProjectQModuleList::refreshList()
      *создать его
      *и добавить в список
      */
-    QString t_pathToIniFile = QString(Config::configuration()->getAppDir() + "bible/");
+    QString t_pathToIniFile = QString(Config::configuration()->getAppDir() + what);
     findModules(t_pathToIniFile);
 }
 //------------------------------------------------------------------------------

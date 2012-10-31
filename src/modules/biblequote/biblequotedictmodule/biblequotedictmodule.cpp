@@ -16,7 +16,7 @@ BibleQuoteDictModule::BibleQuoteDictModule()
 void BibleQuoteDictModule::parseModule(QString pathToModule)
 {
     pathToModule.replace(".idx", ".htm");
-//    myDebug() << "Parse module: " << pathToModule;
+    //    myDebug() << "Parse module: " << pathToModule;
     QStringList params = getInfoFromFile(pathToModule);
     //    myDebug() << params;
 
@@ -35,26 +35,26 @@ void BibleQuoteDictModule::parseModule(QString pathToModule)
 
 
     QDir d(Config::configuration()->getAppDir() + "dictionary/" + name);
-//    if (!d.exists())
-//    {
+    if (!d.exists())
+    {
 
-//        QDir dir;
-//        dir.mkpath(Config::configuration()->getAppDir() + "dictionary/"
-//                   + name);
+        QDir dir;
+        dir.mkpath(Config::configuration()->getAppDir() + "dictionary/"
+                   + name);
 
-//        if (createIniFile())
-//        {
+        if (createIniFile())
+        {
             createDictFile(pathToModule);
-//        }
-//        else
-//        {
-//            myWarning() << "this module is created";
-//        }
-//    }
-//    else
-//    {
+        }
+        else
+        {
+            myWarning() << "this module is created";
+        }
+    }
+    else
+    {
 //        myDebug() << "This module is exist";
-//    }
+    }
 }
 //------------------------------------------------------------------------------
 bool BibleQuoteDictModule::createIniFile()

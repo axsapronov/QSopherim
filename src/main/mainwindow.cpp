@@ -218,7 +218,8 @@ void MainWindow::createConnects()
     connect(ui->action_About_Help, SIGNAL(triggered()), SLOT(showHelp()));
 
     /// other
-    connect(prModule, SIGNAL(SIGNAL_ProcessOk()), SLOT(processFinish()));
+    connect(prModule, SIGNAL(SIGNAL_ProcessModuleOk()), SLOT(processFinishModule()));
+    connect(prModule, SIGNAL(SIGNAL_ProcessDictOk()), SLOT(processFinishDict()));
 
 
     connect(GUI_ModuleViewer, SIGNAL(showNoteList(QString,QString,QString,QString,QString)),
@@ -402,11 +403,18 @@ void MainWindow::showHelp()
     //    HtmlHelp(NULL, "help.chm", HH_DISPLAY_TOPIC, 0);
 }
 //------------------------------------------------------------------------------
-void MainWindow::processFinish()
+void MainWindow::processFinishModule()
 {
     ProjectQModuleList* list = new ProjectQModuleList();
     list->refreshList();
-    GUI_LeftPanel->refreshList(list);
+    GUI_LeftPanel->refreshListModule(list);
+}
+//------------------------------------------------------------------------------
+void MainWindow::processFinishDict()
+{
+    ProjectQModuleList* list = new ProjectQModuleList();
+    list->refreshList("dictionary/");
+    GUI_LeftPanel->refreshListDict(list);
 }
 //------------------------------------------------------------------------------
 void MainWindow::loadModulesFromFolder()

@@ -22,7 +22,8 @@ public:
     ~LeftPanel();
 
     void refreshBookList(ProjectQModuleList* list);
-    void refreshList(ProjectQModuleList* list);
+    void refreshListModule(ProjectQModuleList* list);
+    void refreshListDict(ProjectQModuleList* list);
 
     /**
      * @brief retranslate

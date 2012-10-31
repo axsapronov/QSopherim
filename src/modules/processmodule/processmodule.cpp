@@ -48,11 +48,11 @@ bool ProcessModule::processing(QString pathToModule, int type)
     case OBVCore::Type_BibleQuoteModule:
         //        myDebug() << "this is biblequote module";
         m_biblequote->parseModule(p_pathToModule);
-        emit SIGNAL_ProcessOk();
+        emit SIGNAL_ProcessModuleOk();
         break;
     case OBVCore::Type_BibleQuoteDictModule:
         m_biblequotedictmodule->parseModule(p_pathToModule);
-        emit SIGNAL_ProcessOk();
+        emit SIGNAL_ProcessDictOk();
         break;
     case OBVCore::Type_SwordBibleModule:
         //        myDebug() << "this is sword module";

@@ -16,7 +16,7 @@ public:
     void AddModule(ProjectQModule*);
     int getCurNumberModule();
 
-    void refreshList();
+    void refreshList(QString = "bible/");
     int getSize();
     ProjectQModule* getModuleWithName(QString name);
     QStringList getModuleBooks(QString);

@@ -33,7 +33,7 @@ LeftPanel::~LeftPanel()
     delete ui;
 }
 //------------------------------------------------------------------------------
-void LeftPanel::refreshList(ProjectQModuleList* list)
+void LeftPanel::refreshListModule(ProjectQModuleList* list)
 {
 
     //    this->modelModules = new QStandardItemModel(moduleList->getSize(), 1, this);
@@ -49,6 +49,24 @@ void LeftPanel::refreshList(ProjectQModuleList* list)
     typeModel = new QStringListModel(items, this);
     ui->comBModules->setModel(typeModel);
     refreshBookList(ui->comBModules->currentText());
+}
+//------------------------------------------------------------------------------
+void LeftPanel::refreshListDict(ProjectQModuleList* list)
+{
+
+    //    this->modelModules = new QStandardItemModel(moduleList->getSize(), 1, this);
+    //* Rows and 1 Columns
+//    modelBooks->clear();
+//    modelChapters->clear();
+//    moduleList = list;
+    QStringList items;
+    for (int i = 0; i < list->getSize(); i++)
+    {
+        items << QString(list->getModule(i)->getModuleName());
+    }
+    typeModel = new QStringListModel(items, this);
+    ui->comBDictList->setModel(typeModel);
+//    refreshBookList(ui->comBModules->currentText());
 }
 //------------------------------------------------------------------------------
 void LeftPanel::refreshBookList(ProjectQModuleList* list)

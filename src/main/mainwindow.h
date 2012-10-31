@@ -93,7 +93,8 @@ private slots:
       */
     void showHelp();
 
-    void processFinish();
+    void processFinishModule();
+    void processFinishDict();
 
     void createNote();
 
