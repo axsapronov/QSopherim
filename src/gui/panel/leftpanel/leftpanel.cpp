@@ -146,6 +146,8 @@ void LeftPanel::createConnects()
     connect(ui->tableBook, SIGNAL(clicked(QModelIndex)), SLOT(refreshChapterList(QModelIndex)));
     connect(ui->tableChapter, SIGNAL(clicked(QModelIndex)), SLOT(showChapter(QModelIndex)));
     connect(ui->comBDictList, SIGNAL(activated(QString)), SLOT(refreshWordListFromDict(QString)));
+//    connect(ui->comBWordList, SIGNAL(activated(QString)), SLOT(showDescriptionWord(QString)));
+    connect(ui->ListViewWordList, SIGNAL(activated(QModelIndex)), SLOT(showWord(QModelIndex)));
 }
 //------------------------------------------------------------------------------
 void LeftPanel::showChapter(QModelIndex ind)
@@ -214,14 +216,30 @@ void LeftPanel::refreshWordListFromDict(QString curText)
 {
     QString t_pathToFile = QString(Config::configuration()->getAppDir() + "dictionary/" +
                                       curText + "/dict.xml");
-
-//    myDebug() << t_pathToFile;
-
-//    t_pathToFile = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/dictionary/bibleinfo/dict.xml";
-//    t_pathToFile = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/dictionary/vikhlyantsev/dict.xml";
-
     QStringList wordList = getListWord(t_pathToFile);
-//    myDebug() << wordList.size() << wordList;
-    ui->comBWordList->addItems(wordList);
+
+    QStandardItemModel* modelWord = new QStandardItemModel;
+    for (int i = 0; i < wordList.size() - 1; i++)
+    {
+        modelWord->setItem(i, 0, new QStandardItem(wordList.at(i)));
+        //        myDebug() << "yes";
+    }
+
+    ui->ListViewWordList->setModel(modelWord);
+}
+//------------------------------------------------------------------------------
+void LeftPanel::showDescriptionWord(QString word)
+{
+    QString t_pathToFile = QString(Config::configuration()->getAppDir() + "dictionary/" +
+                                      ui->comBDictList->currentText() + "/dict.xml");
+
+    QString t_text = getDescriptionForWordFromDict(t_pathToFile, word);
+    ui->view->setText(t_text);
+}
+//------------------------------------------------------------------------------
+void LeftPanel::showWord(QModelIndex ind)
+{
+    QString word = ind.data(0).toString();
+    showDescriptionWord(word);
 }
 //------------------------------------------------------------------------------

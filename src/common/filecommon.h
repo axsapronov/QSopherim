@@ -240,5 +240,5 @@ void writeXmlStrongFile(QHash<int, StrongList> *strong);
 QString getCoolLine(QString str);
 QString getNextWord(QString str, int pos);
 QString getShortLang(QString str);
-
+QString getDescriptionForWordFromDict(QString pathToFile, QString word);
 #endif // __FILECOMMON__H

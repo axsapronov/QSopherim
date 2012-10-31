@@ -145,10 +145,10 @@ QStringList getListWord(QString filename)
             r_list.append(attrs.value("name").toString());
         }
 
-//        if (xmlReader.isEndElement())
-//        {
+        //        if (xmlReader.isEndElement())
+        //        {
 
-//        }
+        //        }
         xmlReader.readNext();
     }
     r_list = removeEmptyQStringFromQStringList(&r_list);
@@ -458,7 +458,7 @@ QString getDescriptionFromHtmlFile(QString filePath)
 
     return str;
 }
-///----------------------------------------------------------------------------
+///-----------------------------------------------------------------------------
 QString findPosWord(QString file, QString text)
 {
     QString t_output_str = "";
@@ -941,5 +941,34 @@ QString getShortLang(QString str)
         return "fr";
 
     return "en";
+}
+//------------------------------------------------------------------------------
+QString getDescriptionForWordFromDict(QString t_pathToFile, QString word)
+{
+    QXmlStreamReader xmlReader;
+    QString r_str;
+    xmlReader.addData(getTextFromHtmlFile(t_pathToFile));
+    while(!xmlReader.atEnd())
+    {
+        if(xmlReader.isStartElement())
+        {
+            QStringList sl;
+            sl << xmlReader.name().toString();
+            QXmlStreamAttributes attrs = xmlReader.attributes();
+            if (attrs.value("name") == word)
+            {
+                r_str = xmlReader.readElementText();
+                break;
+            }
+        }
+
+
+        if (xmlReader.isEndElement())
+        {
+
+        }
+        xmlReader.readNext();
+    }
+    return r_str;
 }
 //------------------------------------------------------------------------------
