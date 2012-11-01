@@ -958,17 +958,42 @@ QString getDescriptionForWordFromDict(QString t_pathToFile, QString word)
             if (attrs.value("name") == word)
             {
                 r_str = xmlReader.readElementText();
+                r_str.remove("    ");
                 break;
             }
         }
+//        if (xmlReader.isEndElement())
+//        {
 
-
-        if (xmlReader.isEndElement())
-        {
-
-        }
+//        }
         xmlReader.readNext();
     }
     return r_str;
 }
+//------------------------------------------------------------------------------
+QStringList getBookmarks(QString pathToFile)
+{
+    QXmlStreamReader xmlReader;
+    QString r_str;
+    QStringList r_list;
+    xmlReader.addData(getTextFromHtmlFile(pathToFile));
+    while(!xmlReader.atEnd())
+    {
+        if(xmlReader.isStartElement())
+        {
+            QStringList sl;
+            sl << xmlReader.name().toString();
+            QXmlStreamAttributes attrs = xmlReader.attributes();
+            r_list  << attrs.value("name").toString();
+        }
+//        if (xmlReader.isEndElement())
+//        {
+
+//        }
+        xmlReader.readNext();
+    }
+    r_list = removeEmptyQStringFromQStringList(&r_list);
+    return r_list;
+}
+//------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

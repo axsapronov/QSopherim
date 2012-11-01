@@ -80,7 +80,6 @@ bool BibleQuoteDictModule::createIniFile()
     }
     return createEmpty(Config::configuration()->getAppDir() + "dictionary/" +
                        m_name + "/module.ini", text);
-
     return false;
 }
 //------------------------------------------------------------------------------
@@ -98,7 +97,7 @@ void BibleQuoteDictModule::createDictFile(QString path)
         QStringList t_word;
         t_word = line.split("</h4>");
         WordDictList t_list;
-        t_list.word = t_word.at(0).toInt();
+        t_list.word = t_word.at(0);
         t_list.text = getCoolLine(t_word.at(1));
         wordList[i] = t_list;
     }
@@ -107,11 +106,9 @@ void BibleQuoteDictModule::createDictFile(QString path)
 //------------------------------------------------------------------------------
 void BibleQuoteDictModule::writeDictFile(QHash<int, WordDictList> *wordList)
 {
-
     QString path;
     path = QString(Config::configuration()->getAppDir() + "dictionary/" +
                    m_name + "/dict.xml");
-    myDebug() << path;
     QFile file(path);
     if (file.exists())
         file.remove();
@@ -136,6 +133,5 @@ void BibleQuoteDictModule::writeDictFile(QHash<int, WordDictList> *wordList)
         }
         ts << "</xml>" << endl;
     }
-
 }
 //------------------------------------------------------------------------------

@@ -71,14 +71,16 @@ void MainWindow::init()
     GUI_RightPanel = new RightPanel();
     GUI_LeftPanel = new LeftPanel(this);
     GUI_LeftPanel2 = new LeftPanel2(this);
+
+    GUI_RightPanel->loadBookmarks();
     //    GUI_BottomPanel = new BottomPanel(this);
 
-    GUI_RightPanel->setMinimumWidth(200);
-    GUI_LeftPanel->setMinimumWidth(200);
+    GUI_RightPanel->setMinimumWidth(250);
+    GUI_LeftPanel->setMinimumWidth(300);
     //    GUI_BottomPanel->setMinimumHeight(100);
     addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel);
     addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel2);
-    //    addDockWidget(Qt::RightDockWidgetArea, GUI_RightPanel);
+    addDockWidget(Qt::RightDockWidgetArea, GUI_RightPanel);
     //    addDockWidget(Qt::BottomDockWidgetArea, GUI_BottomPanel);
 
     prModule = new ProcessModule();
@@ -222,7 +224,7 @@ void MainWindow::createConnects()
     connect(prModule, SIGNAL(SIGNAL_ProcessDictOk()), SLOT(processFinishDict()));
 
 
-    connect(GUI_ModuleViewer, SIGNAL(showNoteList(QString,QString,QString,QString,QString)),
+    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowNoteList(QString,QString,QString,QString,QString)),
             GUI_LeftPanel2, SLOT(showNoteList(QString,QString,QString,QString,QString)));
 
     connect(GUI_Settings, SIGNAL(SIGNAL_RetranslateGUI(QString)),
@@ -240,6 +242,8 @@ void MainWindow::createConnects()
     connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadFontSettings()), GUI_ModuleViewer,
             SLOT(updateFontSettings()));
 
+    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNewBookmark(QString)),
+            GUI_RightPanel, SLOT(addNewBookmark(QString)));
 }
 //------------------------------------------------------------------------------
 void MainWindow::showHide(QSystemTrayIcon::ActivationReason r)
@@ -434,7 +438,7 @@ void MainWindow::loadDictFromFolder()
                 , ".idx");
     for (int i = 0; i < listModules.size(); i++)
     {
-//                myDebug() << listModules.at(i);
+        //                myDebug() << listModules.at(i);
         prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteDictModule);
     }
 }

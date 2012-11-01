@@ -42,6 +42,8 @@ private slots:
 
     void showWord(QModelIndex);
 
+    void showDescriptionWord(QString word);
+
     void refreshWordListFromDict(QString);
 private:
     Ui::LeftPanel *ui;
@@ -62,7 +64,7 @@ private:
     void init();
     void createConnects();
 
-    void showDescriptionWord(QString word);
+
 
 
 };

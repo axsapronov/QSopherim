@@ -59,11 +59,13 @@ public slots:
     void updateFontSettings();
 
 signals:
-    void showNoteList(QString, QString, QString, QString, QString);
+    void SIGNAL_ShowNoteList(QString, QString, QString, QString, QString);
+    void SIGNAL_AddNewBookmark(QString);
 
 private slots:
     void showContextMenu(QPoint pt);
     void setCurLine();
+    void addBookmark();
 protected:
     //    void contextMenuEvent(QContextMenuEvent *event);
     bool eventFilter(QObject *obj, QEvent *ev);
@@ -75,9 +77,10 @@ private:
     QVector<StrongList> m_list;
     QHash< QString, QVector<int> > m_strongs;
 
-    QAction *cutAct;
-    QAction *copyAct;
-    QAction *pasteAct;
+    QAction *act_cut;
+    QAction *act_copy;
+    QAction *act_paste;
+    QAction *act_addBookmarks;
 
     void init();
     void createConnects();

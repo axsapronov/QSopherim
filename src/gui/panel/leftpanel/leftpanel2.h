@@ -37,8 +37,6 @@ public slots:
                       QString curChapter,
                       QString curPath,
                       QString firstVerse);
-
-
 private slots:
 
     // notes slots

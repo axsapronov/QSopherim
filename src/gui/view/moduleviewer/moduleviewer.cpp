@@ -31,9 +31,9 @@ ModuleViewer::ModuleViewer(QWidget *parent) :
 //------------------------------------------------------------------------------
 ModuleViewer::~ModuleViewer()
 {
-    delete cutAct;
-    delete copyAct;
-    delete pasteAct;
+    delete act_cut;
+    delete act_copy;
+    delete act_paste;
     delete ui;
 }
 //------------------------------------------------------------------------------
@@ -42,9 +42,9 @@ ModuleViewer::~ModuleViewer()
 //    /// Добавить в контексное меню информацию о текущем расположении (Модуль:Книга:Глава:Номер стиха)
 
 //    QMenu *menu = new QMenu(this);
-//    menu->addAction(cutAct);
-//    menu->addAction(copyAct);
-//    menu->addAction(pasteAct);
+//    menu->addAction(act_cut);
+//    menu->addAction(act_copy);
+//    menu->addAction(act_paste);
 
 //    menu->addSeparator();
 //    QAction *act = new QAction(tr("YYYAAAAZ"), this);
@@ -81,32 +81,36 @@ ModuleViewer::~ModuleViewer()
 //------------------------------------------------------------------------------
 void ModuleViewer::createActions()
 {
-    cutAct = new QAction(tr("Cu&t"), this);
-    cutAct->setShortcuts(QKeySequence::Cut);
-    cutAct->setStatusTip(tr("Cut the current selection's contents to the "
+    act_cut = new QAction(tr("Cu&t"), this);
+    act_cut->setShortcuts(QKeySequence::Cut);
+    act_cut->setStatusTip(tr("Cut the current selection's contents to the "
                             "clipboard"));
-    //    connect(cutAct, SIGNAL(triggered()), this, SLOT(cut()));
+    //    connect(act_cut, SIGNAL(triggered()), this, SLOT(cut()));
 
-    copyAct = new QAction(tr("&Copy"), this);
-    //    copyAct->setShortcuts(QKeySequence::Copy);
-    //    copyAct->setStatusTip(tr("Copy the current selection's contents to the "
+    act_copy = new QAction(tr("&Copy"), this);
+    //    act_copy->setShortcuts(QKeySequence::Copy);
+    //    act_copy->setStatusTip(tr("Copy the current selection's contents to the "
     //                             "clipboard"));
-    //    //    connect(copyAct, SIGNAL(triggered()), this, SLOT(copy()));
+    //    //    connect(act_copy, SIGNAL(triggered()), this, SLOT(copy()));
 
-    pasteAct = new QAction(tr("&Paste"), this);
-    //    pasteAct->setShortcuts(QKeySequence::Paste);
-    //    pasteAct->setStatusTip(tr("Paste the clipboard's contents into the current "
+    act_paste = new QAction(tr("&Paste"), this);
+    //    act_paste->setShortcuts(QKeySequence::Paste);
+    //    act_paste->setStatusTip(tr("Paste the clipboard's contents into the current "
     //                              "selection"));
-    //    connect(pasteAct, SIGNAL(triggered()), this, SLOT(paste()));
+    //    connect(act_paste, SIGNAL(triggered()), this, SLOT(paste()));
+    act_addBookmarks = new QAction(tr("&Add bookmarks"), this);
+    connect(act_addBookmarks, SIGNAL(triggered()), this, SLOT(addBookmark()));
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::showContextMenu(QPoint pt)
 {
     //    QMenu *menu = ui->viewer->createStandardContextMenu();
     QMenu *menu = new QMenu(this);
-    menu->addAction(cutAct);
-    menu->addAction(copyAct);
-    menu->addAction(pasteAct);
+    menu->addAction(act_cut);
+    menu->addAction(act_copy);
+    menu->addAction(act_paste);
+
+    menu->addAction(act_addBookmarks);
 
     menu->addSeparator();
     //    QString str = curBook + ":" + curChapter;
@@ -194,6 +198,7 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
     curPath = pathToFile;
     curChapter = QString::number(numberchapter);
     ui->LAStatus->setText(curModule + " : " + curBook + " : " + curChapter );
+
 }
 //------------------------------------------------------------------------------
 //void ModuleViewer::getTextChapter(QString pathToFile, QString nameBook, int numberchapter)
@@ -363,7 +368,7 @@ void ModuleViewer::showNoteList()
      */
     QString path = curPath;
     path.replace("text.xml", "notes.xml");
-    emit showNoteList(curModule,
+    emit SIGNAL_ShowNoteList(curModule,
                       curBook,
                       curChapter,
                       path,
@@ -518,4 +523,13 @@ void ModuleViewer::updateFontSettings()
 //    ui->viewer->reload();
 //    ui->viewer->update();
 }
+//------------------------------------------------------------------------------
+void ModuleViewer::addBookmark()
+{
+    QString bookm = curModule + " : "
+            + curBook + " : "
+            + curChapter;
+    emit SIGNAL_AddNewBookmark(bookm);
+}
+//------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

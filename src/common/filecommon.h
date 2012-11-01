@@ -217,6 +217,15 @@ QString findPosWord(QString file, QString text);
   @return bool
   */
 bool createEmptyXML(QString fileName);
+/**
+ * @brief addBookToXML
+ * @function
+ * Function for add book to xml
+ * @param fileName
+ * @param namebook
+ * @param mbook
+ * @return
+ */
 bool addBookToXML(QString fileName, QString namebook, Book mbook);
 bool endXML(QString fileName);
 ProjectQModuleInfo getModuleInfo(QString fileName);
@@ -241,4 +250,12 @@ QString getCoolLine(QString str);
 QString getNextWord(QString str, int pos);
 QString getShortLang(QString str);
 QString getDescriptionForWordFromDict(QString pathToFile, QString word);
+
+/**
+ * @brief getBookmarks
+ * return list of bookmarks from file
+ * @param pathToFile
+ * @return
+ */
+QStringList getBookmarks(QString pathToFile);
 #endif // __FILECOMMON__H

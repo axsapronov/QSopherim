@@ -15,9 +15,21 @@ public:
     explicit RightPanel(QWidget *parent = 0);
     ~RightPanel();
     void retranslate();
+    void loadBookmarks();
+
+public slots:
+    /**
+     * @brief addNewBookmark
+     * @function
+     * Function for add bookmark
+     * @param str
+     */
+    void addNewBookmark(QString str);
 
 private:
     Ui::RightPanel *ui;
+
+    QStringList m_listBookmark;
 };
 
 #endif // RIGHTPANEL_H

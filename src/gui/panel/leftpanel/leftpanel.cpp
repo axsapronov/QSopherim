@@ -146,8 +146,8 @@ void LeftPanel::createConnects()
     connect(ui->tableBook, SIGNAL(clicked(QModelIndex)), SLOT(refreshChapterList(QModelIndex)));
     connect(ui->tableChapter, SIGNAL(clicked(QModelIndex)), SLOT(showChapter(QModelIndex)));
     connect(ui->comBDictList, SIGNAL(activated(QString)), SLOT(refreshWordListFromDict(QString)));
-//    connect(ui->comBWordList, SIGNAL(activated(QString)), SLOT(showDescriptionWord(QString)));
-    connect(ui->ListViewWordList, SIGNAL(activated(QModelIndex)), SLOT(showWord(QModelIndex)));
+    connect(ui->comBWordList, SIGNAL(activated(QString)), SLOT(showDescriptionWord(QString)));
+    connect(ui->ListViewWordList, SIGNAL(clicked(QModelIndex)), SLOT(showWord(QModelIndex)));
 }
 //------------------------------------------------------------------------------
 void LeftPanel::showChapter(QModelIndex ind)
