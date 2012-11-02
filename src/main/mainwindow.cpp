@@ -33,7 +33,6 @@ MainWindow::MainWindow(QWidget *parent) :
     init();
     loadModulesFromFolder();
     loadDictFromFolder();
-
     //    debug();
 }
 //------------------------------------------------------------------------------
@@ -41,7 +40,10 @@ MainWindow::~MainWindow()
 {
     GUI_About->deleteLater();
     GUI_Settings->deleteLater();
+
+    GUI_RightPanel->saveBookmarks();
     GUI_RightPanel->deleteLater();
+
     GUI_LeftPanel->deleteLater();
     GUI_LeftPanel2->deleteLater();
     GUI_RightPanel->deleteLater();
@@ -244,6 +246,11 @@ void MainWindow::createConnects()
 
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNewBookmark(QString)),
             GUI_RightPanel, SLOT(addNewBookmark(QString)));
+
+    connect(GUI_RightPanel, SIGNAL(SIGNAL_OpenBookmark(QString, QString, QString)),
+            GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
+    connect(GUI_RightPanel, SIGNAL(SIGNAL_OpenBookmark(QString, QString, QString)),
+            GUI_LeftPanel2, SLOT(addRecordToJournal(QString,QString,QString)));
 }
 //------------------------------------------------------------------------------
 void MainWindow::showHide(QSystemTrayIcon::ActivationReason r)

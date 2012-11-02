@@ -147,10 +147,6 @@ private:
 
     ProcessModule* prModule;
 
-
-
-
-
     /**
       @function
       debug function
