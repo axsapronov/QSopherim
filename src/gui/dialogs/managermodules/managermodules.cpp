@@ -93,6 +93,7 @@ void ManagerModules::deleteSelectedModules()
     }
     ui->tableViewStateModules->setModel(modelBiblies);
     ui->tableViewStateModules->resizeColumnsToContents();
+    emit SIGNAL_RefreshModules();
 }
 //------------------------------------------------------------------------------
 void ManagerModules::loadListModules()

@@ -233,6 +233,10 @@ void MainWindow::createConnects()
             SLOT(retranslate(QString)));
     connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadModules()), SLOT(loadModulesFromFolder()));
 
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), SLOT(processFinishDict()));
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), SLOT(processFinishModule()));
+
+
     // connect fron left1 to left2 panels
     connect(GUI_LeftPanel, SIGNAL(SIGNAL_AddRecordToJournal(QString,QString,QString)),
             GUI_LeftPanel2, SLOT(addRecordToJournal(QString,QString,QString)));

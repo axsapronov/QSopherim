@@ -21,6 +21,8 @@ public:
 
 
     void loadListModules();
+signals:
+    void SIGNAL_RefreshModules();
 private slots:
     /**
      * @brief downloadSelectedModules
