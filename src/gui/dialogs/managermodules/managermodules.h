@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QStandardItemModel>
 
+#include "projectqmodulelist.h"
+
 namespace Ui {
 class ManagerModules;
 }
@@ -63,8 +65,16 @@ private:
      */
     void createConnects();
 
+    /**
+     * @brief deleteModule
+     * @param moduleName
+     */
+    void deleteModule(QString moduleName);
+
     QStandardItemModel *modelBiblies;
     QStandardItemModel *modelDictionaries;
+    ProjectQModuleList* m_listModule;
+    int m_countBiblies;
 
 };
 

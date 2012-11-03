@@ -13,7 +13,7 @@ ProjectQModuleList::ProjectQModuleList()
     init();
 }
 //------------------------------------------------------------------------------
-void ProjectQModuleList::AddModule(ProjectQModule * module)
+void ProjectQModuleList::addModule(ProjectQModule * module)
 {
     moduleList.push_back(module);
     cur_int++;
@@ -69,7 +69,7 @@ void ProjectQModuleList::findModules(QString dir)
             ProjectQModule* module = new ProjectQModule(getModuleInfo(files.at(i)));
 //            myDebug() <<  module.getBookList().size();
 
-            AddModule(module);
+            addModule(module);
             //            myDebug() << getModuleInfo(files.at(i));
         }
     }
@@ -124,6 +124,27 @@ QStringList ProjectQModuleList::getModuleBooks(QString nameOfbook)
     return bookList;
 }
 //------------------------------------------------------------------------------
+void ProjectQModuleList::deleteModule(QString nameModule)
+{
+    for (int i = 0; i < moduleList.size(); i++)
+    {
+        if (moduleList.at(i)->getModuleName() == nameModule)
+        {
+            QString t_path = Config::configuration()->getAppDir() + moduleList.at(i)->getModulePath();
+            QFile::remove(t_path);
+            t_path.replace("module.ini", "text.xml");
+            QFile::remove(QString(t_path).replace("module.ini", "text.xml"));
+            t_path.replace("text.xml", "dict.xml");
+            QFile::remove(QString(t_path).replace("module.ini", "dict.xml"));
+            t_path.remove("dict.xml");
+            QDir dir (t_path);
+
+            dir.rmpath(t_path);
+            moduleList.remove(i);
+        }
+    }
+    cur_int--;
+}
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

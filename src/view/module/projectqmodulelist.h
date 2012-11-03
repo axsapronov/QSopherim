@@ -13,7 +13,8 @@ public:
     ProjectQModule* getNextModule();
     ProjectQModule* getModule(int id);
 
-    void AddModule(ProjectQModule*);
+    void addModule(ProjectQModule*);
+    void deleteModule(QString nameModule);
     int getCurNumberModule();
 
     void refreshList(QString = "bible/");
