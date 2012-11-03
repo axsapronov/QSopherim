@@ -17,12 +17,12 @@ Config::Config()
 //------------------------------------------------------------------------------
 QString Config::getAppDir()
 {
-    return appDir;
+    return m_appDir;
 }
 //------------------------------------------------------------------------------
 void Config::setAppDir(QString newst)
 {
-    appDir = newst;
+    m_appDir = newst;
 }
 //------------------------------------------------------------------------------
 Config *Config::configuration()
@@ -36,12 +36,12 @@ void Config::loadSettings()
 
     QSettings settings("settings.conf", QSettings::NativeFormat);
 
-    bibleDir = settings.value(QString("dir/bible")).toString();
-    dictDir = settings.value(QString("dir/dict")).toString();
-    otherDir = settings.value(QString("dir/other")).toString();
-    appLang = settings.value("language/lang").toString();
-    if (appLang.isEmpty())
-        appLang = "Russian";
+    m_bibleDir = settings.value(QString("dir/bible")).toString();
+    m_dictDir = settings.value(QString("dir/dict")).toString();
+    m_otherDir = settings.value(QString("dir/other")).toString();
+    m_appLang = settings.value("language/lang").toString();
+    if (m_appLang.isEmpty())
+        m_appLang = "Russian";
 
     QDir dir;
     dir.mkpath(getAppDir() + "bible");
@@ -49,8 +49,8 @@ void Config::loadSettings()
     dir.mkpath(getAppDir() + "other");
 
 //    fontColor = settings.value("font/color");
-    fontSize = settings.value("font/size").toInt();
-    fontFamily = settings.value("font/family").toString();
+    m_fontSize = settings.value("font/size").toInt();
+    m_fontFamily = settings.value("font/family").toString();
 
     //    myDebug() << QString(getAppDir() + bibleDir);
 
@@ -116,15 +116,15 @@ void Config::saveSettings()
 {
     //    toAppLog(2, "Save application settings");
     QSettings settings("settings.conf", QSettings::NativeFormat);
-    settings.setValue(QString("language/lang"), appLang);
-    settings.setValue(QString("dir/bible"), bibleDir);
-    settings.setValue(QString("dir/other"), otherDir);
-    settings.setValue(QString("dir/dict"), dictDir);
+    settings.setValue(QString("language/lang"), m_appLang);
+    settings.setValue(QString("dir/bible"), m_bibleDir);
+    settings.setValue(QString("dir/other"), m_otherDir);
+    settings.setValue(QString("dir/dict"), m_dictDir);
 
     // font settings
 //    settings.setValue(QString("font/color"), fontColor);
-    settings.setValue(QString("font/size"), fontSize);
-    settings.setValue(QString("font/family"), fontFamily);
+    settings.setValue(QString("font/size"), m_fontSize);
+    settings.setValue(QString("font/family"), m_fontFamily);
 
     //    //miscellaneous settings
     //    settings.setValue(QString("Language"), lang);
@@ -170,75 +170,94 @@ void Config::saveSettings()
 //------------------------------------------------------------------------------
 QString Config::getBibleDir()
 {
-    return bibleDir;
+    return m_bibleDir;
 }
 //------------------------------------------------------------------------------
 void Config::setBibleDir(QString dir)
 {
-    bibleDir = dir;
+    m_bibleDir = dir;
 }
 //------------------------------------------------------------------------------
 QString Config::getDictDir()
 {
-    return dictDir;
+    return m_dictDir;
 }
 //------------------------------------------------------------------------------
 void Config::setDictDir(QString dir)
 {
-    dictDir = dir;
+    m_dictDir = dir;
 }
 //------------------------------------------------------------------------------
 QString Config::getOtherDir()
 {
-    return otherDir;
+    return m_otherDir;
 }
 //------------------------------------------------------------------------------
 void Config::setOtherDir(QString dir)
 {
-    otherDir = dir;
+    m_otherDir = dir;
 }
 //------------------------------------------------------------------------------
 QString Config::getAppLang()
 {
-    return appLang;
+    return m_appLang;
 }
 //------------------------------------------------------------------------------
 void Config::setAppLang(QString lang)
 {
-    appLang = lang;
+    m_appLang = lang;
 }
 //------------------------------------------------------------------------------
 void Config::setFontColor(QColor newColor)
 {
-    fontColor = newColor;
+    m_fontColor = newColor;
 }
 //------------------------------------------------------------------------------
 void Config::setFontFamily(QString newFamily)
 {
-    fontFamily = newFamily;
+    m_fontFamily = newFamily;
 }
 //------------------------------------------------------------------------------
 void Config::setFontSize(int newSize)
 {
-    fontSize = newSize;
+    m_fontSize = newSize;
 }
 //------------------------------------------------------------------------------
 QString Config::getFontFamily()
 {
-    return fontFamily;
+    return m_fontFamily;
 }
 //------------------------------------------------------------------------------
 QColor Config::getFontColor()
 {
-    return fontColor;
+    return m_fontColor;
 }
 //------------------------------------------------------------------------------
 int Config::getFontSize()
 {
-    return fontSize;
+    return m_fontSize;
+}
+//------------------------------------------------------------------------------
+ProjectQModuleList* Config::getListBibles()
+{
+    return m_listBibles;
+}
+//------------------------------------------------------------------------------
+ProjectQModuleList* Config::getListDictionaries()
+{
+    return m_listDictinaries;
+}
+//------------------------------------------------------------------------------
+void Config::setListBibles(ProjectQModuleList *newlist)
+{
+    m_listBibles = newlist;
+}
+//------------------------------------------------------------------------------
+void Config::setListDictionaries(ProjectQModuleList *newlist)
+{
+    m_listDictinaries = newlist;
 }
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
-
 
 

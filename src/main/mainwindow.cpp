@@ -366,6 +366,7 @@ void MainWindow::showSettings()
 void MainWindow::showModuleManager()
 {
     //set sett
+    GUI_ManagerModules->loadListModules();
     GUI_ManagerModules->show();
 }
 //------------------------------------------------------------------------------

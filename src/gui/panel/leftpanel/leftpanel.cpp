@@ -36,6 +36,7 @@ LeftPanel::~LeftPanel()
 void LeftPanel::refreshListModule(ProjectQModuleList* list)
 {
 
+    Config::configuration()->setListBibles(list);
     //    this->modelModules = new QStandardItemModel(moduleList->getSize(), 1, this);
     //* Rows and 1 Columns
     modelBooks->clear();
@@ -53,7 +54,7 @@ void LeftPanel::refreshListModule(ProjectQModuleList* list)
 //------------------------------------------------------------------------------
 void LeftPanel::refreshListDict(ProjectQModuleList* list)
 {
-
+    Config::configuration()->setListDictionaries(list);
     //    this->modelModules = new QStandardItemModel(moduleList->getSize(), 1, this);
     //* Rows and 1 Columns
 //    modelBooks->clear();
