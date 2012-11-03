@@ -227,28 +227,136 @@ bool createEmptyXML(QString fileName);
  * @return
  */
 bool addBookToXML(QString fileName, QString namebook, Book mbook);
+/**
+ * @brief endXML
+ * @param fileName
+ * @return
+ */
 bool endXML(QString fileName);
+/**
+ * @brief getModuleInfo
+ * @param fileName
+ * @return
+ */
 ProjectQModuleInfo getModuleInfo(QString fileName);
+/**
+ * @brief getParamModule
+ * @param filename
+ * @param param
+ * @return
+ */
 QString getParamModule(QString filename, QString param); // возвращает параметр из файла. Вид файла    "PARAM = VALUE"
+/**
+ * @brief getBookList
+ * @param filaPath
+ * @return
+ */
 QStringList getBookList(QString filaPath);
+/**
+ * @brief getNumberOfChaptersInBook
+ * @param filename
+ * @return
+ */
 QHash<QString, int> getNumberOfChaptersInBook(QString filename);
+/**
+ * @brief removeEmptyQStringFromQStringList
+ * @param list
+ * @return
+ */
 QStringList removeEmptyQStringFromQStringList(QStringList *list);
+/**
+ * @brief getClearText
+ * @param text
+ * @return
+ */
 QString getClearText(QString *text);
+/**
+ * @brief getEndOfTag
+ * @param tag
+ * @return
+ */
 QString getEndOfTag(QString tag);
+/**
+ * @brief getListModulesFromPath
+ * @param path
+ * @param format
+ * @return
+ */
 QStringList getListModulesFromPath(QString path, QString format=".ini");
+/**
+ * @brief recursiveFind
+ * @param directory
+ * @return
+ */
 QStringList recursiveFind(QString directory);
+
+/**
+ * @brief getNoteOfParams
+ * @param curPath
+ * @param curModule
+ * @param curBook
+ * @param curChapter
+ * @param firstVerse
+ * @return
+ */
 QHash<int, QString> getNoteOfParams(QString curPath,
                                     QString curModule,
                                     QString curBook,
                                     QString curChapter,
                                     QString firstVerse);
-QString getVerseNumberFromNote(QString* line);
+/**
+ * @brief getVerseEndNumberFromNote
+ * @param line
+ * @return
+ */
+QString getVerseEndNumberFromNote(QString* line);
+/**
+ * @brief getVerseBeginNumberFromNote
+ * @param line
+ * @return
+ */
+QString getVerseBeginNumberFromNote(QString* line);
+/**
+ * @brief getListStrongs
+ * @param path
+ * @return
+ */
 QVector<StrongList> getListStrongs(QString path);
+/**
+ * @brief createListStrongs
+ * @param path
+ */
 void createListStrongs(QString path);
+/**
+ * @brief writeXmlStrongFile
+ * @param strong
+ */
 void writeXmlStrongFile(QHash<int, StrongList> *strong);
+/**
+ * @brief getCoolLine
+ * @param str
+ * @return
+ */
 QString getCoolLine(QString str);
+/**
+ * @brief getNextWord
+ * @param str
+ * @param pos
+ * @return
+ */
 QString getNextWord(QString str, int pos);
+/**
+ * @brief getShortLang
+ * @param str
+ * @return
+ */
 QString getShortLang(QString str);
+/**
+ * @brief getDescriptionForWordFromDict
+ * @param pathToFile
+ * @param word
+ * @return
+ */
 QString getDescriptionForWordFromDict(QString pathToFile, QString word);
 
 /**

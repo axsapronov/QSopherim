@@ -764,10 +764,13 @@ QHash<int, QString> getNoteOfParams(QString curPath,
         if (line.contains(str1) &&
                 line.contains(str2) &&
                 line.contains(str3) &&
-                getVerseNumberFromNote(&line) == firstVerse)
+                getVerseBeginNumberFromNote(&line) <= firstVerse &&
+                getVerseEndNumberFromNote(&line) >= firstVerse)
         {
             //            QString text = "<note " + str1 + str2 + str3;
             //            hash[count] = strat.remove(text).remove("</note>");
+//            myDebug() << getVerseBeginNumberFromNote(&line) << getVerseEndNumberFromNote(&line);
+
             /// remove tag before text
             int pos = line.indexOf(">");
             line.remove(0, pos + 1);
@@ -778,11 +781,23 @@ QHash<int, QString> getNoteOfParams(QString curPath,
 }
 
 //------------------------------------------------------------------------------
-QString getVerseNumberFromNote(QString* line)
+QString getVerseBeginNumberFromNote(QString* line)
 {
 
     QString str = *line;
     QString t_str ="versebegin=\"";
+    int pos = str.indexOf(t_str);
+    int pos2 = str.indexOf("\"", pos + t_str.length());
+
+    str = str.mid(pos + t_str.length(), pos2  - pos - t_str.length());
+    return str;
+}
+//------------------------------------------------------------------------------
+QString getVerseEndNumberFromNote(QString* line)
+{
+
+    QString str = *line;
+    QString t_str ="verseend=\"";
     int pos = str.indexOf(t_str);
     int pos2 = str.indexOf("\"", pos + t_str.length());
 

@@ -132,19 +132,19 @@ void LeftPanel2::showChapterFromJournal(QModelIndex ind)
     //    GUI_NoteEditor->setPath(m_curPath);
 
 
-        // parse journal item
-        // get module name, book name, chapter value
-        QString str = ui->ListViewJournal->model()->data(ind).toString();
-        int pos = str.indexOf(":");
+    // parse journal item
+    // get module name, book name, chapter value
+    QString str = ui->ListViewJournal->model()->data(ind).toString();
+    int pos = str.indexOf(":");
 
-        QString moduleName = QString(str).mid(0, pos);
-        str.remove(moduleName + ":");
-        pos = str.indexOf(":");
-        QString bookName = QString(str).mid(0, pos);
-        str.remove(bookName + ":");
-        QString chapterValue = str;
+    QString moduleName = QString(str).mid(0, pos);
+    str.remove(moduleName + ":");
+    pos = str.indexOf(":");
+    QString bookName = QString(str).mid(0, pos);
+    str.remove(bookName + ":");
+    QString chapterValue = str;
 
-        emit SIGNAL_ShowChapterFromJournal(moduleName, bookName, chapterValue);
+    emit SIGNAL_ShowChapterFromJournal(moduleName, bookName, chapterValue);
 }
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

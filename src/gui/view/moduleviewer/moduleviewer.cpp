@@ -7,6 +7,7 @@
 
 #include <QMenu>
 #include <QContextMenuEvent>
+#include <QToolTip>
 #include <QXmlStreamReader>
 
 #include <QTextCursor>
@@ -18,15 +19,10 @@ ModuleViewer::ModuleViewer(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ModuleViewer)
 {
-
     ui->setupUi(this);
-    //    setMouseTracking(true);
-    ui->viewer->viewport()->setMouseTracking(true);
-    //    setMouseTracking(true);
-    //    ui->viewer->viewport()->installEventFilter(this);
+//    ui->viewer->viewport()->installEventFilter(this);
     init();
     //    debug();
-
 }
 //------------------------------------------------------------------------------
 ModuleViewer::~ModuleViewer()
@@ -84,7 +80,7 @@ void ModuleViewer::createActions()
     act_cut = new QAction(tr("Cu&t"), this);
     act_cut->setShortcuts(QKeySequence::Cut);
     act_cut->setStatusTip(tr("Cut the current selection's contents to the "
-                            "clipboard"));
+                             "clipboard"));
     //    connect(act_cut, SIGNAL(triggered()), this, SLOT(cut()));
 
     act_copy = new QAction(tr("&Copy"), this);
@@ -230,7 +226,7 @@ void ModuleViewer::init()
     connect(ui->toolNext, SIGNAL(clicked()), this, SLOT(findNext()));
     connect(ui->LEEditFind, SIGNAL(returnPressed()), this, SLOT(findNext()));
     connect(ui->LEEditFind, SIGNAL(textEdited(const QString&)), this, SLOT(find(QString)));
-//    ui->frameFind -> setVisible(false);
+    //    ui->frameFind -> setVisible(false);
     ui->LAWrapped -> setVisible(false);
 
     autoHideTimer = new QTimer(this);
@@ -384,10 +380,10 @@ void ModuleViewer::showNoteList()
     QString path = curPath;
     path.replace("text.xml", "notes.xml");
     emit SIGNAL_ShowNoteList(curModule,
-                      curBook,
-                      curChapter,
-                      path,
-                      QString::number(lastSelectLineFirst));
+                             curBook,
+                             curChapter,
+                             path,
+                             QString::number(lastSelectLineFirst));
 
 }
 //------------------------------------------------------------------------------
@@ -409,25 +405,68 @@ bool ModuleViewer::eventFilter(QObject *obj, QEvent *event)
         }
     }
 
-    if(event->type() == QEvent::MouseMove)
-    {
-        //        QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-        //        myDebug() << mEvent->pos();
-        setCurLine();
-        return true;
-    }
     if (event->type() == QEvent::MouseButtonPress)
     {
         setCurLine();
         return true;
     }
+
+
     if (event->type() == QEvent::MouseButtonRelease)
     {
         setCurLine();
         return true;
     }
-    else return QObject::eventFilter(obj, event);
 
+//    if(event->type() == QEvent::MouseMove)
+//    {
+////        QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+////                myDebug() << mEvent->pos();
+
+//        QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
+
+
+////        QTextCursor cursor = ui->viewer->cursorForPosition(helpEvent->pos());
+//        QTextCursor cursor = ui->viewer->textCursor();
+//        cursor.select(QTextCursor::WordUnderCursor);
+//        if (!cursor.selectedText().isEmpty())
+//        {
+//            lastSelectLineFirst = cursor.blockNumber();
+////            myDebug() << lastSelectLineFirst;
+
+//            showNoteList();
+////            QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
+//        }
+//        else
+//        {
+////            QToolTip::hideText();
+//        }
+
+
+
+//        return true;
+//    }
+
+//    if (event->type() == QEvent::ToolTip)
+//    {
+//        myDebug() << "yes";
+//        QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
+//        QTextCursor cursor = ui->viewer->cursorForPosition(helpEvent->pos());
+//        cursor.select(QTextCursor::WordUnderCursor);
+//        if (!cursor.selectedText().isEmpty())
+//        {
+//            myDebug() << "yes2";
+//            QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
+//        }
+//        else
+//            QToolTip::hideText();
+//        return true;
+//    }
+
+
+
+
+    return QObject::eventFilter(obj, event);
     //    if (event->type() == QEvent::MouseTrackingChange)
     //    {
     //        setCurLine();
@@ -522,7 +561,7 @@ QString ModuleViewer::fillStrongList(QString str)
         if(flag3 && !flag)
         {
             m_strongs[t_str] = vect;
-//            myDebug() << vect.size() << t_str;
+            //            myDebug() << vect.size() << t_str;
             vect.clear();
             flag3 = false;
         }
@@ -552,8 +591,8 @@ void ModuleViewer::updateFontSettings()
     loadViewSettings();
     showChapter(curPath, curBook, curChapter.toInt());
 
-//    ui->viewer->reload();
-//    ui->viewer->update();
+    //    ui->viewer->reload();
+    //    ui->viewer->update();
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::addBookmark()
