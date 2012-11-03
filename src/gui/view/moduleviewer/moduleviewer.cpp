@@ -223,6 +223,21 @@ void ModuleViewer::init()
 
     //    setMouseTracking(true);
     loadViewSettings();
+
+
+    connect(ui->toolClose, SIGNAL(clicked()), ui->frameFind, SLOT(hide()));
+    connect(ui->toolPrevious, SIGNAL(clicked()), this, SLOT(findPrevious()));
+    connect(ui->toolNext, SIGNAL(clicked()), this, SLOT(findNext()));
+    connect(ui->LEEditFind, SIGNAL(returnPressed()), this, SLOT(findNext()));
+    connect(ui->LEEditFind, SIGNAL(textEdited(const QString&)), this, SLOT(find(QString)));
+//    ui->frameFind -> setVisible(false);
+    ui->LAWrapped -> setVisible(false);
+
+    autoHideTimer = new QTimer(this);
+    autoHideTimer -> setInterval(5000);
+    autoHideTimer -> setSingleShot(true);
+    QObject::connect(autoHideTimer, SIGNAL(timeout()), ui->frameFind, SLOT(hide()));
+
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::createConnects()
@@ -378,6 +393,22 @@ void ModuleViewer::showNoteList()
 //------------------------------------------------------------------------------
 bool ModuleViewer::eventFilter(QObject *obj, QEvent *event)
 {
+
+    if (obj == ui->LEEditFind)
+    {
+        if (event -> type() == QEvent::FocusIn && autoHideTimer -> isActive())
+            autoHideTimer -> stop();
+    }
+    else if (event -> type() == QEvent::KeyPress && ui->frameFind -> isVisible())
+    {
+        QKeyEvent *ke = static_cast<QKeyEvent *>(event);
+        if (ke -> key() == Qt::Key_Space)
+        {
+            keyPressEvent(ke);
+            return true;
+        }
+    }
+
     if(event->type() == QEvent::MouseMove)
     {
         //        QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
@@ -395,12 +426,13 @@ bool ModuleViewer::eventFilter(QObject *obj, QEvent *event)
         setCurLine();
         return true;
     }
+    else return QObject::eventFilter(obj, event);
+
     //    if (event->type() == QEvent::MouseTrackingChange)
     //    {
     //        setCurLine();
     //        return true;
     //    }
-    else return QObject::eventFilter(obj, event);
 }
 //------------------------------------------------------------------------------
 //void ModuleViewer::mouseMoveEvent(QMouseEvent *ev)
@@ -532,4 +564,72 @@ void ModuleViewer::addBookmark()
     emit SIGNAL_AddNewBookmark(bookm);
 }
 //------------------------------------------------------------------------------
+void ModuleViewer::findNext()
+{
+    find(ui->LEEditFind-> text(), true, false);
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::findPrevious()
+{
+    find(ui->LEEditFind -> text(), false, true);
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::find()
+{
+    ui->frameFind -> show();
+    ui->LEEditFind -> setFocus(Qt::ShortcutFocusReason);
+    ui->LEEditFind -> selectAll();
+    autoHideTimer -> stop();
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::find(QString ttf, bool forward, bool backward)
+{
+    QTextDocument *doc = ui->viewer->document();
+    QString oldText = ui->LEEditFind -> text();
+    QTextCursor c = ui->viewer->textCursor();
+    QTextDocument::FindFlags options;
+    QPalette p = ui->LEEditFind -> palette();
+    p.setColor(QPalette::Active, QPalette::Base, Qt::white);
+
+    if (c.hasSelection())
+        c.setPosition(forward ? c.position() : c.anchor(), QTextCursor::MoveAnchor);
+
+    QTextCursor newCursor = c;
+
+    if (!ttf.isEmpty())
+    {
+        if (backward)
+            options |= QTextDocument::FindBackward;
+
+        if (ui->checkCase -> isChecked())
+            options |= QTextDocument::FindCaseSensitively;
+
+        if (ui->checkWholeWords -> isChecked())
+            options |= QTextDocument::FindWholeWords;
+
+        newCursor = doc -> find(ttf, c, options);
+        ui->LAWrapped -> hide();
+
+        if (newCursor.isNull())
+        {
+            QTextCursor ac(doc);
+            ac.movePosition(options & QTextDocument::FindBackward
+                            ? QTextCursor::End : QTextCursor::Start);
+            newCursor = doc -> find(ttf, ac, options);
+            if (newCursor.isNull())
+            {
+                p.setColor(QPalette::Active, QPalette::Base, QColor(255, 102, 102));
+                newCursor = c;
+            } else
+                ui->LAWrapped -> show();
+        }
+    }
+
+    if (!ui->frameFind -> isVisible())
+        ui->frameFind -> show();
+    ui->viewer-> setTextCursor(newCursor);
+    ui->LEEditFind -> setPalette(p);
+    if (!ui->LEEditFind -> hasFocus())
+        autoHideTimer -> start();
+}
 //------------------------------------------------------------------------------

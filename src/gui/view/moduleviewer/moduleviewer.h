@@ -2,7 +2,10 @@
 #define MODULEVIEWER_H
 
 #include <QWidget>
+#include <QTimer>
 #include <QHash>
+
+
 class StrongList;
 
 namespace Ui {
@@ -58,14 +61,45 @@ public slots:
      */
     void updateFontSettings();
 
+    /**
+     * @brief find
+     */
+    void find();
+    /**
+     * @brief findNext
+     */
+    void findNext();
+    /**
+     * @brief findPrevious
+     */
+    void findPrevious();
+
 signals:
     void SIGNAL_ShowNoteList(QString, QString, QString, QString, QString);
     void SIGNAL_AddNewBookmark(QString);
 
 private slots:
+    /**
+     * @brief showContextMenu
+     * @param pt
+     */
     void showContextMenu(QPoint pt);
+
+    /**
+     * @brief setCurLine
+     */
     void setCurLine();
+    /**
+     * @brief addBookmark
+     */
     void addBookmark();
+
+    /**
+     * @brief find
+     * @param forward
+     * @param backward
+     */
+    void find(QString, bool forward = false, bool backward = false);
 protected:
     //    void contextMenuEvent(QContextMenuEvent *event);
     bool eventFilter(QObject *obj, QEvent *ev);
@@ -100,8 +134,8 @@ private:
 
     QString fillStrongList(QString str);
 
-//    QHash<int, QHash<QString, QString> > getListStrongWord(QString word);
-    //    void getTextChapter(QString pathToFile, QString nameBook, int numberchapter);
+    QTimer *autoHideTimer;
+
 
 };
 
