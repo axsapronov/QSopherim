@@ -20,7 +20,7 @@ ModuleViewer::ModuleViewer(QWidget *parent) :
     ui(new Ui::ModuleViewer)
 {
     ui->setupUi(this);
-//    ui->viewer->viewport()->installEventFilter(this);
+    //    ui->viewer->viewport()->installEventFilter(this);
     init();
     //    debug();
 }
@@ -226,7 +226,7 @@ void ModuleViewer::init()
     connect(ui->toolNext, SIGNAL(clicked()), this, SLOT(findNext()));
     connect(ui->LEEditFind, SIGNAL(returnPressed()), this, SLOT(findNext()));
     connect(ui->LEEditFind, SIGNAL(textEdited(const QString&)), this, SLOT(find(QString)));
-    //    ui->frameFind -> setVisible(false);
+    ui->frameFind -> setVisible(false);
     ui->LAWrapped -> setVisible(false);
 
     autoHideTimer = new QTimer(this);
@@ -418,50 +418,50 @@ bool ModuleViewer::eventFilter(QObject *obj, QEvent *event)
         return true;
     }
 
-//    if(event->type() == QEvent::MouseMove)
-//    {
-////        QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-////                myDebug() << mEvent->pos();
+    //    if(event->type() == QEvent::MouseMove)
+    //    {
+    ////        QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
+    ////                myDebug() << mEvent->pos();
 
-//        QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
-
-
-////        QTextCursor cursor = ui->viewer->cursorForPosition(helpEvent->pos());
-//        QTextCursor cursor = ui->viewer->textCursor();
-//        cursor.select(QTextCursor::WordUnderCursor);
-//        if (!cursor.selectedText().isEmpty())
-//        {
-//            lastSelectLineFirst = cursor.blockNumber();
-////            myDebug() << lastSelectLineFirst;
-
-//            showNoteList();
-////            QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
-//        }
-//        else
-//        {
-////            QToolTip::hideText();
-//        }
+    //        QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
 
 
+    ////        QTextCursor cursor = ui->viewer->cursorForPosition(helpEvent->pos());
+    //        QTextCursor cursor = ui->viewer->textCursor();
+    //        cursor.select(QTextCursor::WordUnderCursor);
+    //        if (!cursor.selectedText().isEmpty())
+    //        {
+    //            lastSelectLineFirst = cursor.blockNumber();
+    ////            myDebug() << lastSelectLineFirst;
 
-//        return true;
-//    }
+    //            showNoteList();
+    ////            QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
+    //        }
+    //        else
+    //        {
+    ////            QToolTip::hideText();
+    //        }
 
-//    if (event->type() == QEvent::ToolTip)
-//    {
-//        myDebug() << "yes";
-//        QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
-//        QTextCursor cursor = ui->viewer->cursorForPosition(helpEvent->pos());
-//        cursor.select(QTextCursor::WordUnderCursor);
-//        if (!cursor.selectedText().isEmpty())
-//        {
-//            myDebug() << "yes2";
-//            QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
-//        }
-//        else
-//            QToolTip::hideText();
-//        return true;
-//    }
+
+
+    //        return true;
+    //    }
+
+    //    if (event->type() == QEvent::ToolTip)
+    //    {
+    //        myDebug() << "yes";
+    //        QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
+    //        QTextCursor cursor = ui->viewer->cursorForPosition(helpEvent->pos());
+    //        cursor.select(QTextCursor::WordUnderCursor);
+    //        if (!cursor.selectedText().isEmpty())
+    //        {
+    //            myDebug() << "yes2";
+    //            QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
+    //        }
+    //        else
+    //            QToolTip::hideText();
+    //        return true;
+    //    }
 
 
 

@@ -107,7 +107,8 @@ SOURCES  += \
     src/view/module/projectqmodulelist.cpp \
     src/gui/note/noteeditor.cpp \
     src/gui/dialogs/managermodules/managermodules.cpp \
-    src/modules/biblequote/biblequotedictmodule/biblequotedictmodule.cpp
+    src/modules/biblequote/biblequotedictmodule/biblequotedictmodule.cpp \
+    src/gui/dialogs/find/finddialog.cpp
 
 
 HEADERS  += \
@@ -152,7 +153,8 @@ HEADERS  += \
     src/view/module/projectqmodulelist.h \
     src/gui/note/noteeditor.h \
     src/gui/dialogs/managermodules/managermodules.h \
-    src/modules/biblequote/biblequotedictmodule/biblequotedictmodule.h
+    src/modules/biblequote/biblequotedictmodule/biblequotedictmodule.h \
+    src/gui/dialogs/find/finddialog.h
 
 FORMS    += \
          mainwindow.ui \
@@ -164,7 +166,8 @@ FORMS    += \
          leftpanel2.ui \
          moduleviewer.ui \
     src/gui/note/noteeditor.ui \
-    src/gui/dialogs/managermodules/managermodules.ui
+    src/gui/dialogs/managermodules/managermodules.ui \
+    src/gui/dialogs/find/finddialog.ui
 
 RESOURCES += \
     resources/resources.qrc

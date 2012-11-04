@@ -67,9 +67,11 @@
     <property name="title">
      <string>Search</string>
     </property>
-    <addaction name="action_Search_Find"/>
-    <addaction name="action_Search_Find_More"/>
-    <addaction name="action_Search_Find_and_replace"/>
+    <addaction name="action_Search_Find_In_Modules"/>
+    <addaction name="separator"/>
+    <addaction name="action_Search_Find_In_Text"/>
+    <addaction name="action_Search_Find_Previous"/>
+    <addaction name="action_Search_Find_Next"/>
    </widget>
    <widget class="QMenu" name="mAbout">
     <property name="title">
@@ -127,19 +129,28 @@
     <string>About</string>
    </property>
   </action>
-  <action name="action_Search_Find">
+  <action name="action_Search_Find_In_Text">
    <property name="text">
-    <string>Find</string>
+    <string>Find in text</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
    </property>
   </action>
-  <action name="action_Search_Find_More">
+  <action name="action_Search_Find_Next">
    <property name="text">
-    <string>Find more</string>
+    <string>Find Next</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
    </property>
   </action>
-  <action name="action_Search_Find_and_replace">
+  <action name="action_Search_Find_Previous">
    <property name="text">
-    <string>Find / Replace</string>
+    <string>Find Previous</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+G</string>
    </property>
   </action>
   <action name="action_Settings_General">
@@ -268,6 +279,14 @@
   <action name="action_Settings_Module">
    <property name="text">
     <string>Manager modules</string>
+   </property>
+  </action>
+  <action name="action_Search_Find_In_Modules">
+   <property name="text">
+    <string>Find in modules</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+F</string>
    </property>
   </action>
  </widget>

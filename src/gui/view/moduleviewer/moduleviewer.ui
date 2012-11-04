@@ -61,8 +61,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../../../../../../bQella/next/bQella/resources/resources.qrc">
-          <normaloff>:/msc/images/close.png</normaloff>:/msc/images/close.png</iconset>
+         <iconset resource="../../../../resources/resources.qrc">
+          <normaloff>:/images/images/close.png</normaloff>:/images/images/close.png</iconset>
         </property>
         <property name="autoRaise">
          <bool>true</bool>
@@ -91,8 +91,8 @@
          <string>Previous</string>
         </property>
         <property name="icon">
-         <iconset resource="../../../../../../bQella/next/bQella/resources/resources.qrc">
-          <normaloff>:/msc/images/searchprevious.png</normaloff>:/msc/images/searchprevious.png</iconset>
+         <iconset resource="../../../../resources/resources.qrc">
+          <normaloff>:/images/images/searchprevious.png</normaloff>:/images/images/searchprevious.png</iconset>
         </property>
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -114,8 +114,8 @@
          <string>Next</string>
         </property>
         <property name="icon">
-         <iconset resource="../../../../../../bQella/next/bQella/resources/resources.qrc">
-          <normaloff>:/msc/images/searchnext.png</normaloff>:/msc/images/searchnext.png</iconset>
+         <iconset resource="../../../../resources/resources.qrc">
+          <normaloff>:/images/images/searchnext.png</normaloff>:/images/images/searchnext.png</iconset>
         </property>
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -189,7 +189,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../../../../bQella/next/bQella/resources/resources.qrc"/>
+  <include location="../../../../resources/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

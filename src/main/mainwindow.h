@@ -25,6 +25,7 @@ QT_END_NAMESPACE
 #include "moduledefinition.h"
 #include "debughelper.h"
 #include "projectqmodulelist.h"
+#include "src/gui/dialogs/find/finddialog.h"
 #include "noteeditor.h"
 #include "src/gui/dialogs/managermodules/managermodules.h"
 
@@ -38,6 +39,12 @@ public:
 
 private slots:
 
+    /**
+      \brief
+      @function
+      Show find dialog
+      */
+    void findInModules();
     /**
       \brief
       @functon
@@ -136,6 +143,7 @@ private:
     ModuleViewer *GUI_ModuleViewer;
     NoteEditor *GUI_NoteEditor;
     ManagerModules *GUI_ManagerModules;
+    FindDialog *GUI_FindDialog;
 
     //tray
     QSystemTrayIcon *trIcon;

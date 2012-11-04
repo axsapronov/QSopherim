@@ -11,5 +11,8 @@
     <qresource prefix="/other"/>
     <qresource prefix="/images">
         <file>images/img.png</file>
+        <file>images/searchnext.png</file>
+        <file>images/searchprevious.png</file>
+        <file>images/close.png</file>
     </qresource>
 </RCC>

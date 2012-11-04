@@ -50,6 +50,7 @@ MainWindow::~MainWindow()
     GUI_ModuleViewer->deleteLater();
     GUI_NoteEditor->deleteLater();
     GUI_ManagerModules->deleteLater();
+    GUI_FindDialog->deleteLater();
 
     delete trayIconMenu;
     delete trIcon;
@@ -68,6 +69,7 @@ void MainWindow::init()
     GUI_Settings = new Settings(this);
 
     GUI_ManagerModules = new ManagerModules(this);
+    GUI_FindDialog = new FindDialog(this);
 
     /// panel init
     GUI_RightPanel = new RightPanel();
@@ -255,6 +257,15 @@ void MainWindow::createConnects()
             GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
     connect(GUI_RightPanel, SIGNAL(SIGNAL_OpenBookmark(QString, QString, QString)),
             GUI_LeftPanel2, SLOT(addRecordToJournal(QString,QString,QString)));
+
+    // find
+    connect(ui->action_Search_Find_In_Text, SIGNAL(triggered()), GUI_ModuleViewer,
+            SLOT(find()));
+    connect(ui->action_Search_Find_Next, SIGNAL(triggered()), GUI_ModuleViewer,
+            SLOT(findNext()));
+    connect(ui->action_Search_Find_Previous, SIGNAL(triggered()), GUI_ModuleViewer,
+            SLOT(findPrevious()));
+    connect(ui->action_Search_Find_In_Modules, SIGNAL(triggered()), SLOT(findInModules()));
 }
 //------------------------------------------------------------------------------
 void MainWindow::showHide(QSystemTrayIcon::ActivationReason r)
@@ -499,5 +510,10 @@ void MainWindow::retranslate(QString t_lang)
     GUI_ModuleViewer->retranslate();
     GUI_NoteEditor->retranslate();
 
+}
+//------------------------------------------------------------------------------
+void MainWindow::findInModules()
+{
+    GUI_FindDialog->show();
 }
 //------------------------------------------------------------------------------
