@@ -109,12 +109,12 @@ void ModuleViewer::showContextMenu(QPoint pt)
     menu->addAction(act_addBookmarks);
 
     menu->addSeparator();
-    //    QString str = curBook + ":" + curChapter;
-    QAction *act = new QAction(QString(curModule
+    //    QString str = m_curBook + ":" + m_curChapter;
+    QAction *act = new QAction(QString(m_curModule
                                        + " : "
-                                       + curBook
+                                       + m_curBook
                                        + " : "
-                                       + curChapter), this);
+                                       + m_curChapter), this);
 
     // bold text
     //    QTextDocument *document = ui->viewer->document();
@@ -154,9 +154,18 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
     /* если есть стронги,
      *то надо их при чтении xml'я
      *обрабатыванит и приписывать соответств слову
+     *
+     *
+     *Для стронгов:
+     *Запоминаем текст с числами
+     *Убираем числа из текста и показываем.
+     *Когда пользователь ведет мышь по строке n
+     *Берем из сохранившего текста нужную строку и делаем в ней замену стронгов
+     *По номеру колонки определяем нужное слово и показываем уже стронги
      */
 
-    bool strong = false;
+    // брать параметр стронгов из файла конфигурации
+    m_strong = false;
 
     bool flag = false;
     while(!xmlReader.atEnd() and !flag)
@@ -176,11 +185,12 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
                         flag = true;
                         QString str = xmlReader.readElementText();
                         str.remove("    ");
-                        if (strong)
+                        if (m_strong)
                         {
+                            m_backupChapter = str;
                             //                            str.replace(",", ", ")
                             //                                    .replace(".", ". ");
-                            str = fillStrongList(str);
+//                            str = fillStrongList(str);
                         }
                         ui->viewer->setText(str);
                     }
@@ -190,10 +200,10 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
         }
         xmlReader.readNext();
     }
-    curBook = nameBook;
-    curPath = pathToFile;
-    curChapter = QString::number(numberchapter);
-    ui->LAStatus->setText(curModule + " : " + curBook + " : " + curChapter );
+    m_curBook = nameBook;
+    m_curPath = pathToFile;
+    m_curChapter = QString::number(numberchapter);
+    ui->LAStatus->setText(m_curModule + " : " + m_curBook + " : " + m_curChapter );
 
 }
 //------------------------------------------------------------------------------
@@ -252,42 +262,42 @@ void ModuleViewer::loadViewSettings()
 //------------------------------------------------------------------------------
 void ModuleViewer::setModuleName(QString newModule)
 {
-    curModule = newModule;
+    m_curModule = newModule;
 }
 //------------------------------------------------------------------------------
 QString ModuleViewer::getModuleName()
 {
-    return curModule;
+    return m_curModule;
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::setBookName(QString newBook)
 {
-    curBook = newBook;
+    m_curBook = newBook;
 }
 //------------------------------------------------------------------------------
 QString ModuleViewer::getBookName()
 {
-    return curBook;
+    return m_curBook;
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::setChapterValue(QString newChap)
 {
-    curChapter = newChap;
+    m_curChapter = newChap;
 }
 //------------------------------------------------------------------------------
 QString ModuleViewer::getChapterValue()
 {
-    return curChapter;
+    return m_curChapter;
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::setPath(QString newPath)
 {
-    curPath = newPath;
+    m_curPath = newPath;
 }
 //------------------------------------------------------------------------------
 QString ModuleViewer::getPath()
 {
-    return curPath;
+    return m_curPath;
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::setCurLine()
@@ -377,11 +387,11 @@ void ModuleViewer::showNoteList()
      *при нажатии на элемент листа
      *открываем диалог с редактированием заметки
      */
-    QString path = curPath;
+    QString path = m_curPath;
     path.replace("text.xml", "notes.xml");
-    emit SIGNAL_ShowNoteList(curModule,
-                             curBook,
-                             curChapter,
+    emit SIGNAL_ShowNoteList(m_curModule,
+                             m_curBook,
+                             m_curChapter,
                              path,
                              QString::number(lastSelectLineFirst));
 
@@ -417,6 +427,8 @@ bool ModuleViewer::eventFilter(QObject *obj, QEvent *event)
         QTextCursor cursor = ui->viewer->textCursor();
         cursor.select(QTextCursor::WordUnderCursor);
         setCurLine();
+
+        myDebug() << cursor.blockNumber() << cursor.columnNumber();
         return true;
     }
 
@@ -437,16 +449,16 @@ void ModuleViewer::showStrong()
      * добавляем текст в label
      */
 
-    QString path = curPath;
+    QString path = m_curPath;
     //        fileName << "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
     //    QString path = "/home/files/Documents/Bible/strong/strong/"
-    //    QString path = curPath;
+    //    QString path = m_curPath;
     //    path.replace("text.xml", "notes.xml");
 
 
-    //    emit showNoteList(curModule,
-    //                      curBook,
-    //                      curChapter,
+    //    emit showNoteList(m_curModule,
+    //                      m_curBook,
+    //                      m_curChapter,
     //                      path,
     //                      QString::number(lastSelectLineFirst));
 }
@@ -539,7 +551,7 @@ void ModuleViewer::retranslate()
 void ModuleViewer::updateFontSettings()
 {
     loadViewSettings();
-    showChapter(curPath, curBook, curChapter.toInt());
+    showChapter(m_curPath, m_curBook, m_curChapter.toInt());
 
     //    ui->viewer->reload();
     //    ui->viewer->update();
@@ -547,9 +559,9 @@ void ModuleViewer::updateFontSettings()
 //------------------------------------------------------------------------------
 void ModuleViewer::addBookmark()
 {
-    QString bookm = curModule + " : "
-            + curBook + " : "
-            + curChapter;
+    QString bookm = m_curModule + " : "
+            + m_curBook + " : "
+            + m_curChapter;
     emit SIGNAL_AddNewBookmark(bookm);
 }
 //------------------------------------------------------------------------------

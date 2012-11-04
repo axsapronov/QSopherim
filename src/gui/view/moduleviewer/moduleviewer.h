@@ -121,12 +121,16 @@ private:
     void createActions();
     void loadViewSettings();
 
-    QString curModule;
-    QString curBook;
-    QString curChapter;
-    QString curPath;
+    QString m_curModule;
+    QString m_curBook;
+    QString m_curChapter;
+    QString m_curPath;
     int lastSelectLineFirst;
     int lastSelectLineLast;
+
+    bool m_strong;
+
+    QString m_backupChapter;
 
     void showNoteList();
     void showStrong();

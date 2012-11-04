@@ -55,6 +55,7 @@ private:
     QString m_moduleName;
     QString m_moduleShortName;
     bool m_chapterZero;
+    bool m_strongOption;
 
     QStringList m_bookPath;
 

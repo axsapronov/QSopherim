@@ -33,7 +33,7 @@ void BibleQuoteModule::parseModule(QString pathToModule)
     QDir d(Config::configuration()->getAppDir() + "bible/" + parseInfo.shortName());
     if (!d.exists())
     {
-//        emit SIGNAL_CreateFolderForModule(parseInfo.shortName());
+        //        emit SIGNAL_CreateFolderForModule(parseInfo.shortName());
         QDir dir;
         dir.mkpath(Config::configuration()->getAppDir() + "bible/" + parseInfo.shortName());
 
@@ -48,7 +48,7 @@ void BibleQuoteModule::parseModule(QString pathToModule)
     }
     else
     {
-//        myDebug() << "This module is exist";
+        //        myDebug() << "This module is exist";
     }
 
 }
@@ -152,6 +152,7 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
             "\nModuleVerseSign = " + m_verseSign +
             "\nModuleChapterSign = " + m_chapterSign +
             "\nModuleChapterZero = " + m_chapterZero +
+            "\nStrongNumber = " + m_strongOption +
             "\nPathToModule = " + "bible/" + info.shortName() + "/module.ini";
 
     text.append("\nBookList = ");
@@ -236,6 +237,7 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
     m_verseSign = "";
     m_bookCount = "";
     m_chapterZero = false;
+    m_strongOption = false;
     m_bookList.clear();
 
     m_uid = path;
@@ -268,28 +270,47 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
                 continue;
             }
 
-            if(line.contains("BibleName", Qt::CaseInsensitive)) {
+            if(line.contains("BibleName", Qt::CaseInsensitive))
+            {
                 m_moduleName = formatFromIni(line.remove(QRegExp("BibleName(\\s*)=(\\s*)", Qt::CaseInsensitive)));
             }
-            if(line.contains("BibleShortName", Qt::CaseInsensitive)) {
+            if(line.contains("BibleShortName", Qt::CaseInsensitive))
+            {
                 m_moduleShortName = formatFromIni(line.remove(QRegExp("BibleShortName(\\s*)=(\\s*)", Qt::CaseInsensitive)));
             }
             if(line.contains("ChapterSign", Qt::CaseInsensitive))
             {
                 m_chapterSign = formatFromIni(line.remove(QRegExp("ChapterSign(\\s*)=(\\s*)", Qt::CaseInsensitive)));
             }
-            if(line.contains("HTMLFilter", Qt::CaseInsensitive)) {
+            if(line.contains("HTMLFilter", Qt::CaseInsensitive))
+            {
                 m_removeHtml = formatFromIni(line.remove(QRegExp("HTMLFilter(\\s*)=(\\s*)", Qt::CaseInsensitive)));
             }
-            if(line.contains("VerseSign", Qt::CaseInsensitive)) {
+            if(line.contains("VerseSign", Qt::CaseInsensitive))
+            {
                 m_verseSign = formatFromIni(line.remove(QRegExp("VerseSign(\\s*)=(\\s*)", Qt::CaseInsensitive)));
             }
-            if(line.contains("ChapterZero", Qt::CaseInsensitive)) {
+            if(line.contains("ChapterZero", Qt::CaseInsensitive))
+            {
                 const QString zero = formatFromIni(line.remove(QRegExp("ChapterZero(\\s*)=(\\s*)", Qt::CaseInsensitive)));
-                if(zero.compare("Y", Qt::CaseInsensitive) == 0) {
+                if(zero.compare("Y", Qt::CaseInsensitive) == 0)
+                {
                     m_chapterZero = true;
                 } else {
                     m_chapterZero = false;
+                }
+            }
+
+            if(line.contains("StrongNumbers", Qt::CaseInsensitive))
+            {
+                const QString zero = formatFromIni(line.remove(QRegExp("StrongNumbers(\\s*)=(\\s*)", Qt::CaseInsensitive)));
+                if(zero.compare("Y", Qt::CaseInsensitive) == 0)
+                {
+                    m_strongOption = true;
+                }
+                else
+                {
+                    m_strongOption = false;
                 }
             }
 
@@ -444,8 +465,8 @@ int BibleQuoteModule::readBook(const int id)
             // split removes versesign but it is needed
             QString verseText = rawVerseList.at(j + 1);
 
-//            if (!verseText.contains(m_verseSign))
-//                verseText = "";
+            //            if (!verseText.contains(m_verseSign))
+            //                verseText = "";
             //            myDebug() << verseText;
 
             if(verseText.contains("<p>") && !verseText.contains("</p>"))
