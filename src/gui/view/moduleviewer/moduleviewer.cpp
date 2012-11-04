@@ -405,111 +405,23 @@ bool ModuleViewer::eventFilter(QObject *obj, QEvent *event)
         }
     }
 
-    if (event->type() == QEvent::MouseTrackingChange)
-    {
-        myDebug() << "yes1";
-    }
-
-    if (event->type() == QEvent::MouseButtonPress)
-    {
-        //        myDebug() << "yes2";
-        QTextCursor cursor = ui->viewer->textCursor();
-        cursor.select(QTextCursor::WordUnderCursor);
-
-
-        myDebug() << "yes2" << cursor.selectedText();
-    }
-
-    if (event->type() == QEvent::MouseButtonRelease)
-    {
-        myDebug() << "yes3";
-    }
-
     if (event->type() == QEvent::MouseMove)
     {
-        //                QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
-        //        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
-
+        /// Добавить задержку
         QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
         QPoint pt = mouseEvent->pos();
-        QMouseEvent *e = new QMouseEvent(QEvent::MouseButtonPress, pt, Qt::LeftButton, Qt::NoButton,
+        QMouseEvent *e = new QMouseEvent(QEvent::MouseButtonDblClick, pt, Qt::LeftButton, Qt::NoButton,
                                          Qt::NoModifier);
         QApplication::postEvent(ui->viewer->viewport(), e);
 
         QTextCursor cursor = ui->viewer->textCursor();
         cursor.select(QTextCursor::WordUnderCursor);
-
-
-
-
-
-        myDebug() << "yes4" << cursor.selectedText();
+        setCurLine();
+        return true;
     }
 
-    //        if (event->type() == QEvent::MouseButtonPress)
-    //        {
-    //            setCurLine();
-    //            return true;
-    //        }
-
-
-    //        if (event->type() == QEvent::MouseButtonRelease)
-    //        {
-    //            setCurLine();
-    //            return true;
-    //        }
-
-    //    if(event->type() == QEvent::MouseMove)
-    //    {
-    //        //        QMouseEvent *mEvent = static_cast<QMouseEvent*>(event);
-    //        //                myDebug() << mEvent->pos();
-
-    //        QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
-    //        //        QTextCursor cursor = ui->viewer->cursorForPosition(helpEvent->pos());
-    //        QTextCursor cursor = ui->viewer->textCursor();
-    //        cursor.select(QTextCursor::WordUnderCursor);
-    //        if (!cursor.selectedText().isEmpty())
-    //        {
-    //            lastSelectLineFirst = cursor.blockNumber();
-
-    //            myDebug() << cursor.blockNumber() << cursor.columnNumber() << cursor.selectedText();
-
-    //            showNoteList();
-    //            //            QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
-    //        }
-    //        else
-    //        {
-    //            //            QToolTip::hideText();
-    //        }
-
-    //        //        return true;
-    //    }
-
-    //        if (event->type() == QEvent::ToolTip)
-    //        {
-    //            myDebug() << "yes";
-    //            QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
-    //            QTextCursor cursor = ui->viewer->cursorForPosition(helpEvent->pos());
-    //            cursor.select(QTextCursor::WordUnderCursor);
-    //            if (!cursor.selectedText().isEmpty())
-    //            {
-    //                myDebug() << "yes2";
-    //                QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
-    //            }
-    //            else
-    //                QToolTip::hideText();
-    //            return true;
-    //        }
-
-
-
-
     return QObject::eventFilter(obj, event);
-    //    if (event->type() == QEvent::MouseTrackingChange)
-    //    {
-    //        setCurLine();
-    //        return true;
-    //    }
+
 }
 //------------------------------------------------------------------------------
 //void ModuleViewer::mouseMoveEvent(QMouseEvent *ev)
