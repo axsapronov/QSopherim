@@ -212,7 +212,6 @@ void MainWindow::createConnects()
 
     // menu search
 
-
     // toolbar
     connect(ui->actionAction_Other_Create_Note, SIGNAL(triggered()), SLOT(createNote()));
     connect(ui->actionAction_Other_Update_List_Module, SIGNAL(triggered()), SLOT(loadModulesFromFolder()));
@@ -258,7 +257,7 @@ void MainWindow::createConnects()
     connect(GUI_RightPanel, SIGNAL(SIGNAL_OpenBookmark(QString, QString, QString)),
             GUI_LeftPanel2, SLOT(addRecordToJournal(QString,QString,QString)));
 
-    // find
+    // menu search
     connect(ui->action_Search_Find_In_Text, SIGNAL(triggered()), GUI_ModuleViewer,
             SLOT(find()));
     connect(ui->action_Search_Find_Next, SIGNAL(triggered()), GUI_ModuleViewer,

@@ -428,7 +428,7 @@ bool ModuleViewer::eventFilter(QObject *obj, QEvent *event)
         cursor.select(QTextCursor::WordUnderCursor);
         setCurLine();
 
-        myDebug() << cursor.blockNumber() << cursor.columnNumber();
+//        myDebug() << cursor.blockNumber() << cursor.columnNumber();
         return true;
     }
 

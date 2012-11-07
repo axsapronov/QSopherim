@@ -22,7 +22,7 @@ void FindDialog::init()
 {
     createConnects();
     m_currentDir.setPath(Config::configuration()->getAppDir() + "/");
-    ui->LEFind->setText("Бог");
+    ui->LEFind->setText("В начале");
 }
 //------------------------------------------------------------------------------
 void FindDialog::createConnects()
@@ -44,7 +44,6 @@ void FindDialog::find()
         files = recursiveFind(getPathFind());
 
 
-
         FindData find;
         if (!text.isEmpty())
             find = findFiles(files, text);
@@ -61,6 +60,7 @@ void FindDialog::find()
 //------------------------------------------------------------------------------
 FindData FindDialog::findFiles(const QStringList &files, const QString &text)
 {
+    // доставать текст по главам и определять там номер главы и стиха
     FindData output;
     QProgressDialog progressDialog(this);
     progressDialog.setCancelButtonText(tr("&Cancel"));
@@ -99,6 +99,7 @@ FindData FindDialog::findFiles(const QStringList &files, const QString &text)
     }
     output.files = foundFiles;
     output.verse = verses;
+    //    myDebug() << foundFiles;
     return output;
 }
 //------------------------------------------------------------------------------
@@ -172,8 +173,8 @@ void FindDialog::showFiles(const SearchData &data)
         QTableWidgetItem *chapterItem = new QTableWidgetItem(data.chapter[i]);
         chapterItem->setFlags(chapterItem->flags() ^ Qt::ItemIsEditable);
 
-        QTableWidgetItem *urlItem = new QTableWidgetItem(data.url[i]);
-        urlItem->setFlags(urlItem->flags() ^ Qt::ItemIsEditable);
+        QTableWidgetItem *typeItem = new QTableWidgetItem(data.type[i]);
+        typeItem->setFlags(typeItem->flags() ^ Qt::ItemIsEditable);
 
         int row = ui->tableFiles->rowCount();
         ui->tableFiles->insertRow(row);
@@ -182,8 +183,7 @@ void FindDialog::showFiles(const SearchData &data)
         ui->tableFiles->setItem(row, 1, bookItem);
         ui->tableFiles->setItem(row, 2, chapterItem);
         ui->tableFiles->setItem(row, 3, verseItem);
-        ui->tableFiles->setItem(row, 4, fileNameItem);
-        ui->tableFiles->setItem(row, 5, urlItem);
+        ui->tableFiles->setItem(row, 4, typeItem);
     }
     ui->tableFiles->resizeColumnsToContents();
 
@@ -198,42 +198,39 @@ void FindDialog::updateItemforTable(SearchData &data)
 
     for (int i = 0; i < data.files.size(); i++)
     {
+
         QString str = data.files.at(i);
         QStringList list;
-
-        //chapter
+        // path to file text.xml
         list << str.split("/");
         app[2] = list.last().remove(".htm").remove(".html").remove(".HTML").remove(".HTM");
 
-        //book
+        //module name
         list.removeLast();
         app[1] = list.last();
 
-        //module
+        //type module
         list.removeLast();
         app[0] = list.last();
 
         app[2].remove(app[1].toLower()); //chapter
         app[3] = QString(data.files.at(i)); //file
 
-        if (app[0] != "KORAN")
-            app[4] = "http://superbook.org/"+app[0]+"/"+app[1]+"/"+app[1].toLower() + app[2]+".htm"; //url
-        else
-            app[4] = "http://superbook.org/"+app[0]+"/"+app[1]+ "/" + app[2]+".htm"; //url
-
-        if (!data.verse.at(i).isEmpty())
-            app[4].append("#"+data.verse.at(i)); //url
+        app[2] = "booknam";
+        app[3] = "chaptername";
 
         lib[0] << app[0];
         lib[1] << app[1];
         lib[2] << app[2];
         lib[3] << app[3];
         lib[4] << app[4];
+
+//        myDebug() << app[0] << app[1] << app[2] << app[3] << app[4];
     }
-    data.modules = lib[0];
-    data.books = lib[1];
-    data.chapter = lib[2];
-    data.files = lib[3];
-    data.url = lib[4];
+    data.type = lib[0];
+    data.modules = lib[1];
+    data.books = lib[2];
+    data.chapter = lib[3];
+    data.files = lib[4];
 }
 //------------------------------------------------------------------------------

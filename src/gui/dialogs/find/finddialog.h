@@ -24,7 +24,7 @@ typedef struct SearchData
     QStringList books;
     QStringList chapter;
     QStringList files;
-    QStringList url;
+    QStringList type;
     QStringList verse;
 } SearchData;
 

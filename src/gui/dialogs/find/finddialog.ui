@@ -68,7 +68,7 @@
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
        <property name="columnCount">
-        <number>3</number>
+        <number>5</number>
        </property>
        <column>
         <property name="text">
@@ -83,6 +83,16 @@
        <column>
         <property name="text">
          <string>Chapter</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Verse</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Type module</string>
         </property>
        </column>
       </widget>
