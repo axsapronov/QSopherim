@@ -121,6 +121,11 @@ void MainWindow::init()
         setLangFr();
     }
 
+    // Create menu for hide show panels and toolbars
+    QAction *viewsAction = createPopupMenu() -> menuAction();
+    viewsAction -> setText(tr("Toolbars & panels"));
+    ui->mView->addAction(viewsAction);
+
     /// moved to center desktop
     //    QRect rect = QApplication::desktop()->availableGeometry(this);
     //    this->move(rect.width() / 2 - this->width() / 2,
