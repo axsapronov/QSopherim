@@ -123,7 +123,7 @@ void MainWindow::init()
 
     // Create menu for hide show panels and toolbars
     QAction *viewsAction = createPopupMenu() -> menuAction();
-    viewsAction -> setText(tr("Toolbars & panels"));
+    viewsAction -> setText(tr("Toolbars and panels"));
     ui->mView->addAction(viewsAction);
 
     /// moved to center desktop
