@@ -37,7 +37,6 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="action_File_Open_Module_Test"/>
     <addaction name="separator"/>
     <addaction name="action_File_Close"/>
    </widget>
