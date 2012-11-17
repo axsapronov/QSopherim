@@ -20,7 +20,6 @@ ModuleViewer::ModuleViewer(QWidget *parent) :
     ui(new Ui::ModuleViewer)
 {
     ui->setupUi(this);
-    ui->viewer->viewport()->installEventFilter(this);
     init();
     //    debug();
 }
@@ -190,7 +189,7 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
                             m_backupChapter = str;
                             //                            str.replace(",", ", ")
                             //                                    .replace(".", ". ");
-//                            str = fillStrongList(str);
+                            //                            str = fillStrongList(str);
                         }
                         ui->viewer->setText(str);
                     }
@@ -226,6 +225,12 @@ void ModuleViewer::init()
     createConnects();
 
     ui->viewer->setContextMenuPolicy(Qt::CustomContextMenu);
+    //    ui->viewer->setMouseTracking(true);
+    //    ui->viewer->viewport()->setMouseTracking(true);
+
+    ui->viewer->viewport()->installEventFilter(this);
+
+
 
     //    setMouseTracking(true);
     loadViewSettings();
@@ -420,13 +425,18 @@ bool ModuleViewer::eventFilter(QObject *obj, QEvent *event)
         /// Добавить задержку
         QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
         QPoint pt = mouseEvent->pos();
-        QMouseEvent *e = new QMouseEvent(QEvent::MouseButtonDblClick, pt, Qt::LeftButton, Qt::NoButton,
-                                         Qt::NoModifier);
-        QApplication::postEvent(ui->viewer->viewport(), e);
 
-        QTextCursor cursor = ui->viewer->textCursor();
-        cursor.select(QTextCursor::WordUnderCursor);
-        setCurLine();
+//        QMouseEvent *e = new QMouseEvent(QEvent::MouseButtonDblClick, pt, Qt::LeftButton, Qt::NoButton,
+//                                         Qt::NoModifier);
+//                QApplication::postEvent(ui->viewer->viewport(), e);
+
+//        QTextCursor cursor = ui->viewer->textCursor();
+//        cursor.select(QTextCursor::WordUnderCursor);
+//        setCurLine();
+
+//        e = new QMouseEvent(QEvent::MouseButtonRelease, pt, Qt::LeftButton, Qt::NoButton,
+//                                         Qt::NoModifier);
+//                QApplication::postEvent(ui->viewer->viewport(), e);
 
 //        myDebug() << cursor.blockNumber() << cursor.columnNumber();
         return true;

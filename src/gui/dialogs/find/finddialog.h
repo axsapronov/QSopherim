@@ -16,6 +16,8 @@ typedef struct FindData
 {
     QStringList files;
     QStringList verse;
+    QStringList chapters;
+    QStringList books;
 } FindData;
 
 typedef struct SearchData
@@ -25,7 +27,7 @@ typedef struct SearchData
     QStringList chapter;
     QStringList files;
     QStringList type;
-    QStringList verse;
+//    QStringList verse;
 } SearchData;
 
 class FindDialog : public QDialog

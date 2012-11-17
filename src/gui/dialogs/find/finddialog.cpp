@@ -4,6 +4,7 @@
 #include "config.h"
 #include "debughelper.h"
 #include "filecommon.h"
+#include "stringcommon.h"
 
 FindDialog::FindDialog(QWidget *parent) :
     QDialog(parent),
@@ -52,7 +53,9 @@ void FindDialog::find()
 
         SearchData data;
         data.files = find.files;
-        data.verse = find.verse;
+//        data.verse = find.verse;
+        data.books = find.books;
+        data.chapter = find.chapters;
         updateItemforTable(data);
         showFiles(data);
     }
@@ -69,6 +72,11 @@ FindData FindDialog::findFiles(const QStringList &files, const QString &text)
 
     QStringList foundFiles;
     QStringList verses;
+    QStringList books;
+    QStringList chapters;
+
+    QString curBook;
+    QString curChapter;
 
     for (int i = 0; i < files.size(); ++i)
     {
@@ -88,18 +96,27 @@ FindData FindDialog::findFiles(const QStringList &files, const QString &text)
                 if (progressDialog.wasCanceled())
                     break;
                 line = in.readLine();
+                if (line.indexOf("<book") >= 0 )
+                    curBook = getBookNameFromStr(&line);
+
+                if (line.indexOf("<chapter") >= 0 )
+                    curChapter = getChapterNameFromStr(&line);
+
                 if (line.contains(text))
                 {
                     foundFiles << files[i];
+                    books << curBook;
+                    chapters << curChapter;
                     //                    verses << getIntVerse(line);
-                    verses << QString::number(1);
+//                    verses << QString::number(1);
                 }
             }
         }
     }
     output.files = foundFiles;
-    output.verse = verses;
-    //    myDebug() << foundFiles;
+//    output.verse = verses;
+    output.books = books;
+    output.chapters = chapters;
     return output;
 }
 //------------------------------------------------------------------------------
@@ -167,8 +184,8 @@ void FindDialog::showFiles(const SearchData &data)
         QTableWidgetItem *moduleItem = new QTableWidgetItem(data.modules[i]);
         moduleItem->setFlags(moduleItem->flags() ^ Qt::ItemIsEditable);
 
-        QTableWidgetItem *verseItem = new QTableWidgetItem(data.verse[i]);
-        verseItem->setFlags(verseItem->flags() ^ Qt::ItemIsEditable);
+//        QTableWidgetItem *verseItem = new QTableWidgetItem(data.verse[i]);
+//        verseItem->setFlags(verseItem->flags() ^ Qt::ItemIsEditable);
 
         QTableWidgetItem *chapterItem = new QTableWidgetItem(data.chapter[i]);
         chapterItem->setFlags(chapterItem->flags() ^ Qt::ItemIsEditable);
@@ -182,8 +199,8 @@ void FindDialog::showFiles(const SearchData &data)
         ui->tableFiles->setItem(row, 0, moduleItem);
         ui->tableFiles->setItem(row, 1, bookItem);
         ui->tableFiles->setItem(row, 2, chapterItem);
-        ui->tableFiles->setItem(row, 3, verseItem);
-        ui->tableFiles->setItem(row, 4, typeItem);
+//        ui->tableFiles->setItem(row, 3, verseItem);
+        ui->tableFiles->setItem(row, 3, typeItem);
     }
     ui->tableFiles->resizeColumnsToContents();
 
@@ -213,19 +230,17 @@ void FindDialog::updateItemforTable(SearchData &data)
         list.removeLast();
         app[0] = list.last();
 
-        app[2].remove(app[1].toLower()); //chapter
-        app[3] = QString(data.files.at(i)); //file
+        // book name
+        app[2] = data.books.at(i);
 
-        app[2] = "booknam";
-        app[3] = "chaptername";
+        // chapter name
+        app[3] = data.chapter.at(i);
 
         lib[0] << app[0];
         lib[1] << app[1];
         lib[2] << app[2];
         lib[3] << app[3];
         lib[4] << app[4];
-
-//        myDebug() << app[0] << app[1] << app[2] << app[3] << app[4];
     }
     data.type = lib[0];
     data.modules = lib[1];
