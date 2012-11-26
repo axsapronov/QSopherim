@@ -385,6 +385,7 @@ void MainWindow::showSettings()
 void MainWindow::showModuleManager()
 {
     //set sett
+    GUI_LeftPanel->setListModuleFromList();
     GUI_ManagerModules->loadListModules();
     GUI_ManagerModules->show();
 }

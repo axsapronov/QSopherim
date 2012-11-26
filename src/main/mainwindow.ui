@@ -269,6 +269,9 @@
    <property name="text">
     <string>Manager modules</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
+   </property>
   </action>
   <action name="action_Search_Find_In_Modules">
    <property name="text">

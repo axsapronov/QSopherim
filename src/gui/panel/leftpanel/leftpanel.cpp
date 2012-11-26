@@ -244,3 +244,8 @@ void LeftPanel::showWord(QModelIndex ind)
     showDescriptionWord(word);
 }
 //------------------------------------------------------------------------------
+void LeftPanel::setListModuleFromList()
+{
+    Config::configuration()->setListBibles(moduleList);
+}
+//------------------------------------------------------------------------------

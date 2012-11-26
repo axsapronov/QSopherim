@@ -25,6 +25,8 @@ public:
     void refreshListModule(ProjectQModuleList* list);
     void refreshListDict(ProjectQModuleList* list);
 
+    void setListModuleFromList();
+
     /**
      * @brief retranslate
      * retranslate gui

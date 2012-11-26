@@ -65,10 +65,10 @@ void ManagerModules::deleteSelectedModules()
     {
         m_listModule->deleteModule(selectedList.at(i).data(0).toString());
         QString t_str = ui->tableViewStateModules->model()->data
+                (
+                    ui->tableViewStateModules->model()->index
                     (
-                        ui->tableViewStateModules->model()->index
-                        (
-                            selectedList.at(i).row(), 1
+                        selectedList.at(i).row(), 1
                         ), Qt::DisplayRole
                     ).toString();
 
@@ -98,32 +98,35 @@ void ManagerModules::deleteSelectedModules()
 //------------------------------------------------------------------------------
 void ManagerModules::loadListModules()
 {
-
     ProjectQModuleList* list = Config::configuration()->getListBibles();
     modelBiblies->clear();
-    for (int i = 0; i < list->getSize(); i++)
-        m_listModule->addModule(list->getModule(i));
 
-    m_countBiblies = list->getSize();
-
-    list = Config::configuration()->getListDictionaries();
-    for (int i = 0; i < list->getSize(); i++)
-        m_listModule->addModule(list->getModule(i));
-
-    for(int i = 0; i < m_listModule->getSize(); i++)
+    if (list->getSize() != 0)
     {
-        modelBiblies->setItem(i, 0, new QStandardItem(m_listModule->getModule(i)->getModuleName()));
-        if (i < m_countBiblies)
+        for (int i = 0; i < list->getSize(); i++)
+            m_listModule->addModule(list->getModule(i));
+
+        m_countBiblies = list->getSize();
+
+        list = Config::configuration()->getListDictionaries();
+        for (int i = 0; i < list->getSize(); i++)
+            m_listModule->addModule(list->getModule(i));
+
+        for(int i = 0; i < m_listModule->getSize(); i++)
         {
-            modelBiblies->setItem(i, 1, new QStandardItem("bible"));
+            modelBiblies->setItem(i, 0, new QStandardItem(m_listModule->getModule(i)->getModuleName()));
+            if (i < m_countBiblies)
+            {
+                modelBiblies->setItem(i, 1, new QStandardItem("bible"));
+            }
+            else
+            {
+                modelBiblies->setItem(i, 1, new QStandardItem("dictionaries"));
+            }
         }
-        else
-        {
-            modelBiblies->setItem(i, 1, new QStandardItem("dictionaries"));
-        }
+        ui->tableViewStateModules->setModel(modelBiblies);
+        ui->tableViewStateModules->resizeColumnsToContents();
     }
-    ui->tableViewStateModules->setModel(modelBiblies);
-    ui->tableViewStateModules->resizeColumnsToContents();
 }
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
