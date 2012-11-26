@@ -24,6 +24,11 @@
 #include "config.h"
 #include "filecommon.h"
 
+#include <QProgressDialog>
+#include <QProgressBar>
+#include <QLabel>
+#include <QApplication>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -33,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
     init();
     loadModulesFromFolder();
     loadDictFromFolder();
+    //    loadModules();
     //    debug();
 }
 //------------------------------------------------------------------------------
@@ -451,25 +457,86 @@ void MainWindow::processFinishDict()
 //------------------------------------------------------------------------------
 void MainWindow::loadModulesFromFolder()
 {
+    /**TO DO
+     * moved to center dialog
+     **/
+    QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
+    loadProgress.setValue(0);
+    loadProgress.setGeometry(750, 300, 400, 170);
+    loadProgress.show();
+
+    QLabel overallLabel(&loadProgress);
+    overallLabel.setGeometry(11, 10, 378, 20);
+    overallLabel.setText("Load modules");
+    overallLabel.show();
+
     QStringList listModules = getListModulesFromPath(Config::configuration()->getBibleDir());
     for (int i = 0; i < listModules.size(); i++)
     {
-        //        myDebug() << listModules.at(i);
         prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
+        loadProgress.setValue(100 * i / listModules.size());
+        QApplication::processEvents();
     }
 }
 //------------------------------------------------------------------------------
 void MainWindow::loadDictFromFolder()
 {
+    /**TO DO
+     * moved to center dialog
+     **/
+    QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
+    loadProgress.setValue(0);
+    loadProgress.setGeometry(750, 300, 400, 170);
+    loadProgress.show();
+
+    QLabel overallLabel(&loadProgress);
+    overallLabel.setGeometry(11, 10, 378, 20);
+    overallLabel.setText("Load dictionary");
+    overallLabel.show();
+
     QStringList listModules = getListModulesFromPath(
                 Config::configuration()->getDictDir()
                 , ".idx");
     for (int i = 0; i < listModules.size(); i++)
     {
-        //                myDebug() << listModules.at(i);
         prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteDictModule);
+        loadProgress.setValue(100 * i / listModules.size());
+        QApplication::processEvents();
     }
 }
+//------------------------------------------------------------------------------
+//void MainWindow::loadModules()
+//{
+//    QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
+//    loadProgress.setValue(0);
+//    loadProgress.setGeometry(750, 300, 400, 170);
+//    loadProgress.show();
+
+//    QLabel overallLabel(&loadProgress);
+//    overallLabel.setGeometry(11, 10, 378, 20);
+//    overallLabel.setText("Load modules");
+//    overallLabel.show();
+
+//    QStringList listModules = getListModulesFromPath(Config::configuration()->getBibleDir());
+//    for (int i = 0; i < listModules.size(); i++)
+//    {
+//        prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
+//        loadProgress.setValue(100 * i / listModules.size());
+//        QApplication::processEvents();
+//    }
+
+
+//    listModules = getListModulesFromPath(
+//                Config::configuration()->getDictDir()
+//                , ".idx");
+//    for (int i = 0; i < listModules.size(); i++)
+//    {
+//        prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteDictModule);
+//        loadProgress.setValue(100 * i / listModules.size());
+//        QApplication::processEvents();
+//    }
+
+//}
 //------------------------------------------------------------------------------
 void MainWindow::createNote()
 {

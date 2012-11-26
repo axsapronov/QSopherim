@@ -126,6 +126,8 @@ private slots:
      */
     void loadDictFromFolder();
 
+//    void loadModules();
+
 protected:
     void closeEvent(QCloseEvent *);
 //    void mouseMoveEvent(QMouseEvent *);
