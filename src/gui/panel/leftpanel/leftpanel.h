@@ -64,11 +64,11 @@ private:
      * initall function
      */
     void init();
+
+    /**
+     * @brief createConnects
+     */
     void createConnects();
-
-
-
-
 };
 
 #endif // LEFTPANEL_H

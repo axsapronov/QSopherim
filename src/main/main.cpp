@@ -4,11 +4,12 @@
 
 
 #include <QtGui/QApplication>
-#include <QSettings>
+
 #include <QTextCodec>
 #include <QTranslator>
 #include <QLocale>
-#include <QDir>
+
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -18,9 +19,14 @@ int main(int argc, char *argv[])
 
     Config *conf = new Config();
     conf -> setAppDir(QDir::currentPath() + "/");
-    conf -> loadSettings();
+    if (QFile::exists(conf->getAppDir() + "settings.conf"))
+    {
+        conf -> loadSettings();
+    }
+    else
+        conf -> saveSettings();
 
-    QTextCodec * codec = QTextCodec::codecForName("UTF-8"); // set encoding for progs
+    QTextCodec * codec = QTextCodec::codecForName("UTF-8"); // set encoding for prog
     QTextCodec::setCodecForCStrings(codec);
     QTextCodec::setCodecForLocale(codec);
     QTextCodec::setCodecForTr(codec);

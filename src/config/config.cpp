@@ -8,9 +8,17 @@
 static Config *static_configuration = 0;
 Config::Config()
 {
-    if( !static_configuration ) {
+    if( !static_configuration )
+    {
         static_configuration = this;
-    } else {
+        m_fontSize = 12;
+        m_fontColor = QColor(qRgb(0,0,0));
+        m_fontFamily = "DejaVu Sans";
+        m_appLang = "Russian";
+
+    }
+    else
+    {
         qWarning( "Multiple configurations not allowed!" );
     }
 }
@@ -33,7 +41,6 @@ Config *Config::configuration()
 //------------------------------------------------------------------------------
 void Config::loadSettings()
 {
-
     QSettings settings("settings.conf", QSettings::NativeFormat);
 
     m_bibleDir = settings.value(QString("dir/bible")).toString();
@@ -48,7 +55,7 @@ void Config::loadSettings()
     dir.mkpath(getAppDir() + "dictionary");
     dir.mkpath(getAppDir() + "other");
 
-//    fontColor = settings.value("font/color");
+    //    fontColor = settings.value("font/color");
     m_fontSize = settings.value("font/size").toInt();
     m_fontFamily = settings.value("font/family").toString();
 
@@ -122,7 +129,7 @@ void Config::saveSettings()
     settings.setValue(QString("dir/dict"), m_dictDir);
 
     // font settings
-//    settings.setValue(QString("font/color"), fontColor);
+    //    settings.setValue(QString("font/color"), fontColor);
     settings.setValue(QString("font/size"), m_fontSize);
     settings.setValue(QString("font/family"), m_fontFamily);
 
