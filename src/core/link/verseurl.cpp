@@ -12,7 +12,7 @@ You should have received a copy of the GNU General Public License along with
 this program; if not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 #include "verseurl.h"
-#include "src/core/debughelper.h"
+#include "debughelper.h"
 #include <QtCore/QHashIterator>
 #include <QtCore/QStringList>
 VerseUrl::VerseUrl()

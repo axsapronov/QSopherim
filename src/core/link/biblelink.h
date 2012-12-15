@@ -14,9 +14,9 @@ this program; if not, see <http://www.gnu.org/licenses/>.
 #ifndef BIBLELINK_H
 #define BIBLELINK_H
 #include <QtCore/QRegExp>
-#include "src/core/verse/versification.h"
-#include "src/core/debughelper.h"
-#include "src/core/link/verseurl.h"
+#include "versification.h"
+#include "debughelper.h"
+#include "verseurl.h"
 #include <QtCore/QSharedPointer>
 class BibleLink
 {

@@ -16,7 +16,7 @@ this program; if not, see <http://www.gnu.org/licenses/>.
 #include <QtCore/QString>
 #include <QtCore/QList>
 #include <QtCore/QMap>
-#include "src/core/verse/verse.h"
+#include "verse.h"
 class TextRange
 {
 public:

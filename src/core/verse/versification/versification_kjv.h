@@ -13,7 +13,7 @@ this program; if not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 #ifndef VERSIFICATION_KJV_H
 #define VERSIFICATION_KJV_H
-#include "src/core/verse/versification.h"
+#include "versification.h"
 #include <QtCore/QFlags>
 #include <QtCore/QObject>
 class Versification_KJV : public Versification

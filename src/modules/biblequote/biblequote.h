@@ -4,7 +4,7 @@
 #include "biblemodule.h"
 
 
-#include "src/core/verse/chapter.h"
+#include "chapter.h"
 #include "book.h"
 
 #include <QString>
