@@ -15,10 +15,10 @@ this program; if not, see <http://www.gnu.org/licenses/>.
 #define TEXTRANGES_H
 #include <QtCore/QList>
 #include <QtCore/QSet>
-#include "src/core/verse/textrange.h"
-#include "src/core/link/verseurlrange.h"
-#include "src/core/debughelper.h"
-#include "src/core/verse/ranges.h"
+#include "textrange.h"
+#include "verseurlrange.h"
+#include "debughelper.h"
+#include "ranges.h"
 
 /**
   * TextRanges is a list of TextRange[s].

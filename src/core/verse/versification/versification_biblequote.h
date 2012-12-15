@@ -14,7 +14,7 @@ this program; if not, see <http://www.gnu.org/licenses/>.
 #ifndef VERSIFICATION_BIBLEQUOTE_H
 #define VERSIFICATION_BIBLEQUOTE_H
 
-#include "src/core/verse/versification.h"
+#include "../versification.h"
 
 class Versification_BibleQuote : public Versification
 {

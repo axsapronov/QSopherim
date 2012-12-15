@@ -14,7 +14,7 @@ this program; if not, see <http://www.gnu.org/licenses/>.
 #ifndef BOOK_H
 #define BOOK_H
 #include <QtCore/QHash>
-#include "src/core/verse/chapter.h"
+#include "chapter.h"
 class Book
 {
 public:

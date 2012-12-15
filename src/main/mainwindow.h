@@ -25,9 +25,9 @@ QT_END_NAMESPACE
 #include "moduledefinition.h"
 #include "debughelper.h"
 #include "projectqmodulelist.h"
-#include "src/gui/dialogs/find/finddialog.h"
+#include "finddialog.h"
 #include "noteeditor.h"
-#include "src/gui/dialogs/managermodules/managermodules.h"
+#include "managermodules.h"
 
 class MainWindow : public QMainWindow
 {
@@ -186,5 +186,6 @@ private:
 
 
 };
+
 
 #endif // MAINWINDOW_H

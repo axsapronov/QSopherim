@@ -13,8 +13,8 @@ this program; if not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 #ifndef RANGES_H
 #define RANGES_H
-#include "src/core/verse/range.h"
-#include "src/core/link/verseurl.h"
+#include "range.h"
+#include "verseurl.h"
 #include <QtCore/QList>
 class Ranges
 {

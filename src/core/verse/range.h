@@ -14,7 +14,7 @@ this program; if not, see <http://www.gnu.org/licenses/>.
 
 #ifndef RANGE_H
 #define RANGE_H
-#include "src/core/verse/rangeenum.h"
+#include "rangeenum.h"
 
 #include <QtCore/QList>
 class Range

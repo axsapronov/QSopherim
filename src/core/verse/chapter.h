@@ -17,7 +17,7 @@ this program; if not, see <http://www.gnu.org/licenses/>.
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QMap>
-#include "src/core/verse/verse.h"
+#include "verse.h"
 /**
   * Chapter represents a verse chapter.
  */

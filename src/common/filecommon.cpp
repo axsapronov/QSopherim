@@ -3,7 +3,7 @@
 #include "debughelper.h"
 
 
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QString getEncodingFromFile(QString file, QString language)
 {
     QProcess pr;
@@ -41,7 +41,7 @@ QString getEncodingFromFile(QString file, QString language)
     //    qDebug() << "encoding = " << encoding;
     return encoding;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QString getFileNameAbs(const QString file)
 {
     QStringList list;
@@ -51,7 +51,7 @@ QString getFileNameAbs(const QString file)
     str = list.first();
     return str;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QString getFileName(const QString file)
 {
     QStringList list;
@@ -59,7 +59,7 @@ QString getFileName(const QString file)
     QString str = list.last();
     return str;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QString absolutifyFileName(QString fn, QString path)
 {
     QString afn;
@@ -69,7 +69,7 @@ QString absolutifyFileName(QString fn, QString path)
     }
     return afn;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QTextCodec * getCodecOfEncoding(QString encoding)
 {
     //    encoding = encoding.toUpper ();
@@ -95,7 +95,7 @@ QTextCodec * getCodecOfEncoding(QString encoding)
     //        qDebug() << " encoding = " << encoding;
     return codec;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QStringList getFillLang()
 {
     QStringList items;
@@ -107,7 +107,7 @@ QStringList getFillLang()
           << QString ("he");
     return items;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QStringList getFillType()
 {
     //    Dictionary/Справочник
@@ -127,7 +127,7 @@ QStringList getFillType()
           << QString::fromUtf8( ("Wordbook/Словарь"));
     return items;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QStringList getListWord(QString filename)
 {
     QStringList r_list;
@@ -155,7 +155,7 @@ QStringList getListWord(QString filename)
     return r_list;
 }
 
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 bool createEmptyHtml(QString fileName, QString title, QString text)
 {
     bool ret = true;
@@ -181,7 +181,7 @@ bool createEmptyHtml(QString fileName, QString title, QString text)
     }
     return ret;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 bool createEmpty(QString fileName, QString text)
 {
     bool ret = false;
@@ -205,7 +205,7 @@ bool createEmpty(QString fileName, QString text)
     }
     return ret;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 bool createEmptyHtml(QString fileName, QString title)
 {
     bool ret = true;
@@ -231,7 +231,7 @@ bool createEmptyHtml(QString fileName, QString title)
     }
     return ret;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void replaceStrInFile(QString filepath, QString old, QString newstr)
 {
     QFile file(filepath);
@@ -262,7 +262,7 @@ void replaceStrInFile(QString filepath, QString old, QString newstr)
     }
 
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QString getTextFromHtmlFile(QString filePath)
 {
     QString str = "";
@@ -294,7 +294,7 @@ QString getTextFromHtmlFile(QString filePath)
 
     return str;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QStringList getInfoFromFile(QString file_path)
 {
     QStringList list;
@@ -342,7 +342,7 @@ QStringList getInfoFromFile(QString file_path)
 
     return list;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QString getParamInfo(QString *inputstr, QString param)
 {
     QString str = *inputstr;
@@ -360,7 +360,7 @@ QString getParamInfo(QString *inputstr, QString param)
     return str;
 }
 
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QString removeSpaces(QString str)
 {
     /// translate to hindi
@@ -404,7 +404,7 @@ QString removeSpaces(QString str)
 
     return str;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void deleteWordFromDict(QString filePath, QString word, QString description)
 {
     QString text = getTextFromHtmlFile(filePath);
@@ -413,7 +413,7 @@ void deleteWordFromDict(QString filePath, QString word, QString description)
     QFile::remove(filePath);
     createEmpty(filePath, text);
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void addWordToDict(QString filePath, QString word, QString description)
 {
     QString text = getTextFromHtmlFile(filePath);
@@ -427,7 +427,7 @@ void addWordToDict(QString filePath, QString word, QString description)
     QFile::remove(filePath);
     createEmpty(filePath, text);
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QString getDescriptionFromHtmlFile(QString filePath)
 {
     QString str = "";
@@ -458,7 +458,7 @@ QString getDescriptionFromHtmlFile(QString filePath)
 
     return str;
 }
-///-----------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 QString findPosWord(QString file, QString text)
 {
     QString t_output_str = "";
@@ -486,7 +486,7 @@ QString findPosWord(QString file, QString text)
     }
     return t_output_str;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 bool createEmptyXML(QString fileName)
 {
     bool ret = false;
@@ -512,7 +512,7 @@ bool createEmptyXML(QString fileName)
     }
     return ret;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 bool addBookToXML(QString fileName, QString namebook, Book mbook)
 {
     bool ret = false;
@@ -556,7 +556,7 @@ bool addBookToXML(QString fileName, QString namebook, Book mbook)
     }
     return ret;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 bool endXML(QString fileName)
 {
     bool ret = false;
@@ -580,7 +580,7 @@ bool endXML(QString fileName)
     }
     return ret;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 ProjectQModuleInfo getModuleInfo(QString fileName)
 {
 
@@ -601,7 +601,7 @@ ProjectQModuleInfo getModuleInfo(QString fileName)
 
     return list;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QString getParamModule(QString filename, QString param)
 {
     // translate to hindi
@@ -628,7 +628,7 @@ QString getParamModule(QString filename, QString param)
     }
     return str;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QStringList getBookList(QString file)
 {
     QStringList bookList;
@@ -638,7 +638,7 @@ QStringList getBookList(QString file)
     bookList << str.split(":");
     return bookList;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QHash<QString, int> getNumberOfChaptersInBook(QString filename)
 {
 
@@ -662,7 +662,7 @@ QHash<QString, int> getNumberOfChaptersInBook(QString filename)
     }
     return list;
 }
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 QStringList removeEmptyQStringFromQStringList(QStringList *list)
 {
     QStringList listn;
@@ -678,7 +678,7 @@ QStringList removeEmptyQStringFromQStringList(QStringList *list)
     //    myDebug() << listn;
     return listn;
 }
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 QString getClearText(QString *text)
 {
     QString clearText = *text;
@@ -698,7 +698,7 @@ QString getClearText(QString *text)
     return clearText;
 
 }
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 QString getEndOfTag(QString tag)
 {
     QString newtag = tag;
@@ -709,7 +709,7 @@ QString getEndOfTag(QString tag)
     }
     return newtag;
 }
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 QStringList getListModulesFromPath(QString path, QString format)
 {
     QStringList files = recursiveFind(path);
@@ -724,7 +724,7 @@ QStringList getListModulesFromPath(QString path, QString format)
     }
     return list;
 }
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 QStringList recursiveFind(QString directory)
 {
     //// подумать, нужен ли чистый рекурсивный поиск
@@ -738,7 +738,7 @@ QStringList recursiveFind(QString directory)
     }
     return list;
 }
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 QHash<int, QString> getNoteOfParams(QString curPath,
                                     QString curModule,
                                     QString curBook,
@@ -780,7 +780,7 @@ QHash<int, QString> getNoteOfParams(QString curPath,
     return hash;
 }
 
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 QString getVerseBeginNumberFromNote(QString* line)
 {
 
@@ -792,7 +792,7 @@ QString getVerseBeginNumberFromNote(QString* line)
     str = str.mid(pos + t_str.length(), pos2  - pos - t_str.length());
     return str;
 }
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 QString getVerseEndNumberFromNote(QString* line)
 {
 
@@ -804,7 +804,7 @@ QString getVerseEndNumberFromNote(QString* line)
     str = str.mid(pos + t_str.length(), pos2  - pos - t_str.length());
     return str;
 }
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 QVector<StrongList> getListStrongs(QString pathToFile)
 {
     QVector<StrongList> list;
@@ -832,7 +832,7 @@ QVector<StrongList> getListStrongs(QString pathToFile)
 
     return list;
 }
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 void createListStrongs(QString path)
 {
     QString text = getTextFromHtmlFile(path);
@@ -852,7 +852,7 @@ void createListStrongs(QString path)
     }
     writeXmlStrongFile(&strong);
 }
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 void writeXmlStrongFile(QHash<int, StrongList> *strong)
 {
     QString path;
@@ -883,7 +883,7 @@ void writeXmlStrongFile(QHash<int, StrongList> *strong)
         ts << "</xml>" << endl;
     }
 }
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 QString getCoolLine(QString str)
 {
     QString t_str = getClearText(&str);
@@ -904,7 +904,7 @@ QString getCoolLine(QString str)
     }
     return t_str;
 }
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 QString getNextWord(QString str, int pos)
 {
     /// translate to hindi
@@ -943,7 +943,7 @@ QString getNextWord(QString str, int pos)
 
     return t_str;
 }
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 QString getShortLang(QString str)
 {
     if (str == "Russian")
@@ -957,7 +957,7 @@ QString getShortLang(QString str)
 
     return "en";
 }
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 QString getDescriptionForWordFromDict(QString t_pathToFile, QString word)
 {
     QXmlStreamReader xmlReader;
@@ -985,7 +985,7 @@ QString getDescriptionForWordFromDict(QString t_pathToFile, QString word)
     }
     return r_str;
 }
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 QStringList getBookmarks(QString pathToFile)
 {
     QXmlStreamReader xmlReader;
@@ -1010,5 +1010,5 @@ QStringList getBookmarks(QString pathToFile)
     r_list = removeEmptyQStringFromQStringList(&r_list);
     return r_list;
 }
-//------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
