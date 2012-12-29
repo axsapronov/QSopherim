@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     loadModulesFromFolder();
     loadDictFromFolder();
     //    loadModules();
-    //    debug();
+//        debug();
 }
 //------------------------------------------------------------------------------
 MainWindow::~MainWindow()
@@ -159,8 +159,8 @@ void MainWindow::debug()
     QString fileStrong;
     fileStrong = "/home/files/Documents/Bible/oteh/Strongs/HEBREW.HTM";
     createListStrongs(fileStrong);
-    fileStrong = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/strongs/strong.xml";
-    GUI_ModuleViewer->setStrongList(fileStrong);
+//    fileStrong = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/strongs/strong.xml";
+//    GUI_ModuleViewer->setStrongList(fileStrong);
 
 
     QHash<QString, QVector<int> > hash;
@@ -240,6 +240,9 @@ void MainWindow::createConnects()
 
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowNoteList(QString,QString,QString,QString,QString)),
             GUI_LeftPanel2, SLOT(showNoteList(QString,QString,QString,QString,QString)));
+
+    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowStrong(QString)),
+            GUI_LeftPanel2, SLOT(showStrong(QString)));
 
     connect(GUI_Settings, SIGNAL(SIGNAL_RetranslateGUI(QString)),
             SLOT(retranslate(QString)));

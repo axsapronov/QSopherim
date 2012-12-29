@@ -11,6 +11,9 @@
 
 #include "noteeditor.h"
 
+
+class StrongList;
+
 namespace Ui {
 class LeftPanel2;
 }
@@ -37,6 +40,8 @@ public slots:
                       QString curChapter,
                       QString curPath,
                       QString firstVerse);
+
+    void showStrong(QString number);
 private slots:
 
     // notes slots
@@ -58,6 +63,9 @@ private:
     Ui::LeftPanel2 *ui;
 
     QHash<int, QString> m_data;
+
+
+    QVector<StrongList> m_listStrong;
 
     NoteEditor *GUI_NoteEditor;
 

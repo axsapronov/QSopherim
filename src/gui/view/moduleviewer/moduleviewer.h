@@ -6,8 +6,6 @@
 #include <QHash>
 
 
-class StrongList;
-
 namespace Ui {
 class ModuleViewer;
 }
@@ -78,6 +76,8 @@ signals:
     void SIGNAL_ShowNoteList(QString, QString, QString, QString, QString);
     void SIGNAL_AddNewBookmark(QString);
 
+    void SIGNAL_ShowStrong(QString);
+
 private slots:
     /**
      * @brief showContextMenu
@@ -109,7 +109,7 @@ protected:
 private:
     Ui::ModuleViewer *ui;
 
-    QVector<StrongList> m_list;
+//    QVector<StrongList> m_list;
     QHash< QString, QVector<int> > m_strongs;
 
     QAction *act_cut;

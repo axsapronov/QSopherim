@@ -20,49 +20,19 @@ LeftPanel2::~LeftPanel2()
     delete ui;
 }
 //------------------------------------------------------------------------------
-void LeftPanel2::showNoteList(QString curModule,
-                              QString curBook,
-                              QString curChapter,
-                              QString curPath,
-                              QString firstVerse)
-{
-    m_data = getNoteOfParams(curPath,
-                             curModule,
-                             curBook,
-                             curChapter,
-                             firstVerse);
-
-    m_curModule = curModule;
-    m_curBook = curBook;
-    m_curChapter = curChapter;
-    m_curPath = curPath;
-    m_firstVerse = firstVerse;
-
-    if (m_data.size() != 0)
-    {
-        for (int i = 0; i < m_data.size(); i++)
-        {
-            QStandardItemModel *model = new QStandardItemModel();
-            model->clear();
-            ui->ListViewNote->setModel(model);
-            QStandardItem *item = new QStandardItem();
-            QString first50Simbols = m_data[i].mid(0, 50);
-            item->setData(first50Simbols, Qt::DisplayRole );
-            item->setEditable( false );
-            model->appendRow( item );
-        }
-    }
-    else
-    {
-        /// reset
-        ui->ListViewNote->setModel(new QStandardItemModel());
-    }
-}
-//------------------------------------------------------------------------------
 void LeftPanel2::init()
 {
     m_data.clear();
     GUI_NoteEditor = new NoteEditor(this);
+
+    //    QString path = m_curPath;
+
+    QString fileStrong;
+    fileStrong = "/home/files/Documents/Bible/oteh/Strongs/HEBREW.HTM";
+    createListStrongs(fileStrong);
+
+    fileStrong = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/strongs/strong.xml";
+    m_listStrong = getListStrongs(fileStrong);
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::createConnects()
@@ -147,5 +117,62 @@ void LeftPanel2::showChapterFromJournal(QModelIndex ind)
     emit SIGNAL_ShowChapterFromJournal(moduleName, bookName, chapterValue);
 }
 //------------------------------------------------------------------------------
+void LeftPanel2::showNoteList(QString curModule,
+                              QString curBook,
+                              QString curChapter,
+                              QString curPath,
+                              QString firstVerse)
+{
+    m_data = getNoteOfParams(curPath,
+                             curModule,
+                             curBook,
+                             curChapter,
+                             firstVerse);
+
+    m_curModule = curModule;
+    m_curBook = curBook;
+    m_curChapter = curChapter;
+    m_curPath = curPath;
+    m_firstVerse = firstVerse;
+
+    if (m_data.size() != 0)
+    {
+        for (int i = 0; i < m_data.size(); i++)
+        {
+            QStandardItemModel *model = new QStandardItemModel();
+            model->clear();
+            ui->ListViewNote->setModel(model);
+            QStandardItem *item = new QStandardItem();
+            QString first50Simbols = m_data[i].mid(0, 50);
+            item->setData(first50Simbols, Qt::DisplayRole );
+            item->setEditable( false );
+            model->appendRow( item );
+        }
+    }
+    else
+    {
+        /// reset
+        ui->ListViewNote->setModel(new QStandardItemModel());
+    }
+}
+//------------------------------------------------------------------------------
+void LeftPanel2::showStrong(QString number)
+{
+    //    myDebug() << m_listStrong.size();
+    int i = 0;
+    do
+    {
+        if (m_listStrong.at(i).number == number.toInt())
+        {
+            QString str =
+                    tr("Strong number ")
+                    + number
+                    + "\n"
+                    + m_listStrong.at(i).text;
+            ui->textBrStrong->setPlainText(str);
+        }
+        i++;
+    } while (i < m_listStrong.size());
+}
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

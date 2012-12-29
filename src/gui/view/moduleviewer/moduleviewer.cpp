@@ -477,7 +477,11 @@ bool ModuleViewer::event(QEvent* event)
         if (!cursor.selectedText().isEmpty())
         {
 //            myDebug() << helpEvent->pos() << cursor.selectedText();
-            QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
+            if (cursor.selectedText().indexOf("0") >= 0 )
+            {
+                emit SIGNAL_ShowStrong(cursor.selectedText());
+//                QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
+            }
         }
         else
         {
@@ -491,8 +495,6 @@ bool ModuleViewer::event(QEvent* event)
 //------------------------------------------------------------------------------
 //bool ModuleViewer::eventFilter(QObject *obj, QEvent *event)
 //{
-
-
 ////    if(e->type() == QEvent::ToolTip)
 ////    {
 ////               QHelpEvent *tipEvent = static_cast<QHelpEvent*>(e);
@@ -584,7 +586,7 @@ void ModuleViewer::showStrong()
 //------------------------------------------------------------------------------
 void ModuleViewer::setStrongList(QString path)
 {
-    m_list = getListStrongs(path);
+//    m_list = getListStrongs(path);
     int i = 5;
     //    myDebug() << m_list.size() << m_list.at(i).number
     //                 << m_list.at(i).text;

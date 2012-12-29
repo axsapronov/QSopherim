@@ -274,8 +274,7 @@ QString getTextFromHtmlFile(QString filePath)
         if (file.open(QIODevice::ReadOnly))
         {
             QTextStream stream(&file);
-            QString encoding = getEncodingFromFile(filePath);
-            stream.setCodec(getCodecOfEncoding(encoding));
+            stream.setCodec(getCodecOfEncoding(getEncodingFromFile(filePath)));
             str = stream.readAll();
             //        //        qDebug() << "str = " << str;
             //        int body = QString("<body>").length();
