@@ -34,19 +34,45 @@ public:
     void retranslate();
 public slots:
     void showChapterFromJournal(QString module, QString book, QString chapter);
+
 signals:
     void SIGNAL_AddRecordToJournal(QString, QString, QString);
 
 private slots:
-    void refreshChapterList(QModelIndex);
-    void refreshBookList(QString);
-    void showChapter(QModelIndex);
 
+    /**
+     * @brief refreshChapterList
+     */
+    void refreshChapterList(QModelIndex);
+    /**
+     * @brief refreshBookList
+     */
+    void refreshBookList(QString);
+    /**
+     * @brief showChapter
+     */
+    void showChapter(QModelIndex);
+    /**
+     * @brief showWord
+     */
     void showWord(QModelIndex);
 
-    void showDescriptionWord(QString word);
-
+    /**
+     * @brief refreshWordListFromDict
+     */
     void refreshWordListFromDict(QString);
+
+    /**
+     * @brief showDescriptionWordFromOtherModules
+     * @param word
+     */
+    void showDescriptionWordFromOtherModules(QString word);
+
+    /**
+     * @brief showDescriptionWord
+     * @param word
+     */
+    void showDescriptionWord(QString word);
 private:
     Ui::LeftPanel *ui;
     QStandardItemModel *modelModules;
@@ -58,6 +84,8 @@ private:
     QString m_lastNameOfBook;
 
     QStringListModel *typeModel;
+
+    QString m_curWord;
     /**
      * @brief init
      * @function
@@ -69,6 +97,8 @@ private:
      * @brief createConnects
      */
     void createConnects();
+
+    QStringList getListDictWithWord(QString word);
 };
 
 #endif // LEFTPANEL_H

@@ -154,6 +154,8 @@ void LeftPanel::createConnects()
     connect(ui->comBDictList, SIGNAL(activated(QString)), SLOT(refreshWordListFromDict(QString)));
     connect(ui->comBWordList, SIGNAL(activated(QString)), SLOT(showDescriptionWord(QString)));
     connect(ui->ListViewWordList, SIGNAL(clicked(QModelIndex)), SLOT(showWord(QModelIndex)));
+
+    connect(ui->comBDictListFindWord, SIGNAL(activated(QString)), SLOT(showDescriptionWordFromOtherModules(QString)));
 }
 //------------------------------------------------------------------------------
 void LeftPanel::showChapter(QModelIndex ind)
@@ -232,6 +234,9 @@ void LeftPanel::refreshWordListFromDict(QString curText)
     }
 
     ui->ListViewWordList->setModel(modelWord);
+
+    // find desc from other dict
+
 }
 //------------------------------------------------------------------------------
 void LeftPanel::showDescriptionWord(QString word)
@@ -243,14 +248,51 @@ void LeftPanel::showDescriptionWord(QString word)
     ui->view->setText(t_text);
 }
 //------------------------------------------------------------------------------
+void LeftPanel::showDescriptionWordFromOtherModules(QString word)
+{
+    word = m_curWord;
+    QString t_pathToFile = QString(Config::configuration()->getAppDir() + "dictionary/" +
+                                   ui->comBDictListFindWord->currentText() + "/dict.xml");
+
+    QString t_text = getDescriptionForWordFromDict(t_pathToFile, word);
+    ui->view->setText(t_text);
+}
+//------------------------------------------------------------------------------
 void LeftPanel::showWord(QModelIndex ind)
 {
     QString word = ind.data(0).toString();
+    m_curWord = word;
     showDescriptionWord(word);
+
+    QStringList list = getListDictWithWord(word);
+
+    ui->comBDictListFindWord->clear();
+    ui->comBDictListFindWord->addItems(list);
 }
 //------------------------------------------------------------------------------
 void LeftPanel::setListModuleFromList()
 {
     Config::configuration()->setListBibles(moduleList);
+}
+//------------------------------------------------------------------------------
+QStringList LeftPanel::getListDictWithWord(QString word)
+{
+    QStringList r_list;
+
+    QStringList t_list = recursiveFind(Config::configuration()->getAppDir() + "dictionary/");
+    for (int var = 0; var < t_list.size(); var++)
+    {
+        if (t_list.at(var).indexOf("dict.xml") >= 0)
+        {
+            QString t_text = getDescriptionForWordFromDict(t_list.at(var), word);
+            if (!t_text.isEmpty())
+            {
+                QStringList t_l;
+                t_l << QString(t_list.at(var)).split("/");
+                r_list << t_l.at(t_l.size() - 2);
+            }
+        }
+    }
+    return r_list;
 }
 //------------------------------------------------------------------------------
