@@ -954,7 +954,7 @@ QString getShortLang(QString str)
     if (str == "Français")
         return "fr";
 
-    return "en";
+    return "ru";
 }
 //-------------------------------------------------------------------------------
 QString getDescriptionForWordFromDict(QString t_pathToFile, QString word)

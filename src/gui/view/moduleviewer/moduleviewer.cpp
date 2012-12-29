@@ -11,6 +11,7 @@
 #include <QXmlStreamReader>
 
 #include <QTextCursor>
+#include <QTextBlock>
 #include <QTextDocumentFragment>
 
 static ModuleViewer *static_viewer = 0;
@@ -402,29 +403,137 @@ void ModuleViewer::showNoteList()
 
 }
 //------------------------------------------------------------------------------
-bool ModuleViewer::eventFilter(QObject *obj, QEvent *event)
+//bool ModuleViewer::event(QEvent *e)
+//{
+//    if(e->type() == QEvent::ToolTip)
+//    {
+//        QHelpEvent *tipEvent = static_cast<QHelpEvent*>(e);
+//        QTextCursor wordCursor = ui->viewer->cursorForPosition(tipEvent->pos());
+//        wordCursor.movePosition(QTextCursor::StartOfWord);
+
+//        QString str;
+//        /* хотел сделать что-то наподобие такого:
+
+//                while(wordCursor.currentChar() != ' ')
+//                         str.append(wordCursor.currentChar());
+//                         wordCursor.movePosition(QTextCursor::NextCharacter);
+//                но подобной currentChar() функции не нашел...
+//                */
+
+//        QTextBlock block     = wordCursor.block();
+//        const QString sText  = block.text();
+//        //            if (!sText.size())
+//        //                return 0;
+//        int nCurCharPos = wordCursor.position() - block.position();
+////        return sText[nCurCharPos];  // символ за курсором
+//        str = sText[nCurCharPos];
+
+
+
+//        myDebug() << str;
+//        if(!str.isEmpty())
+//        {
+//            QToolTip::showText(tipEvent->globalPos(), str);
+//        }
+//        else QToolTip::hideText();
+//    }
+
+//        if (event->type() == QEvent::MouseMove)
+//        {
+//            /// Добавить задержку
+//            QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
+//            QPoint pt = mouseEvent->pos();
+
+//    //        QMouseEvent *e = new QMouseEvent(QEvent::MouseButtonDblClick, pt, Qt::LeftButton, Qt::NoButton,
+//    //                                         Qt::NoModifier);
+//    //                QApplication::postEvent(ui->viewer->viewport(), e);
+
+//    //        QTextCursor cursor = ui->viewer->textCursor();
+//    //        cursor.select(QTextCursor::WordUnderCursor);
+//    //        setCurLine();
+
+//    //        e = new QMouseEvent(QEvent::MouseButtonRelease, pt, Qt::LeftButton, Qt::NoButton,
+//    //                                         Qt::NoModifier);
+//    //                QApplication::postEvent(ui->viewer->viewport(), e);
+
+//    //        myDebug() << cursor.blockNumber() << cursor.columnNumber();
+//            return true;
+//        }
+
+
+//    //    return ui->viewer->event(e);
+//    return QObject::eventFilter(ui->viewer, e);
+//}
+//------------------------------------------------------------------------------
+bool ModuleViewer::event(QEvent* event)
 {
+    if (event->type() == QEvent::ToolTip)
+    {
+        QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
+        QTextCursor cursor = ui->viewer->cursorForPosition(helpEvent->pos() - ui->viewer->pos());
+//        QTextCursor cursor = ui->viewer->cursor();
 
-    if (obj == ui->LEEditFind)
-    {
-        if (event -> type() == QEvent::FocusIn && autoHideTimer -> isActive())
-            autoHideTimer -> stop();
-    }
-    else if (event -> type() == QEvent::KeyPress && ui->frameFind -> isVisible())
-    {
-        QKeyEvent *ke = static_cast<QKeyEvent *>(event);
-        if (ke -> key() == Qt::Key_Space)
+        cursor.select(QTextCursor::WordUnderCursor);
+        if (!cursor.selectedText().isEmpty())
         {
-            keyPressEvent(ke);
-            return true;
+//            myDebug() << helpEvent->pos() << cursor.selectedText();
+            QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
         }
+        else
+        {
+            QToolTip::hideText();
+        }
+        return true;
     }
+    return QObject::eventFilter(ui->viewer, event);
+    //    return QTextEdit::event(event);
+}
+//------------------------------------------------------------------------------
+//bool ModuleViewer::eventFilter(QObject *obj, QEvent *event)
+//{
 
-    if (event->type() == QEvent::MouseMove)
-    {
-        /// Добавить задержку
-        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
-        QPoint pt = mouseEvent->pos();
+
+////    if(e->type() == QEvent::ToolTip)
+////    {
+////               QHelpEvent *tipEvent = static_cast<QHelpEvent*>(e);
+////               QTextCursor wordCursor = cursorForPosition(tipEvent->pos());
+////               wordCursor.movePosition(QTextCursor::StartOfWord);
+////               /* хотел сделать что-то наподобие такого:
+////               QString str;
+////               while(wordCursor.currentChar() != ' ')
+////                        str.append(wordCursor.currentChar());
+////                        wordCursor.movePosition(QTextCursor::NextCharacter);
+////               но подобной currentChar() функции не нашел...
+////               */
+////               if(!str.isEmpty())
+////               {
+////                                  QToolTip::showText(tipEvent->globalPos(), str);
+////        }
+////               else QToolTip::hideText();
+////    }
+////    return QTextEdit::event(e);
+
+
+////    if (obj == ui->LEEditFind)
+////    {
+////        if (event -> type() == QEvent::FocusIn && autoHideTimer -> isActive())
+////            autoHideTimer -> stop();
+////    }
+////    else if (event -> type() == QEvent::KeyPress && ui->frameFind -> isVisible())
+////    {
+////        QKeyEvent *ke = static_cast<QKeyEvent *>(event);
+////        if (ke -> key() == Qt::Key_Space)
+////        {
+////            keyPressEvent(ke);
+////            return true;
+////        }
+////    }
+
+//    if (event->type() == QEvent::MouseMove)
+//    {
+//        /// Добавить задержку
+//        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
+//        QPoint pt = mouseEvent->pos();
 
 //        QMouseEvent *e = new QMouseEvent(QEvent::MouseButtonDblClick, pt, Qt::LeftButton, Qt::NoButton,
 //                                         Qt::NoModifier);
@@ -439,12 +548,12 @@ bool ModuleViewer::eventFilter(QObject *obj, QEvent *event)
 //                QApplication::postEvent(ui->viewer->viewport(), e);
 
 //        myDebug() << cursor.blockNumber() << cursor.columnNumber();
-        return true;
-    }
+//        return true;
+//    }
 
-    return QObject::eventFilter(obj, event);
+//    return QObject::eventFilter(obj, event);
 
-}
+//}
 //------------------------------------------------------------------------------
 //void ModuleViewer::mouseMoveEvent(QMouseEvent *ev)
 //{

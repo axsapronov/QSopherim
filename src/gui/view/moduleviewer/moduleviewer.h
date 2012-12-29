@@ -102,7 +102,8 @@ private slots:
     void find(QString, bool forward = false, bool backward = false);
 protected:
     //    void contextMenuEvent(QContextMenuEvent *event);
-    bool eventFilter(QObject *obj, QEvent *ev);
+//    bool eventFilter(QObject *obj, QEvent *ev);
+    bool event(QEvent *e);
 //    void mouseMoveEvent (QMouseEvent* event);
 
 private:

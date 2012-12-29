@@ -551,7 +551,8 @@ void MainWindow::createNote()
 //------------------------------------------------------------------------------
 void MainWindow::retranslate(QString t_lang)
 {
-    /// remove translate
+
+    // remove translate
     QString lan = "projectQ_" + getShortLang(Config::configuration()->getAppLang());
     QTranslator translator2;
     translator2.load(lan,":lang/lang");
@@ -559,7 +560,7 @@ void MainWindow::retranslate(QString t_lang)
     qApp->removeTranslator(&translator2);
     ui->retranslateUi(this);
 
-    /// set new translate
+    // set new translate
     Config::configuration()->setAppLang(t_lang);
     QTranslator translator;
     lan = "projectQ_" + getShortLang(t_lang);
