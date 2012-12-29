@@ -44,19 +44,19 @@ MainWindow::MainWindow(QWidget *parent) :
 //------------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
-    GUI_About->deleteLater();
-    GUI_Settings->deleteLater();
+    delete GUI_About;
+    delete GUI_Settings;
 
     GUI_RightPanel->saveBookmarks();
-    GUI_RightPanel->deleteLater();
+    delete GUI_RightPanel;
 
-    GUI_LeftPanel->deleteLater();
-    GUI_LeftPanel2->deleteLater();
-    GUI_RightPanel->deleteLater();
-    GUI_ModuleViewer->deleteLater();
-    GUI_NoteEditor->deleteLater();
-    GUI_ManagerModules->deleteLater();
-    GUI_FindDialog->deleteLater();
+    delete GUI_LeftPanel;
+    delete GUI_LeftPanel2;
+    delete GUI_RightPanel;
+    delete GUI_ModuleViewer;
+    delete GUI_NoteEditor;
+    delete GUI_ManagerModules;
+    delete GUI_FindDialog;
 
     delete trayIconMenu;
     delete trIcon;

@@ -142,7 +142,6 @@ void FindDialog::removeItemListChapter(QStringList &list)
 {
 
 }
-
 //------------------------------------------------------------------------------
 void FindDialog::removeItemListBook(QStringList &list)
 {

@@ -141,7 +141,6 @@ void ProjectQModuleList::hideModule(QString nameModule)
             Config::configuration()->addHiddenModule(nameModule);
         }
     }
-//    cur_int--;
 }
 //------------------------------------------------------------------------------
 void ProjectQModuleList::showModule(QString nameModule)
@@ -153,6 +152,10 @@ void ProjectQModuleList::showModule(QString nameModule)
             Config::configuration()->showHiddenModule(nameModule);
         }
     }
-//    cur_int++;
+}
+//------------------------------------------------------------------------------
+void ProjectQModuleList::clearList()
+{
+    moduleList.clear();
 }
 //------------------------------------------------------------------------------

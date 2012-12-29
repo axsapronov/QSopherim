@@ -83,6 +83,12 @@ private:
     ProjectQModuleList* m_listModule;
     int m_countBiblies;
 
+    /**
+     * @brief updateList
+     * update hide/show/delete list
+     */
+    void updateList();
+
 };
 
 #endif // MANAGERMODULES_H

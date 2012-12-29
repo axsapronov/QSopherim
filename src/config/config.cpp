@@ -73,7 +73,7 @@ void Config::loadSettings()
     // hide settings
     m_listHiddenModules->append(settings.value(QString("modules/hidden")).toString().split("_:_"));
     *m_listHiddenModules = removeEmptyQStringFromQStringList(m_listHiddenModules);
-    myDebug() << m_listHiddenModules->size() << *m_listHiddenModules;
+    //    myDebug() << m_listHiddenModules->size() << *m_listHiddenModules;
 
 
     //    myDebug() << QString(getAppDir() + bibleDir);

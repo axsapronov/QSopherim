@@ -68,6 +68,7 @@ public:
      */
     QStringList getModuleBooks(QString);
 
+    void clearList();
 
 private:
     QVector<ProjectQModule*> moduleList;
