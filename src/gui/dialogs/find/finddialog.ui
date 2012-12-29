@@ -20,7 +20,7 @@
       <widget class="QComboBox" name="comBBook">
        <item>
         <property name="text">
-         <string>All book</string>
+         <string>All books</string>
         </property>
        </item>
       </widget>

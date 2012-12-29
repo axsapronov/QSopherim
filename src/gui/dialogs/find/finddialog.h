@@ -38,6 +38,8 @@ public:
     explicit FindDialog(QWidget *parent = 0);
     ~FindDialog();
 
+    void preShowDialog();
+
 private slots:
     /**
      * @brief find
@@ -49,6 +51,16 @@ private slots:
      */
     void updateInfo();
 
+    /**
+     * @brief updateCBChapter
+     * @param path
+     */
+    void updateComBChapter(int f_bookIndex);
+
+    /**
+     * @brief updateCBBook
+     */
+    void updateComBBook(int f_moduleIndex);
 
 private:
     Ui::FindDialog *ui;
@@ -66,13 +78,10 @@ private:
     /**
      * @brief updateCBBook
      */
-    void updateComBBook();
+    void updateComBModule();
 
-    /**
-     * @brief updateCBChapter
-     * @param path
-     */
-    void updateComBChapter(QString path);
+
+
 
     /**
      * @brief removeItemListChapter

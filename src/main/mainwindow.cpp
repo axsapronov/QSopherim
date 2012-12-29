@@ -457,9 +457,6 @@ void MainWindow::processFinishDict()
 //------------------------------------------------------------------------------
 void MainWindow::loadModulesFromFolder()
 {
-    /**TO DO
-     * moved to center dialog
-     **/
     QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
     loadProgress.setValue(0);
     loadProgress.setGeometry(750, 300, 400, 170);
@@ -468,6 +465,7 @@ void MainWindow::loadModulesFromFolder()
     QLabel overallLabel(&loadProgress);
     overallLabel.setGeometry(11, 10, 378, 20);
     overallLabel.setText("Load modules");
+
     overallLabel.show();
 
     QStringList listModules = getListModulesFromPath(Config::configuration()->getBibleDir());
@@ -481,9 +479,6 @@ void MainWindow::loadModulesFromFolder()
 //------------------------------------------------------------------------------
 void MainWindow::loadDictFromFolder()
 {
-    /**TO DO
-     * moved to center dialog
-     **/
     QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
     loadProgress.setValue(0);
     loadProgress.setGeometry(750, 300, 400, 170);
@@ -586,6 +581,7 @@ void MainWindow::retranslate(QString t_lang)
 //------------------------------------------------------------------------------
 void MainWindow::findInModules()
 {
+    GUI_FindDialog->preShowDialog();
     GUI_FindDialog->show();
 }
 //------------------------------------------------------------------------------

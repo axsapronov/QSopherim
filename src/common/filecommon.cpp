@@ -636,6 +636,7 @@ QStringList getBookList(QString file)
     // translate to hindi
     QString str = getParamModule(file, param);
     bookList << str.split(":");
+    bookList = removeEmptyQStringFromQStringList(&bookList);
     return bookList;
 }
 //------------------------------------------------------------------------------
@@ -649,8 +650,6 @@ QHash<QString, int> getNumberOfChaptersInBook(QString filename)
     bookList << str.split("::");
     bookList = removeEmptyQStringFromQStringList(&bookList);
     QHash<QString, int> list;
-
-
 
     for (int i = 0; i < bookList.size(); i++)
     {
