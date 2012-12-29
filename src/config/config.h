@@ -14,6 +14,7 @@ class Config
 public:
 
     Config();
+    ~Config();
     void loadSettings();
     void saveSettings();
     //variables for global use via  Config::configuration() -> variable()
@@ -28,13 +29,33 @@ public:
     void setListBibles(ProjectQModuleList* newlist);
     void setListDictionaries(ProjectQModuleList* newlist);
 
+    void addHiddenModule(QString nameModule);
+    void showHiddenModule(QString nameModule);
+
+    /**
+     * @brief getBibleDir
+     * @return
+     */
     QString getBibleDir();
+    /**
+     * @brief getDictDir
+     * @return
+     */
     QString getDictDir();
+    /**
+     * @brief getOtherDir
+     * @return
+     */
     QString getOtherDir();
+    /**
+     * @brief getAppLang
+     * @return
+     */
     QString getAppLang();
 
     ProjectQModuleList* getListBibles();
     ProjectQModuleList* getListDictionaries();
+    QStringList* getListHiddenModules();
 
 
     // settings font
@@ -58,6 +79,7 @@ private:
 
     ProjectQModuleList* m_listBibles;
     ProjectQModuleList* m_listDictinaries;
+    QStringList* m_listHiddenModules;
 
     // settings font
     QColor m_fontColor;

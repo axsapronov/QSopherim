@@ -16,11 +16,21 @@ Config::Config()
         m_fontFamily = "DejaVu Sans";
         m_appLang = "Russian";
 
+        m_listHiddenModules = new QStringList;
     }
     else
     {
         qWarning( "Multiple configurations not allowed!" );
     }
+}
+//------------------------------------------------------------------------------
+Config::~Config()
+{
+    delete m_listHiddenModules;
+    delete m_listBibles;
+    delete m_listDictinaries;
+
+    delete this;
 }
 //------------------------------------------------------------------------------
 QString Config::getAppDir()
@@ -58,6 +68,13 @@ void Config::loadSettings()
     //    fontColor = settings.value("font/color");
     m_fontSize = settings.value("font/size").toInt();
     m_fontFamily = settings.value("font/family").toString();
+
+
+    // hide settings
+    m_listHiddenModules->append(settings.value(QString("modules/hidden")).toString().split("_:_"));
+    *m_listHiddenModules = removeEmptyQStringFromQStringList(m_listHiddenModules);
+    myDebug() << m_listHiddenModules->size() << *m_listHiddenModules;
+
 
     //    myDebug() << QString(getAppDir() + bibleDir);
 
@@ -132,6 +149,14 @@ void Config::saveSettings()
     //    settings.setValue(QString("font/color"), fontColor);
     settings.setValue(QString("font/size"), m_fontSize);
     settings.setValue(QString("font/family"), m_fontFamily);
+
+    // hide settings
+    QString t_hiddenModules;
+    for (int i = 0; i < m_listHiddenModules->size(); i++)
+    {
+        t_hiddenModules.append(m_listHiddenModules->at(i) + "_:_");
+    }
+    settings.setValue(QString("modules/hidden"), t_hiddenModules);
 
     //    //miscellaneous settings
     //    settings.setValue(QString("Language"), lang);
@@ -265,6 +290,27 @@ void Config::setListDictionaries(ProjectQModuleList *newlist)
     m_listDictinaries = newlist;
 }
 //------------------------------------------------------------------------------
+void Config::addHiddenModule(QString nameModule)
+{
+    m_listHiddenModules->append(nameModule);
+}
 //------------------------------------------------------------------------------
-
+void Config::showHiddenModule(QString nameModule)
+{
+    int i = m_listHiddenModules->size() - 1;
+    do
+    {
+        if (m_listHiddenModules->at(i) == nameModule)
+        {
+            m_listHiddenModules->removeAt(i);
+            i = 0;
+        }
+    } while (i > 1 );
+}
+//------------------------------------------------------------------------------
+QStringList* Config::getListHiddenModules()
+{
+    return m_listHiddenModules;
+}
+//------------------------------------------------------------------------------
 

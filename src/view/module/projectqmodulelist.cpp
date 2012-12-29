@@ -75,20 +75,6 @@ void ProjectQModuleList::findModules(QString dir)
     }
 }
 //------------------------------------------------------------------------------
-QStringList ProjectQModuleList::recursiveFind(QString directory)
-{
-    //// подумать, нужен ли чистый рекурсивный поиск
-    //// если нет, то сюда вставить обработку getModuleFilesList
-    QStringList list;
-    QDirIterator iterator (directory, QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
-    while(iterator.hasNext())
-    {
-        iterator.next();
-        list << iterator.fileInfo().absoluteFilePath();
-    }
-    return list;
-}
-//------------------------------------------------------------------------------
 QStringList ProjectQModuleList::getModuleFilesList(QStringList files)
 {
     QStringList list;
@@ -146,5 +132,27 @@ void ProjectQModuleList::deleteModule(QString nameModule)
     cur_int--;
 }
 //------------------------------------------------------------------------------
+void ProjectQModuleList::hideModule(QString nameModule)
+{
+    for (int i = 0; i < moduleList.size(); i++)
+    {
+        if (moduleList.at(i)->getModuleName() == nameModule)
+        {
+            Config::configuration()->addHiddenModule(nameModule);
+        }
+    }
+//    cur_int--;
+}
 //------------------------------------------------------------------------------
+void ProjectQModuleList::showModule(QString nameModule)
+{
+    for (int i = 0; i < moduleList.size(); i++)
+    {
+        if (moduleList.at(i)->getModuleName() == nameModule)
+        {
+            Config::configuration()->showHiddenModule(nameModule);
+        }
+    }
+//    cur_int++;
+}
 //------------------------------------------------------------------------------

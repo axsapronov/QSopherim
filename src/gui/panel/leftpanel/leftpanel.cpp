@@ -28,14 +28,13 @@ LeftPanel::~LeftPanel()
     delete modelModules;
     delete modelClear;
     delete moduleList;
-    typeModel->deleteLater();
+    delete typeModel;
 
     delete ui;
 }
 //------------------------------------------------------------------------------
 void LeftPanel::refreshListModule(ProjectQModuleList* list)
 {
-
     Config::configuration()->setListBibles(list);
     //    this->modelModules = new QStandardItemModel(moduleList->getSize(), 1, this);
     //* Rows and 1 Columns
@@ -45,7 +44,10 @@ void LeftPanel::refreshListModule(ProjectQModuleList* list)
     QStringList items;
     for (int i = 0; i < list->getSize(); i++)
     {
-        items << QString(list->getModule(i)->getModuleName());
+        if (!Config::configuration()->getListHiddenModules()->contains(list->getModule(i)->getModuleName()))
+        {
+            items << QString(list->getModule(i)->getModuleName());
+        }
     }
     typeModel = new QStringListModel(items, this);
     ui->comBModules->setModel(typeModel);
@@ -57,17 +59,20 @@ void LeftPanel::refreshListDict(ProjectQModuleList* list)
     Config::configuration()->setListDictionaries(list);
     //    this->modelModules = new QStandardItemModel(moduleList->getSize(), 1, this);
     //* Rows and 1 Columns
-//    modelBooks->clear();
-//    modelChapters->clear();
-//    moduleList = list;
+    //    modelBooks->clear();
+    //    modelChapters->clear();
+    //    moduleList = list;
     QStringList items;
     for (int i = 0; i < list->getSize(); i++)
     {
-        items << QString(list->getModule(i)->getModuleName());
+        if (!Config::configuration()->getListHiddenModules()->contains(list->getModule(i)->getModuleName()))
+        {
+            items << QString(list->getModule(i)->getModuleName());
+        }
     }
     typeModel = new QStringListModel(items, this);
     ui->comBDictList->setModel(typeModel);
-//    refreshBookList(ui->comBModules->currentText());
+    //    refreshBookList(ui->comBModules->currentText());
 }
 //------------------------------------------------------------------------------
 void LeftPanel::refreshBookList(ProjectQModuleList* list)
@@ -216,7 +221,7 @@ void LeftPanel::showChapterFromJournal(QString module, QString book, QString cha
 void LeftPanel::refreshWordListFromDict(QString curText)
 {
     QString t_pathToFile = QString(Config::configuration()->getAppDir() + "dictionary/" +
-                                      curText + "/dict.xml");
+                                   curText + "/dict.xml");
     QStringList wordList = getListWord(t_pathToFile);
 
     QStandardItemModel* modelWord = new QStandardItemModel;
@@ -232,7 +237,7 @@ void LeftPanel::refreshWordListFromDict(QString curText)
 void LeftPanel::showDescriptionWord(QString word)
 {
     QString t_pathToFile = QString(Config::configuration()->getAppDir() + "dictionary/" +
-                                      ui->comBDictList->currentText() + "/dict.xml");
+                                   ui->comBDictList->currentText() + "/dict.xml");
 
     QString t_text = getDescriptionForWordFromDict(t_pathToFile, word);
     ui->view->setText(t_text);

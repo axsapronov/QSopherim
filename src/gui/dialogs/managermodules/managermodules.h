@@ -48,6 +48,11 @@ private slots:
     void hideSelectedModules();
 
     /**
+     * @brief hideSelectedModules
+     */
+    void showSelectedModules();
+
+    /**
      * @brief deleteSelectedModules
      */
     void deleteSelectedModules();

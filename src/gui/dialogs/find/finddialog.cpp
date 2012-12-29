@@ -16,6 +16,8 @@ FindDialog::FindDialog(QWidget *parent) :
 //------------------------------------------------------------------------------
 FindDialog::~FindDialog()
 {
+    ui->tableFiles->model()->deleteLater();
+
     delete ui;
 }
 //------------------------------------------------------------------------------
@@ -53,7 +55,7 @@ void FindDialog::find()
 
         SearchData data;
         data.files = find.files;
-//        data.verse = find.verse;
+        //        data.verse = find.verse;
         data.books = find.books;
         data.chapter = find.chapters;
         updateItemforTable(data);
@@ -108,13 +110,13 @@ FindData FindDialog::findFiles(const QStringList &files, const QString &text)
                     books << curBook;
                     chapters << curChapter;
                     //                    verses << getIntVerse(line);
-//                    verses << QString::number(1);
+                    //                    verses << QString::number(1);
                 }
             }
         }
     }
     output.files = foundFiles;
-//    output.verse = verses;
+    //    output.verse = verses;
     output.books = books;
     output.chapters = chapters;
     return output;
@@ -184,8 +186,8 @@ void FindDialog::showFiles(const SearchData &data)
         QTableWidgetItem *moduleItem = new QTableWidgetItem(data.modules[i]);
         moduleItem->setFlags(moduleItem->flags() ^ Qt::ItemIsEditable);
 
-//        QTableWidgetItem *verseItem = new QTableWidgetItem(data.verse[i]);
-//        verseItem->setFlags(verseItem->flags() ^ Qt::ItemIsEditable);
+        //        QTableWidgetItem *verseItem = new QTableWidgetItem(data.verse[i]);
+        //        verseItem->setFlags(verseItem->flags() ^ Qt::ItemIsEditable);
 
         QTableWidgetItem *chapterItem = new QTableWidgetItem(data.chapter[i]);
         chapterItem->setFlags(chapterItem->flags() ^ Qt::ItemIsEditable);
@@ -199,7 +201,7 @@ void FindDialog::showFiles(const SearchData &data)
         ui->tableFiles->setItem(row, 0, moduleItem);
         ui->tableFiles->setItem(row, 1, bookItem);
         ui->tableFiles->setItem(row, 2, chapterItem);
-//        ui->tableFiles->setItem(row, 3, verseItem);
+        //        ui->tableFiles->setItem(row, 3, verseItem);
         ui->tableFiles->setItem(row, 3, typeItem);
     }
     ui->tableFiles->resizeColumnsToContents();
