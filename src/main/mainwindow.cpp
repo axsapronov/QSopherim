@@ -151,54 +151,74 @@ void MainWindow::debug()
 {
     QStringList fileName;
 
+
     //    fileName << "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
     //    fileName << "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
     //    fileName << "/home/files/Documents/Bible/unrar/NT_Russian_Kassian/Bibleqt.ini";
     //    fileName << "/home/files/Documents/Bible/unrar/Makarij/bibleqt.ini";
 
-    QString fileStrong;
-    fileStrong = "/home/files/Documents/Bible/oteh/Strongs/HEBREW.HTM";
-    createListStrongs(fileStrong);
-//    fileStrong = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/strongs/strong.xml";
-//    GUI_ModuleViewer->setStrongList(fileStrong);
+
+//    QString str = "fasf 0432 fsdf 5635 fasdf" ;
+
+//    QRegExp rx("(\\d+)");
+
+//    myDebug() << str;
+//    QString str = "Offsets: 12 14 99 231 7";
+//    QStringList list;
+//    int pos = 0;
+
+//    while ((pos = rx.indexIn(str, pos)) != -1) {
+////        list << rx.cap(1);
+//        str.replace(rx.cap(1), "<sup>" + rx.cap(1) + "</sup>");
+//        pos += rx.matchedLength() + 11;
+//    }
+//    myDebug() << list << str;
+    // list: ["12", "14", "99", "231", "7"]
 
 
-    QHash<QString, QVector<int> > hash;
+//    QString fileStrong;
+//    fileStrong = "/home/files/Documents/Bible/oteh/Strongs/HEBREW.HTM";
+//    createListStrongs(fileStrong);
+////    fileStrong = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/strongs/strong.xml";
+////    GUI_ModuleViewer->setStrongList(fileStrong);
 
-    QString str;
-    str = "fsa2f fsaf asfas f4 f43 3 2 23d23 sfsd";
-    myDebug() << getNextWord(str, 6);
 
-    //    QString str = "";
-    //    if (str.isEmpty())
-    //    {
-    //        myDebug() << "yes";
-    //    }
+//    QHash<QString, QVector<int> > hash;
 
-    //    QString str;
-    //    QString l1 = "module=\"Пятикнижие (перевод архим. Макария)\"";
-    //    QString l2
-    ////    str = "<note module=\"Пятикнижие (перевод архим. Макария)\" book=\"Левит\" chapter=\"3\" versebegin=\"0\" verseend=\"1\">gsadgsad";
-    //    myDebug() << str;
-    //    if (str.contains(l1) &&
-    //            && )
-    //    {
-    //        myDebug() << "yes";
-    //    }
+//    QString str;
+//    str = "fsa2f fsaf asfas f4 f43 3 2 23d23 sfsd";
+//    myDebug() << getNextWord(str, 6);
 
-    //    loadModulesFromFolder();
-    //    for (int i = 0; i < fileName.size(); i++)
-    //    {
-    //        prModule->processing(fileName.at(i), OBVCore::Type_BibleQuoteModule);
-    //    }
+//    //    QString str = "";
+//    //    if (str.isEmpty())
+//    //    {
+//    //        myDebug() << "yes";
+//    //    }
 
-    // > 62
-    // < 60
-    //    // " " 127
-    //        for (int i = 0; i < 255; i++)
-    //        {
-    //            myDebug() << QChar(i) << i;
-    //        }
+//    //    QString str;
+//    //    QString l1 = "module=\"Пятикнижие (перевод архим. Макария)\"";
+//    //    QString l2
+//    ////    str = "<note module=\"Пятикнижие (перевод архим. Макария)\" book=\"Левит\" chapter=\"3\" versebegin=\"0\" verseend=\"1\">gsadgsad";
+//    //    myDebug() << str;
+//    //    if (str.contains(l1) &&
+//    //            && )
+//    //    {
+//    //        myDebug() << "yes";
+//    //    }
+
+//    //    loadModulesFromFolder();
+//    //    for (int i = 0; i < fileName.size(); i++)
+//    //    {
+//    //        prModule->processing(fileName.at(i), OBVCore::Type_BibleQuoteModule);
+//    //    }
+
+//    // > 62
+//    // < 60
+//    //    // " " 127
+//    //        for (int i = 0; i < 255; i++)
+//    //        {
+//    //            myDebug() << QChar(i) << i;
+//    //        }
 }
 //------------------------------------------------------------------------------
 void MainWindow::createConnects()

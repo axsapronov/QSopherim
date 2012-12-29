@@ -25,9 +25,6 @@
      <property name="tabChangesFocus">
       <bool>true</bool>
      </property>
-     <property name="lineWrapMode">
-      <enum>QTextEdit::NoWrap</enum>
-     </property>
     </widget>
    </item>
    <item row="0" column="0">

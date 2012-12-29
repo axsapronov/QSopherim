@@ -422,7 +422,7 @@ int BibleQuoteModule::readBook(const int id)
                 out += line;
             }
         }
-        ///  chapter_tag is ANAME
+        //  chapter_tag is ANAME
         if (m_chapterSign != getEndOfTag(m_chapterSign))
             out2.remove(QRegExp("=\\d+>")); // hindi remove text =NUMBERCHAPTER>
         out2.remove("^&к");
@@ -464,6 +464,19 @@ int BibleQuoteModule::readBook(const int id)
         {
             // split removes versesign but it is needed
             QString verseText = rawVerseList.at(j + 1);
+
+
+//            // strong
+//            QRegExp rx("(\\d+)");
+//            verseText.replace(rx, "<sup>%1</sup>");
+//            int pos = 0;
+
+//            while ((pos = rx.indexIn(verseText, pos)) != -1)
+//            {
+////                myDebug() << "yes";
+//                verseText.replace(rx.cap(1), "<sup>" + rx.cap(1) + "</sup>");
+//                pos += rx.matchedLength() + 11;
+//            }
 
             //            if (!verseText.contains(m_verseSign))
             //                verseText = "";

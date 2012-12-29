@@ -188,9 +188,18 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
                         if (m_strong)
                         {
                             m_backupChapter = str;
-                            //                            str.replace(",", ", ")
-                            //                                    .replace(".", ". ");
-                            //                            str = fillStrongList(str);
+
+////                            myDebug() << "yes" << str;
+//                            QRegExp rx("(\\d+)");
+//                            int pos = 0;
+//                            while ((pos = rx.indexIn(str, pos)) != -1)
+//                            {
+//                                //        list << rx.cap(1);
+//                                myDebug() << "1";
+//                                str.replace(rx.cap(1), "<sup>" + rx.cap(1) + "</sup>");
+//                                pos += rx.matchedLength() + 11;
+//                            }
+//                            myDebug() << "yes";
                         }
                         ui->viewer->setText(str);
                     }
@@ -471,16 +480,16 @@ bool ModuleViewer::event(QEvent* event)
     {
         QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
         QTextCursor cursor = ui->viewer->cursorForPosition(helpEvent->pos() - ui->viewer->pos());
-//        QTextCursor cursor = ui->viewer->cursor();
+        //        QTextCursor cursor = ui->viewer->cursor();
 
         cursor.select(QTextCursor::WordUnderCursor);
         if (!cursor.selectedText().isEmpty())
         {
-//            myDebug() << helpEvent->pos() << cursor.selectedText();
+            //            myDebug() << helpEvent->pos() << cursor.selectedText();
             if (cursor.selectedText().indexOf("0") >= 0 )
             {
                 emit SIGNAL_ShowStrong(cursor.selectedText());
-//                QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
+                //                QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
             }
         }
         else
@@ -586,7 +595,7 @@ void ModuleViewer::showStrong()
 //------------------------------------------------------------------------------
 void ModuleViewer::setStrongList(QString path)
 {
-//    m_list = getListStrongs(path);
+    //    m_list = getListStrongs(path);
     int i = 5;
     //    myDebug() << m_list.size() << m_list.at(i).number
     //                 << m_list.at(i).text;
