@@ -305,17 +305,12 @@ QHash<int, QString> getNoteOfParams(QString curPath,
                                     QString curChapter,
                                     QString firstVerse);
 /**
- * @brief getVerseEndNumberFromNote
+ * @brief getVerseNumberFromNote
  * @param line
  * @return
  */
-QString getVerseEndNumberFromNote(QString* line);
-/**
- * @brief getVerseBeginNumberFromNote
- * @param line
- * @return
- */
-QString getVerseBeginNumberFromNote(QString* line);
+QString getVerseNumberFromNote(QString* line);
+
 /**
  * @brief getListStrongs
  * @param path

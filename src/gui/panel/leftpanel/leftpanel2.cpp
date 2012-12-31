@@ -50,8 +50,7 @@ void LeftPanel2::editNote(QModelIndex ind)
     GUI_NoteEditor->setBookName(m_curBook);
     GUI_NoteEditor->setChapterValue(m_curChapter);
     GUI_NoteEditor->setPath(m_curPath);
-    GUI_NoteEditor->setFirstVerse(m_firstVerse);
-    GUI_NoteEditor->setLastVerse(m_firstVerse);
+    GUI_NoteEditor->setVerse(m_verse);
     //    myDebug() << ind.row() << m_data[ind.row()];
     //    QString str = *(m_data[ind.row()]);
     GUI_NoteEditor->editNote(m_data[ind.row()]);
@@ -133,7 +132,7 @@ void LeftPanel2::showNoteList(QString curModule,
     m_curBook = curBook;
     m_curChapter = curChapter;
     m_curPath = curPath;
-    m_firstVerse = firstVerse;
+    m_verse = firstVerse;
 
     if (m_data.size() != 0)
     {

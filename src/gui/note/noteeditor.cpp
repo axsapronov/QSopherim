@@ -27,8 +27,7 @@ void NoteEditor::saveNote()
     //    myDebug() << m_path;
     addTextNotes(textNote);
 
-    m_verseFirst = "";
-    m_verseLast = "";
+    m_verse = "";
     m_moduleName = "";
     m_bookName = "";
     m_chapterValue = "";
@@ -87,8 +86,7 @@ void NoteEditor::addTextNotes(QString text)
         QString noteText = tab + "<note module=\"" + m_moduleName
                 + "\" book=\"" + m_bookName
                 + "\" chapter=\"" + m_chapterValue
-                + "\" versebegin=\"" + m_verseFirst
-                + "\" verseend=\"" + m_verseLast
+                + "\" verse=\"" + m_verse
                 + "\">"
                 + text
                 + "</note>\n"
@@ -116,8 +114,7 @@ void NoteEditor::addTextNotes(QString text)
                    << "<note module=\"" << m_moduleName
                    << "\" book=\"" << m_bookName
                    << "\" chapter=\"" << m_chapterValue
-                   << "\" versebegin=\"" + m_verseFirst
-                   << "\" verseend=\"" + m_verseLast
+                   << "\" verse=\"" + m_verse
                    << "\">"
                    << text
                    << "</note>" << endl
@@ -126,14 +123,9 @@ void NoteEditor::addTextNotes(QString text)
     }
 }
 //------------------------------------------------------------------------------
-void NoteEditor::setFirstVerse(QString first)
+void NoteEditor::setVerse(QString first)
 {
-    m_verseFirst = first;
-}
-//------------------------------------------------------------------------------
-void NoteEditor::setLastVerse(QString last)
-{
-    m_verseLast = last;
+    m_verse = first;
 }
 //------------------------------------------------------------------------------
 void NoteEditor::editNote(QString text)

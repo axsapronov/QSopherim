@@ -77,39 +77,22 @@ ModuleViewer::~ModuleViewer()
 //------------------------------------------------------------------------------
 void ModuleViewer::createActions()
 {
-    act_cut = new QAction(tr("Cu&t"), this);
-    act_cut->setShortcuts(QKeySequence::Cut);
-    act_cut->setStatusTip(tr("Cut the current selection's contents to the "
-                             "clipboard"));
-    //    connect(act_cut, SIGNAL(triggered()), this, SLOT(cut()));
-
-    act_copy = new QAction(tr("&Copy"), this);
-    //    act_copy->setShortcuts(QKeySequence::Copy);
-    //    act_copy->setStatusTip(tr("Copy the current selection's contents to the "
-    //                             "clipboard"));
-    //    //    connect(act_copy, SIGNAL(triggered()), this, SLOT(copy()));
-
-    act_paste = new QAction(tr("&Paste"), this);
-    //    act_paste->setShortcuts(QKeySequence::Paste);
-    //    act_paste->setStatusTip(tr("Paste the clipboard's contents into the current "
-    //                              "selection"));
-    //    connect(act_paste, SIGNAL(triggered()), this, SLOT(paste()));
     act_addBookmarks = new QAction(tr("&Add bookmarks"), this);
-    connect(act_addBookmarks, SIGNAL(triggered()), this, SLOT(addBookmark()));
+    connect(act_addBookmarks, SIGNAL(triggered()), this, SLOT(sAddBookmark()));
+
+
+    act_addNote= new QAction(tr("&Add note"), this);
+    connect(act_addNote, SIGNAL(triggered()), this, SLOT(sAddNote()));
 }
 //------------------------------------------------------------------------------
-void ModuleViewer::showContextMenu(QPoint pt)
+void ModuleViewer::sShowContextMenu(QPoint pt)
 {
-    //    QMenu *menu = ui->viewer->createStandardContextMenu();
-    QMenu *menu = new QMenu(this);
-    menu->addAction(act_cut);
-    menu->addAction(act_copy);
-    menu->addAction(act_paste);
-
-    menu->addAction(act_addBookmarks);
-
+    QMenu *menu = ui->viewer->createStandardContextMenu();
     menu->addSeparator();
-    //    QString str = m_curBook + ":" + m_curChapter;
+    menu->addAction(act_addBookmarks);
+    menu->addAction(act_addNote);
+    menu->addSeparator();
+
     QAction *act = new QAction(QString(m_curModule
                                        + " : "
                                        + m_curBook
@@ -189,17 +172,17 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
                         {
                             m_backupChapter = str;
 
-////                            myDebug() << "yes" << str;
-//                            QRegExp rx("(\\d+)");
-//                            int pos = 0;
-//                            while ((pos = rx.indexIn(str, pos)) != -1)
-//                            {
-//                                //        list << rx.cap(1);
-//                                myDebug() << "1";
-//                                str.replace(rx.cap(1), "<sup>" + rx.cap(1) + "</sup>");
-//                                pos += rx.matchedLength() + 11;
-//                            }
-//                            myDebug() << "yes";
+                            ////                            myDebug() << "yes" << str;
+                            //                            QRegExp rx("(\\d+)");
+                            //                            int pos = 0;
+                            //                            while ((pos = rx.indexIn(str, pos)) != -1)
+                            //                            {
+                            //                                //        list << rx.cap(1);
+                            //                                myDebug() << "1";
+                            //                                str.replace(rx.cap(1), "<sup>" + rx.cap(1) + "</sup>");
+                            //                                pos += rx.matchedLength() + 11;
+                            //                            }
+                            //                            myDebug() << "yes";
                         }
                         ui->viewer->setText(str);
                     }
@@ -232,11 +215,12 @@ void ModuleViewer::init()
         qWarning( "Multiple viewers not allowed!" );
     }
     createActions();
-    createConnects();
+
 
     ui->viewer->setContextMenuPolicy(Qt::CustomContextMenu);
     //    ui->viewer->setMouseTracking(true);
-    //    ui->viewer->viewport()->setMouseTracking(true);
+//        ui->viewer->viewport()->setMouseTracking(true);
+//        this->setMouseTracking(true);
 
     ui->viewer->viewport()->installEventFilter(this);
 
@@ -250,7 +234,7 @@ void ModuleViewer::init()
     connect(ui->toolPrevious, SIGNAL(clicked()), this, SLOT(findPrevious()));
     connect(ui->toolNext, SIGNAL(clicked()), this, SLOT(findNext()));
     connect(ui->LEEditFind, SIGNAL(returnPressed()), this, SLOT(findNext()));
-    connect(ui->LEEditFind, SIGNAL(textEdited(const QString&)), this, SLOT(find(QString)));
+    connect(ui->LEEditFind, SIGNAL(textEdited(const QString&)), this, SLOT(sFind(QString)));
     ui->frameFind -> setVisible(false);
     ui->LAWrapped -> setVisible(false);
 
@@ -259,14 +243,9 @@ void ModuleViewer::init()
     autoHideTimer -> setSingleShot(true);
     QObject::connect(autoHideTimer, SIGNAL(timeout()), ui->frameFind, SLOT(hide()));
 
-}
-//------------------------------------------------------------------------------
-void ModuleViewer::createConnects()
-{
     connect(ui->viewer, SIGNAL(customContextMenuRequested(QPoint)),
-            this,SLOT(showContextMenu(QPoint)));
-    connect(ui->viewer, SIGNAL(selectionChanged()), SLOT(setCurLine()));
-    //    connect(ui->viewer, SIGNAL(textChanged()), SLOT(setCurLine()));
+            this,SLOT(sShowContextMenu(QPoint)));
+
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::loadViewSettings()
@@ -315,81 +294,6 @@ QString ModuleViewer::getPath()
     return m_curPath;
 }
 //------------------------------------------------------------------------------
-void ModuleViewer::setCurLine()
-{
-    /// count select lines
-    //    QTextCursor cursor = ui->viewer->textCursor();
-    //    int selectedLines = 0; //<--- this is it
-    //    if(!cursor.selection().isEmpty())
-    //    {
-    //        QString str = cursor.selection().toPlainText();
-    //        selectedLines = str.count("\n")+1;
-    //    }
-
-    //    myDebug() << selectedLines;
-
-    /// current line
-    //    QTextCursor cursor      = ui->viewer->textCursor();
-    ////     Current line text
-    ////    QString cur_line_text   = cursor.block().text().trimmed();
-
-    //    // Current line
-    //    int     cur_line_number = cursor.blockNumber();
-
-    //    // Current column
-    //    int     cur_line_column = cursor.columnNumber();
-
-    //    myDebug() << cur_line_number << cur_line_column;
-
-
-    QTextCursor cursor = ui->viewer->textCursor();
-    int start = cursor.selectionStart();
-    int end = cursor.selectionEnd();
-
-    if(!cursor.hasSelection())
-        return; // No selection available
-
-    cursor.setPosition(start);
-    /// first line is empty
-    lastSelectLineFirst = cursor.blockNumber();
-    cursor.setPosition(end, QTextCursor::KeepAnchor);
-    lastSelectLineLast = cursor.blockNumber();
-
-    showNoteList();
-    //    showStrong();
-    //    myDebug() << "start: " << firstLine << " end: " << lastLine;
-}
-////------------------------------------------------------------------------------
-//int ModuleViewer::getLastSelectLineFirst()
-//{
-//    return lastSelectLineFirst;
-//}
-////------------------------------------------------------------------------------
-//int ModuleViewer::getLastSelectLineLast()
-//{
-//    return lastSelectLineLast;
-//}
-//------------------------------------------------------------------------------
-QString ModuleViewer::getLastSelectLineFirst()
-{
-    return QString::number(lastSelectLineFirst);
-}
-//------------------------------------------------------------------------------
-QString ModuleViewer::getLastSelectLineLast()
-{
-    return QString::number(lastSelectLineLast);
-}
-//------------------------------------------------------------------------------
-void ModuleViewer::setLastSelectLineFirst(int firstlast)
-{
-    lastSelectLineFirst = firstlast;
-}
-//------------------------------------------------------------------------------
-void ModuleViewer::setLastSelectLineLast(int firstlast)
-{
-    lastSelectLineLast = firstlast;
-}
-//------------------------------------------------------------------------------
 void ModuleViewer::showNoteList()
 {
     /* по названию модуля
@@ -402,13 +306,15 @@ void ModuleViewer::showNoteList()
      *при нажатии на элемент листа
      *открываем диалог с редактированием заметки
      */
+
+//    myDebug() << m_lastLine;
     QString path = m_curPath;
     path.replace("text.xml", "notes.xml");
     emit SIGNAL_ShowNoteList(m_curModule,
                              m_curBook,
                              m_curChapter,
                              path,
-                             QString::number(lastSelectLineFirst));
+                             QString::number(m_lastLine));
 
 }
 //------------------------------------------------------------------------------
@@ -491,13 +397,30 @@ bool ModuleViewer::event(QEvent* event)
                 emit SIGNAL_ShowStrong(cursor.selectedText());
                 //                QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
             }
+
         }
         else
         {
             QToolTip::hideText();
         }
+
+        m_lastLine = cursor.blockNumber();
+        showNoteList();
+
         return true;
     }
+//    if (event->type() == QEvent::MouseMove)
+//    {
+
+//        QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
+//        QTextCursor cursor = ui->viewer->cursorForPosition(helpEvent->pos() - ui->viewer->pos());
+//        m_lastLine = cursor.blockNumber();
+//        showNoteList();
+
+//        myDebug() << "fasf";
+//        return true;
+//    }
+
     return QObject::eventFilter(ui->viewer, event);
     //    return QTextEdit::event(event);
 }
@@ -569,48 +492,6 @@ bool ModuleViewer::event(QEvent* event)
 //void ModuleViewer::mouseMoveEvent(QMouseEvent *ev)
 //{
 //    myDebug() << ev->pos();
-//}
-//------------------------------------------------------------------------------
-void ModuleViewer::showStrong()
-{
-
-    /* по слову
-     *получаем список стронгов
-     * добавляем текст в label
-     */
-
-    QString path = m_curPath;
-    //        fileName << "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
-    //    QString path = "/home/files/Documents/Bible/strong/strong/"
-    //    QString path = m_curPath;
-    //    path.replace("text.xml", "notes.xml");
-
-
-    //    emit showNoteList(m_curModule,
-    //                      m_curBook,
-    //                      m_curChapter,
-    //                      path,
-    //                      QString::number(lastSelectLineFirst));
-}
-//------------------------------------------------------------------------------
-void ModuleViewer::setStrongList(QString path)
-{
-    //    m_list = getListStrongs(path);
-    int i = 5;
-    //    myDebug() << m_list.size() << m_list.at(i).number
-    //                 << m_list.at(i).text;
-}
-//------------------------------------------------------------------------------
-//QHash<int, QHash<QString, QString> > ModuleViewer::getListStrongWord(QString word)
-//{
-////    int count = 0;
-//    QHash<int, QString> list;
-////    for(int i = 0; i < m_list.size(); i++)
-////    {
-////        list[count] = m_list[i][word];
-////    }
-
-//    return list;
 //}
 //------------------------------------------------------------------------------
 QString ModuleViewer::fillStrongList(QString str)
@@ -687,7 +568,7 @@ void ModuleViewer::updateFontSettings()
     //    ui->viewer->update();
 }
 //------------------------------------------------------------------------------
-void ModuleViewer::addBookmark()
+void ModuleViewer::sAddBookmark()
 {
     QString bookm = m_curModule + " : "
             + m_curBook + " : "
@@ -697,12 +578,12 @@ void ModuleViewer::addBookmark()
 //------------------------------------------------------------------------------
 void ModuleViewer::findNext()
 {
-    find(ui->LEEditFind-> text(), true, false);
+    sFind(ui->LEEditFind-> text(), true, false);
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::findPrevious()
 {
-    find(ui->LEEditFind -> text(), false, true);
+    sFind(ui->LEEditFind -> text(), false, true);
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::find()
@@ -713,10 +594,10 @@ void ModuleViewer::find()
     autoHideTimer -> stop();
 }
 //------------------------------------------------------------------------------
-void ModuleViewer::find(QString ttf, bool forward, bool backward)
+void ModuleViewer::sFind(QString ttf, bool forward, bool backward)
 {
     QTextDocument *doc = ui->viewer->document();
-    QString oldText = ui->LEEditFind -> text();
+//    QString oldText = ui->LEEditFind -> text();
     QTextCursor c = ui->viewer->textCursor();
     QTextDocument::FindFlags options;
     QPalette p = ui->LEEditFind -> palette();
@@ -762,5 +643,15 @@ void ModuleViewer::find(QString ttf, bool forward, bool backward)
     ui->LEEditFind -> setPalette(p);
     if (!ui->LEEditFind -> hasFocus())
         autoHideTimer -> start();
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::sAddNote()
+{
+    emit SIGNAL_AddNote();
+}
+//------------------------------------------------------------------------------
+QString ModuleViewer::getLastNumberLine()
+{
+    return QString::number(m_lastLine);
 }
 //------------------------------------------------------------------------------

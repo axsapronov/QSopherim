@@ -39,7 +39,7 @@ public slots:
                       QString curBook,
                       QString curChapter,
                       QString curPath,
-                      QString firstVerse);
+                      QString verse);
 
     void showStrong(QString number);
 private slots:
@@ -76,7 +76,7 @@ private:
     QString m_curBook;
     QString m_curChapter;
     QString m_curPath;
-    QString m_firstVerse;
+    QString m_verse;
 
     QStringList m_journalList;
 };

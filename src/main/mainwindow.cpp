@@ -258,11 +258,12 @@ void MainWindow::createConnects()
     connect(prModule, SIGNAL(SIGNAL_ProcessDictOk()), SLOT(processFinishDict()));
 
 
+    // module viewer
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowNoteList(QString,QString,QString,QString,QString)),
             GUI_LeftPanel2, SLOT(showNoteList(QString,QString,QString,QString,QString)));
-
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowStrong(QString)),
             GUI_LeftPanel2, SLOT(showStrong(QString)));
+    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNote()), SLOT(createNote()));
 
     connect(GUI_Settings, SIGNAL(SIGNAL_RetranslateGUI(QString)),
             SLOT(retranslate(QString)));
@@ -285,6 +286,7 @@ void MainWindow::createConnects()
 
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNewBookmark(QString)),
             GUI_RightPanel, SLOT(addNewBookmark(QString)));
+
 
     connect(GUI_RightPanel, SIGNAL(SIGNAL_OpenBookmark(QString, QString, QString)),
             GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
@@ -567,14 +569,12 @@ void MainWindow::createNote()
     GUI_NoteEditor->setModuleName(GUI_ModuleViewer->getModuleName());
     GUI_NoteEditor->setBookName(GUI_ModuleViewer->getBookName());
     GUI_NoteEditor->setChapterValue(GUI_ModuleViewer->getChapterValue());
-    GUI_NoteEditor->setFirstVerse(GUI_ModuleViewer->getLastSelectLineFirst());
-    GUI_NoteEditor->setLastVerse(GUI_ModuleViewer->getLastSelectLineLast());
+    GUI_NoteEditor->setVerse(GUI_ModuleViewer->getLastNumberLine());
     GUI_NoteEditor->show();
 }
 //------------------------------------------------------------------------------
 void MainWindow::retranslate(QString t_lang)
 {
-
     // remove translate
     QString lan = "projectQ_" + getShortLang(Config::configuration()->getAppLang());
     QTranslator translator2;

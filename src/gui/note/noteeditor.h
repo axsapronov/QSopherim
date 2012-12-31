@@ -19,8 +19,7 @@ public:
     void setBookName(QString bookName);
     void setChapterValue(QString chapterValue);
     void setPath(QString name);
-    void setFirstVerse(QString first);
-    void setLastVerse(QString last);
+    void setVerse(QString first);
     void editNote(QString text);
 
     void retranslate();
@@ -37,8 +36,7 @@ private:
     QString m_bookName;
     QString m_chapterValue;
     QString m_path;
-    QString m_verseFirst;
-    QString m_verseLast;
+    QString m_verse;
 
     void setTextToLabel();
     void addTextNotes(QString text);

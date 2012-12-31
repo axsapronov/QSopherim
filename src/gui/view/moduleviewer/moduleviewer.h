@@ -41,14 +41,10 @@ public:
 
     void showChapter(QString pathToFile, QString nameBook, int numberchapter);
 
-    QString getLastSelectLineFirst();
-    void setLastSelectLineFirst(int firstlast);
-
-    QString getLastSelectLineLast();
-    void setLastSelectLineLast(int lastlast);
-
     void setStrongList(QString path);
     void retranslate();
+
+    QString getLastNumberLine();
 
 public slots:
 
@@ -76,6 +72,9 @@ signals:
     void SIGNAL_ShowNoteList(QString, QString, QString, QString, QString);
     void SIGNAL_AddNewBookmark(QString);
 
+//    void SIGNAL_AddNote(QString, QString, QString, QString, QString);
+    void SIGNAL_AddNote();
+
     void SIGNAL_ShowStrong(QString);
 
 private slots:
@@ -83,23 +82,21 @@ private slots:
      * @brief showContextMenu
      * @param pt
      */
-    void showContextMenu(QPoint pt);
+    void sShowContextMenu(QPoint pt);
 
-    /**
-     * @brief setCurLine
-     */
-    void setCurLine();
     /**
      * @brief addBookmark
      */
-    void addBookmark();
+    void sAddBookmark();
 
     /**
      * @brief find
      * @param forward
      * @param backward
      */
-    void find(QString, bool forward = false, bool backward = false);
+    void sFind(QString, bool forward = false, bool backward = false);
+
+    void sAddNote();
 protected:
     //    void contextMenuEvent(QContextMenuEvent *event);
 //    bool eventFilter(QObject *obj, QEvent *ev);
@@ -116,9 +113,9 @@ private:
     QAction *act_copy;
     QAction *act_paste;
     QAction *act_addBookmarks;
+    QAction *act_addNote;
 
     void init();
-    void createConnects();
     void createActions();
     void loadViewSettings();
 
@@ -126,8 +123,8 @@ private:
     QString m_curBook;
     QString m_curChapter;
     QString m_curPath;
-    int lastSelectLineFirst;
-    int lastSelectLineLast;
+
+    int m_lastLine;
 
     bool m_strong;
 

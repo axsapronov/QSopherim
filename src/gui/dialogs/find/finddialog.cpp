@@ -215,16 +215,6 @@ void FindDialog::updateComBChapter(int f_bookIndex)
 
 }
 //------------------------------------------------------------------------------
-void FindDialog::removeItemListChapter(QStringList &list)
-{
-
-}
-//------------------------------------------------------------------------------
-void FindDialog::removeItemListBook(QStringList &list)
-{
-
-}
-//------------------------------------------------------------------------------
 void FindDialog::accept ()
 {
     ui->LEFind->setText("");
