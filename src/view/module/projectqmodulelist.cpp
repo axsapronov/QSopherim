@@ -13,6 +13,14 @@ ProjectQModuleList::ProjectQModuleList()
     init();
 }
 //------------------------------------------------------------------------------
+ProjectQModuleList::~ProjectQModuleList()
+{
+    for (int i = 0; i < moduleList.size(); i++)
+    {
+        delete moduleList.at(i);
+    }
+}
+//------------------------------------------------------------------------------
 void ProjectQModuleList::addModule(ProjectQModule * module)
 {
     moduleList.push_back(module);

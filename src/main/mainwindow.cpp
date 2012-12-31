@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     loadModulesFromFolder();
     loadDictFromFolder();
     //    loadModules();
-//        debug();
+    //        debug();
 }
 //------------------------------------------------------------------------------
 MainWindow::~MainWindow()
@@ -52,7 +52,6 @@ MainWindow::~MainWindow()
 
     delete GUI_LeftPanel;
     delete GUI_LeftPanel2;
-    delete GUI_RightPanel;
     delete GUI_ModuleViewer;
     delete GUI_NoteEditor;
     delete GUI_ManagerModules;
@@ -78,7 +77,7 @@ void MainWindow::init()
     GUI_FindDialog = new FindDialog(this);
 
     /// panel init
-    GUI_RightPanel = new RightPanel();
+    GUI_RightPanel = new RightPanel(this);
     GUI_LeftPanel = new LeftPanel(this);
     GUI_LeftPanel2 = new LeftPanel2(this);
 
@@ -158,67 +157,67 @@ void MainWindow::debug()
     //    fileName << "/home/files/Documents/Bible/unrar/Makarij/bibleqt.ini";
 
 
-//    QString str = "fasf 0432 fsdf 5635 fasdf" ;
+    //    QString str = "fasf 0432 fsdf 5635 fasdf" ;
 
-//    QRegExp rx("(\\d+)");
+    //    QRegExp rx("(\\d+)");
 
-//    myDebug() << str;
-//    QString str = "Offsets: 12 14 99 231 7";
-//    QStringList list;
-//    int pos = 0;
+    //    myDebug() << str;
+    //    QString str = "Offsets: 12 14 99 231 7";
+    //    QStringList list;
+    //    int pos = 0;
 
-//    while ((pos = rx.indexIn(str, pos)) != -1) {
-////        list << rx.cap(1);
-//        str.replace(rx.cap(1), "<sup>" + rx.cap(1) + "</sup>");
-//        pos += rx.matchedLength() + 11;
-//    }
-//    myDebug() << list << str;
+    //    while ((pos = rx.indexIn(str, pos)) != -1) {
+    ////        list << rx.cap(1);
+    //        str.replace(rx.cap(1), "<sup>" + rx.cap(1) + "</sup>");
+    //        pos += rx.matchedLength() + 11;
+    //    }
+    //    myDebug() << list << str;
     // list: ["12", "14", "99", "231", "7"]
 
 
-//    QString fileStrong;
-//    fileStrong = "/home/files/Documents/Bible/oteh/Strongs/HEBREW.HTM";
-//    createListStrongs(fileStrong);
-////    fileStrong = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/strongs/strong.xml";
-////    GUI_ModuleViewer->setStrongList(fileStrong);
+    //    QString fileStrong;
+    //    fileStrong = "/home/files/Documents/Bible/oteh/Strongs/HEBREW.HTM";
+    //    createListStrongs(fileStrong);
+    ////    fileStrong = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/strongs/strong.xml";
+    ////    GUI_ModuleViewer->setStrongList(fileStrong);
 
 
-//    QHash<QString, QVector<int> > hash;
+    //    QHash<QString, QVector<int> > hash;
 
-//    QString str;
-//    str = "fsa2f fsaf asfas f4 f43 3 2 23d23 sfsd";
-//    myDebug() << getNextWord(str, 6);
+    //    QString str;
+    //    str = "fsa2f fsaf asfas f4 f43 3 2 23d23 sfsd";
+    //    myDebug() << getNextWord(str, 6);
 
-//    //    QString str = "";
-//    //    if (str.isEmpty())
-//    //    {
-//    //        myDebug() << "yes";
-//    //    }
+    //    //    QString str = "";
+    //    //    if (str.isEmpty())
+    //    //    {
+    //    //        myDebug() << "yes";
+    //    //    }
 
-//    //    QString str;
-//    //    QString l1 = "module=\"Пятикнижие (перевод архим. Макария)\"";
-//    //    QString l2
-//    ////    str = "<note module=\"Пятикнижие (перевод архим. Макария)\" book=\"Левит\" chapter=\"3\" versebegin=\"0\" verseend=\"1\">gsadgsad";
-//    //    myDebug() << str;
-//    //    if (str.contains(l1) &&
-//    //            && )
-//    //    {
-//    //        myDebug() << "yes";
-//    //    }
+    //    //    QString str;
+    //    //    QString l1 = "module=\"Пятикнижие (перевод архим. Макария)\"";
+    //    //    QString l2
+    //    ////    str = "<note module=\"Пятикнижие (перевод архим. Макария)\" book=\"Левит\" chapter=\"3\" versebegin=\"0\" verseend=\"1\">gsadgsad";
+    //    //    myDebug() << str;
+    //    //    if (str.contains(l1) &&
+    //    //            && )
+    //    //    {
+    //    //        myDebug() << "yes";
+    //    //    }
 
-//    //    loadModulesFromFolder();
-//    //    for (int i = 0; i < fileName.size(); i++)
-//    //    {
-//    //        prModule->processing(fileName.at(i), OBVCore::Type_BibleQuoteModule);
-//    //    }
+    //    //    loadModulesFromFolder();
+    //    //    for (int i = 0; i < fileName.size(); i++)
+    //    //    {
+    //    //        prModule->processing(fileName.at(i), OBVCore::Type_BibleQuoteModule);
+    //    //    }
 
-//    // > 62
-//    // < 60
-//    //    // " " 127
-//    //        for (int i = 0; i < 255; i++)
-//    //        {
-//    //            myDebug() << QChar(i) << i;
-//    //        }
+    //    // > 62
+    //    // < 60
+    //    //    // " " 127
+    //    //        for (int i = 0; i < 255; i++)
+    //    //        {
+    //    //            myDebug() << QChar(i) << i;
+    //    //        }
 }
 //------------------------------------------------------------------------------
 void MainWindow::createConnects()
@@ -482,46 +481,60 @@ void MainWindow::processFinishDict()
 //------------------------------------------------------------------------------
 void MainWindow::loadModulesFromFolder()
 {
-    QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
-    loadProgress.setValue(0);
-    loadProgress.setGeometry(750, 300, 400, 170);
-    loadProgress.show();
-
-    QLabel overallLabel(&loadProgress);
-    overallLabel.setGeometry(11, 10, 378, 20);
-    overallLabel.setText("Load modules");
-
-    overallLabel.show();
-
-    QStringList listModules = getListModulesFromPath(Config::configuration()->getBibleDir());
-    for (int i = 0; i < listModules.size(); i++)
+    if (!Config::configuration()->getBibleDir().isEmpty())
     {
-        prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
-        loadProgress.setValue(100 * i / listModules.size());
-        QApplication::processEvents();
+        QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
+        loadProgress.setValue(0);
+        loadProgress.setGeometry(750, 300, 400, 170);
+        loadProgress.show();
+
+        QLabel overallLabel(&loadProgress);
+        overallLabel.setGeometry(11, 10, 378, 20);
+        overallLabel.setText("Load modules");
+
+        overallLabel.show();
+
+        QStringList listModules = getListModulesFromPath(Config::configuration()->getBibleDir());
+        for (int i = 0; i < listModules.size(); i++)
+        {
+            prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
+            loadProgress.setValue(100 * i / listModules.size());
+            QApplication::processEvents();
+        }
+    }
+    else
+    {
+        processFinishModule();
     }
 }
 //------------------------------------------------------------------------------
 void MainWindow::loadDictFromFolder()
 {
-    QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
-    loadProgress.setValue(0);
-    loadProgress.setGeometry(750, 300, 400, 170);
-    loadProgress.show();
-
-    QLabel overallLabel(&loadProgress);
-    overallLabel.setGeometry(11, 10, 378, 20);
-    overallLabel.setText("Load dictionary");
-    overallLabel.show();
-
-    QStringList listModules = getListModulesFromPath(
-                Config::configuration()->getDictDir()
-                , ".idx");
-    for (int i = 0; i < listModules.size(); i++)
+    if (!Config::configuration()->getDictDir().isEmpty())
     {
-        prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteDictModule);
-        loadProgress.setValue(100 * i / listModules.size());
-        QApplication::processEvents();
+        QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
+        loadProgress.setValue(0);
+        loadProgress.setGeometry(750, 300, 400, 170);
+        loadProgress.show();
+
+        QLabel overallLabel(&loadProgress);
+        overallLabel.setGeometry(11, 10, 378, 20);
+        overallLabel.setText("Load dictionary");
+        overallLabel.show();
+
+        QStringList listModules = getListModulesFromPath(
+                    Config::configuration()->getDictDir()
+                    , ".idx");
+        for (int i = 0; i < listModules.size(); i++)
+        {
+            prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteDictModule);
+            loadProgress.setValue(100 * i / listModules.size());
+            QApplication::processEvents();
+        }
+    }
+    else
+    {
+        processFinishDict();
     }
 }
 //------------------------------------------------------------------------------

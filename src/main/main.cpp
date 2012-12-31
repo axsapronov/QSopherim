@@ -17,6 +17,11 @@ int main(int argc, char *argv[])
 //    a.setOrganizationName(GL_AUTHOR);
     a.setApplicationName(GL_PROG_NAME);
 
+    QTextCodec * codec = QTextCodec::codecForName("UTF-8"); // set encoding for prog
+    QTextCodec::setCodecForCStrings(codec);
+    QTextCodec::setCodecForLocale(codec);
+    QTextCodec::setCodecForTr(codec);
+
     Config *conf = new Config();
     conf -> setAppDir(QDir::currentPath() + "/");
     if (QFile::exists(conf->getAppDir() + "settings.conf"))
@@ -25,11 +30,6 @@ int main(int argc, char *argv[])
     }
     else
         conf -> saveSettings();
-
-    QTextCodec * codec = QTextCodec::codecForName("UTF-8"); // set encoding for prog
-    QTextCodec::setCodecForCStrings(codec);
-    QTextCodec::setCodecForLocale(codec);
-    QTextCodec::setCodecForTr(codec);
 
     QString lang = conf->getAppLang();
 
@@ -41,5 +41,7 @@ int main(int argc, char *argv[])
 
     MainWindow w;
     w.show();
+
     return a.exec();
+//    return 0;
 }

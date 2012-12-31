@@ -29,7 +29,6 @@ Config::~Config()
     delete m_listHiddenModules;
     delete m_listBibles;
     delete m_listDictinaries;
-
     delete this;
 }
 //------------------------------------------------------------------------------

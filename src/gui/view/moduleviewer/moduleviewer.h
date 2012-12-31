@@ -109,9 +109,6 @@ private:
 //    QVector<StrongList> m_list;
     QHash< QString, QVector<int> > m_strongs;
 
-    QAction *act_cut;
-    QAction *act_copy;
-    QAction *act_paste;
     QAction *act_addBookmarks;
     QAction *act_addNote;
 

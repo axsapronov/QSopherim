@@ -11,6 +11,8 @@ class ProjectQModuleList
 public:
     explicit ProjectQModuleList();
 
+    ~ProjectQModuleList();
+
     /**
      * @brief getNextModule
      * @return

@@ -28,7 +28,7 @@ LeftPanel::~LeftPanel()
     delete modelModules;
     delete modelClear;
     delete moduleList;
-    delete typeModel;
+
 
     delete ui;
 }

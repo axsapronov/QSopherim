@@ -27,9 +27,6 @@ ModuleViewer::ModuleViewer(QWidget *parent) :
 //------------------------------------------------------------------------------
 ModuleViewer::~ModuleViewer()
 {
-    delete act_cut;
-    delete act_copy;
-    delete act_paste;
     delete ui;
 }
 //------------------------------------------------------------------------------
