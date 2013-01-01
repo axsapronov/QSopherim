@@ -32,48 +32,6 @@ ModuleViewer::~ModuleViewer()
     delete ui;
 }
 //------------------------------------------------------------------------------
-//void ModuleViewer::contextMenuEvent(QContextMenuEvent *event)
-//{
-//    /// Добавить в контексное меню информацию о текущем расположении (Модуль:Книга:Глава:Номер стиха)
-
-//    QMenu *menu = new QMenu(this);
-//    menu->addAction(act_cut);
-//    menu->addAction(act_copy);
-//    menu->addAction(act_paste);
-
-//    menu->addSeparator();
-//    QAction *act = new QAction(tr("YYYAAAAZ"), this);
-//    menu->addAction(act);
-
-//        QPoint lastPos = event->pos();
-//        QTextCursor cursor = cursorForPosition(lastPos);
-//        QString zeile = cursor.block().text();
-//        int pos = cursor.columnNumber();
-//        int end = zeile.indexOf(QRegExp("\\W+"), pos);
-//        int begin = zeile.lastIndexOf(QRegExp("\\W+"), pos);
-//        zeile = zeile.mid(begin + 1, end - begin - 1);
-//        QStringList liste = getWordPropositions(zeile);
-//        qDebug() << liste;
-//        if (!liste.isEmpty())
-//        {
-//            menu -> addSeparator();
-//            QAction *a;
-//            //replace this  to TextEditBQella
-//            a = menu->addAction(tr("Add .."), this, SLOT(slot_addWord(lastPos)));
-//            a = menu->addAction(tr("Ignore .."), this, SLOT(slot_ignoreWord(lastPos)));
-//            for (int i = 0; i < qMin(int(MaxWords), liste.size()); ++i)
-//            {
-//                misspelledWordsActs[i]->setText(liste.at(i).trimmed());
-//                misspelledWordsActs[i]->setVisible(true);
-//                menu -> addAction(misspelledWordsActs[i]);
-//            }
-
-//        } // if  misspelled
-
-
-//    menu->exec(event->globalPos());
-//}
-//------------------------------------------------------------------------------
 void ModuleViewer::createActions()
 {
     act_addBookmarks = new QAction(tr("&Add bookmarks"), this);
@@ -97,27 +55,8 @@ void ModuleViewer::sShowContextMenu(QPoint pt)
                                        + m_curBook
                                        + " : "
                                        + m_curChapter), this);
-
-    // bold text
-    //    QTextDocument *document = ui->viewer->document();
-    //      QTextCursor cursor(document);
-
-    //      for(int i = 0; i < 20 ; i++)
-    //      {
-    //      cursor.movePosition(QTextCursor::Down);
-    //      }
-    //      cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
-
-    //      QTextCharFormat format;
-    //      format.setFontWeight(QFont::Bold);
-
-    //      cursor.mergeCharFormat(format);
-
-
-
     menu->addAction(act);
     menu->exec(ui->viewer->mapToGlobal(pt));
-    //    delete menu;
 }
 //------------------------------------------------------------------------------
 ModuleViewer *ModuleViewer::viewer()
@@ -198,11 +137,6 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
 
 }
 //------------------------------------------------------------------------------
-//void ModuleViewer::getTextChapter(QString pathToFile, QString nameBook, int numberchapter)
-//{
-
-//}
-//------------------------------------------------------------------------------
 void ModuleViewer::init()
 {
     if( !static_viewer)
@@ -215,19 +149,9 @@ void ModuleViewer::init()
     }
     createActions();
 
-
     ui->viewer->setContextMenuPolicy(Qt::CustomContextMenu);
-    //    ui->viewer->setMouseTracking(true);
-//        ui->viewer->viewport()->setMouseTracking(true);
-//        this->setMouseTracking(true);
-
     ui->viewer->viewport()->installEventFilter(this);
-
-
-
-    //    setMouseTracking(true);
     loadViewSettings();
-
 
     connect(ui->toolClose, SIGNAL(clicked()), ui->frameFind, SLOT(hide()));
     connect(ui->toolPrevious, SIGNAL(clicked()), this, SLOT(findPrevious()));
@@ -306,7 +230,6 @@ void ModuleViewer::showNoteList()
      *открываем диалог с редактированием заметки
      */
 
-//    myDebug() << m_lastLine;
     QString path = m_curPath;
     path.replace("text.xml", "notes.xml");
     emit SIGNAL_ShowNoteList(m_curModule,
@@ -316,68 +239,6 @@ void ModuleViewer::showNoteList()
                              QString::number(m_lastLine));
 
 }
-//------------------------------------------------------------------------------
-//bool ModuleViewer::event(QEvent *e)
-//{
-//    if(e->type() == QEvent::ToolTip)
-//    {
-//        QHelpEvent *tipEvent = static_cast<QHelpEvent*>(e);
-//        QTextCursor wordCursor = ui->viewer->cursorForPosition(tipEvent->pos());
-//        wordCursor.movePosition(QTextCursor::StartOfWord);
-
-//        QString str;
-//        /* хотел сделать что-то наподобие такого:
-
-//                while(wordCursor.currentChar() != ' ')
-//                         str.append(wordCursor.currentChar());
-//                         wordCursor.movePosition(QTextCursor::NextCharacter);
-//                но подобной currentChar() функции не нашел...
-//                */
-
-//        QTextBlock block     = wordCursor.block();
-//        const QString sText  = block.text();
-//        //            if (!sText.size())
-//        //                return 0;
-//        int nCurCharPos = wordCursor.position() - block.position();
-////        return sText[nCurCharPos];  // символ за курсором
-//        str = sText[nCurCharPos];
-
-
-
-//        myDebug() << str;
-//        if(!str.isEmpty())
-//        {
-//            QToolTip::showText(tipEvent->globalPos(), str);
-//        }
-//        else QToolTip::hideText();
-//    }
-
-//        if (event->type() == QEvent::MouseMove)
-//        {
-//            /// Добавить задержку
-//            QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
-//            QPoint pt = mouseEvent->pos();
-
-//    //        QMouseEvent *e = new QMouseEvent(QEvent::MouseButtonDblClick, pt, Qt::LeftButton, Qt::NoButton,
-//    //                                         Qt::NoModifier);
-//    //                QApplication::postEvent(ui->viewer->viewport(), e);
-
-//    //        QTextCursor cursor = ui->viewer->textCursor();
-//    //        cursor.select(QTextCursor::WordUnderCursor);
-//    //        setCurLine();
-
-//    //        e = new QMouseEvent(QEvent::MouseButtonRelease, pt, Qt::LeftButton, Qt::NoButton,
-//    //                                         Qt::NoModifier);
-//    //                QApplication::postEvent(ui->viewer->viewport(), e);
-
-//    //        myDebug() << cursor.blockNumber() << cursor.columnNumber();
-//            return true;
-//        }
-
-
-//    //    return ui->viewer->event(e);
-//    return QObject::eventFilter(ui->viewer, e);
-//}
 //------------------------------------------------------------------------------
 bool ModuleViewer::event(QEvent* event)
 {
@@ -390,7 +251,6 @@ bool ModuleViewer::event(QEvent* event)
         cursor.select(QTextCursor::WordUnderCursor);
         if (!cursor.selectedText().isEmpty())
         {
-            //            myDebug() << helpEvent->pos() << cursor.selectedText();
             if (cursor.selectedText().indexOf("0") >= 0 )
             {
                 emit SIGNAL_ShowStrong(cursor.selectedText());
@@ -408,90 +268,8 @@ bool ModuleViewer::event(QEvent* event)
 
         return true;
     }
-//    if (event->type() == QEvent::MouseMove)
-//    {
-
-//        QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
-//        QTextCursor cursor = ui->viewer->cursorForPosition(helpEvent->pos() - ui->viewer->pos());
-//        m_lastLine = cursor.blockNumber();
-//        showNoteList();
-
-//        myDebug() << "fasf";
-//        return true;
-//    }
-
     return QObject::eventFilter(ui->viewer, event);
-    //    return QTextEdit::event(event);
 }
-//------------------------------------------------------------------------------
-//bool ModuleViewer::eventFilter(QObject *obj, QEvent *event)
-//{
-////    if(e->type() == QEvent::ToolTip)
-////    {
-////               QHelpEvent *tipEvent = static_cast<QHelpEvent*>(e);
-////               QTextCursor wordCursor = cursorForPosition(tipEvent->pos());
-////               wordCursor.movePosition(QTextCursor::StartOfWord);
-////               /* хотел сделать что-то наподобие такого:
-////               QString str;
-////               while(wordCursor.currentChar() != ' ')
-////                        str.append(wordCursor.currentChar());
-////                        wordCursor.movePosition(QTextCursor::NextCharacter);
-////               но подобной currentChar() функции не нашел...
-////               */
-////               if(!str.isEmpty())
-////               {
-////                                  QToolTip::showText(tipEvent->globalPos(), str);
-////        }
-////               else QToolTip::hideText();
-////    }
-////    return QTextEdit::event(e);
-
-
-////    if (obj == ui->LEEditFind)
-////    {
-////        if (event -> type() == QEvent::FocusIn && autoHideTimer -> isActive())
-////            autoHideTimer -> stop();
-////    }
-////    else if (event -> type() == QEvent::KeyPress && ui->frameFind -> isVisible())
-////    {
-////        QKeyEvent *ke = static_cast<QKeyEvent *>(event);
-////        if (ke -> key() == Qt::Key_Space)
-////        {
-////            keyPressEvent(ke);
-////            return true;
-////        }
-////    }
-
-//    if (event->type() == QEvent::MouseMove)
-//    {
-//        /// Добавить задержку
-//        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
-//        QPoint pt = mouseEvent->pos();
-
-//        QMouseEvent *e = new QMouseEvent(QEvent::MouseButtonDblClick, pt, Qt::LeftButton, Qt::NoButton,
-//                                         Qt::NoModifier);
-//                QApplication::postEvent(ui->viewer->viewport(), e);
-
-//        QTextCursor cursor = ui->viewer->textCursor();
-//        cursor.select(QTextCursor::WordUnderCursor);
-//        setCurLine();
-
-//        e = new QMouseEvent(QEvent::MouseButtonRelease, pt, Qt::LeftButton, Qt::NoButton,
-//                                         Qt::NoModifier);
-//                QApplication::postEvent(ui->viewer->viewport(), e);
-
-//        myDebug() << cursor.blockNumber() << cursor.columnNumber();
-//        return true;
-//    }
-
-//    return QObject::eventFilter(obj, event);
-
-//}
-//------------------------------------------------------------------------------
-//void ModuleViewer::mouseMoveEvent(QMouseEvent *ev)
-//{
-//    myDebug() << ev->pos();
-//}
 //------------------------------------------------------------------------------
 QString ModuleViewer::fillStrongList(QString str)
 {
@@ -562,9 +340,6 @@ void ModuleViewer::updateFontSettings()
 {
     loadViewSettings();
     showChapter(m_curPath, m_curBook, m_curChapter.toInt());
-
-    //    ui->viewer->reload();
-    //    ui->viewer->update();
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::sAddBookmark()

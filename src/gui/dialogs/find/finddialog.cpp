@@ -24,7 +24,7 @@ FindDialog::~FindDialog()
 void FindDialog::preShowDialog()
 {
     m_currentDir.setPath(Config::configuration()->getAppDir() + "/");
-    ui->LEFind->setText("В начале");
+//    ui->LEFind->setText("В начале");
     updateComBModule();
 }
 //------------------------------------------------------------------------------
