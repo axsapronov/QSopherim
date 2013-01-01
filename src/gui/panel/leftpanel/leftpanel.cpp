@@ -156,6 +156,8 @@ void LeftPanel::createConnects()
     connect(ui->ListViewWordList, SIGNAL(clicked(QModelIndex)), SLOT(showWord(QModelIndex)));
 
     connect(ui->comBDictListFindWord, SIGNAL(activated(QString)), SLOT(showDescriptionWordFromOtherModules(QString)));
+
+    connect(ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(sShowHideLeftPanel2(int)));
 }
 //------------------------------------------------------------------------------
 void LeftPanel::showChapter(QModelIndex ind)
@@ -296,3 +298,19 @@ QStringList LeftPanel::getListDictWithWord(QString word)
     return r_list;
 }
 //------------------------------------------------------------------------------
+void LeftPanel::sShowHideLeftPanel2(int f_tab)
+{
+    if (f_tab == 1)
+    {
+        // hide if select dict
+        emit SIGNAL_ShowHideLeftPanel2(true); // hide
+    }
+    else
+    {
+        // show if select module
+        emit SIGNAL_ShowHideLeftPanel2(false);
+    }
+
+}
+//------------------------------------------------------------------------------
+

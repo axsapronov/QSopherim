@@ -113,6 +113,12 @@
         </item>
         <item row="2" column="0">
          <widget class="QListView" name="ListViewWordList">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>200</height>
+           </size>
+          </property>
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
           </property>

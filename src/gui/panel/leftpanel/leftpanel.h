@@ -37,6 +37,7 @@ public slots:
 
 signals:
     void SIGNAL_AddRecordToJournal(QString, QString, QString);
+    void SIGNAL_ShowHideLeftPanel2(bool);
 
 private slots:
 
@@ -73,6 +74,9 @@ private slots:
      * @param word
      */
     void showDescriptionWord(QString word);
+
+    void sShowHideLeftPanel2(int f_tab);
+
 private:
     Ui::LeftPanel *ui;
     QStandardItemModel *modelModules;
