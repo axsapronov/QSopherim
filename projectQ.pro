@@ -88,6 +88,7 @@ SOURCES  += \
         format.cpp \
         filecommon.cpp \
         stringcommon.cpp \
+        strongcommon.cpp \
         processmodule.cpp \
         biblemodule.cpp \
         metainfo.cpp \
@@ -132,6 +133,7 @@ HEADERS  += \
         format.h \
         filecommon.h \
         stringcommon.h \
+        strongcommon.h \
         processmodule.h \
         biblemodule.h \
         metainfo.h \

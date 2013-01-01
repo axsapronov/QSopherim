@@ -1,7 +1,9 @@
 #include "config.h"
 #include "debughelper.h"
-#include <QSettings>
 #include "filecommon.h"
+#include "stringcommon.h"
+
+#include <QSettings>
 #include <QDir>
 
 
@@ -68,6 +70,8 @@ void Config::loadSettings()
     m_fontSize = settings.value("font/size").toInt();
     m_fontFamily = settings.value("font/family").toString();
 
+    if (!QFile::exists(m_appDir + "strongs.xml"))
+        createEmptyXML(m_appDir + "strongs.xml");
 
     // hide settings
     m_listHiddenModules->append(settings.value(QString("modules/hidden")).toString().split("_:_"));
@@ -198,6 +202,16 @@ void Config::saveSettings()
 
     //    toAppLog(2, "- done");
 }//saveSettings()
+//------------------------------------------------------------------------------
+QString Config::getStrongDir()
+{
+    return m_strongDir;
+}
+//------------------------------------------------------------------------------
+void Config::setStrongDir(QString dir)
+{
+    m_strongDir = dir;
+}
 //------------------------------------------------------------------------------
 QString Config::getBibleDir()
 {

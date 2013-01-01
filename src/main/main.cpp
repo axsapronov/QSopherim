@@ -23,7 +23,8 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(codec);
 
     Config *conf = new Config();
-    conf -> setAppDir(QDir::currentPath() + "/");
+    conf->setAppDir(QDir::currentPath() + "/");
+    conf->setStrongDir(QDir::currentPath() + "/strongs/");
     if (QFile::exists(conf->getAppDir() + "settings.conf"))
     {
         conf -> loadSettings();

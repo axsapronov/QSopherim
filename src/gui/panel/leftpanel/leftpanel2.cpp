@@ -3,6 +3,7 @@
 
 #include "filecommon.h"
 #include "debughelper.h"
+#include "strongcommon.h"
 
 
 LeftPanel2::LeftPanel2(QWidget *parent) :
@@ -26,13 +27,9 @@ void LeftPanel2::init()
     GUI_NoteEditor = new NoteEditor(this);
 
     //    QString path = m_curPath;
+    m_strong_on = false;
 
-    QString fileStrong;
-    fileStrong = "/home/files/Documents/Bible/oteh/Strongs/HEBREW.HTM";
-    createListStrongs(fileStrong);
 
-    fileStrong = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/strongs/strong.xml";
-    m_listStrong = getListStrongs(fileStrong);
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::createConnects()
@@ -157,21 +154,37 @@ void LeftPanel2::showNoteList(QString curModule,
 //------------------------------------------------------------------------------
 void LeftPanel2::showStrong(QString number)
 {
-    //    myDebug() << m_listStrong.size();
-    int i = 0;
-    do
+    // добавить вывод сразу и гречески и иврит
+    if (m_strong_on)
     {
-        if (m_listStrong.at(i).number == number.toInt())
+        //    myDebug() << m_listStrong.size();
+        int i = 0;
+        do
         {
-            QString str =
-                    tr("Strong number ")
-                    + number
-                    + "\n"
-                    + m_listStrong.at(i).text;
-            ui->textBrStrong->setPlainText(str);
-        }
-        i++;
-    } while (i < m_listStrong.size());
+            if (m_listStrongGreek.at(i).number == number.toInt())
+            {
+                QString str =
+                        tr("Strong number ")
+                        + number
+                        + "\n"
+                        + m_listStrongGreek.at(i).text;
+                ui->textBrStrong->setPlainText(str);
+            }
+            i++;
+        } while (i < m_listStrongGreek.size());
+    }
+}
+//------------------------------------------------------------------------------
+void LeftPanel2::sSetStrongHebrew(QString path)
+{
+    m_listStrongHebrew = getListStrongs(path);
+    m_strong_on = true;
+}
+//------------------------------------------------------------------------------
+void LeftPanel2::sSetStrongGreek(QString path)
+{
+    m_listStrongGreek = getListStrongs(path);
+    m_strong_on = true;
 }
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

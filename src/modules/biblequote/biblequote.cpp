@@ -1,5 +1,6 @@
 #include "biblequote.h"
 #include "debughelper.h"
+#include "stringcommon.h"
 #include "filecommon.h"
 #include "moduledefinition.h"
 #include "config.h"

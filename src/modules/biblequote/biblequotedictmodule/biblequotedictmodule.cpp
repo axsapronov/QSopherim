@@ -1,7 +1,7 @@
 #include "biblequotedictmodule.h"
 
 #include "debughelper.h"
-#include "filecommon.h"
+#include "stringcommon.h"
 
 BibleQuoteDictModule::BibleQuoteDictModule(QString pathToModule)
 {

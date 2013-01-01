@@ -35,6 +35,7 @@ signals:
     void SIGNAL_ShowChapterFromJournal(QString, QString, QString);
 
 public slots:
+
     void showNoteList(QString curModule,
                       QString curBook,
                       QString curChapter,
@@ -42,6 +43,10 @@ public slots:
                       QString verse);
 
     void showStrong(QString number);
+
+    void sSetStrongHebrew(QString path);
+    void sSetStrongGreek(QString path);
+
 private slots:
 
     // notes slots
@@ -64,13 +69,10 @@ private:
 
     QHash<int, QString> m_data;
 
-
-    QVector<StrongList> m_listStrong;
+    QVector<StrongList> m_listStrongGreek;
+    QVector<StrongList> m_listStrongHebrew;
 
     NoteEditor *GUI_NoteEditor;
-
-    void init();
-    void createConnects();
 
     QString m_curModule;
     QString m_curBook;
@@ -79,6 +81,11 @@ private:
     QString m_verse;
 
     QStringList m_journalList;
+
+    bool m_strong_on;
+
+    void init();
+    void createConnects();
 };
 
 #endif // LEFTPANEL2_H

@@ -2,6 +2,8 @@
 #include "ui_moduleviewer.h"
 #include "debughelper.h"
 #include "cnode.h"
+
+#include "stringcommon.h"
 #include "filecommon.h"
 
 

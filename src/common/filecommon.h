@@ -19,12 +19,6 @@
 #include "projectqmodule.h" /// ProjectQModuleInfo
 
 
-typedef struct StrongList
-{
-    int number;
-    QString text;
-} StrongList;
-
 
 typedef struct WordDictList
 {
@@ -54,32 +48,6 @@ typedef struct WordDictList
   */
 QString getEncodingFromFile(QString file, QString language="russian");
 
-
-/**
-  @function
-  Retun name of file
-  Example:
-  /home/warmonger/develop/other/file.ru  return file
-  @return name_file
-  */
-QString getFileNameAbs(const QString file);
-/**
-  @function
-  Retun name of file
-  Example:
-  /home/warmonger/develop/other/file.ru  return file.ru
-  @param filepath
-  @return name_file
-  */
-QString getFileName(const QString file);
-/**
-  @function
-  Returns absolute file path
-  @param filepath
-  @param folder
-  @return filename
-  */
-QString absolutifyFileName(QString fn, QString path);
 /**
   @function
   Return codec from string
@@ -175,14 +143,7 @@ QStringList getInfoFromFile(QString file_path);
   @return param
   */
 QString getParamInfo(QString *inputstr, QString param);
-/**
-  @function
-  Hindi function for remove spaces
-  dont use QString::simplified()
-  used while :)
-  @param text
-  */
-QString removeSpaces(QString str);
+
 /**
   @function
   Delete word in file
@@ -258,24 +219,7 @@ QStringList getBookList(QString filaPath);
  * @return
  */
 QHash<QString, int> getNumberOfChaptersInBook(QString filename);
-/**
- * @brief removeEmptyQStringFromQStringList
- * @param list
- * @return
- */
-QStringList removeEmptyQStringFromQStringList(QStringList *list);
-/**
- * @brief getClearText
- * @param text
- * @return
- */
-QString getClearText(QString *text);
-/**
- * @brief getEndOfTag
- * @param tag
- * @return
- */
-QString getEndOfTag(QString tag);
+
 /**
  * @brief getListModulesFromPath
  * @param path
@@ -311,41 +255,6 @@ QHash<int, QString> getNoteOfParams(QString curPath,
  */
 QString getVerseNumberFromNote(QString* line);
 
-/**
- * @brief getListStrongs
- * @param path
- * @return
- */
-QVector<StrongList> getListStrongs(QString path);
-/**
- * @brief createListStrongs
- * @param path
- */
-void createListStrongs(QString path);
-/**
- * @brief writeXmlStrongFile
- * @param strong
- */
-void writeXmlStrongFile(QHash<int, StrongList> *strong);
-/**
- * @brief getCoolLine
- * @param str
- * @return
- */
-QString getCoolLine(QString str);
-/**
- * @brief getNextWord
- * @param str
- * @param pos
- * @return
- */
-QString getNextWord(QString str, int pos);
-/**
- * @brief getShortLang
- * @param str
- * @return
- */
-QString getShortLang(QString str);
 /**
  * @brief getDescriptionForWordFromDict
  * @param pathToFile

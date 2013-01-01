@@ -24,6 +24,7 @@ public:
     void setBibleDir(QString dir);
     void setOtherDir(QString dir);
     void setDictDir(QString dir);
+    void setStrongDir(QString dir);
     void setAppLang(QString lang);
 
     void setListBibles(ProjectQModuleList* newlist);
@@ -42,6 +43,11 @@ public:
      * @return
      */
     QString getDictDir();
+    /**
+     * @brief getStrongDir
+     * @return
+     */
+    QString getStrongDir();
     /**
      * @brief getOtherDir
      * @return
@@ -75,6 +81,7 @@ private:
     QString m_bibleDir;
     QString m_otherDir;
     QString m_dictDir;
+    QString m_strongDir;
     QString m_appLang;
 
     ProjectQModuleList* m_listBibles;

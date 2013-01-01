@@ -23,6 +23,7 @@
 #include "defines.h" /// defines
 #include "config.h"
 #include "filecommon.h"
+#include "stringcommon.h"
 
 #include <QProgressDialog>
 #include <QProgressBar>
@@ -93,7 +94,6 @@ void MainWindow::init()
     //    addDockWidget(Qt::BottomDockWidgetArea, GUI_BottomPanel);
 
     prModule = new ProcessModule();
-
 
     //    ui->centralWidget->setMouseTracking(true);
     GUI_ModuleViewer = new ModuleViewer(this);
@@ -264,12 +264,19 @@ void MainWindow::createConnects()
             GUI_LeftPanel2, SLOT(showStrong(QString)));
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNote()), SLOT(createNote()));
 
+    // settings
     connect(GUI_Settings, SIGNAL(SIGNAL_RetranslateGUI(QString)),
             SLOT(retranslate(QString)));
     connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadModules()), SLOT(loadModulesFromFolder()));
 
+
+    // manager module
+
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), SLOT(processFinishDict()));
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), SLOT(processFinishModule()));
+
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetGreekStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongGreek(QString)));
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetHebrewStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongHebrew(QString)));
 
 
     // connect fron left1 to left2 panels
@@ -417,6 +424,7 @@ void MainWindow::showModuleManager()
     //set sett
     GUI_LeftPanel->setListModuleFromList();
     GUI_ManagerModules->loadListModules();
+    GUI_ManagerModules->loadStrongList();
     GUI_ManagerModules->show();
 }
 //------------------------------------------------------------------------------
