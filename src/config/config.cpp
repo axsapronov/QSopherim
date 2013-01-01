@@ -57,7 +57,7 @@ void Config::loadSettings()
     m_bibleDir = settings.value(QString("dir/bible")).toString();
     m_dictDir = settings.value(QString("dir/dict")).toString();
     m_otherDir = settings.value(QString("dir/other")).toString();
-    m_appLang = settings.value("language/lang").toString();
+    m_appLang = settings.value(QString("language/lang")).toString();
     if (m_appLang.isEmpty())
         m_appLang = "Russian";
 
@@ -70,8 +70,12 @@ void Config::loadSettings()
     m_fontSize = settings.value("font/size").toInt();
     m_fontFamily = settings.value("font/family").toString();
 
+    m_strongGreek = settings.value("strongs/greek").toString();
+    m_strongHebrew = settings.value("strongs/hebrew").toString();
+
     if (!QFile::exists(m_appDir + "strongs.xml"))
         createEmptyXML(m_appDir + "strongs.xml");
+
 
     // hide settings
     m_listHiddenModules->append(settings.value(QString("modules/hidden")).toString().split("_:_"));
@@ -152,6 +156,10 @@ void Config::saveSettings()
     //    settings.setValue(QString("font/color"), fontColor);
     settings.setValue(QString("font/size"), m_fontSize);
     settings.setValue(QString("font/family"), m_fontFamily);
+
+    // strongs settings
+    settings.setValue(QString("strongs/hebrew"), m_strongHebrew);
+    settings.setValue(QString("strongs/greek"), m_strongGreek);
 
     // hide settings
     QString t_hiddenModules;
@@ -326,4 +334,23 @@ QStringList* Config::getListHiddenModules()
     return m_listHiddenModules;
 }
 //------------------------------------------------------------------------------
-
+QString Config::getStrongHebrew()
+{
+    return m_strongHebrew;
+}
+//------------------------------------------------------------------------------
+void Config::setStrongHebrew(QString strong)
+{
+    m_strongHebrew = strong;
+}
+//------------------------------------------------------------------------------
+QString Config::getStrongGreek()
+{
+    return m_strongGreek;
+}
+//------------------------------------------------------------------------------
+void Config::setStrongGreek(QString strong)
+{
+    m_strongGreek= strong;
+}
+//------------------------------------------------------------------------------

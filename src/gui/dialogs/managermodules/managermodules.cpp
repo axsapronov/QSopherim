@@ -237,12 +237,16 @@ void ManagerModules::sAddStrongToHebrew()
 //------------------------------------------------------------------------------
 void ManagerModules::sSetGreekStrong(QString f_strong)
 {
+    QString t_str = getFullPathToStrong(f_strong);
+    Config::configuration()->setStrongGreek(t_str);
     emit SIGNAL_SetGreekStrong(getFullPathToStrong(f_strong));
 }
 //------------------------------------------------------------------------------
 void ManagerModules::sSetHebrewStrong(QString f_strong)
 {
-    emit SIGNAL_SetHebrewStrong(getFullPathToStrong(f_strong));
+    QString t_str = getFullPathToStrong(f_strong);
+    Config::configuration()->setStrongHebrew(t_str);
+    emit SIGNAL_SetHebrewStrong(t_str);
     //    fileStrong = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/strongs/strong.xml";
     //    GUI_ModuleViewer->setStrongList(fileStrong);
 }

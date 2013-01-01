@@ -82,7 +82,8 @@ private:
 
     QStringList m_journalList;
 
-    bool m_strong_on;
+    bool m_strongGreek_on;
+    bool m_strongHebrew_on;
 
     void init();
     void createConnects();

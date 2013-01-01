@@ -27,8 +27,25 @@ void LeftPanel2::init()
     GUI_NoteEditor = new NoteEditor(this);
 
     //    QString path = m_curPath;
-    m_strong_on = false;
+    if (Config::configuration()->getStrongHebrew().isEmpty())
+    {
+        m_strongHebrew_on = false;
+    }
+    else
+    {
+        m_listStrongHebrew = getListStrongs(Config::configuration()->getStrongHebrew());
+        m_strongHebrew_on = true;
+    }
 
+    if (Config::configuration()->getStrongGreek().isEmpty())
+    {
+        m_strongGreek_on = false;
+    }
+    else
+    {
+        m_listStrongGreek = getListStrongs(Config::configuration()->getStrongGreek());
+        m_strongGreek_on = true;
+    }
 
 }
 //------------------------------------------------------------------------------
@@ -155,7 +172,7 @@ void LeftPanel2::showNoteList(QString curModule,
 void LeftPanel2::showStrong(QString number)
 {
     // добавить вывод сразу и гречески и иврит
-    if (m_strong_on)
+    if (m_strongGreek_on)
     {
         //    myDebug() << m_listStrong.size();
         int i = 0;
@@ -178,13 +195,13 @@ void LeftPanel2::showStrong(QString number)
 void LeftPanel2::sSetStrongHebrew(QString path)
 {
     m_listStrongHebrew = getListStrongs(path);
-    m_strong_on = true;
+    m_strongHebrew_on = true;
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::sSetStrongGreek(QString path)
 {
     m_listStrongGreek = getListStrongs(path);
-    m_strong_on = true;
+    m_strongGreek_on = true;
 }
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

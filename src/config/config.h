@@ -21,16 +21,53 @@ public:
     QString getAppDir();
     void setAppDir(QString dir);
 
+    /**
+     * @brief setBibleDir
+     * @param dir
+     */
     void setBibleDir(QString dir);
+    /**
+     * @brief setOtherDir
+     * @param dir
+     */
     void setOtherDir(QString dir);
+    /**
+     * @brief setDictDir
+     * @param dir
+     */
     void setDictDir(QString dir);
+    /**
+     * @brief setStrongDir
+     * @param dir
+     */
     void setStrongDir(QString dir);
+    /**
+     * @brief setAppLang
+     * @param lang
+     */
     void setAppLang(QString lang);
 
+    /**
+     * @brief setListBibles
+     * @param newlist
+     */
     void setListBibles(ProjectQModuleList* newlist);
+
+    /**
+     * @brief setListDictionaries
+     * @param newlist
+     */
     void setListDictionaries(ProjectQModuleList* newlist);
 
+    /**
+     * @brief addHiddenModule
+     * @param nameModule
+     */
     void addHiddenModule(QString nameModule);
+    /**
+     * @brief showHiddenModule
+     * @param nameModule
+     */
     void showHiddenModule(QString nameModule);
 
     /**
@@ -59,6 +96,13 @@ public:
      */
     QString getAppLang();
 
+    QString getStrongHebrew();
+    QString getStrongGreek();
+
+    void setStrongHebrew(QString strong);
+    void setStrongGreek(QString strong);
+
+
     ProjectQModuleList* getListBibles();
     ProjectQModuleList* getListDictionaries();
     QStringList* getListHiddenModules();
@@ -83,6 +127,9 @@ private:
     QString m_dictDir;
     QString m_strongDir;
     QString m_appLang;
+
+    QString m_strongHebrew;
+    QString m_strongGreek;
 
     ProjectQModuleList* m_listBibles;
     ProjectQModuleList* m_listDictinaries;
