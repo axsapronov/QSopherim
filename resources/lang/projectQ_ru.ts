@@ -224,7 +224,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/dialogs/about/about.ui" line="238"/>
         <source>Thanks</source>
-        <translation type="unfinished"></translation>
+        <translation>Благодарности</translation>
     </message>
 </context>
 <context>
@@ -340,7 +340,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/main/mainwindow.ui" line="135"/>
         <source>Find more</source>
-        <translation type="unfinished"></translation>
+        <translation>Искать дальше</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="140"/>
@@ -351,7 +351,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../src/main/mainwindow.ui" line="255"/>
         <location filename="../../src/main/mainwindow.cpp" line="422"/>
         <source>Open module(test)</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть модуль(тест)</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="258"/>
@@ -410,19 +410,19 @@ p, li { white-space: pre-wrap; }
         <location filename="../../src/main/mainwindow.ui" line="203"/>
         <location filename="../../src/main/mainwindow.ui" line="237"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>English</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="208"/>
         <location filename="../../src/main/mainwindow.ui" line="229"/>
         <source>France</source>
-        <translation type="unfinished"></translation>
+        <translation>France</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="213"/>
         <location filename="../../src/main/mainwindow.ui" line="245"/>
         <source>Deutsch</source>
-        <translation type="unfinished"></translation>
+        <translation>Deutsch</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="250"/>
@@ -519,39 +519,39 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/dialogs/settings/settings.ui" line="83"/>
         <source>Module</source>
-        <translation type="unfinished"></translation>
+        <translation>Модуль</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.ui" line="91"/>
         <source>Other:</source>
-        <translation type="unfinished"></translation>
+        <translation>Другие:</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.ui" line="101"/>
         <location filename="../../src/dialogs/settings/settings.ui" line="122"/>
         <location filename="../../src/dialogs/settings/settings.ui" line="143"/>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>Обзор</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.ui" line="112"/>
         <source>Bible:</source>
-        <translation type="unfinished"></translation>
+        <translation>Библия:</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.ui" line="133"/>
         <source>Dictionary:</source>
-        <translation type="unfinished"></translation>
+        <translation>Словарь:</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.ui" line="166"/>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Шрифт:</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.ui" line="172"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Font for display text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Шрифт для отображения текста&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.ui" line="175"/>
@@ -561,68 +561,69 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/dialogs/settings/settings.ui" line="185"/>
         <source>Font color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет шрифта:</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.ui" line="192"/>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер шрифта</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.ui" line="215"/>
         <source>Other settings:</source>
-        <translation type="unfinished"></translation>
+        <translation>Другие настройки:</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.ui" line="224"/>
         <source>Bold</source>
-        <translation type="unfinished"></translation>
+        <translation>Жирный</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.ui" line="231"/>
         <source>Italic</source>
-        <translation type="unfinished"></translation>
+        <translation>Курсив</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.ui" line="238"/>
         <source>Underline</source>
-        <translation type="unfinished"></translation>
+        <translation>Подчеркнутый</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.ui" line="245"/>
         <source>Strikethrough</source>
-        <translation type="unfinished"></translation>
+        <translation>Зачеркнутый</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.ui" line="280"/>
         <source>Select color</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать цвет</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.ui" line="288"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Сеть</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.cpp" line="125"/>
         <source>Settings has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки были изменены.
+Вы хотите сохранить изменения?</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.cpp" line="203"/>
         <source>Select dir for bible modules</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите директорию для модулей библии</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.cpp" line="216"/>
         <source>Select dir for dict modules</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите директорию для словарей</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settings/settings.cpp" line="229"/>
         <source>Select dir for other modules</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите директорию для других модулей</translation>
     </message>
 </context>
 <context>
