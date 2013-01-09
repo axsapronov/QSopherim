@@ -87,6 +87,8 @@ void MainWindow::init()
 
     GUI_RightPanel->setMinimumWidth(250);
     GUI_LeftPanel->setMinimumWidth(300);
+    GUI_LeftPanel2->setMinimumWidth(300);
+
     //    GUI_BottomPanel->setMinimumHeight(100);
     addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel);
     addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel2);
