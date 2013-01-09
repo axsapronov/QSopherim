@@ -6,7 +6,6 @@
 #include <QSettings>
 #include <QDir>
 
-
 static Config *static_configuration = 0;
 Config::Config()
 {
@@ -14,7 +13,8 @@ Config::Config()
     {
         static_configuration = this;
         m_fontSize = 12;
-        m_fontColor = QColor(qRgb(0,0,0));
+        m_fontColor = QColor(qRgb(0, 0, 0));
+        m_viewerColor = QColor(qRgb(255, 255, 255));
         m_fontFamily = "DejaVu Sans";
         m_appLang = "Russian";
 
@@ -66,9 +66,17 @@ void Config::loadSettings()
     dir.mkpath(getAppDir() + "dictionary");
     dir.mkpath(getAppDir() + "other");
 
-    //    fontColor = settings.value("font/color");
+    // viewer settings
+    m_viewerColor = qVariantValue<QColor> (settings.value("viewer/color"));
+
+    // font settings for viewer
+    m_fontColor = qVariantValue<QColor> (settings.value("font/color"));
     m_fontSize = settings.value("font/size").toInt();
     m_fontFamily = settings.value("font/family").toString();
+    m_fontBold = settings.value("font/bold").toBool();
+    m_fontItalic = settings.value("font/italic").toBool();
+    m_fontUnderline = settings.value("font/underline").toBool();
+    m_fontStrike = settings.value("font/strike").toBool();
 
     m_strongGreek = settings.value("strongs/greek").toString();
     m_strongHebrew = settings.value("strongs/hebrew").toString();
@@ -90,19 +98,6 @@ void Config::loadSettings()
     //        toAppLog(2, "Load application settings");
 
     //miscellaneous settings
-    //        lang = settings.value(QString("Language") ).toString();
-    //        src = settings.value(QString("Source") ).toStringList();
-    //        QStringList::iterator it = src.begin();
-    //        for (; it != src.end(); ++it) {
-    //            *it = urlifyFileName( absolutifyFileName(*it, prjDir) );
-    //        }
-    //        sideBar = settings.value(QString("SideBarPage") ).toInt();
-    //        rebuildDocs = settings.value(QString("RebuildDocDB"), true ).toBool();
-    //        profileFNs = settings.value(QString("Projects") ).toStringList();
-    //        profileFNs = absolutifyFileList(profileFNs, prjDir);	//we will load this list to widget in LeftPanel::initialize()
-    //        curProject = settings.value(QString("ActiveProject") ).toString();
-    //        curProject = absolutifyFileName(curProject, prjDir);	 //absolutify project file path
-    //        setContentsSortOrder(settings.value(QString("ContentsSortOrder") ).toString());
 
     //        //window and font settings
     //        winGeometry = settings.value(QString("WindowGeometry")).toByteArray();
@@ -152,10 +147,18 @@ void Config::saveSettings()
     settings.setValue(QString("dir/other"), m_otherDir);
     settings.setValue(QString("dir/dict"), m_dictDir);
 
-    // font settings
-    //    settings.setValue(QString("font/color"), fontColor);
+    // viewer
+    settings.setValue(QString("viewer/color"), m_viewerColor);
+
+    // font settings for viewer
+    settings.setValue(QString("font/color"), m_fontColor);
     settings.setValue(QString("font/size"), m_fontSize);
     settings.setValue(QString("font/family"), m_fontFamily);
+
+    settings.setValue(QString("font/bold"), m_fontBold);
+    settings.setValue(QString("font/italic"), m_fontItalic);
+    settings.setValue(QString("font/underline"), m_fontUnderline);
+    settings.setValue(QString("font/strike"), m_fontStrike);
 
     // strongs settings
     settings.setValue(QString("strongs/hebrew"), m_strongHebrew);
@@ -170,13 +173,6 @@ void Config::saveSettings()
     settings.setValue(QString("modules/hidden"), t_hiddenModules);
 
     //    //miscellaneous settings
-    //    settings.setValue(QString("Language"), lang);
-    //    settings.setValue(QString("Projects"), relatifyFileList(profileFNs, prjDir) );
-    //    settings.setValue(QString("ActiveProject"), curProject /*relatifyFileName(curProject, prjDir) */);
-    //    settings.setValue(QString("Source"),src );	 //paths relatified in MainWindow::saveSettings()
-    //    settings.setValue(QString("SideBarPage"), sideBarPage() );
-    //    settings.setValue(QString("RebuildDocDB"), rebuildDocs );
-    //    settings.setValue(QString("ContentsSortOrder"), contentsSortOrder );
 
     //    //window and font settings
     //    settings.setValue(QString("WindowGeometry"), winGeometry);
@@ -352,5 +348,55 @@ QString Config::getStrongGreek()
 void Config::setStrongGreek(QString strong)
 {
     m_strongGreek= strong;
+}
+//------------------------------------------------------------------------------
+void Config::setFontBold(bool state)
+{
+    m_fontBold = state;
+}
+//------------------------------------------------------------------------------
+void Config::setFontItalic(bool state)
+{
+    m_fontItalic = state;
+}
+//------------------------------------------------------------------------------
+void Config::setFontStrike(bool state)
+{
+    m_fontStrike = state;
+}
+//------------------------------------------------------------------------------
+void Config::setFontUnderline(bool state)
+{
+    m_fontUnderline = state;
+}
+//------------------------------------------------------------------------------
+bool Config::getFontBold()
+{
+    return m_fontBold;
+}
+//------------------------------------------------------------------------------
+bool Config::getFontUnderline()
+{
+    return m_fontUnderline;
+}
+//------------------------------------------------------------------------------
+bool Config::getFontItalic()
+{
+    return m_fontItalic;
+}
+//------------------------------------------------------------------------------
+bool Config::getFontStrike()
+{
+    return m_fontStrike;
+}
+//------------------------------------------------------------------------------
+QColor Config::getViewerColor()
+{
+    return m_viewerColor;
+}
+//------------------------------------------------------------------------------
+void Config::setViewerColor(QColor newColor)
+{
+    m_viewerColor = newColor;
 }
 //------------------------------------------------------------------------------

@@ -70,11 +70,9 @@ private slots:
 
 private:
     Ui::Settings *ui;
-    QString APP_Lang;
-    QString folderBible;
-    QString folderDict;
-    QString folderOther;
-    QColor fontColor;
+    QString m_APP_Lang;
+    QColor m_fontColor;
+    QColor m_viewerColor;
     /**
       @function
       Debug function

@@ -108,14 +108,31 @@ public:
     QStringList* getListHiddenModules();
 
 
-    // settings font
+    // viewer settings
+
+    QColor getViewerColor();
+
+    void setViewerColor(QColor newColor);
+
+    // settings font for viewer
+
     int getFontSize();
     QColor getFontColor();
     QString getFontFamily();
 
+    bool getFontBold();
+    bool getFontStrike();
+    bool getFontUnderline();
+    bool getFontItalic();
+
     void setFontSize(int  newSize);
     void setFontColor(QColor newColor);
     void setFontFamily(QString newFamily);
+
+    void setFontBold(bool state);
+    void setFontStrike(bool state);
+    void setFontUnderline(bool state);
+    void setFontItalic(bool state);
 
     static Config *configuration();
 
@@ -135,10 +152,21 @@ private:
     ProjectQModuleList* m_listDictinaries;
     QStringList* m_listHiddenModules;
 
+    // viewer settings
+
+    QColor m_viewerColor;
+
     // settings font
+
     QColor m_fontColor;
     int m_fontSize;
     QString m_fontFamily;
+
+    bool m_fontBold;
+    bool m_fontItalic;
+    bool m_fontUnderline;
+    bool m_fontStrike;
+
 };
 
 #endif // __CONFIG__H

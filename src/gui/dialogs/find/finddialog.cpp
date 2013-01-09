@@ -243,8 +243,8 @@ void FindDialog::showFiles(const SearchData &data)
 {
     for (int i = 0; i < data.files.size(); ++i)
     {
-        QTableWidgetItem *fileNameItem = new QTableWidgetItem(data.files[i]);
-        fileNameItem->setFlags(fileNameItem->flags() ^ Qt::ItemIsEditable);
+        QTableWidgetItem fileNameItem = QTableWidgetItem(data.files[i]);
+        fileNameItem.setFlags(fileNameItem.flags() ^ Qt::ItemIsEditable);
 
         QTableWidgetItem *bookItem = new QTableWidgetItem(data.books[i]);
         bookItem->setFlags(bookItem->flags() ^ Qt::ItemIsEditable);

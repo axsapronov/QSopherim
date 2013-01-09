@@ -25,19 +25,6 @@ typedef struct WordDictList
     QString word;
     QString text;
 } WordDictList;
-
-//class StrongList
-//{
-//public:
-//    StrongList()
-//    {
-
-//    };
-
-//    int number;
-//    QString text;
-//};
-
 /**
   \brief
   @function
@@ -143,25 +130,6 @@ QStringList getInfoFromFile(QString file_path);
   @return param
   */
 QString getParamInfo(QString *inputstr, QString param);
-
-/**
-  @function
-  Delete word in file
-  Delete <h4>word</h4> and description texts
-  @param file_path
-  @param word
-  @param description
-  */
-void deleteWordFromDict(QString filePath, QString word, QString description);
-/**
-  @function
-  Add word in file
-  Add <h4>word</h4> and description texts
-  @param file_path
-  @param word
-  @param description
-  */
-void addWordToDict(QString filePath, QString word, QString description);
 /**
   @function
   Function for find string

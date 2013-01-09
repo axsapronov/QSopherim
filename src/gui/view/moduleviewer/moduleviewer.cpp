@@ -175,6 +175,15 @@ void ModuleViewer::loadViewSettings()
 {
     ui->viewer->setFontFamily(Config::configuration()->getFontFamily());
     ui->viewer->setFontPointSize(Config::configuration()->getFontSize());
+
+    ui->viewer->setFontItalic(Config::configuration()->getFontItalic());
+    ui->viewer->setFontUnderline(Config::configuration()->getFontUnderline());
+
+    ui->viewer->setTextColor(Config::configuration()->getFontColor());
+
+    QPalette p = ui->viewer->palette();
+    p.setColor(QPalette::Base, Config::configuration()->getViewerColor());
+    ui->viewer->setPalette(p);
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::setModuleName(QString newModule)

@@ -44,8 +44,8 @@ void Settings::init()
     // font
     ui->sBFontSize->setValue(Config::configuration()->getFontSize());
     ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
-    fontColor = Config::configuration()->getFontColor();
-
+    m_fontColor = Config::configuration()->getFontColor();
+    m_viewerColor = Config::configuration()->getViewerColor();
 
     //    ui->sBFontSize->setValue(Config);
 
@@ -64,11 +64,17 @@ void Settings::loadSettings()
     setAPPLang(lang);
     ui->comBLanguage->setCurrentIndex(ui->comBLanguage->findText(lang));
 
-    /// load module settings
+    // load module settings
 
     QString t_folderbible = Config::configuration()->getBibleDir();
     QString t_folderdict = Config::configuration()->getDictDir();
     QString t_folderother = Config::configuration()->getOtherDir();
+
+    // load font and viewer settings
+    ui->chBBold->setChecked(Config::configuration()->getFontBold());
+    ui->chBItalic->setChecked(Config::configuration()->getFontItalic());
+    ui->chBStrike->setChecked(Config::configuration()->getFontStrike());
+    ui->chBUnderline->setChecked(Config::configuration()->getFontUnderline());
 
     ui->LEBibleFolder->setText(t_folderbible);
     ui->LEDictFolder->setText(t_folderdict);
@@ -76,8 +82,8 @@ void Settings::loadSettings()
 
     ui->sBFontSize->setValue(Config::configuration()->getFontSize());
     ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
-    fontColor = Config::configuration()->getFontColor();
-
+    m_fontColor = Config::configuration()->getFontColor();
+    m_viewerColor = Config::configuration()->getViewerColor();
 
 
     /// replace to AppDir/*  if empty
@@ -98,14 +104,22 @@ void Settings::saveSettings()
         emit SIGNAL_RetranslateGUI(ui->comBLanguage->currentText());
     }
     Config::configuration()->setAppLang(ui->comBLanguage->currentText());
-    /// save module settings
+    // save module settings
     Config::configuration()->setBibleDir(ui->LEBibleFolder->text());
     Config::configuration()->setDictDir(ui->LEDictFolder->text());
     Config::configuration()->setOtherDir(ui->LEOtherFolder->text());
 
+    // save font settings and viewer settings
     Config::configuration()->setFontFamily(ui->fontComB->currentText());
     Config::configuration()->setFontSize(ui->sBFontSize->value());
-    Config::configuration()->setFontColor(fontColor);
+    Config::configuration()->setFontColor(m_fontColor);
+    Config::configuration()->setViewerColor(m_viewerColor);
+
+    Config::configuration()->setFontBold(ui->chBBold->checkState());
+    Config::configuration()->setFontItalic(ui->chBItalic->checkState());
+    Config::configuration()->setFontStrike(ui->chBStrike->checkState());
+    Config::configuration()->setFontUnderline(ui->chBUnderline->checkState());
+
     //    ui->sBFontSize->setValue(Config::configuration()->getFontSize());
 
     //    ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
@@ -118,7 +132,7 @@ void Settings::createConnect()
     connect(ui->pBDictFolder, SIGNAL(clicked()), SLOT(browseDictDir()));
 
     connect(ui->pBColor, SIGNAL(clicked()), SLOT(selectFontColor()));
-
+    connect(ui->pBBackgroundColor, SIGNAL(clicked()), SLOT(selectFontColor()));
 }
 ///----------------------------------------------------------------------------
 void Settings::accept()
@@ -132,7 +146,7 @@ void Settings::accept()
                                        | QMessageBox::Discard
                                        | QMessageBox::Cancel,
                                        QMessageBox::Save);
-//        QMessageBox msgBox;
+        //        QMessageBox msgBox;
         switch (ret)
         {
         case QMessageBox::Save:
@@ -140,9 +154,9 @@ void Settings::accept()
             saveSettings();
 
 
-//            msgBox.setText("Settings has been modified. Please restart the"
-//                           "application for the entry into force of the settings");
-//            msgBox.exec();
+            //            msgBox.setText("Settings has been modified. Please restart the"
+            //                           "application for the entry into force of the settings");
+            //            msgBox.exec();
 
             emit SIGNAL_ReLoadModules();
             emit SIGNAL_ReLoadFontSettings();
@@ -168,12 +182,12 @@ void Settings::accept()
 ///----------------------------------------------------------------------------
 QString Settings::getAPPLang()
 {
-    return APP_Lang;
+    return m_APP_Lang;
 }
 ///----------------------------------------------------------------------------
 void Settings::setAPPLang(QString new_lang)
 {
-    APP_Lang = new_lang;
+    m_APP_Lang = new_lang;
     return;
 }
 ///----------------------------------------------------------------------------
@@ -191,7 +205,7 @@ bool Settings::getModifySettings()
         return true;
     if (ui->fontComB->currentText() != Config::configuration()->getFontFamily())
         return true;
-    if (fontColor != Config::configuration()->getFontColor())
+    if (m_fontColor != Config::configuration()->getFontColor())
         return true;
 
     return false;
@@ -246,10 +260,24 @@ void Settings::browseOtherDir()
 ///----------------------------------------------------------------------------
 void Settings::selectFontColor()
 {
-    QColor fontColor = QColorDialog::getColor(Config::configuration()->getFontColor(), this);
-
-    if (!fontColor.isValid())
+    QPushButton *button = (QPushButton *)sender();
+    QColor t_color;
+    t_color = QColorDialog::getColor(Config::configuration()->getFontColor(), this);
+    if (!t_color.isValid())
+    {
         return;
+    }
+
+    if (button->text().indexOf("background") >= 0)
+    {
+        // set like background (viewer) color
+        m_viewerColor = t_color;
+    }
+    else
+    {
+        // set like font color
+        m_fontColor = t_color;
+    }
 }
 ///----------------------------------------------------------------------------
 void Settings::retranslate()
