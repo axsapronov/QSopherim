@@ -332,62 +332,6 @@ QString getParamInfo(QString *inputstr, QString param)
 
     return str;
 }
-
-
-//------------------------------------------------------------------------------
-void deleteWordFromDict(QString filePath, QString word, QString description)
-{
-    QString text = getTextFromHtmlFile(filePath);
-    text.remove(QString("<h4>%1</h4>").arg(word))
-            .remove(description);
-    QFile::remove(filePath);
-    createEmpty(filePath, text);
-}
-//------------------------------------------------------------------------------
-void addWordToDict(QString filePath, QString word, QString description)
-{
-    QString text = getTextFromHtmlFile(filePath);
-
-    QString oldPos = findPosWord(filePath, word);
-    QString newText = QString("<h4>%1</h4> %2")
-            .arg(word)
-            .arg(description) + "\r\n" + oldPos;
-    text.replace(oldPos, newText);
-
-    QFile::remove(filePath);
-    createEmpty(filePath, text);
-}
-//------------------------------------------------------------------------------
-QString getDescriptionFromHtmlFile(QString filePath)
-{
-    QString str = "";
-    QFile file(filePath);
-    //    qDebug() << filePath;
-    file.close();
-    if (file.open(QIODevice::ReadOnly))
-    {
-        QTextStream stream(&file);
-        QString encoding = getEncodingFromFile(filePath);
-        stream.setCodec(getCodecOfEncoding(encoding));
-        str = stream.readAll();
-        //        qDebug() << "str = " << str;
-        int body = QString("<body>").length();
-        int posBegin = str.indexOf("<body>");
-
-        int posEnd = str.indexOf("</body>");
-        str = str.mid(posBegin + body,
-                      posEnd - posBegin - body);
-        str.remove("\n")
-                .remove("\r");
-        file.close();
-    }
-    else
-    {
-        qDebug() << "Error: not open file(getTextFromHtmlFile):" << filePath;
-    }
-
-    return str;
-}
 //-------------------------------------------------------------------------------
 QString findPosWord(QString file, QString text)
 {
@@ -433,7 +377,7 @@ bool createEmptyXML(QString fileName)
 //            ts << "<!DOCTYPE xbel>" << endl;
 //            ts << "<xbel version=\"1.0\">" << endl;
             ts << "<xml>" << endl;
-            ts << "</xml>" << endl;
+//            ts << "</xml>" << endl;
             file.close();
             ret = true;
         }
@@ -501,7 +445,8 @@ bool endXML(QString fileName)
             //try to open or create file
             QTextStream ts(&file);
             ts.setCodec("UTF-8");
-            ts << "</xbel>" << endl;
+//            ts << "</xbel>" << endl;
+            ts << "</xml>" << endl;
             file.close();
             ret = true;
         }
