@@ -89,5 +89,10 @@ QString getNextWord(QString str, int pos);
  */
 QString getShortLang(QString str);
 
-
+/**
+ * @brief generationInterchangeableColorsIntext
+ * @param f_text
+ * @param f_color
+ */
+void genInterchangeableColorsIntext(QString *f_text);
 #endif // __STRINGCOMMON__H

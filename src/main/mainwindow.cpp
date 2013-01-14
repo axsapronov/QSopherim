@@ -254,7 +254,7 @@ void MainWindow::createConnects()
     connect(ui->action_About_Site, SIGNAL(triggered()), this, SLOT(aboutOpenSite()));
     connect(ui->action_About_Help, SIGNAL(triggered()), SLOT(showHelp()));
 
-    /// other
+    // other
     connect(prModule, SIGNAL(SIGNAL_ProcessModuleOk()), SLOT(processFinishModule()));
     connect(prModule, SIGNAL(SIGNAL_ProcessDictOk()), SLOT(processFinishDict()));
 

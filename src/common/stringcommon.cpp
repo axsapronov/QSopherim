@@ -1,6 +1,8 @@
 #include "stringcommon.h"
 #include "filecommon.h"
 
+#include "debughelper.h"
+
 QString getBookNameFromStr(QString * str)
 {
     QString r_str = *str;
@@ -215,5 +217,45 @@ QString getShortLang(QString str)
         return "fr";
 
     return "ru";
+}
+//-------------------------------------------------------------------------------
+void genInterchangeableColorsIntext(QString *f_text)
+{
+    QStringList t_text;
+    t_text << (*f_text).split("\n");
+    *f_text = "";
+    QString t_str = "";
+
+    bool t_bool = true;
+    int t_var = 0;
+    for (int i = 0; i < t_text.size(); i++)
+    {
+        // hindi
+        /*
+         * 1 2 3 4 5 4 3 2 1 2 3 4 5 4 3 ....*/
+        if (t_var == 1)
+        {
+            t_bool = true;
+        }
+
+        if (t_var == 5)
+        {
+            t_bool = false;
+        }
+
+        if (t_bool)
+        {
+            t_var++;
+        }
+        else
+        {
+            t_var--;
+        }
+
+        t_str = QString("<div id=\"verse%1\">").arg(t_var)
+                + t_text.at(i)
+                + "</div>";
+        (*f_text).append(t_str + "\n");
+    }
 }
 //-------------------------------------------------------------------------------

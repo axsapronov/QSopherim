@@ -114,7 +114,12 @@ private:
 
     void init();
     void createActions();
-    void loadViewSettings();
+
+    /**
+     * @brief setStyleSettings
+     * set settings for viewer (css styles)
+     */
+    void setStyleSettings();
 
     QString m_curModule;
     QString m_curBook;

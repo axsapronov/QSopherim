@@ -106,6 +106,10 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
                         flag = true;
                         QString str = xmlReader.readElementText();
                         str.remove("    ");
+
+                        // gen colors (divs)
+                        genInterchangeableColorsIntext(&str);
+
                         if (m_strong)
                         {
                             m_backupChapter = str;
@@ -151,7 +155,7 @@ void ModuleViewer::init()
 
     ui->viewer->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->viewer->viewport()->installEventFilter(this);
-    loadViewSettings();
+    setStyleSettings();
 
     connect(ui->toolClose, SIGNAL(clicked()), ui->frameFind, SLOT(hide()));
     connect(ui->toolPrevious, SIGNAL(clicked()), this, SLOT(findPrevious()));
@@ -169,21 +173,6 @@ void ModuleViewer::init()
     connect(ui->viewer, SIGNAL(customContextMenuRequested(QPoint)),
             this,SLOT(sShowContextMenu(QPoint)));
 
-}
-//------------------------------------------------------------------------------
-void ModuleViewer::loadViewSettings()
-{
-    ui->viewer->setFontFamily(Config::configuration()->getFontFamily());
-    ui->viewer->setFontPointSize(Config::configuration()->getFontSize());
-
-    ui->viewer->setFontItalic(Config::configuration()->getFontItalic());
-    ui->viewer->setFontUnderline(Config::configuration()->getFontUnderline());
-
-    ui->viewer->setTextColor(Config::configuration()->getFontColor());
-
-    QPalette p = ui->viewer->palette();
-    p.setColor(QPalette::Base, Config::configuration()->getViewerColor());
-    ui->viewer->setPalette(p);
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::setModuleName(QString newModule)
@@ -347,7 +336,7 @@ void ModuleViewer::retranslate()
 //------------------------------------------------------------------------------
 void ModuleViewer::updateFontSettings()
 {
-    loadViewSettings();
+    setStyleSettings();
     showChapter(m_curPath, m_curBook, m_curChapter.toInt());
 }
 //------------------------------------------------------------------------------
@@ -436,5 +425,52 @@ void ModuleViewer::sAddNote()
 QString ModuleViewer::getLastNumberLine()
 {
     return QString::number(m_lastLine);
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::setStyleSettings()
+{
+    int sum = 20;
+    // 5
+    int counstyles = 5;
+    QString sheet;
+
+    bool t_italic = Config::configuration()->getFontItalic();
+    bool t_underline = Config::configuration()->getFontUnderline();
+    bool t_bold = Config::configuration()->getFontBold();
+    int t_fontsize = Config::configuration()->getFontSize();
+    QString t_font = Config::configuration()->getFontFamily();
+
+
+    for (int i = 0; i < counstyles; i++)
+    {
+        QColor color(
+                    Config::configuration()->getFontColor().red() + sum * i * 1.1
+                    , Config::configuration()->getFontColor().green() + sum * i
+                    , Config::configuration()->getFontColor().blue() + sum * i
+                    );
+
+        QString t_color = QString("div#verse%1 {color: %2; font-size: %3pt; font-family: %4")
+                .arg(i + 1) // 1 2 3 4 5
+                .arg(color.name())
+                .arg(t_fontsize )
+                .arg(t_font);
+
+        if (t_italic)
+        {
+            t_color.append("font-style: italic;");
+        }
+        if (t_underline)
+        {
+            t_color.append("text-decoration: line-through;");
+        }
+        if (t_bold)
+        {
+            t_color.append("font-weight: bold;");
+        }
+
+        t_color.append("}");
+        sheet.append(t_color + "\n");
+    }
+    ui->viewer->document()->setDefaultStyleSheet(sheet);
 }
 //------------------------------------------------------------------------------
