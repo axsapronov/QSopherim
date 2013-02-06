@@ -429,7 +429,7 @@ QString ModuleViewer::getLastNumberLine()
 //------------------------------------------------------------------------------
 void ModuleViewer::setStyleSettings()
 {
-    int sum = 20;
+    int sum = 25;
     // 5
     int counstyles = 5;
     QString sheet;
@@ -444,7 +444,7 @@ void ModuleViewer::setStyleSettings()
     for (int i = 0; i < counstyles; i++)
     {
         QColor color(
-                    Config::configuration()->getFontColor().red() + sum * i * 1.1
+                    Config::configuration()->getFontColor().red() + sum * i * 1.2
                     , Config::configuration()->getFontColor().green() + sum * i
                     , Config::configuration()->getFontColor().blue() + sum * i
                     );

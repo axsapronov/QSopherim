@@ -6,7 +6,7 @@
 
 QT       += core gui xml
 
-TARGET      = projectQ
+TARGET      = QSopherim
 TEMPLATE    = app
 DESTDIR     = build/bin
 OBJECTS_DIR = build/obj
@@ -181,6 +181,6 @@ RESOURCES += \
         resources/resources.qrc
 
 TRANSLATIONS += \
-        resources/lang/projectQ_ru.ts \
-        resources/lang/projectQ_de.ts \
-        resources/lang/projectQ_fr.ts
+        resources/lang/QSopherim_ru.ts \
+        resources/lang/QSopherim_de.ts \
+        resources/lang/QSopherim_fr.ts

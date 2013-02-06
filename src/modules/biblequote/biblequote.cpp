@@ -408,6 +408,9 @@ int BibleQuoteModule::readBook(const int id)
             }
             //            line.replace(m_chapterSign, getEndOfTag(m_chapterSign));
             //            }
+
+//            line.remove("&nbsp;");
+            line.replace("&nbsp;", " ");
             out2 += line;
             if(chapterstarted == false && line.contains(m_chapterSign))
             {
@@ -420,6 +423,8 @@ int BibleQuoteModule::readBook(const int id)
             }
             else if(chapterstarted == true)
             {
+//                line = getCoolLine(line);
+
                 out += line;
             }
         }
