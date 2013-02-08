@@ -287,22 +287,22 @@ int Config::getFontSize()
     return m_fontSize;
 }
 //------------------------------------------------------------------------------
-ProjectQModuleList* Config::getListBibles()
+QSopherimModuleList* Config::getListBibles()
 {
     return m_listBibles;
 }
 //------------------------------------------------------------------------------
-ProjectQModuleList* Config::getListDictionaries()
+QSopherimModuleList* Config::getListDictionaries()
 {
     return m_listDictinaries;
 }
 //------------------------------------------------------------------------------
-void Config::setListBibles(ProjectQModuleList *newlist)
+void Config::setListBibles(QSopherimModuleList *newlist)
 {
     m_listBibles = newlist;
 }
 //------------------------------------------------------------------------------
-void Config::setListDictionaries(ProjectQModuleList *newlist)
+void Config::setListDictionaries(QSopherimModuleList *newlist)
 {
     m_listDictinaries = newlist;
 }

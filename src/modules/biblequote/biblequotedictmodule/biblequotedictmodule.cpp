@@ -61,7 +61,7 @@ bool BibleQuoteDictModule::createIniFile()
 {
     /// добавить обработку типа
     QString text =
-            "////Module for projectQ"
+            "////Module for QSopherim"
             "\nModuleName = " + m_name +
             "\nAuthor = " + m_author +
             "\nRevision = " + m_revision +

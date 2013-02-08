@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QStandardItemModel>
 
-#include "projectqmodulelist.h"
+#include "qsopherimmodulelist.h"
 
 namespace Ui {
 class ManagerModules;
@@ -78,7 +78,7 @@ private:
 
     QStandardItemModel *modelBiblies;
     QStandardItemModel *modelDictionaries;
-    ProjectQModuleList* m_listModule;
+    QSopherimModuleList* m_listModule;
 
     QStringList m_hebrewList;
     QStringList m_greekList;

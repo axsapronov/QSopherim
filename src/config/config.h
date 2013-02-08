@@ -5,7 +5,7 @@
 #include <QColor>
 #include <QTranslator>
 
-#include "projectqmodulelist.h"
+#include "qsopherimmodulelist.h"
 
 //====================== class Config ============================
 
@@ -51,13 +51,13 @@ public:
      * @brief setListBibles
      * @param newlist
      */
-    void setListBibles(ProjectQModuleList* newlist);
+    void setListBibles(QSopherimModuleList* newlist);
 
     /**
      * @brief setListDictionaries
      * @param newlist
      */
-    void setListDictionaries(ProjectQModuleList* newlist);
+    void setListDictionaries(QSopherimModuleList* newlist);
 
     /**
      * @brief addHiddenModule
@@ -103,8 +103,8 @@ public:
     void setStrongGreek(QString strong);
 
 
-    ProjectQModuleList* getListBibles();
-    ProjectQModuleList* getListDictionaries();
+    QSopherimModuleList* getListBibles();
+    QSopherimModuleList* getListDictionaries();
     QStringList* getListHiddenModules();
 
 
@@ -148,8 +148,8 @@ private:
     QString m_strongHebrew;
     QString m_strongGreek;
 
-    ProjectQModuleList* m_listBibles;
-    ProjectQModuleList* m_listDictinaries;
+    QSopherimModuleList* m_listBibles;
+    QSopherimModuleList* m_listDictinaries;
     QStringList* m_listHiddenModules;
 
     // viewer settings

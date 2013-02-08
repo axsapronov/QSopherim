@@ -36,6 +36,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    setWindowTitle(QString("%1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
     init();
     loadModulesFromFolder();
     loadDictFromFolder();
@@ -95,14 +97,10 @@ void MainWindow::init()
     addDockWidget(Qt::RightDockWidgetArea, GUI_RightPanel);
     //    addDockWidget(Qt::BottomDockWidgetArea, GUI_BottomPanel);
 
+    GUI_RightPanel->hide();
     prModule = new ProcessModule();
 
-    //    ui->centralWidget->setMouseTracking(true);
-    GUI_ModuleViewer = new ModuleViewer(this);
-    GUI_NoteEditor = new NoteEditor(this);
 
-    //    GUI_ModuleViewer->setMouseTracking(true);
-    this->setCentralWidget(GUI_ModuleViewer);
     //    centralWidget()->setAttribute(Qt::WA_TransparentForMouseEvents);
     //    setMouseTracking(true);
 
@@ -127,6 +125,14 @@ void MainWindow::init()
     {
         setLangFr();
     }
+
+
+    //    ui->centralWidget->setMouseTracking(true);
+    GUI_ModuleViewer = new ModuleViewer(this);
+    GUI_NoteEditor = new NoteEditor(this);
+
+    //    GUI_ModuleViewer->setMouseTracking(true);
+    this->setCentralWidget(GUI_ModuleViewer);
 
     // Create menu for hide show panels and toolbars
     QAction *viewsAction = createPopupMenu() -> menuAction();
@@ -180,7 +186,7 @@ void MainWindow::debug()
     //    QString fileStrong;
     //    fileStrong = "/home/files/Documents/Bible/oteh/Strongs/HEBREW.HTM";
     //    createListStrongs(fileStrong);
-    ////    fileStrong = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/strongs/strong.xml";
+    ////    fileStrong = "/home/files/Develop/git/QSopherim/QSopherim-build-desktop/build/bin/strongs/strong.xml";
     ////    GUI_ModuleViewer->setStrongList(fileStrong);
 
 
@@ -480,14 +486,14 @@ void MainWindow::showHelp()
 //------------------------------------------------------------------------------
 void MainWindow::processFinishModule()
 {
-    ProjectQModuleList* list = new ProjectQModuleList();
+    QSopherimModuleList* list = new QSopherimModuleList();
     list->refreshList();
     GUI_LeftPanel->refreshListModule(list);
 }
 //------------------------------------------------------------------------------
 void MainWindow::processFinishDict()
 {
-    ProjectQModuleList* list = new ProjectQModuleList();
+    QSopherimModuleList* list = new QSopherimModuleList();
     list->refreshList("dictionary/");
     GUI_LeftPanel->refreshListDict(list);
 }
@@ -602,7 +608,7 @@ void MainWindow::createNote()
 void MainWindow::retranslate(QString t_lang)
 {
     // remove translate
-    QString lan = "projectQ_" + getShortLang(Config::configuration()->getAppLang());
+    QString lan = "QSopherim_" + getShortLang(Config::configuration()->getAppLang());
     QTranslator translator2;
     translator2.load(lan,":lang/lang");
 
@@ -612,7 +618,7 @@ void MainWindow::retranslate(QString t_lang)
     // set new translate
     Config::configuration()->setAppLang(t_lang);
     QTranslator translator;
-    lan = "projectQ_" + getShortLang(t_lang);
+    lan = "QSopherim_" + getShortLang(t_lang);
     translator.load(lan,":lang/lang");
     qApp->installTranslator(&translator);
 

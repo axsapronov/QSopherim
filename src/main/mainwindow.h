@@ -24,7 +24,7 @@ QT_END_NAMESPACE
 #include "processmodule.h"
 #include "moduledefinition.h"
 #include "debughelper.h"
-#include "projectqmodulelist.h"
+#include "qsopherimmodulelist.h"
 #include "finddialog.h"
 #include "noteeditor.h"
 #include "managermodules.h"

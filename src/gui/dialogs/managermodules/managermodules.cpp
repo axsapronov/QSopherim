@@ -2,7 +2,7 @@
 #include "ui_managermodules.h"
 
 #include "config.h"
-#include "projectqmodulelist.h"
+#include "qsopherimmodulelist.h"
 #include "debughelper.h"
 #include "filecommon.h"
 #include "strongcommon.h"
@@ -30,7 +30,7 @@ ManagerModules::~ManagerModules()
 //------------------------------------------------------------------------------
 void ManagerModules::init()
 {
-    m_listModule = new ProjectQModuleList;
+    m_listModule = new QSopherimModuleList;
     modelBiblies = new QStandardItemModel(0, 1, this);
     modelDictionaries = new QStandardItemModel(0, 0, this);
     createConnects();
@@ -116,7 +116,7 @@ void ManagerModules::deleteSelectedModules()
 //------------------------------------------------------------------------------
 void ManagerModules::loadListModules()
 {
-    ProjectQModuleList* list = Config::configuration()->getListBibles();
+    QSopherimModuleList* list = Config::configuration()->getListBibles();
     modelBiblies->clear();
     //    myDebug() << "yes";
     m_listModule->clearList();
@@ -247,7 +247,7 @@ void ManagerModules::sSetHebrewStrong(QString f_strong)
     QString t_str = getFullPathToStrong(f_strong);
     Config::configuration()->setStrongHebrew(t_str);
     emit SIGNAL_SetHebrewStrong(t_str);
-    //    fileStrong = "/home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/strongs/strong.xml";
+    //    fileStrong = "/home/files/Develop/git/QSopherim/QSopherim-build-desktop/build/bin/strongs/strong.xml";
     //    GUI_ModuleViewer->setStrongList(fileStrong);
 }
 //------------------------------------------------------------------------------

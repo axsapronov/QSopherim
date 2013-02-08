@@ -164,7 +164,7 @@ void FindDialog::updateComBModule()
     {
         /*
          *i have
-         ///home/files/Develop/git/projectQ/projectQ-build-desktop/build/bin/bible/Сперджен/module.ini
+         ///home/files/Develop/git/QSopherim/QSopherim-build-desktop/build/bin/bible/Сперджен/module.ini
          i get  "Сперджен" - this is module name
          */
 

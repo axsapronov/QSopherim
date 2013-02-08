@@ -35,9 +35,9 @@ int main(int argc, char *argv[])
     QString lang = conf->getAppLang();
 
     QTranslator translator;
-    if (lang == "Russian") translator.load("projectQ_ru",":lang/lang");
-    if (lang == "Deutch") translator.load("projectQ_de",":lang/lang");
-    if (lang == "Français") translator.load("projectQ_fr",":lang/lang");
+    if (lang == "Russian") translator.load("QSopherim_ru",":lang/lang");
+    if (lang == "Deutch") translator.load("QSopherim_de",":lang/lang");
+    if (lang == "Français") translator.load("QSopherim_fr",":lang/lang");
     a.installTranslator(&translator);
 
     MainWindow w;

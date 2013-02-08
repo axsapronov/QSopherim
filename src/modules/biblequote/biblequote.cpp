@@ -145,7 +145,7 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
 {
     /// добавить обработку типа
     QString text =
-            "////Module for projectQ"
+            "////Module for QSopherim"
             "\nModuleName = " + info.name() +
             "\nModuleShortName = " + info.shortName() +
             "\nModuleLanguage = " + info.language +

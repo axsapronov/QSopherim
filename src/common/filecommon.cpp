@@ -458,10 +458,10 @@ bool endXML(QString fileName)
     return ret;
 }
 //------------------------------------------------------------------------------
-ProjectQModuleInfo getModuleInfo(QString fileName)
+QSopherimModuleInfo getModuleInfo(QString fileName)
 {
 
-    ProjectQModuleInfo list;
+    QSopherimModuleInfo list;
     list.moduleName = getParamModule(fileName, "ModuleName");
     list.moduleShortName = getParamModule(fileName, "ModuleShortName");
     //    list.append(getParamModule(fileName, "ModuleLanguage"));

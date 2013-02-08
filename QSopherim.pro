@@ -111,8 +111,8 @@ SOURCES  += \
         verseurlrange.cpp \
         biblelink.cpp \
         url.cpp \
-        projectqmodule.cpp \
-        projectqmodulelist.cpp \
+        qsopherimmodule.cpp \
+        qsopherimmodulelist.cpp \
         noteeditor.cpp \
         managermodules.cpp \
         biblequotedictmodule.cpp \
@@ -157,8 +157,8 @@ HEADERS  += \
         verseurlrange.h  \
         biblelink.h  \
         url.h \
-        projectqmodule.h \
-        projectqmodulelist.h \
+        qsopherimmodule.h \
+        qsopherimmodulelist.h \
         noteeditor.h \
         managermodules.h \
         biblequotedictmodule.h \

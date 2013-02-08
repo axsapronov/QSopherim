@@ -16,7 +16,7 @@
 
 #include <QDebug>
 #include "book.h"
-#include "projectqmodule.h" /// ProjectQModuleInfo
+#include "qsopherimmodule.h" /// QSopherimModuleInfo
 
 
 
@@ -167,7 +167,7 @@ bool endXML(QString fileName);
  * @param fileName
  * @return
  */
-ProjectQModuleInfo getModuleInfo(QString fileName);
+QSopherimModuleInfo getModuleInfo(QString fileName);
 /**
  * @brief getParamModule
  * @param filename

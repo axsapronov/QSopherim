@@ -1,9 +1,9 @@
 <RCC>
     <qresource prefix="/lang">
-        <file>lang/projectQ_ru.qm</file>
-        <file>lang/projectQ_fr.qm</file>
-        <file>lang/projectQ_de.qm</file>
-        <file>lang/projectQ_en.qm</file>
+        <file>lang/QSopherim_ru.qm</file>
+        <file>lang/QSopherim_fr.qm</file>
+        <file>lang/QSopherim_de.qm</file>
+        <file>lang/QSopherim_en.qm</file>
     </qresource>
     <qresource prefix="/icons">
         <file>images/qt-logo.png</file>

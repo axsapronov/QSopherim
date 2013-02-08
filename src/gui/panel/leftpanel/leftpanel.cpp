@@ -1,7 +1,7 @@
 #include "leftpanel.h"
 #include "ui_leftpanel.h"
 #include "debughelper.h"
-#include "projectqmodulelist.h"
+#include "qsopherimmodulelist.h"
 #include "moduleviewer.h"
 #include "filecommon.h"
 
@@ -33,7 +33,7 @@ LeftPanel::~LeftPanel()
     delete ui;
 }
 //------------------------------------------------------------------------------
-void LeftPanel::refreshListModule(ProjectQModuleList* list)
+void LeftPanel::refreshListModule(QSopherimModuleList* list)
 {
     Config::configuration()->setListBibles(list);
     //    this->modelModules = new QStandardItemModel(moduleList->getSize(), 1, this);
@@ -54,7 +54,7 @@ void LeftPanel::refreshListModule(ProjectQModuleList* list)
     refreshBookList(ui->comBModules->currentText());
 }
 //------------------------------------------------------------------------------
-void LeftPanel::refreshListDict(ProjectQModuleList* list)
+void LeftPanel::refreshListDict(QSopherimModuleList* list)
 {
     Config::configuration()->setListDictionaries(list);
     //    this->modelModules = new QStandardItemModel(moduleList->getSize(), 1, this);
@@ -75,7 +75,7 @@ void LeftPanel::refreshListDict(ProjectQModuleList* list)
     //    refreshBookList(ui->comBModules->currentText());
 }
 //------------------------------------------------------------------------------
-void LeftPanel::refreshBookList(ProjectQModuleList* list)
+void LeftPanel::refreshBookList(QSopherimModuleList* list)
 {
     //    moduleList = list;
     Q_UNUSED (list)
@@ -140,7 +140,7 @@ void LeftPanel::init()
     modelBooks = new QStandardItemModel(0, 0, this);
     modelChapters = new QStandardItemModel(0, 0, this);
     modelClear = new QStandardItemModel(0, 0, this);
-    moduleList = new ProjectQModuleList();
+    moduleList = new QSopherimModuleList();
     m_lastNameOfBook  = "";
     ui->tableBook->reset();
     ui->tableChapter->reset();

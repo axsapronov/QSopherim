@@ -12,7 +12,7 @@ class QStringListModel;
 namespace Ui {
 class LeftPanel;
 }
-class ProjectQModuleList;
+class QSopherimModuleList;
 class LeftPanel : public QDockWidget
 {
     Q_OBJECT
@@ -21,9 +21,9 @@ public:
     explicit LeftPanel(QWidget *parent = 0);
     ~LeftPanel();
 
-    void refreshBookList(ProjectQModuleList* list);
-    void refreshListModule(ProjectQModuleList* list);
-    void refreshListDict(ProjectQModuleList* list);
+    void refreshBookList(QSopherimModuleList* list);
+    void refreshListModule(QSopherimModuleList* list);
+    void refreshListDict(QSopherimModuleList* list);
 
     void setListModuleFromList();
 
@@ -83,7 +83,7 @@ private:
     QStandardItemModel *modelBooks;
     QStandardItemModel *modelChapters;
     QStandardItemModel *modelClear;
-    ProjectQModuleList *moduleList;
+    QSopherimModuleList *moduleList;
 
     QString m_lastNameOfBook;
 

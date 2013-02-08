@@ -109,6 +109,7 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
 
                         // gen colors (divs)
                         genInterchangeableColorsIntext(&str);
+                        //myDebug() << str;
 
                         if (m_strong)
                         {
@@ -155,6 +156,7 @@ void ModuleViewer::init()
 
     ui->viewer->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->viewer->viewport()->installEventFilter(this);
+
     setStyleSettings();
 
     connect(ui->toolClose, SIGNAL(clicked()), ui->frameFind, SLOT(hide()));
@@ -449,7 +451,7 @@ void ModuleViewer::setStyleSettings()
                     , Config::configuration()->getFontColor().blue() + sum * i
                     );
 
-        QString t_color = QString("div#verse%1 {color: %2; font-size: %3pt; font-family: %4")
+        QString t_color = QString("div#verse%1 {color: %2; font-size: %3pt; font-family: %4; ")
                 .arg(i + 1) // 1 2 3 4 5
                 .arg(color.name())
                 .arg(t_fontsize )

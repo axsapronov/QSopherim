@@ -31,13 +31,13 @@ void Settings::debug()
 ///----------------------------------------------------------------------------
 void Settings::init()
 {
-    /// add item to combobox
+    // add item to combobox
     ui->comBLanguage->addItem("Russian");
     ui->comBLanguage->addItem("English");
     ui->comBLanguage->addItem("Français");
     ui->comBLanguage->addItem("Deutsch");
 
-    /// load module settings
+    // load module settings
     ui->LEBibleFolder->setText(Config::configuration()->getBibleDir());
     ui->LEDictFolder->setText(Config::configuration()->getDictDir());
     ui->LEOtherFolder->setText(Config::configuration()->getOtherDir());

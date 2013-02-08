@@ -31,7 +31,7 @@ private:
 
     /**
      * @brief createDictFile
-     * @function for create projectQ dict module from bible qt module
+     * @function for create QSopherim dict module from bible qt module
      * @param path
      */
     void createDictFile(QString path);
