@@ -25,7 +25,15 @@ int main(int argc, char *argv[])
     Config *conf = new Config();
     conf->setAppDir(QDir::currentPath() + "/");
     conf->setStrongDir(QDir::currentPath() + "/strongs/");
-    if (QFile::exists(conf->getAppDir() + "settings.conf"))
+
+#ifdef Q_OS_WIN
+    QString t_settings = "settings.ini";
+#endif
+#ifdef Q_OS_LINUX
+    QString t_settings = "settings.conf";
+#endif
+
+    if (QFile::exists(conf->getAppDir() + t_settings))
     {
         conf -> loadSettings();
     }

@@ -59,7 +59,7 @@ Config *Config::configuration()
 void Config::loadSettings()
 {
     #ifdef Q_OS_WIN
-        QSettings settings("settings.ini", QSettings::NativeFormat);
+        QSettings settings("settings.ini", QSettings::IniFormat);
     #endif
     #ifdef Q_OS_LINUX
         QSettings settings("settings.conf", QSettings::NativeFormat);
@@ -154,7 +154,7 @@ void Config::saveSettings()
 {
     //    toAppLog(2, "Save application settings");
 #ifdef Q_OS_WIN
-    QSettings settings("settings.ini", QSettings::NativeFormat);
+    QSettings settings("settings.ini", QSettings::IniFormat);
 #endif
 #ifdef Q_OS_LINUX
     QSettings settings("settings.conf", QSettings::NativeFormat);
