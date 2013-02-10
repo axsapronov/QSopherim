@@ -148,8 +148,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>592</width>
-            <height>348</height>
+            <width>96</width>
+            <height>26</height>
            </rect>
           </property>
           <attribute name="label">
@@ -229,14 +229,14 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
+       <item row="5" column="0">
         <widget class="QLabel" name="label_7">
          <property name="text">
           <string>Other settings:</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="6" column="1">
         <layout class="QGridLayout" name="gridLayout_4">
          <item row="0" column="0">
           <widget class="QCheckBox" name="chBBold">
@@ -267,6 +267,20 @@
           </widget>
          </item>
         </layout>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>Options:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QCheckBox" name="checkBox">
+         <property name="text">
+          <string>Changing text color</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

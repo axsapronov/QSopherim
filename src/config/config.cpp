@@ -12,11 +12,16 @@ Config::Config()
     if( !static_configuration )
     {
         static_configuration = this;
+
         m_fontSize = 12;
         m_fontColor = QColor(qRgb(0, 0, 0));
         m_viewerColor = QColor(qRgb(255, 255, 255));
         m_fontFamily = "DejaVu Sans";
         m_appLang = "Russian";
+        m_fontBold = false;
+        m_fontItalic = false;
+        m_fontStrike = false;
+        m_fontUnderline = false;
 
         m_listHiddenModules = new QStringList;
     }
