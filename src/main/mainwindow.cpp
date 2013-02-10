@@ -100,7 +100,6 @@ void MainWindow::init()
     GUI_RightPanel->setTitleBarWidget(t_emptyWidget3);
     delete t_titleBar;
 
-
     GUI_RightPanel->loadBookmarks();
     //    GUI_BottomPanel = new BottomPanel(this);
 
@@ -117,14 +116,13 @@ void MainWindow::init()
     //GUI_RightPanel->hide();
     prModule = new ProcessModule();
 
-
     //    centralWidget()->setAttribute(Qt::WA_TransparentForMouseEvents);
     //    setMouseTracking(true);
 
-    /// load settings
+    // load settings
     // replace to QString t_lang = GUI_Settings->getAppLang()
     // and switch t_lang?
-    /// and load load module settings
+    // and load load module settings
     GUI_Settings->loadSettings();
     if (GUI_Settings->getAPPLang() == "Russian" )
     {

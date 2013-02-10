@@ -52,7 +52,12 @@ Config *Config::configuration()
 //------------------------------------------------------------------------------
 void Config::loadSettings()
 {
-    QSettings settings("settings.conf", QSettings::NativeFormat);
+    #ifdef Q_OS_WIN
+        QSettings settings("settings.ini", QSettings::NativeFormat);
+    #endif
+    #ifdef Q_OS_LINUX
+        QSettings settings("settings.conf", QSettings::NativeFormat);
+    #endif
 
     m_bibleDir = settings.value(QString("dir/bible")).toString();
     m_dictDir = settings.value(QString("dir/dict")).toString();
@@ -141,7 +146,13 @@ void Config::loadSettings()
 void Config::saveSettings()
 {
     //    toAppLog(2, "Save application settings");
+#ifdef Q_OS_WIN
+    QSettings settings("settings.ini", QSettings::NativeFormat);
+#endif
+#ifdef Q_OS_LINUX
     QSettings settings("settings.conf", QSettings::NativeFormat);
+#endif
+
     settings.setValue(QString("language/lang"), m_appLang);
     settings.setValue(QString("dir/bible"), m_bibleDir);
     settings.setValue(QString("dir/other"), m_otherDir);
