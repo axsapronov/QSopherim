@@ -108,8 +108,10 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
                         str.remove("    ");
 
                         // gen colors (divs)
-                        genInterchangeableColorsIntext(&str);
-                        //myDebug() << str;
+                        if (Config::configuration()->getOptionChangeTextColor())
+                            genInterchangeableColorsIntext(&str, 5);
+                        else
+                            genInterchangeableColorsIntext(&str, 1);
 
                         if (m_strong)
                         {
@@ -433,7 +435,10 @@ void ModuleViewer::setStyleSettings()
 {
     int sum = 25;
     // 5
-    int counstyles = 5;
+    int counstyles = 1;
+    if (Config::configuration()->getOptionChangeTextColor())
+        counstyles = 5;
+
     QString sheet;
 
     bool t_italic = Config::configuration()->getFontItalic();

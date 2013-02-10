@@ -22,6 +22,7 @@ Config::Config()
         m_fontItalic = false;
         m_fontStrike = false;
         m_fontUnderline = false;
+        m_optionChangeTextColor = true;
 
         m_listHiddenModules = new QStringList;
     }
@@ -78,6 +79,7 @@ void Config::loadSettings()
 
     // viewer settings
     m_viewerColor = qVariantValue<QColor> (settings.value("viewer/color"));
+    m_optionChangeTextColor = settings.value("viewer/colorchangind").toBool();
 
     // font settings for viewer
     m_fontColor = qVariantValue<QColor> (settings.value("font/color"));
@@ -165,6 +167,7 @@ void Config::saveSettings()
 
     // viewer
     settings.setValue(QString("viewer/color"), m_viewerColor);
+    settings.setValue(QString("viewer/colorchanging"), m_optionChangeTextColor);
 
     // font settings for viewer
     settings.setValue(QString("font/color"), m_fontColor);
@@ -414,5 +417,15 @@ QColor Config::getViewerColor()
 void Config::setViewerColor(QColor newColor)
 {
     m_viewerColor = newColor;
+}
+//------------------------------------------------------------------------------
+void Config::setOptionChangeTextColor(bool state)
+{
+    m_optionChangeTextColor = state;
+}
+//------------------------------------------------------------------------------
+bool Config::getOptionChangeTextColor()
+{
+    return m_optionChangeTextColor;
 }
 //------------------------------------------------------------------------------

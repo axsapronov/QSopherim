@@ -38,14 +38,16 @@ void Settings::init()
     ui->comBLanguage->addItem("Deutsch");
 
     // load module settings
-    ui->LEBibleFolder->setText(Config::configuration()->getBibleDir());
-    ui->LEDictFolder->setText(Config::configuration()->getDictDir());
-    ui->LEOtherFolder->setText(Config::configuration()->getOtherDir());
-    // font
-    ui->sBFontSize->setValue(Config::configuration()->getFontSize());
-    ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
-    m_fontColor = Config::configuration()->getFontColor();
-    m_viewerColor = Config::configuration()->getViewerColor();
+//    ui->LEBibleFolder->setText(Config::configuration()->getBibleDir());
+//    ui->LEDictFolder->setText(Config::configuration()->getDictDir());
+//    ui->LEOtherFolder->setText(Config::configuration()->getOtherDir());
+//    // font
+//    ui->sBFontSize->setValue(Config::configuration()->getFontSize());
+//    ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
+//    m_fontColor = Config::configuration()->getFontColor();
+//    m_viewerColor = Config::configuration()->getViewerColor();
+
+    loadSettings();
 
     //    ui->sBFontSize->setValue(Config);
 
@@ -75,6 +77,8 @@ void Settings::loadSettings()
     ui->chBItalic->setChecked(Config::configuration()->getFontItalic());
     ui->chBStrike->setChecked(Config::configuration()->getFontStrike());
     ui->chBUnderline->setChecked(Config::configuration()->getFontUnderline());
+
+    ui->chBChangindTextColor->setChecked(Config::configuration()->getOptionChangeTextColor());
 
     ui->LEBibleFolder->setText(t_folderbible);
     ui->LEDictFolder->setText(t_folderdict);
@@ -119,6 +123,8 @@ void Settings::saveSettings()
     Config::configuration()->setFontItalic(ui->chBItalic->checkState());
     Config::configuration()->setFontStrike(ui->chBStrike->checkState());
     Config::configuration()->setFontUnderline(ui->chBUnderline->checkState());
+
+    Config::configuration()->setOptionChangeTextColor(ui->chBChangindTextColor->checkState());
 
     //    ui->sBFontSize->setValue(Config::configuration()->getFontSize());
 
@@ -193,20 +199,22 @@ void Settings::setAPPLang(QString new_lang)
 ///----------------------------------------------------------------------------
 bool Settings::getModifySettings()
 {
-    if (ui->comBLanguage->currentText() != Config::configuration()->getAppLang())
+    if (ui->comBLanguage->currentText() != Config::configuration()->getAppLang()
+            || ui->LEBibleFolder->text() != Config::configuration()->getBibleDir()
+            || ui->LEDictFolder->text() != Config::configuration()->getDictDir()
+            || ui->LEOtherFolder->text() != Config::configuration()->getOtherDir()
+            || ui->sBFontSize->value() != Config::configuration()->getFontSize()
+            || ui->fontComB->currentText() != Config::configuration()->getFontFamily()
+            || m_fontColor != Config::configuration()->getFontColor()
+            || ui->chBBold->checkState() != Config::configuration()->getFontBold()
+            || ui->chBChangindTextColor->checkState() != Config::configuration()->getOptionChangeTextColor()
+            || ui->chBItalic->checkState() != Config::configuration()->getFontItalic()
+            || ui->chBStrike->checkState() != Config::configuration()->getFontStrike()
+            || ui->chBUnderline->checkState() != Config::configuration()->getFontUnderline()
+            )
+    {
         return true;
-    if (ui->LEBibleFolder->text() != Config::configuration()->getBibleDir())
-        return true;
-    if (ui->LEDictFolder->text() != Config::configuration()->getDictDir())
-        return true;
-    if (ui->LEOtherFolder->text() != Config::configuration()->getOtherDir())
-        return true;
-    if (ui->sBFontSize->value() != Config::configuration()->getFontSize())
-        return true;
-    if (ui->fontComB->currentText() != Config::configuration()->getFontFamily())
-        return true;
-    if (m_fontColor != Config::configuration()->getFontColor())
-        return true;
+    }
 
     return false;
 }

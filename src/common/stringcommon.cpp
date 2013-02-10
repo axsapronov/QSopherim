@@ -219,7 +219,7 @@ QString getShortLang(QString str)
     return "ru";
 }
 //-------------------------------------------------------------------------------
-void genInterchangeableColorsIntext(QString *f_text)
+void genInterchangeableColorsIntext(QString *f_text, int count)
 {
     QStringList t_text;
     t_text << (*f_text).split("\n");
@@ -238,18 +238,26 @@ void genInterchangeableColorsIntext(QString *f_text)
             t_bool = true;
         }
 
-        if (t_var == 5)
+        if (t_var == count)
         {
             t_bool = false;
         }
 
-        if (t_bool)
+        // hack
+        if (count != 1)
         {
-            t_var++;
+            if (t_bool)
+            {
+                t_var++;
+            }
+            else
+            {
+                t_var--;
+            }
         }
         else
         {
-            t_var--;
+            t_var = 1;
         }
 
         t_str = QString("<div id=\"verse%1\">").arg(t_var)

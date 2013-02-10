@@ -276,7 +276,7 @@
         </widget>
        </item>
        <item row="4" column="1">
-        <widget class="QCheckBox" name="checkBox">
+        <widget class="QCheckBox" name="chBChangindTextColor">
          <property name="text">
           <string>Changing text color</string>
          </property>

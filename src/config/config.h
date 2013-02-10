@@ -125,6 +125,8 @@ public:
     bool getFontUnderline();
     bool getFontItalic();
 
+    bool getOptionChangeTextColor();
+
     void setFontSize(int  newSize);
     void setFontColor(QColor newColor);
     void setFontFamily(QString newFamily);
@@ -133,6 +135,8 @@ public:
     void setFontStrike(bool state);
     void setFontUnderline(bool state);
     void setFontItalic(bool state);
+
+    void setOptionChangeTextColor(bool state);
 
     static Config *configuration();
 
@@ -166,6 +170,8 @@ private:
     bool m_fontItalic;
     bool m_fontUnderline;
     bool m_fontStrike;
+
+    bool m_optionChangeTextColor;
 
 };
 

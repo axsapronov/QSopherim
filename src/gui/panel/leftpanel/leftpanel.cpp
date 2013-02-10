@@ -300,7 +300,7 @@ QStringList LeftPanel::getListDictWithWord(QString word)
 //------------------------------------------------------------------------------
 void LeftPanel::sShowHideLeftPanel2(int f_tab)
 {
-    if (f_tab == 1)
+    if (f_tab == 2) // dict
     {
         // hide if select dict
         emit SIGNAL_ShowHideLeftPanel2(true); // hide

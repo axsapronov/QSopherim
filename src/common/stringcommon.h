@@ -94,5 +94,5 @@ QString getShortLang(QString str);
  * @param f_text
  * @param f_color
  */
-void genInterchangeableColorsIntext(QString *f_text);
+void genInterchangeableColorsIntext(QString *f_text, int count = 1);
 #endif // __STRINGCOMMON__H
