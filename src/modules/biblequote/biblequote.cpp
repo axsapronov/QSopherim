@@ -431,7 +431,7 @@ int BibleQuoteModule::readBook(const int id)
         //  chapter_tag is ANAME
         if (m_chapterSign != getEndOfTag(m_chapterSign))
             out2.remove(QRegExp("=\\d+>")); // hindi remove text =NUMBERCHAPTER>
-        out2.remove("^&к");
+        out2.remove("^&к").remove("&");
         //        out2 = getClearText(&out2);
         chapterText << out2.split(m_chapterSign);
     }
