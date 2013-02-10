@@ -84,6 +84,23 @@ void MainWindow::init()
     GUI_LeftPanel = new LeftPanel(this);
     GUI_LeftPanel2 = new LeftPanel2(this);
 
+    // to hide the title bar completely must replace the default widget with a generic one
+    QWidget* t_titleBar = GUI_LeftPanel2->titleBarWidget();
+    QWidget* t_emptyWidget2 = new QWidget();
+    GUI_LeftPanel2->setTitleBarWidget(t_emptyWidget2);
+    delete t_titleBar;
+
+    t_titleBar = GUI_LeftPanel->titleBarWidget();
+    QWidget* t_emptyWidget = new QWidget();
+    GUI_LeftPanel->setTitleBarWidget(t_emptyWidget);
+    delete t_titleBar;
+
+    t_titleBar = GUI_RightPanel->titleBarWidget();
+    QWidget* t_emptyWidget3 = new QWidget();
+    GUI_RightPanel->setTitleBarWidget(t_emptyWidget3);
+    delete t_titleBar;
+
+
     GUI_RightPanel->loadBookmarks();
     //    GUI_BottomPanel = new BottomPanel(this);
 
@@ -97,7 +114,7 @@ void MainWindow::init()
     addDockWidget(Qt::RightDockWidgetArea, GUI_RightPanel);
     //    addDockWidget(Qt::BottomDockWidgetArea, GUI_BottomPanel);
 
-    GUI_RightPanel->hide();
+    //GUI_RightPanel->hide();
     prModule = new ProcessModule();
 
 

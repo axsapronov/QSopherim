@@ -1,4 +1,4 @@
-<?xml version='1.0'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>BottomPanel</class>
  <widget class="QDockWidget" name="BottomPanel">
@@ -15,4 +15,6 @@
   </property>
   <widget class="QWidget" name="dockWidgetContents"/>
  </widget>
+ <resources/>
+ <connections/>
 </ui>

@@ -10,6 +10,9 @@
     <height>486</height>
    </rect>
   </property>
+  <property name="windowTitle">
+   <string>Modules</string>
+  </property>
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">

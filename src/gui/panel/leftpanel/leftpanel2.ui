@@ -16,6 +16,9 @@
   <property name="allowedAreas">
    <set>Qt::LeftDockWidgetArea</set>
   </property>
+  <property name="windowTitle">
+   <string>Info</string>
+  </property>
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">

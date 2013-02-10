@@ -10,6 +10,9 @@
     <height>609</height>
    </rect>
   </property>
+  <property name="windowTitle">
+   <string>Bookmarks</string>
+  </property>
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QGridLayout" name="gridLayout">
     <item row="2" column="0">
@@ -19,7 +22,14 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Bookmarks</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QPushButton" name="pBDelete">
@@ -42,13 +52,6 @@
        </spacer>
       </item>
      </layout>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Bookmarks</string>
-      </property>
-     </widget>
     </item>
    </layout>
   </widget>
