@@ -54,8 +54,16 @@ private:
     QString m_modulePath;
     QString m_moduleName;
     QString m_moduleShortName;
+    QString m_copyright;
     bool m_chapterZero;
+    bool m_bibleType;
     bool m_strongOption;
+    bool m_apocrypha;
+    bool m_oldTestament;
+    bool m_newTestament;
+    bool m_greek;
+
+    QString m_typeModule;
 
     QStringList m_bookPath;
 

@@ -241,7 +241,7 @@ void ModuleViewer::showNoteList()
                              QString::number(m_lastLine));
 
 }
-//------------------------------------------------------------------------------
+////------------------------------------------------------------------------------
 bool ModuleViewer::event(QEvent* event)
 {
     if (event->type() == QEvent::ToolTip)
@@ -256,6 +256,7 @@ bool ModuleViewer::event(QEvent* event)
             if (cursor.selectedText().indexOf("0") >= 0 )
             {
                 emit SIGNAL_ShowStrong(cursor.selectedText());
+
                 //                QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
             }
 

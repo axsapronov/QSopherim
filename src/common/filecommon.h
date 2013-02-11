@@ -238,4 +238,16 @@ QString getDescriptionForWordFromDict(QString pathToFile, QString word);
  * @return
  */
 QStringList getBookmarks(QString pathToFile);
+
+/**
+ * @brief addToListBookModule
+ * @param shortName
+ */
+void addToListBookModule(const QString shortName);
+
+/**
+ * @brief addToListBibleModule
+ * @param shortName
+ */
+void addToListBibleModule(const QString shortName);
 #endif // __FILECOMMON__H

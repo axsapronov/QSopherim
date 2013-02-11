@@ -467,7 +467,7 @@ QSopherimModuleInfo getModuleInfo(QString fileName)
     //    list.append(getParamModule(fileName, "ModuleLanguage"));
     list.bookValue = getParamModule(fileName, "BooksValue").toInt();
     list.modulePath = getParamModule(fileName, "PathToModule");
-
+    list.moduleType = getParamModule(fileName, "TypeModule");
 
     list.bookList = getBookList(fileName);
 
@@ -677,4 +677,13 @@ QStringList getBookmarks(QString pathToFile)
     return r_list;
 }
 //-------------------------------------------------------------------------------
+void addToListBookModule(const QString f_shortName)
+{
+    myDebug() << "apend book module " << f_shortName;
+}
+//-------------------------------------------------------------------------------
+void addToListBibleModule(const QString f_shortName)
+{
+    myDebug() << "apend bible module " << f_shortName;
+}
 //-------------------------------------------------------------------------------

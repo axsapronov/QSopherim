@@ -13,65 +13,68 @@ QSopherimModule::QSopherimModule(QSopherimModuleInfo list)
 //    moduleShortName = list.at(1);
 //    chapterValue = list.at(2).toInt();
 //    modulePath = list.at(3);
-    moduleName = list.moduleName;
-    moduleShortName  = list.moduleShortName;
-    bookValue = list.bookValue;
-    modulePath = list.modulePath;
-    bookList = list.bookList;
-    numberOfChaptersInBook = list.numberOfChaptersInBook;
+    m_moduleName = list.moduleName;
+    m_moduleShortName  = list.moduleShortName;
+    m_bookValue = list.bookValue;
+    m_modulePath = list.modulePath;
+    m_bookList = list.bookList;
+    m_numberOfChaptersInBook = list.numberOfChaptersInBook;
+    m_moduleType = list.moduleType;
 //    myDebug() << getBookList().size();
 //    myDebug() << this;
 }
 //------------------------------------------------------------------------------
 int QSopherimModule::getBookValue()
 {
-   return this->bookValue;
+   return m_bookValue;
 }
 //------------------------------------------------------------------------------
 QString QSopherimModule::getModuleName()
 {
-    return this->moduleName;
+    return m_moduleName;
 }
 //------------------------------------------------------------------------------
 QString QSopherimModule::getModuleShortName()
 {
-    return this->moduleShortName;
+    return m_moduleShortName;
 }
 //------------------------------------------------------------------------------
 void QSopherimModule::setBookValue(int newvalue)
 {
-    this->bookValue = newvalue;
+    m_bookValue = newvalue;
 }
 //------------------------------------------------------------------------------
 void QSopherimModule::setModuleName(QString newname)
 {
-    this->moduleName = newname;
+    m_moduleName = newname;
 }
 //------------------------------------------------------------------------------
 void QSopherimModule::setModuleShortName(QString newname)
 {
-    this->moduleShortName = newname;
+    m_moduleShortName = newname;
 }
 //------------------------------------------------------------------------------
 void QSopherimModule::init()
 {
-    bookValue = 0;
-    moduleName = "";
-    moduleShortName = "";
-    modulePath = "";
-    bookList.clear();
-    numberOfChaptersInBook.clear();
+    m_bookValue = 0;
+    m_moduleName = "";
+    m_moduleShortName = "";
+    m_modulePath = "";
+    m_bookList.clear();
+    m_numberOfChaptersInBook.clear();
+    m_moduleType = "";
 }
 //------------------------------------------------------------------------------
 QSopherimModuleInfo QSopherimModule::getModuleInfo()
 {
     QSopherimModuleInfo list;
-    list.moduleName = moduleName;
-    list.moduleShortName = moduleShortName;
-    list.bookValue = bookValue;
-    list.modulePath = modulePath;
-    list.bookList = bookList;
-    list.numberOfChaptersInBook = numberOfChaptersInBook;
+    list.moduleName = m_moduleName;
+    list.moduleShortName = m_moduleShortName;
+    list.bookValue = m_bookValue;
+    list.modulePath = m_modulePath;
+    list.bookList = m_bookList;
+    list.numberOfChaptersInBook = m_numberOfChaptersInBook;
+    list.moduleType = m_moduleType;
 //    myDebug() << "fasf" <<  this;
 
 //    list << moduleName
@@ -85,38 +88,48 @@ QSopherimModuleInfo QSopherimModule::getModuleInfo()
 //------------------------------------------------------------------------------
 void QSopherimModule::setModulePath(QString newPath)
 {
-    modulePath = newPath;
+    m_modulePath = newPath;
 }
 //------------------------------------------------------------------------------
 QString QSopherimModule::getModulePath()
 {
-    return modulePath;
+    return m_modulePath;
 }
 //------------------------------------------------------------------------------
 QStringList QSopherimModule::getBookList()
 {
 //    myDebug() << bookList.size();
 //    myDebug() << "fasf" << this;
-    return bookList;
+    return m_bookList;
 }
 //------------------------------------------------------------------------------
 void QSopherimModule::setBookList(QStringList newlist)
 {
-    bookList = newlist;
+    m_bookList = newlist;
 }
 //------------------------------------------------------------------------------
 QHash<QString, int> QSopherimModule::getNumberOfChaptersInBooks()
 {
-    return numberOfChaptersInBook;
+    return m_numberOfChaptersInBook;
 }
 //------------------------------------------------------------------------------
 void QSopherimModule::setNumberOfChaptersInBooks(QHash<QString, int> newP)
 {
-    numberOfChaptersInBook = newP;
+    m_numberOfChaptersInBook = newP;
 }
 //------------------------------------------------------------------------------
 int QSopherimModule::getValueChapterForBookFromModule(QString nameOfBook)
 {
-    return numberOfChaptersInBook.value(nameOfBook);
+    return m_numberOfChaptersInBook.value(nameOfBook);
+}
+//------------------------------------------------------------------------------
+QString QSopherimModule::getModuleType()
+{
+    return m_moduleType;
+}
+//------------------------------------------------------------------------------
+void QSopherimModule::setModuleType(QString newType)
+{
+    m_moduleType = newType;
 }
 //------------------------------------------------------------------------------

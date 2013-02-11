@@ -205,7 +205,7 @@ QString getNextWord(QString str, int pos)
     return t_str;
 }
 //-------------------------------------------------------------------------------
-QString getShortLang(QString str)
+QString getShortLang(const QString str)
 {
     if (str == "Russian")
         return "ru";
@@ -266,4 +266,14 @@ void genInterchangeableColorsIntext(QString *f_text, int count)
         (*f_text).append(t_str + "\n");
     }
 }
-//-------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+QString getParamFromStr(const QString *f_str, const QString f_param)
+{
+    QString r_text = *f_str;
+
+    QString t_rgx = f_param + "(\\s*)=(\\s*)";
+    r_text = r_text.remove(QRegExp(t_rgx, Qt::CaseInsensitive)).trimmed();
+
+    return r_text;
+}
+//------------------------------------------------------------------------------

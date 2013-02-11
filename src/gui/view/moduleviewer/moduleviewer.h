@@ -101,7 +101,7 @@ protected:
     //    void contextMenuEvent(QContextMenuEvent *event);
 //    bool eventFilter(QObject *obj, QEvent *ev);
     bool event(QEvent *e);
-//    void mouseMoveEvent (QMouseEvent* event);
+    //void mouseMoveEvent (QMouseEvent* event);
 
 private:
     Ui::ModuleViewer *ui;

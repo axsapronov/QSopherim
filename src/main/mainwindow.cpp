@@ -113,7 +113,7 @@ void MainWindow::init()
     addDockWidget(Qt::RightDockWidgetArea, GUI_RightPanel);
     //    addDockWidget(Qt::BottomDockWidgetArea, GUI_BottomPanel);
 
-    //GUI_RightPanel->hide();
+    GUI_RightPanel->hide();
     prModule = new ProcessModule();
 
     //    centralWidget()->setAttribute(Qt::WA_TransparentForMouseEvents);
@@ -524,7 +524,7 @@ void MainWindow::loadModulesFromFolder()
 
         QLabel overallLabel(&loadProgress);
         overallLabel.setGeometry(11, 10, 378, 20);
-        overallLabel.setText("Load modules");
+        overallLabel.setText(tr("Convert: bible modules"));
 
         overallLabel.show();
 
@@ -553,7 +553,7 @@ void MainWindow::loadDictFromFolder()
 
         QLabel overallLabel(&loadProgress);
         overallLabel.setGeometry(11, 10, 378, 20);
-        overallLabel.setText("Load dictionary");
+        overallLabel.setText(tr("Convert: dictionary modules"));
         overallLabel.show();
 
         QStringList listModules = getListModulesFromPath(

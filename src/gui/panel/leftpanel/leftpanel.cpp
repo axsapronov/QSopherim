@@ -29,6 +29,8 @@ LeftPanel::~LeftPanel()
     delete modelClear;
     delete moduleList;
 
+    delete typeModelBook;
+    delete typeModel;
 
     delete ui;
 }
@@ -41,17 +43,33 @@ void LeftPanel::refreshListModule(QSopherimModuleList* list)
     modelBooks->clear();
     modelChapters->clear();
     moduleList = list;
-    QStringList items;
+    QStringList items_bible;
+    QStringList items_book;
     for (int i = 0; i < list->getSize(); i++)
     {
         if (!Config::configuration()->getListHiddenModules()->contains(list->getModule(i)->getModuleName()))
         {
-            items << QString(list->getModule(i)->getModuleName());
+            //todo
+            if (list->getModule(i)->getModuleType() == "Bible")
+                items_bible << QString(list->getModule(i)->getModuleName());
+            else
+                items_book << QString(list->getModule(i)->getModuleName());
         }
     }
-    typeModel = new QStringListModel(items, this);
-    ui->comBModules->setModel(typeModel);
-    refreshBookList(ui->comBModules->currentText());
+
+    if (!items_bible.isEmpty())
+    {
+        typeModel = new QStringListModel(items_bible, this);
+        ui->comBModules->setModel(typeModel);
+    }
+
+    if (!items_book.isEmpty())
+    {
+        typeModelBook = new QStringListModel(items_book, this);
+        ui->comBModulesBook->setModel(typeModelBook);
+    }
+
+    refreshComboBooks();
 }
 //------------------------------------------------------------------------------
 void LeftPanel::refreshListDict(QSopherimModuleList* list)
@@ -119,17 +137,39 @@ void LeftPanel::refreshBookList(QSopherimModuleList* list)
 //------------------------------------------------------------------------------
 void LeftPanel::refreshChapterList(QModelIndex moind)
 {
+    QTableView *t_table = (QTableView*)sender();
+
     modelChapters->clear();
-    int chapterValue = moduleList->getModuleWithName(ui->comBModules->currentText())
-            ->getValueChapterForBookFromModule(moind.data(0).toString());
+    int chapterValue = 0;
+
+    if (t_table == ui->tableBook)
+        chapterValue = moduleList->getModuleWithName(ui->comBModules->currentText())
+                ->getValueChapterForBookFromModule(moind.data(0).toString());
+
+    if (t_table == ui->tableBookBook)
+        chapterValue = moduleList->getModuleWithName(ui->comBModulesBook->currentText())
+                ->getValueChapterForBookFromModule(moind.data(0).toString());
+
     modelChapters->clear();
     for (int i = 0; i < chapterValue; i++)
     {
         modelChapters->setItem(i, 0, new QStandardItem(QString::number(i + 1)));
         //        myDebug() << "yes";
     }
-    ui->tableChapter->setModel(modelChapters);
-    ui->tableChapter->resizeColumnsToContents();
+
+
+    if (t_table == ui->tableBook)
+    {
+        ui->tableChapter->setModel(modelChapters);
+        ui->tableChapter->resizeColumnsToContents();
+    }
+
+    if (t_table == ui->tableBookBook)
+    {
+        ui->tableChapterBook->setModel(modelChapters);
+        ui->tableChapterBook->resizeColumnsToContents();
+    }
+
     m_lastNameOfBook  = moind.data(0).toString();
 }
 //------------------------------------------------------------------------------
@@ -148,9 +188,17 @@ void LeftPanel::init()
 //------------------------------------------------------------------------------
 void LeftPanel::createConnects()
 {
+    // bible or book
     connect(ui->comBModules, SIGNAL(activated(QString)), SLOT(refreshBookList(QString)));
+    connect(ui->comBModulesBook, SIGNAL(activated(QString)), SLOT(refreshBookList(QString)));
+
     connect(ui->tableBook, SIGNAL(clicked(QModelIndex)), SLOT(refreshChapterList(QModelIndex)));
+    connect(ui->tableBookBook, SIGNAL(clicked(QModelIndex)), SLOT(refreshChapterList(QModelIndex)));
+
     connect(ui->tableChapter, SIGNAL(clicked(QModelIndex)), SLOT(showChapter(QModelIndex)));
+    connect(ui->tableChapterBook, SIGNAL(clicked(QModelIndex)), SLOT(showChapter(QModelIndex)));
+
+    // dict
     connect(ui->comBDictList, SIGNAL(activated(QString)), SLOT(refreshWordListFromDict(QString)));
     connect(ui->comBWordList, SIGNAL(activated(QString)), SLOT(showDescriptionWord(QString)));
     connect(ui->ListViewWordList, SIGNAL(clicked(QModelIndex)), SLOT(showWord(QModelIndex)));
@@ -162,43 +210,89 @@ void LeftPanel::createConnects()
 //------------------------------------------------------------------------------
 void LeftPanel::showChapter(QModelIndex ind)
 {
-    /// так как выделение с книги может спадать, то надо запоминать последнюю книгу
+    // так как выделение с книги может спадать, то надо запоминать последнюю книгу
+
+    QTableView *t_table = (QTableView*)sender();
 
     QString t_nameOfBook;
-    QModelIndexList selectedList = ui->tableBook->selectionModel()->selectedRows();
+    QModelIndexList selectedList;
+    QString t_pathToModule;
+    QString t_curModule;
+
+    // bible
+    if (t_table == ui->tableChapter)
+    {
+        selectedList = ui->tableBook->selectionModel()->selectedRows();
+        t_curModule = ui->comBModules->currentText();
+    }
+
+    // book
+    if (t_table == ui->tableChapterBook)
+    {
+        selectedList = ui->tableBookBook->selectionModel()->selectedRows();
+        t_curModule = ui->comBModulesBook->currentText();
+    }
+
     for( int i = 0; i < selectedList.count(); i++)
     {
         t_nameOfBook = selectedList.at(i).data(0).toString();
     }
+    m_lastNameOfBook = t_nameOfBook;
 
-    QString t_pathToModule = Config::configuration()->getAppDir() +
-            moduleList->getModuleWithName(ui->comBModules->currentText())->getModulePath();
+    t_pathToModule = Config::configuration()->getAppDir() +
+            moduleList->getModuleWithName(t_curModule)->getModulePath();
     t_pathToModule.replace("module.ini", "text.xml");
 
-    ModuleViewer::viewer()->setModuleName(ui->comBModules->currentText());
+    ModuleViewer::viewer()->setModuleName(t_curModule);
     ModuleViewer::viewer()->showChapter(t_pathToModule, m_lastNameOfBook ,
                                         ind.row() + 1);
-    emit SIGNAL_AddRecordToJournal(ui->comBModules->currentText(),
+
+
+    emit SIGNAL_AddRecordToJournal(t_curModule,
                                    m_lastNameOfBook ,
                                    QString::number(ind.row() + 1));
 
 }
 //------------------------------------------------------------------------------
-void LeftPanel::refreshBookList(QString nameOfBook)
+void LeftPanel::refreshBookList(QString nameOfModule, QString f_type)
 {
     modelBooks->clear();
     modelChapters->clear();
-    QStringList bookList = moduleList->getModuleBooks(nameOfBook);
-    //    myDebug() << moduleList->getModuleWithName(ui->comBModules->currentText());
-    //    myDebug() << bookList.size();
+
+    QStringList bookList = moduleList->getModuleBooks(nameOfModule);
     for (int i = 0; i < bookList.size() - 1; i++)
     {
         modelBooks->setItem(i, 0, new QStandardItem(bookList.at(i)));
-        //        myDebug() << "yes";
     }
 
-    ui->tableBook->setModel(modelBooks);
-    ui->tableBook->resizeColumnsToContents();
+    if (f_type == "Bible")
+    {
+        ui->tableBook->setModel(modelBooks);
+        ui->tableBook->resizeColumnsToContents();
+    }
+
+    if (f_type == "Book")
+    {
+        ui->tableBookBook->setModel(modelBooks);
+        ui->tableBookBook->resizeColumnsToContents();
+    }
+}
+//------------------------------------------------------------------------------
+void LeftPanel::refreshBookList(QString nameOfModule)
+{
+    QComboBox *combo = (QComboBox*)sender();
+
+    if (combo == ui->comBModules)
+        refreshBookList(nameOfModule, "Bible");
+
+    if (combo == ui->comBModulesBook)
+        refreshBookList(nameOfModule, "Book");
+}
+//------------------------------------------------------------------------------
+void LeftPanel::refreshComboBooks()
+{
+    refreshBookList(ui->comBModulesBook->currentText(), "Book");
+    refreshBookList(ui->comBModules->currentText(), "Bible");
 }
 //------------------------------------------------------------------------------
 void LeftPanel::retranslate()
@@ -211,11 +305,11 @@ void LeftPanel::showChapterFromJournal(QString module, QString book, QString cha
     QString t_pathToModule = Config::configuration()->getAppDir() +
             moduleList->getModuleWithName(module)->getModulePath();
     t_pathToModule.replace("module.ini", "text.xml");
-
     m_lastNameOfBook  = book;
-
     ui->comBModules->setCurrentIndex(ui->comBModules->findText(module));
-    refreshBookList(module);
+
+    // refresh tab for bible modules or book modules
+    refreshBookList(module, moduleList->getModuleWithName(module)->getModuleType());
 
     ModuleViewer::viewer()->setModuleName(module);
     ModuleViewer::viewer()->showChapter(t_pathToModule, book,
@@ -300,15 +394,16 @@ QStringList LeftPanel::getListDictWithWord(QString word)
 //------------------------------------------------------------------------------
 void LeftPanel::sShowHideLeftPanel2(int f_tab)
 {
-    if (f_tab == 2) // dict
-    {
-        // hide if select dict
-        emit SIGNAL_ShowHideLeftPanel2(true); // hide
-    }
-    else
-    {
+    // not copy many of tab 1, tab 2, tab N
+    if (f_tab != 2) // dict
         // show if select module
         emit SIGNAL_ShowHideLeftPanel2(false);
+
+    switch (f_tab)
+    {
+    case 0 /*bible tab*/: refreshBookList(ui->comBModules->currentText(), "Bible"); break;
+    case 1 /*book tab*/ : refreshBookList(ui->comBModulesBook->currentText(), "Book"); break;
+    case 2 /*dict tab*/ : emit SIGNAL_ShowHideLeftPanel2(true); // hide if select dict
     }
 
 }

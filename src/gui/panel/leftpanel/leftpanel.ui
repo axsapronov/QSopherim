@@ -140,7 +140,7 @@
          </spacer>
         </item>
         <item row="1" column="2">
-         <widget class="QTableView" name="tableChaptekBook">
+         <widget class="QTableView" name="tableChapterBook">
           <property name="maximumSize">
            <size>
             <width>60</width>

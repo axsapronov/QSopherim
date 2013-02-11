@@ -20,17 +20,14 @@ NoteEditor::~NoteEditor()
 //------------------------------------------------------------------------------
 void NoteEditor::saveNote()
 {
-    //    myDebug() << "saveNote";
-
     QString textNote = ui->textEditor->toPlainText();
-    //    myDebug() << textNote;
-    //    myDebug() << m_path;
     addTextNotes(textNote);
 
     m_verse = "";
     m_moduleName = "";
     m_bookName = "";
     m_chapterValue = "";
+    ui->textEditor->clear();
 
     QWidget::hide();
 }

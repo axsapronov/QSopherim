@@ -47,8 +47,13 @@ private slots:
     void refreshChapterList(QModelIndex);
     /**
      * @brief refreshBookList
+     * @param nameOfModule
      */
-    void refreshBookList(QString);
+    void refreshBookList(QString nameOfModule);
+    /**
+     * @brief refreshBookList
+     */
+    void refreshBookList(QString nameOfModule, QString f_type);
     /**
      * @brief showChapter
      */
@@ -88,6 +93,7 @@ private:
     QString m_lastNameOfBook;
 
     QStringListModel *typeModel;
+    QStringListModel *typeModelBook;
 
     QString m_curWord;
     /**
@@ -101,6 +107,8 @@ private:
      * @brief createConnects
      */
     void createConnects();
+
+    void refreshComboBooks();
 
     QStringList getListDictWithWord(QString word);
 };

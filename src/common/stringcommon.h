@@ -87,7 +87,7 @@ QString getNextWord(QString str, int pos);
  * @param str
  * @return
  */
-QString getShortLang(QString str);
+QString getShortLang(const QString str);
 
 /**
  * @brief generationInterchangeableColorsIntext
@@ -95,4 +95,12 @@ QString getShortLang(QString str);
  * @param f_color
  */
 void genInterchangeableColorsIntext(QString *f_text, int count = 1);
+
+/**
+ * @brief getParamFromStr
+ * @param f_str
+ * @param f_param
+ * @return
+ */
+QString getParamFromStr(const QString *f_str, const QString f_param);
 #endif // __STRINGCOMMON__H

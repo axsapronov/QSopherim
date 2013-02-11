@@ -41,6 +41,15 @@ void BibleQuoteModule::parseModule(QString pathToModule)
         if (createIniFile(parseInfo))
         {
             createBookFiles(pathToModule);
+
+            if (!m_bibleType)
+            {
+                addToListBookModule(parseInfo.shortName());
+            }
+            else
+            {
+                addToListBibleModule(parseInfo.shortName());
+            }
         }
         else
         {
@@ -154,6 +163,7 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
             "\nModuleChapterSign = " + m_chapterSign +
             "\nModuleChapterZero = " + m_chapterZero +
             "\nStrongNumber = " + m_strongOption +
+            "\nTypeModule = " + m_typeModule +
             "\nPathToModule = " + "bible/" + info.shortName() + "/module.ini";
 
     text.append("\nBookList = ");
@@ -239,6 +249,7 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
     m_bookCount = "";
     m_chapterZero = false;
     m_strongOption = false;
+    m_typeModule = "Bible";
     m_bookList.clear();
 
     m_uid = path;
@@ -252,7 +263,7 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
 
     QFile file;
     file.setFileName(path);
-    QString encoding;
+    //QString encoding;
     //    ModuleSettings *settings = m_settings->getModuleSettings(m_moduleID);
     //    if(settings->encoding == "Default" || settings->encoding.isEmpty()) {
     //        encoding = m_settings->encoding;
@@ -273,51 +284,70 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
 
             if(line.contains("BibleName", Qt::CaseInsensitive))
             {
-                m_moduleName = formatFromIni(line.remove(QRegExp("BibleName(\\s*)=(\\s*)", Qt::CaseInsensitive)));
+                m_moduleName = getParamFromStr(&line, "BibleName");
             }
             if(line.contains("BibleShortName", Qt::CaseInsensitive))
             {
-                m_moduleShortName = formatFromIni(line.remove(QRegExp("BibleShortName(\\s*)=(\\s*)", Qt::CaseInsensitive)));
+                m_moduleShortName = getParamFromStr(&line, "BibleShortName");
             }
             if(line.contains("ChapterSign", Qt::CaseInsensitive))
             {
-                m_chapterSign = formatFromIni(line.remove(QRegExp("ChapterSign(\\s*)=(\\s*)", Qt::CaseInsensitive)));
+                m_chapterSign = getParamFromStr(&line, "ChapterSign");
             }
             if(line.contains("HTMLFilter", Qt::CaseInsensitive))
             {
-                m_removeHtml = formatFromIni(line.remove(QRegExp("HTMLFilter(\\s*)=(\\s*)", Qt::CaseInsensitive)));
+                m_removeHtml = getParamFromStr(&line, "HTMLFilter");
+            }
+            if(line.contains("Copyright", Qt::CaseInsensitive))
+            {
+                m_copyright = getParamFromStr(&line, "Copyright");
             }
             if(line.contains("VerseSign", Qt::CaseInsensitive))
             {
-                m_verseSign = formatFromIni(line.remove(QRegExp("VerseSign(\\s*)=(\\s*)", Qt::CaseInsensitive)));
+                m_verseSign = getParamFromStr(&line, "VerseSign");
             }
             if(line.contains("ChapterZero", Qt::CaseInsensitive))
             {
-                const QString zero = formatFromIni(line.remove(QRegExp("ChapterZero(\\s*)=(\\s*)", Qt::CaseInsensitive)));
-                if(zero.compare("Y", Qt::CaseInsensitive) == 0)
-                {
-                    m_chapterZero = true;
-                } else {
-                    m_chapterZero = false;
-                }
+                const QString zero = getParamFromStr(&line, "ChapterZero");
+                m_chapterZero  = zero.compare("Y", Qt::CaseInsensitive) == 0;
+            }
+            if(line.contains("Bible ", Qt::CaseInsensitive))
+            {
+                const QString bible = getParamFromStr(&line, "Bible");
+                m_bibleType = bible.compare("Y", Qt::CaseInsensitive) == 0;
+                if (!m_bibleType)
+                    m_typeModule = "Book";
+            }
+            if(line.contains("Apocrypha", Qt::CaseInsensitive))
+            {
+                const QString bible = getParamFromStr(&line, "Apocrypha");
+                m_apocrypha = bible.compare("Y", Qt::CaseInsensitive) == 0;
+            }
+            if(line.contains("OldTestament", Qt::CaseInsensitive))
+            {
+                const QString bible = getParamFromStr(&line, "OldTestament");
+                m_oldTestament = bible.compare("Y", Qt::CaseInsensitive) == 0;
+            }
+            if(line.contains("NewTestament", Qt::CaseInsensitive))
+            {
+                const QString bible = getParamFromStr(&line, "NewTestament");
+                m_newTestament = bible.compare("Y", Qt::CaseInsensitive) == 0;
+            }
+            if(line.contains("Greek", Qt::CaseInsensitive))
+            {
+                const QString bible = getParamFromStr(&line, "Greek");
+                m_greek = bible.compare("Y", Qt::CaseInsensitive) == 0;
             }
 
             if(line.contains("StrongNumbers", Qt::CaseInsensitive))
             {
-                const QString zero = formatFromIni(line.remove(QRegExp("StrongNumbers(\\s*)=(\\s*)", Qt::CaseInsensitive)));
-                if(zero.compare("Y", Qt::CaseInsensitive) == 0)
-                {
-                    m_strongOption = true;
-                }
-                else
-                {
-                    m_strongOption = false;
-                }
+                const QString zero = getParamFromStr(&line, "StrongNumbers");
+                m_strongOption = zero.compare("Y", Qt::CaseInsensitive) == 0;
             }
 
             if(started == false && line.contains("BookQty", Qt::CaseInsensitive))
             {
-                m_bookCount = formatFromIni(line.remove(QRegExp("BookQty(\\s*)=(\\s*)", Qt::CaseInsensitive)));
+                m_bookCount = getParamFromStr(&line, "BookQty");
                 started = true;
             }
             if(started == true)
@@ -326,18 +356,18 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
                 {
                     if(line.contains("ChapterQty", Qt::CaseInsensitive))
                     {
-                        bookCount[i] = formatFromIni(line.remove(QRegExp("ChapterQty(\\s*)=(\\s*)", Qt::CaseInsensitive))).toInt();
+                        bookCount[i] = getParamFromStr(&line, "ChapterQty").toInt();
                         i++;
                         started2 = false;
                     }
                     else if(line.contains("FullName", Qt::CaseInsensitive))
                     {
-                        bookFullName << formatFromIni(line.remove(QRegExp("FullName(\\s*)=(\\s*)", Qt::CaseInsensitive)));
+                        bookFullName << getParamFromStr(&line, "FullName");
 
                     }
                     else if(line.contains("ShortName", Qt::CaseInsensitive))
                     {
-                        const QString s = formatFromIni(line.remove(QRegExp("ShortName(\\s*)=(\\s*)", Qt::CaseInsensitive)));
+                        const QString s = getParamFromStr(&line, "ShortName");
                         bookShortName.append(s.split(" "));
 
                     }
@@ -346,7 +376,7 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
                 {
                     count++;
                     started2 = true;
-                    m_bookPath << formatFromIni(line.remove(QRegExp("PathName(\\s*)=(\\s*)", Qt::CaseInsensitive)));
+                    m_bookPath << getParamFromStr(&line, "PathName");
 
                 }
             }
