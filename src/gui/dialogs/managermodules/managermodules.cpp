@@ -77,7 +77,9 @@ void ManagerModules::showSelectedModules()
     QModelIndexList selectedList = ui->tableViewStateModules->selectionModel()->selectedRows();
     for( int i = 0; i<selectedList.count(); i++)
     {
-        m_listModule->showModule(selectedList.at(i).data(0).toString());
+        //todo
+        if (Config::configuration()->getListHiddenModules()->contains(selectedList.at(i).data(0).toString()))
+            m_listModule->showModule(selectedList.at(i).data(0).toString());
     }
     updateList();
 }
