@@ -250,4 +250,11 @@ void addToListBookModule(const QString shortName);
  * @param shortName
  */
 void addToListBibleModule(const QString shortName);
+
+/**
+ * @brief getModuleNameFromIni
+ * @param f_filePath
+ * @return
+ */
+QString getModuleNameFromIni(const QString f_filePath);
 #endif // __FILECOMMON__H

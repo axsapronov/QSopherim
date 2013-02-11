@@ -688,3 +688,35 @@ void addToListBibleModule(const QString f_shortName)
     myDebug() << "apend bible module " << f_shortName;
 }
 //-------------------------------------------------------------------------------
+QString getModuleNameFromIni(const QString f_filePath)
+{
+    QString r_moduleName;
+    if(QFile::exists(f_filePath))
+    {
+        QString encoding = getEncodingFromFile(f_filePath);
+        QFile file(f_filePath);
+        QString str;
+        if(file.open(QIODevice::ReadOnly))
+        {
+            QTextStream stream(&file);
+            stream.setCodec(getCodecOfEncoding(encoding));
+            do
+            {
+                str = stream.readLine();
+                if(str.contains("ModuleName", Qt::CaseInsensitive))
+                {
+                    r_moduleName = getParamFromStr(&str, "ModuleName");
+                }
+
+            } while(!stream.atEnd());
+            file.close();
+        }
+        else
+        {
+            qDebug() << "Error: not open file for read(get info from file):"
+                     << f_filePath;
+        }
+    }
+    return r_moduleName;
+}
+//-------------------------------------------------------------------------------

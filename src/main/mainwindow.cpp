@@ -319,6 +319,11 @@ void MainWindow::createConnects()
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNewBookmark(QString)),
             GUI_RightPanel, SLOT(addNewBookmark(QString)));
 
+    // connect find dialog to left2 panel
+    connect(GUI_FindDialog, SIGNAL(SIGNAL_ShowChapter(QString, QString, QString)),
+            GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
+
+
 
     connect(GUI_RightPanel, SIGNAL(SIGNAL_OpenBookmark(QString, QString, QString)),
             GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));

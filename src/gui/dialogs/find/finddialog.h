@@ -6,6 +6,7 @@
 #include <QProgressDialog>
 #include <QFile>
 #include <QDir>
+#include <QModelIndex>
 
 
 namespace Ui {
@@ -61,6 +62,14 @@ private slots:
      * @brief updateCBBook
      */
     void updateComBBook(int f_moduleIndex);
+    /**
+     * @brief showChapter
+     * @param f_ind
+     */
+    void showChapter(QModelIndex f_ind);
+
+signals:
+    void SIGNAL_ShowChapter(QString module, QString book, QString chapter);
 
 private:
     Ui::FindDialog *ui;
@@ -79,9 +88,6 @@ private:
      * @brief updateCBBook
      */
     void updateComBModule();
-
-
-
 
     /**
      * @brief removeItemListChapter

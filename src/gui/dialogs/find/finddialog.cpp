@@ -6,6 +6,8 @@
 #include "filecommon.h"
 #include "stringcommon.h"
 
+#include <QStandardItemModel>
+
 FindDialog::FindDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FindDialog)
@@ -24,7 +26,6 @@ FindDialog::~FindDialog()
 void FindDialog::preShowDialog()
 {
     m_currentDir.setPath(Config::configuration()->getAppDir() + "/");
-//    ui->LEFind->setText("В начале");
     updateComBModule();
 }
 //------------------------------------------------------------------------------
@@ -38,6 +39,7 @@ void FindDialog::createConnects()
     connect(ui->pBFind, SIGNAL(clicked()), SLOT(find()));
     connect(ui->comBModule, SIGNAL(activated(int)), SLOT(updateComBBook(int)));
     connect(ui->comBBook, SIGNAL(activated(int)), SLOT(updateComBChapter(int)));
+    connect(ui->tableFiles, SIGNAL(activated(QModelIndex)), SLOT(showChapter(QModelIndex)));
 }
 //------------------------------------------------------------------------------
 void FindDialog::find()
@@ -162,19 +164,7 @@ void FindDialog::updateComBModule()
 
     for (int i = 0; i < t_list.size(); i++)
     {
-        /*
-         *i have
-         ///home/files/Develop/git/QSopherim/QSopherim-build-desktop/build/bin/bible/Сперджен/module.ini
-         i get  "Сперджен" - this is module name
-         */
-
-        QStringList t_l;
-        t_l  << t_list.at(i).split("/");
-
-        // -1 - this is module.ini
-        // -2 - is name of module
-        t_moduleName = t_l.at(t_l.size() - 2);
-
+        t_moduleName = getModuleNameFromIni(t_list.at(i));
         listModules << t_moduleName;
     }
 
@@ -281,18 +271,28 @@ void FindDialog::updateItemforTable(SearchData &data)
     QStringList lib[5];
     QString app[5];
 
+    QString prev;
+    QString curModuleName;
+
     for (int i = 0; i < data.files.size(); i++)
     {
-
         QString str = data.files.at(i);
         QStringList list;
         // path to file text.xml
         list << str.split("/");
+        // case intens
         app[2] = list.last().remove(".htm").remove(".html").remove(".HTML").remove(".HTM");
 
         //module name
         list.removeLast();
-        app[1] = list.last();
+        if (prev != data.files.at(i))
+        {
+            prev = data.files.at(i);
+            QString t_str = data.files.at(i);
+            t_str.replace("text.xml", "module.ini");
+            curModuleName = getModuleNameFromIni(t_str);
+        }
+        app[1] = curModuleName;
 
         //type module
         list.removeLast();
@@ -315,6 +315,19 @@ void FindDialog::updateItemforTable(SearchData &data)
     data.books = lib[2];
     data.chapter = lib[3];
     data.files = lib[4];
+}
+//------------------------------------------------------------------------------
+void FindDialog::showChapter(QModelIndex f_ind)
+{
+    QString module = ui->tableFiles->model()->index(f_ind.row(), 0).data().toString();
+    QString book = ui->tableFiles->model()->index(f_ind.row(), 1).data().toString();
+    QString chapter = ui->tableFiles->model()->index(f_ind.row(), 2).data().toString();
+    QString type = ui->tableFiles->model()->index(f_ind.row(), 3).data().toString();
+
+    if (type == "bible")
+    {
+        emit SIGNAL_ShowChapter(module, book, chapter);
+    }
 }
 //------------------------------------------------------------------------------
 

@@ -11,6 +11,10 @@
 #include <QStandardItemModel>
 #include <QStringListModel>
 
+#define GUI_TAB_BIBLE 0
+#define GUI_TAB_BOOK 1
+#define GUI_TAB_DICT 2
+
 
 
 LeftPanel::LeftPanel(QWidget *parent) :
@@ -302,18 +306,37 @@ void LeftPanel::retranslate()
 //------------------------------------------------------------------------------
 void LeftPanel::showChapterFromJournal(QString module, QString book, QString chapter)
 {
+
     QString t_pathToModule = Config::configuration()->getAppDir() +
             moduleList->getModuleWithName(module)->getModulePath();
+
     t_pathToModule.replace("module.ini", "text.xml");
     m_lastNameOfBook  = book;
-    ui->comBModules->setCurrentIndex(ui->comBModules->findText(module));
+
 
     // refresh tab for bible modules or book modules
     refreshBookList(module, moduleList->getModuleWithName(module)->getModuleType());
 
+    if (moduleList->getModuleWithName(module)->getModuleType() == "Bible")
+    {
+        ui->comBModules->setCurrentIndex(ui->comBModules->findText(module));
+        ui->tabWidget->setCurrentIndex(GUI_TAB_BIBLE); // bible
+        //todo добавить автоматический выбор открытой главы и книги
+    }
+
+    if (moduleList->getModuleWithName(module)->getModuleType() == "Book")
+    {
+        ui->comBModulesBook->setCurrentIndex(ui->comBModulesBook->findText(module));
+        ui->tabWidget->setCurrentIndex(GUI_TAB_BOOK); // book
+    }
+
+
+
+
     ModuleViewer::viewer()->setModuleName(module);
     ModuleViewer::viewer()->showChapter(t_pathToModule, book,
                                         chapter.toInt());
+
 }
 //------------------------------------------------------------------------------
 void LeftPanel::refreshWordListFromDict(QString curText)
@@ -395,15 +418,15 @@ QStringList LeftPanel::getListDictWithWord(QString word)
 void LeftPanel::sShowHideLeftPanel2(int f_tab)
 {
     // not copy many of tab 1, tab 2, tab N
-    if (f_tab != 2) // dict
+    if (f_tab != GUI_TAB_DICT) // dict
         // show if select module
         emit SIGNAL_ShowHideLeftPanel2(false);
 
     switch (f_tab)
     {
-    case 0 /*bible tab*/: refreshBookList(ui->comBModules->currentText(), "Bible"); break;
-    case 1 /*book tab*/ : refreshBookList(ui->comBModulesBook->currentText(), "Book"); break;
-    case 2 /*dict tab*/ : emit SIGNAL_ShowHideLeftPanel2(true); // hide if select dict
+    case GUI_TAB_BIBLE: refreshBookList(ui->comBModules->currentText(), "Bible"); break;
+    case GUI_TAB_BOOK: refreshBookList(ui->comBModulesBook->currentText(), "Book"); break;
+    case GUI_TAB_DICT : emit SIGNAL_ShowHideLeftPanel2(true); // hide if select dict
     }
 
 }
