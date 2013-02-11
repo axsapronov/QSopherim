@@ -10,7 +10,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
-        <location filename="../../src/gui/dialogs/about/about.ui" line="58"/>
+        <location filename="../../src/gui/dialogs/about/about.ui" line="30"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;table border=&quot;0&quot; style=&quot;-qt-table-type: root; margin-top:4px; margin-bottom:4px; margin-left:4px; margin-right:4px;&quot;&gt;
+&lt;tr&gt;
+&lt;td style=&quot;border: none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;QSopherim v. pre-alpha-2 &lt;/span&gt;&lt;img src=&quot;:/banners/banners/globe-small.png&quot; /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Кроссплатформенная читалка для всевозможных форматов библейских текстов&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; color:#000000;&quot;&gt;Website:  &lt;/span&gt;&lt;a href=&quot;http://warmonger1.github.com/QSopherim&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;http://warmonger1.github.com/QSopherim&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; color:#000000;&quot;&gt;Code: &lt;/span&gt;&lt;a href=&quot;https://github.com/WarmongeR1/QSopherim&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;https://github.com/WarmongeR1/QSopherim&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;DejaVu Sans&apos;; color:#000000;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;DejaVu Sans&apos;; color:#000000;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;DejaVu Sans&apos;; color:#000000;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/dialogs/about/about.ui" line="53"/>
+        <source>License</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <location filename="../../src/gui/dialogs/about/about.ui" line="59"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -134,17 +159,17 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:19px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:&apos;sans-serif&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;To do so, attach the following notices to the program. It is safest to attach them to the start of each source file to most effectively state the exclusion of warranty; and each file should have at least the “copyright” line and a pointer to where the full notice is found.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;    &amp;lt;one line to give the program&apos;s name and a brief idea of what it does.&amp;gt;&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;    Copyright (C) &amp;lt;year&amp;gt;  &amp;lt;name of author&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;    This program is free software: you can redistribute it and/or modify&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;    it under the terms of the GNU General Public License as published by&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;    the Free Software Foundation, either version 3 of the License, or&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;    (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;    This program is distributed in the hope that it will be useful,&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;    but WITHOUT ANY WARRANTY; without even the implied warranty of&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;    GNU General Public License for more details.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;    You should have received a copy of the GNU General Public License&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:15px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:&apos;monospace&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;    along with this program.  If not, see &amp;lt;http://www.gnu.org/licenses/&amp;gt;.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:19px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:&apos;sans-serif&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;Also add information on how to contact you by electronic and paper mail.&lt;/span&gt;&lt;/p&gt;
@@ -156,11 +181,16 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:19px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:&apos;sans-serif&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;The hypothetical commands `show w&apos; and `show c&apos; should show the appropriate parts of the General Public License. Of course, your program&apos;s commands might be different; for a GUI interface, you would use an “about box”.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:19px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:&apos;sans-serif&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;You should also get your employer (if you work as a programmer) or school, if any, to sign a “copyright disclaimer” for the program, if necessary. For more information on this, and how to apply and follow the GNU GPL, see &amp;lt;&lt;/span&gt;&lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;&lt;span style=&quot; font-family:&apos;sans-serif&apos;; text-decoration: underline; color:#800080;&quot;&gt;http://www.gnu.org/licenses/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;sans-serif&apos;; color:#35382a;&quot;&gt;&amp;gt;.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:19px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:&apos;sans-serif&apos;; color:#35382a; background-color:#ffffff;&quot;&gt;The GNU General Public License does not permit incorporating your program into proprietary programs. If your program is a subroutine library, you may consider it more useful to permit linking proprietary applications with the library. If this is what you want to do, use the GNU Lesser General Public License instead of this License. But first, please read &amp;lt;&lt;/span&gt;&lt;a href=&quot;http://www.gnu.org/philosophy/why-not-lgpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;sans-serif&apos;; text-decoration: underline; color:#800080;&quot;&gt;http://www.gnu.org/philosophy/why-not-lgpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;sans-serif&apos;; color:#35382a;&quot;&gt;&amp;gt;.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/about/about.ui" line="217"/>
+        <location filename="../../src/gui/dialogs/about/about.ui" line="212"/>
+        <source>Developers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/dialogs/about/about.ui" line="218"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -172,33 +202,18 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;;&quot;&gt;Sapronov Alexander aka WarmongeR&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-weight:600;&quot;&gt;e-mail:&lt;/span&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;;&quot;&gt; sapronov.alexander92@gmail.com&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-weight:600;&quot;&gt;skype:&lt;/span&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;;&quot;&gt; warm0nger1&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;DejaVu Sans&apos;;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;DejaVu Sans&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/about/about.ui" line="244"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;table border=&quot;0&quot; style=&quot;-qt-table-type: root; margin-top:4px; margin-bottom:4px; margin-left:4px; margin-right:4px;&quot;&gt;
-&lt;tr&gt;
-&lt;td style=&quot;border: none;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/gui/dialogs/about/about.ui" line="52"/>
-        <source>License</source>
+        <location filename="../../src/gui/dialogs/about/about.ui" line="239"/>
+        <source>Thanks</source>
         <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
-        <location filename="../../src/gui/dialogs/about/about.ui" line="30"/>
+        <location filename="../../src/gui/dialogs/about/about.ui" line="245"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -206,24 +221,11 @@ p, li { white-space: pre-wrap; }
 &lt;table border=&quot;0&quot; style=&quot;-qt-table-type: root; margin-top:4px; margin-bottom:4px; margin-left:4px; margin-right:4px;&quot;&gt;
 &lt;tr&gt;
 &lt;td style=&quot;border: none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;QSopherim v 0.0 (в разработке) &lt;/span&gt;&lt;img src=&quot;:/banners/banners/globe-small.png&quot; /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;f&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; color:#000000;&quot;&gt;Website:  &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;DejaVu Sans&apos;; color:#000000;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;DejaVu Sans&apos;; color:#000000;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;DejaVu Sans&apos;; color:#000000;&quot;&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/gui/dialogs/about/about.ui" line="211"/>
-        <source>Developers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/gui/dialogs/about/about.ui" line="238"/>
-        <source>Thanks</source>
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Благодарности&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Виктор Липкович - за поддержку, идеи.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -244,7 +246,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../src/gui/dialogs/find/finddialog.ui" line="23"/>
-        <location filename="../../src/gui/dialogs/find/finddialog.cpp" line="187"/>
+        <location filename="../../src/gui/dialogs/find/finddialog.cpp" line="177"/>
         <source>All books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -270,53 +272,53 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../src/gui/dialogs/find/finddialog.ui" line="60"/>
-        <location filename="../../src/gui/dialogs/find/finddialog.cpp" line="200"/>
+        <location filename="../../src/gui/dialogs/find/finddialog.cpp" line="190"/>
         <source>All chapters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/find/finddialog.ui" line="75"/>
+        <location filename="../../src/gui/dialogs/find/finddialog.ui" line="78"/>
         <source>Module</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/find/finddialog.ui" line="80"/>
+        <location filename="../../src/gui/dialogs/find/finddialog.ui" line="83"/>
         <source>Book</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/find/finddialog.ui" line="85"/>
+        <location filename="../../src/gui/dialogs/find/finddialog.ui" line="88"/>
         <source>Chapter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/find/finddialog.ui" line="90"/>
+        <location filename="../../src/gui/dialogs/find/finddialog.ui" line="93"/>
         <source>Type module</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/find/finddialog.ui" line="116"/>
-        <location filename="../../src/gui/dialogs/find/finddialog.cpp" line="157"/>
+        <location filename="../../src/gui/dialogs/find/finddialog.ui" line="119"/>
+        <location filename="../../src/gui/dialogs/find/finddialog.cpp" line="159"/>
         <source>All modules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/find/finddialog.cpp" line="78"/>
+        <location filename="../../src/gui/dialogs/find/finddialog.cpp" line="80"/>
         <source>&amp;Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/find/finddialog.cpp" line="80"/>
+        <location filename="../../src/gui/dialogs/find/finddialog.cpp" line="82"/>
         <source>Find Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/find/finddialog.cpp" line="93"/>
+        <location filename="../../src/gui/dialogs/find/finddialog.cpp" line="95"/>
         <source>Searching file number %1 of %2...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/find/finddialog.cpp" line="275"/>
+        <location filename="../../src/gui/dialogs/find/finddialog.cpp" line="265"/>
         <source>%1 file(s) found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -324,12 +326,22 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LeftPanel</name>
     <message>
-        <location filename="../../src/gui/panel/leftpanel/leftpanel.ui" line="22"/>
+        <location filename="../../src/gui/panel/leftpanel/leftpanel.ui" line="14"/>
+        <source>Modules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/panel/leftpanel/leftpanel.ui" line="25"/>
         <source>Bible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/panel/leftpanel/leftpanel.ui" line="98"/>
+        <location filename="../../src/gui/panel/leftpanel/leftpanel.ui" line="101"/>
+        <source>Book</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/panel/leftpanel/leftpanel.ui" line="177"/>
         <source>Dictionary</source>
         <translation type="unfinished"></translation>
     </message>
@@ -337,22 +349,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LeftPanel2</name>
     <message>
-        <location filename="../../src/gui/panel/leftpanel/leftpanel2.ui" line="28"/>
+        <location filename="../../src/gui/panel/leftpanel/leftpanel2.ui" line="20"/>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/panel/leftpanel/leftpanel2.ui" line="31"/>
         <source>Strongs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/panel/leftpanel/leftpanel2.ui" line="38"/>
+        <location filename="../../src/gui/panel/leftpanel/leftpanel2.ui" line="41"/>
         <source>Notes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/panel/leftpanel/leftpanel2.ui" line="48"/>
+        <location filename="../../src/gui/panel/leftpanel/leftpanel2.ui" line="51"/>
         <source>Journal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/panel/leftpanel/leftpanel2.cpp" line="184"/>
+        <location filename="../../src/gui/panel/leftpanel/leftpanel2.cpp" line="187"/>
         <source>Strong number </source>
         <translation type="unfinished"></translation>
     </message>
@@ -371,13 +388,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="45"/>
-        <location filename="../../src/main/mainwindow.ui" line="167"/>
+        <location filename="../../src/main/mainwindow.ui" line="170"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="50"/>
-        <location filename="../../src/main/mainwindow.ui" line="147"/>
+        <location filename="../../src/main/mainwindow.ui" line="150"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -393,271 +410,286 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="77"/>
-        <location filename="../../src/main/mainwindow.ui" line="118"/>
+        <location filename="../../src/main/mainwindow.ui" line="121"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="102"/>
+        <location filename="../../src/main/mainwindow.ui" line="105"/>
         <source>toolBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="113"/>
+        <location filename="../../src/main/mainwindow.ui" line="116"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="252"/>
+        <location filename="../../src/main/mainwindow.ui" line="255"/>
         <source>Open module(test)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="255"/>
+        <location filename="../../src/main/mainwindow.ui" line="258"/>
         <source>Ctrl+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="260"/>
+        <location filename="../../src/main/mainwindow.ui" line="263"/>
         <source>Create note</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="123"/>
+        <location filename="../../src/main/mainwindow.ui" line="126"/>
         <source>Find in text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="126"/>
+        <location filename="../../src/main/mainwindow.ui" line="93"/>
+        <source>main toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="129"/>
         <source>Ctrl+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="131"/>
+        <location filename="../../src/main/mainwindow.ui" line="134"/>
         <source>Find Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="134"/>
+        <location filename="../../src/main/mainwindow.ui" line="137"/>
         <source>Ctrl+G</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="139"/>
+        <location filename="../../src/main/mainwindow.ui" line="142"/>
         <source>Find Previous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="142"/>
+        <location filename="../../src/main/mainwindow.ui" line="145"/>
         <source>Ctrl+Shift+G</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="152"/>
+        <location filename="../../src/main/mainwindow.ui" line="155"/>
         <source>Lan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="157"/>
+        <location filename="../../src/main/mainwindow.ui" line="160"/>
         <source>Site of program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="162"/>
+        <location filename="../../src/main/mainwindow.ui" line="165"/>
         <source>Fonts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="172"/>
+        <location filename="../../src/main/mainwindow.ui" line="175"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="175"/>
+        <location filename="../../src/main/mainwindow.ui" line="178"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="180"/>
+        <location filename="../../src/main/mainwindow.ui" line="183"/>
         <source>Lang</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="185"/>
-        <location filename="../../src/main/mainwindow.ui" line="195"/>
-        <location filename="../../src/main/mainwindow.ui" line="218"/>
+        <location filename="../../src/main/mainwindow.ui" line="188"/>
+        <location filename="../../src/main/mainwindow.ui" line="198"/>
+        <location filename="../../src/main/mainwindow.ui" line="221"/>
         <source>Russian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="190"/>
-        <location filename="../../src/main/mainwindow.ui" line="200"/>
-        <location filename="../../src/main/mainwindow.ui" line="234"/>
+        <location filename="../../src/main/mainwindow.ui" line="193"/>
+        <location filename="../../src/main/mainwindow.ui" line="203"/>
+        <location filename="../../src/main/mainwindow.ui" line="237"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="205"/>
-        <location filename="../../src/main/mainwindow.ui" line="226"/>
+        <location filename="../../src/main/mainwindow.ui" line="208"/>
+        <location filename="../../src/main/mainwindow.ui" line="229"/>
         <source>France</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="210"/>
-        <location filename="../../src/main/mainwindow.ui" line="242"/>
+        <location filename="../../src/main/mainwindow.ui" line="213"/>
+        <location filename="../../src/main/mainwindow.ui" line="245"/>
         <source>Deutsch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="247"/>
+        <location filename="../../src/main/mainwindow.ui" line="250"/>
         <source>About Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="265"/>
+        <location filename="../../src/main/mainwindow.ui" line="268"/>
         <source>Update list module</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="270"/>
+        <location filename="../../src/main/mainwindow.ui" line="273"/>
         <source>Manager modules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="273"/>
+        <location filename="../../src/main/mainwindow.ui" line="276"/>
         <source>Ctrl+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="278"/>
+        <location filename="../../src/main/mainwindow.ui" line="281"/>
         <source>Find in modules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="281"/>
+        <location filename="../../src/main/mainwindow.ui" line="284"/>
         <source>Ctrl+Shift+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="135"/>
+        <location filename="../../src/main/mainwindow.cpp" line="154"/>
         <source>Toolbars and panels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="351"/>
+        <location filename="../../src/main/mainwindow.cpp" line="375"/>
         <source>&amp;Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="354"/>
+        <location filename="../../src/main/mainwindow.cpp" line="378"/>
         <source>&amp;Expand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="357"/>
+        <location filename="../../src/main/mainwindow.cpp" line="381"/>
         <source>&amp;Restore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="360"/>
+        <location filename="../../src/main/mainwindow.cpp" line="384"/>
         <source>Q&amp;uit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.cpp" line="532"/>
+        <source>Convert: bible modules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.cpp" line="561"/>
+        <source>Convert: dictionary modules</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ManagerModules</name>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="14"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="20"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="34"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="46"/>
         <source>Download modules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="40"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="52"/>
         <source>Get list modules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="110"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="122"/>
         <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="121"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="133"/>
         <source>Status:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="136"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="148"/>
         <source>Remove/hide modules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="154"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="166"/>
         <source>Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="161"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="173"/>
         <source>Show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="181"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="193"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="191"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="203"/>
         <source>Strongs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="201"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="213"/>
         <source>Strongs (htm)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="211"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="223"/>
         <source>Browse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="222"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="234"/>
         <source>Name strongs:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="238"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="250"/>
         <source>Greek</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="248"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="260"/>
         <source>Add to greek strongs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="265"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="277"/>
         <source>Hebrew</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="275"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="287"/>
         <source>Add to hebrew strongs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="179"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="181"/>
         <source>Select strong (.htm)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="181"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="183"/>
         <source>All Files (*);;Html Files (*.htm)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -670,22 +702,22 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/view/moduleviewer/moduleviewer.ui" line="88"/>
+        <location filename="../../src/gui/view/moduleviewer/moduleviewer.ui" line="91"/>
         <source>Previous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/view/moduleviewer/moduleviewer.ui" line="111"/>
+        <location filename="../../src/gui/view/moduleviewer/moduleviewer.ui" line="114"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/view/moduleviewer/moduleviewer.ui" line="131"/>
+        <location filename="../../src/gui/view/moduleviewer/moduleviewer.ui" line="134"/>
         <source>Case Sensitive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/view/moduleviewer/moduleviewer.ui" line="138"/>
+        <location filename="../../src/gui/view/moduleviewer/moduleviewer.ui" line="141"/>
         <source>Whole words</source>
         <translation type="unfinished"></translation>
     </message>
@@ -711,12 +743,13 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>RightPanel</name>
     <message>
-        <location filename="../../src/gui/panel/rightpanel/rightpanel.ui" line="27"/>
+        <location filename="../../src/gui/panel/rightpanel/rightpanel.ui" line="37"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/panel/rightpanel/rightpanel.ui" line="49"/>
+        <location filename="../../src/gui/panel/rightpanel/rightpanel.ui" line="14"/>
+        <location filename="../../src/gui/panel/rightpanel/rightpanel.ui" line="28"/>
         <source>Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -739,12 +772,22 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/settings/settings.ui" line="280"/>
+        <location filename="../../src/gui/dialogs/settings/settings.ui" line="274"/>
+        <source>Options:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/dialogs/settings/settings.ui" line="281"/>
+        <source>Changing text color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/dialogs/settings/settings.ui" line="297"/>
         <source>Global</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/settings/settings.ui" line="292"/>
+        <location filename="../../src/gui/dialogs/settings/settings.ui" line="309"/>
         <source>Language:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -841,28 +884,28 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/settings/settings.ui" line="275"/>
+        <location filename="../../src/gui/dialogs/settings/settings.ui" line="292"/>
         <source>Network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/settings/settings.cpp" line="143"/>
+        <location filename="../../src/gui/dialogs/settings/settings.cpp" line="149"/>
         <source>Settings has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/settings/settings.cpp" line="226"/>
+        <location filename="../../src/gui/dialogs/settings/settings.cpp" line="234"/>
         <source>Select dir for bible modules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/settings/settings.cpp" line="239"/>
+        <location filename="../../src/gui/dialogs/settings/settings.cpp" line="247"/>
         <source>Select dir for dict modules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/settings/settings.cpp" line="252"/>
+        <location filename="../../src/gui/dialogs/settings/settings.cpp" line="260"/>
         <source>Select dir for other modules</source>
         <translation type="unfinished"></translation>
     </message>
