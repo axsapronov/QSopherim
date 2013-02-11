@@ -175,24 +175,45 @@ void LeftPanel2::showNoteList(QString curModule,
 void LeftPanel2::showStrong(QString number)
 {
     // добавить вывод сразу и гречески и иврит
-    if (m_strongGreek_on)
+    //    if (m_strongGreek_on)
+    //    {
+    //        //    myDebug() << m_listStrong.size();
+    //        int i = 0;
+    //        do
+    //        {
+    //            if (m_listStrongGreek.at(i).number == number.toInt())
+    //            {
+    //                QString str =
+    //                        tr("Strong number ")
+    //                        + number
+    //                        + "\n"
+    //                        + m_listStrongGreek.at(i).text;
+    //                ui->textBrStrong->setPlainText(str);
+    //            }
+    //            i++;
+    //        } while (i < m_listStrongGreek.size());
+    //    }
+
+    myDebug() << m_strongGreek_on << m_strongHebrew_on;
+    if (m_strongHebrew_on)
     {
         //    myDebug() << m_listStrong.size();
         int i = 0;
         do
         {
-            if (m_listStrongGreek.at(i).number == number.toInt())
+            if (m_listStrongHebrew.at(i).number == number.toInt())
             {
                 QString str =
                         tr("Strong number ")
                         + number
                         + "\n"
-                        + m_listStrongGreek.at(i).text;
+                        + m_listStrongHebrew.at(i).text;
                 ui->textBrStrong->setPlainText(str);
             }
             i++;
-        } while (i < m_listStrongGreek.size());
+        } while (i < m_listStrongHebrew.size());
     }
+
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::sSetStrongHebrew(QString path)

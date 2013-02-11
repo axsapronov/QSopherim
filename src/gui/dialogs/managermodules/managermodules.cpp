@@ -296,6 +296,8 @@ void ManagerModules::loadStrongList()
 {
     m_hebrewList.clear();
     m_greekList.clear();
+    ui->ListWGreek->clear();
+    ui->ListWHebrew->clear();
 
     QXmlStreamReader xmlReader;
     xmlReader.addData(getTextFromHtmlFile(Config::configuration()->getAppDir()
