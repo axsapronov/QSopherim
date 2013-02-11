@@ -241,33 +241,31 @@ void ModuleViewer::showNoteList()
                              QString::number(m_lastLine));
 
 }
-////------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 bool ModuleViewer::event(QEvent* event)
 {
     if (event->type() == QEvent::ToolTip)
     {
         QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
         QTextCursor cursor = ui->viewer->cursorForPosition(helpEvent->pos() - ui->viewer->pos());
-        //        QTextCursor cursor = ui->viewer->cursor();
-
         cursor.select(QTextCursor::WordUnderCursor);
         if (!cursor.selectedText().isEmpty())
         {
             if (cursor.selectedText().indexOf("0") >= 0 )
             {
                 emit SIGNAL_ShowStrong(cursor.selectedText());
-
-                //                QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
             }
 
+            //            QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
+
+            // show notes
+            m_lastLine = cursor.blockNumber() + 1;
+            showNoteList();
         }
         else
         {
             QToolTip::hideText();
         }
-
-        m_lastLine = cursor.blockNumber();
-        showNoteList();
 
         return true;
     }
@@ -374,7 +372,7 @@ void ModuleViewer::find()
 void ModuleViewer::sFind(QString ttf, bool forward, bool backward)
 {
     QTextDocument *doc = ui->viewer->document();
-//    QString oldText = ui->LEEditFind -> text();
+    //    QString oldText = ui->LEEditFind -> text();
     QTextCursor c = ui->viewer->textCursor();
     QTextDocument::FindFlags options;
     QPalette p = ui->LEEditFind -> palette();

@@ -17,7 +17,8 @@ LeftPanel2::LeftPanel2(QWidget *parent) :
 //------------------------------------------------------------------------------
 LeftPanel2::~LeftPanel2()
 {
-    GUI_NoteEditor->deleteLater();
+    delete m_modelNotes;
+    delete GUI_NoteEditor;
     delete ui;
 }
 //------------------------------------------------------------------------------
@@ -150,21 +151,23 @@ void LeftPanel2::showNoteList(QString curModule,
 
     if (m_data.size() != 0)
     {
+        QStandardItemModel *model = new QStandardItemModel(m_data.size(), 0);
+        model->clear();
+        ui->ListViewNote->setModel(model);
+
         for (int i = 0; i < m_data.size(); i++)
         {
-            QStandardItemModel *model = new QStandardItemModel();
-            model->clear();
-            ui->ListViewNote->setModel(model);
             QStandardItem *item = new QStandardItem();
             QString first50Simbols = m_data[i].mid(0, 50);
             item->setData(first50Simbols, Qt::DisplayRole );
             item->setEditable( false );
             model->appendRow( item );
         }
+
     }
     else
     {
-        /// reset
+        // reset
         ui->ListViewNote->setModel(new QStandardItemModel());
     }
 }

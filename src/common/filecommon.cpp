@@ -605,6 +605,7 @@ QHash<int, QString> getNoteOfParams(QString curPath,
             int pos = line.indexOf(">");
             line.remove(0, pos + 1);
             hash[count] = line;
+            count++;
         }
     }
     return hash;

@@ -72,6 +72,8 @@ private:
     QVector<StrongList> m_listStrongGreek;
     QVector<StrongList> m_listStrongHebrew;
 
+    QStandardItemModel *m_modelNotes;
+
     NoteEditor *GUI_NoteEditor;
 
     QString m_curModule;
