@@ -112,9 +112,9 @@ QSopherimModule* QSopherimModuleList::getModuleWithName(QString name)
     return tes;
 }
 //------------------------------------------------------------------------------
-QStringList QSopherimModuleList::getModuleBooks(QString nameOfbook)
+QStringList QSopherimModuleList::getModuleBooks(QString nameOfModule)
 {
-    QStringList bookList = getModuleWithName(nameOfbook)->getBookList();
+    QStringList bookList = getModuleWithName(nameOfModule)->getBookList();
     return bookList;
 }
 //------------------------------------------------------------------------------

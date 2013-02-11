@@ -68,7 +68,7 @@ public:
      * @brief getModuleBooks
      * @return
      */
-    QStringList getModuleBooks(QString);
+    QStringList getModuleBooks(QString nameOfModule);
 
     void clearList();
 

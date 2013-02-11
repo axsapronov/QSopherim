@@ -53,27 +53,28 @@ void LeftPanel::refreshListModule(QSopherimModuleList* list)
     {
         if (!Config::configuration()->getListHiddenModules()->contains(list->getModule(i)->getModuleName()))
         {
-            //todo
             if (list->getModule(i)->getModuleType() == "Bible")
                 items_bible << QString(list->getModule(i)->getModuleName());
-            else
+
+            if (list->getModule(i)->getModuleType() == "Book")
                 items_book << QString(list->getModule(i)->getModuleName());
         }
-    }
-
-    if (!items_bible.isEmpty())
-    {
-        typeModel = new QStringListModel(items_bible, this);
-        ui->comBModules->setModel(typeModel);
     }
 
     if (!items_book.isEmpty())
     {
         typeModelBook = new QStringListModel(items_book, this);
         ui->comBModulesBook->setModel(typeModelBook);
+        refreshBookList(ui->comBModulesBook->currentText(), "Book");
     }
 
-    refreshComboBooks();
+    if (!items_bible.isEmpty())
+    {
+        typeModel = new QStringListModel(items_bible, this);
+        ui->comBModules->setModel(typeModel);
+        refreshBookList(ui->comBModules->currentText(), "Bible");
+    }
+
 }
 //------------------------------------------------------------------------------
 void LeftPanel::refreshListDict(QSopherimModuleList* list)
@@ -185,6 +186,8 @@ void LeftPanel::init()
     modelChapters = new QStandardItemModel(0, 0, this);
     modelClear = new QStandardItemModel(0, 0, this);
     moduleList = new QSopherimModuleList();
+    typeModelBook = new QStringListModel();
+    typeModel = new QStringListModel();
     m_lastNameOfBook  = "";
     ui->tableBook->reset();
     ui->tableChapter->reset();
