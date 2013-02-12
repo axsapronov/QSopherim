@@ -9,28 +9,46 @@
 QVector<StrongList> getListStrongs(QString pathToFile)
 {
     QVector<StrongList> list;
-    QXmlStreamReader xmlReader;
-    xmlReader.addData(getTextFromHtmlFile(pathToFile));
+
+    //QXmlStreamReader xmlReader;
+    //xmlReader.addData(getTextFromHtmlFile(pathToFile));
+//    while(!xmlReader.atEnd())
+//    {
+//        if(xmlReader.isStartElement())
+//        {
+//            StrongList t_list;
+//            QXmlStreamAttributes attrs = xmlReader.attributes();
+//            if (xmlReader.name().toString() == "strong")
+//            {
+//                t_list.number = attrs.value("number").toString().toInt();
+//                QString str = xmlReader.readElementText();
+//                str.remove("    ");
+//                t_list.text = str;
+//            }
+//            list.push_back(t_list);
+//        }
+//        xmlReader.readNext();
+//    }
 
 
-    while(!xmlReader.atEnd())
+    QString t_text = getTextFromHtmlFile(pathToFile);
+    QStringList t_list = t_text.split("\n");
+
+    for (int i = 0; i < t_list.size(); i++)
     {
-        if(xmlReader.isStartElement())
+        StrongList t_strong;
+        if (t_list.at(i).contains("strong"))
         {
-            StrongList t_list;
-            QXmlStreamAttributes attrs = xmlReader.attributes();
-            if (xmlReader.name().toString() == "strong")
-            {
-                t_list.number = attrs.value("number").toString().toInt();
-                QString str = xmlReader.readElementText();
-                str.remove("    ");
-                t_list.text = str;
-            }
-            list.push_back(t_list);
-        }
-        xmlReader.readNext();
-    }
+            int pos1 = t_list.at(i).indexOf("number='") + 8; // 8 length
+            int pos2 = t_list.at(i).indexOf("'", pos1);
+            t_strong.number = t_list.at(i).mid(pos1, pos2 - pos1).toInt();
 
+            QString str = t_list.at(i).mid(pos2 + 3, t_list.at(i).length() - pos2 - 3 - 9 ); // 9 - length </strong>
+            str.remove("    ");
+            t_strong.text = str;
+        }
+        list.push_back(t_strong);
+    }
     return list;
 }
 //-------------------------------------------------------------------------------

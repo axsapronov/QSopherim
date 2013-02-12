@@ -183,32 +183,30 @@ void LeftPanel2::showStrong(QString number)
     //        {
     //            if (m_listStrongGreek.at(i).number == number.toInt())
     //            {
-    //                QString str =
-    //                        tr("Strong number ")
-    //                        + number
-    //                        + "\n"
-    //                        + m_listStrongGreek.at(i).text;
-    //                ui->textBrStrong->setPlainText(str);
+    //    QString str =
+    //            tr("Strong number: ")
+    //            + number
+    //            + "\n<br>"
+    //            + m_listStrongHebrew.at(i).text;
+    //    ui->textBrStrong->setHtml(str);
     //            }
     //            i++;
     //        } while (i < m_listStrongGreek.size());
     //    }
 
-    myDebug() << m_strongGreek_on << m_strongHebrew_on;
     if (m_strongHebrew_on)
     {
-        //    myDebug() << m_listStrong.size();
         int i = 0;
         do
         {
             if (m_listStrongHebrew.at(i).number == number.toInt())
             {
                 QString str =
-                        tr("Strong number ")
+                        tr("Strong number: ")
                         + number
-                        + "\n"
+                        + "\n<br>"
                         + m_listStrongHebrew.at(i).text;
-                ui->textBrStrong->setPlainText(str);
+                ui->textBrStrong->setHtml(str);
             }
             i++;
         } while (i < m_listStrongHebrew.size());
