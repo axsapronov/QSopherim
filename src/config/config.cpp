@@ -79,7 +79,7 @@ void Config::loadSettings()
 
     // viewer settings
     m_viewerColor = qVariantValue<QColor> (settings.value("viewer/color"));
-    m_optionChangeTextColor = settings.value("viewer/colorchangind").toBool();
+    m_optionChangeTextColor = settings.value("viewer/colorchanging").toBool();
 
     // font settings for viewer
     m_fontColor = qVariantValue<QColor> (settings.value("font/color"));

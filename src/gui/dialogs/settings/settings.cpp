@@ -112,6 +112,7 @@ void Settings::saveSettings()
     Config::configuration()->setBibleDir(ui->LEBibleFolder->text());
     Config::configuration()->setDictDir(ui->LEDictFolder->text());
     Config::configuration()->setOtherDir(ui->LEOtherFolder->text());
+
     Config::configuration()->setOptionChangeTextColor(ui->chBChangindTextColor->checkState());
 
     // save font settings and viewer settings
@@ -124,8 +125,6 @@ void Settings::saveSettings()
     Config::configuration()->setFontItalic(ui->chBItalic->checkState());
     Config::configuration()->setFontStrike(ui->chBStrike->checkState());
     Config::configuration()->setFontUnderline(ui->chBUnderline->checkState());
-
-    Config::configuration()->setOptionChangeTextColor(ui->chBChangindTextColor->checkState());
 
     //    ui->sBFontSize->setValue(Config::configuration()->getFontSize());
 
