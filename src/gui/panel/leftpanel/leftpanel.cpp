@@ -95,6 +95,7 @@ void LeftPanel::refreshListDict(QSopherimModuleList* list)
     }
     typeModel = new QStringListModel(items, this);
     ui->comBDictList->setModel(typeModel);
+    refreshWordListFromDict(ui->comBDictList->currentText());
     //    refreshBookList(ui->comBModules->currentText());
 }
 //------------------------------------------------------------------------------
