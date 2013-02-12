@@ -112,6 +112,7 @@ void Settings::saveSettings()
     Config::configuration()->setBibleDir(ui->LEBibleFolder->text());
     Config::configuration()->setDictDir(ui->LEDictFolder->text());
     Config::configuration()->setOtherDir(ui->LEOtherFolder->text());
+    Config::configuration()->setOptionChangeTextColor(ui->chBChangindTextColor->checkState());
 
     // save font settings and viewer settings
     Config::configuration()->setFontFamily(ui->fontComB->currentText());
