@@ -2,6 +2,7 @@
 #include "ui_noteeditor.h"
 #include "debughelper.h"
 #include "filecommon.h"
+#include "defines.h"
 
 #include "config.h"
 
@@ -10,6 +11,7 @@ NoteEditor::NoteEditor(QWidget *parent) :
     ui(new Ui::NoteEditor)
 {
     ui->setupUi(this);
+    setWindowTitle(QString(tr("Note editor") + " | %1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
     init();
 }
 //------------------------------------------------------------------------------

@@ -3,6 +3,7 @@
 #include "defines.h"
 #include "config.h"
 #include "debughelper.h"
+#include "defines.h"
 
 #include <QDebug>
 #include <QMessageBox>
@@ -14,6 +15,9 @@ Settings::Settings(QWidget *parent) :
     ui(new Ui::Settings)
 {
     ui->setupUi(this);
+
+    setWindowTitle(QString(tr("Settings") + " | %1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
+
     init();
     createConnect();
 }

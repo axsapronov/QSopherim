@@ -50,12 +50,16 @@ void ModuleViewer::sShowContextMenu(QPoint pt)
     menu->addAction(act_addNote);
     menu->addSeparator();
 
-    QAction *act = new QAction(QString(m_curModule
-                                       + " : "
-                                       + m_curBook
-                                       + " : "
-                                       + m_curChapter), this);
-    menu->addAction(act);
+
+    if (!m_curChapter.isEmpty())
+    {
+        QAction *act = new QAction(QString(m_curModule
+                                           + " : "
+                                           + m_curBook
+                                           + " : "
+                                           + m_curChapter), this);
+        menu->addAction(act);
+    }
     menu->exec(ui->viewer->mapToGlobal(pt));
 }
 //------------------------------------------------------------------------------

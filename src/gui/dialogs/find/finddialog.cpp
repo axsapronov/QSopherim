@@ -6,6 +6,8 @@
 #include "filecommon.h"
 #include "stringcommon.h"
 
+#include "defines.h" // GL_
+
 #include <QStandardItemModel>
 
 FindDialog::FindDialog(QWidget *parent) :
@@ -13,6 +15,9 @@ FindDialog::FindDialog(QWidget *parent) :
     ui(new Ui::FindDialog)
 {
     ui->setupUi(this);
+
+    setWindowTitle(QString(tr("Find") + " | %1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
+
     init();
 }
 //------------------------------------------------------------------------------

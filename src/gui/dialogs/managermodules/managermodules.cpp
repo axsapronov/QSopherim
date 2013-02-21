@@ -7,6 +7,7 @@
 #include "filecommon.h"
 #include "strongcommon.h"
 #include "stringcommon.h"
+#include "defines.h"
 
 #include <QStandardItemModel>
 #include <QFileDialog>
@@ -16,6 +17,8 @@ ManagerModules::ManagerModules(QWidget *parent) :
     ui(new Ui::ManagerModules)
 {
     ui->setupUi(this);
+
+    setWindowTitle(QString(tr("Manager modules") + " | %1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
     init();
 }
 //------------------------------------------------------------------------------
