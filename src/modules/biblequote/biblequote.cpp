@@ -4,6 +4,7 @@
 #include "filecommon.h"
 #include "moduledefinition.h"
 #include "config.h"
+#include "defines.h"
 
 #include <QTextCodec>
 #include <QString>
@@ -164,7 +165,7 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
             "\nModuleChapterZero = " + m_chapterZero +
             "\nStrongNumber = " + m_strongOption +
             "\nTypeModule = " + m_typeModule +
-            "\nPathToModule = " + "bible/" + info.shortName() + "/module.ini";
+            "\nPathToModule = " + "bible/" + info.shortName() + "/module" + GL_FORMAT_MODULE;
 
     text.append("\nBookList = ");
     for(int i = 0; i < m_bookList.size(); i++)
@@ -183,13 +184,13 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
 
     //    myDebug() << m_bookPath;
     QString t_pathToIniFile = QString(Config::configuration()->getAppDir() + "bible/" +
-                                      info.shortName() + "/module.ini");
+                                      info.shortName() + "/module" + GL_FORMAT_MODULE);
     if (QFile::exists(t_pathToIniFile))
     {
         QFile::remove(t_pathToIniFile);
     }
     return createEmpty(Config::configuration()->getAppDir() + "bible/" +
-                       info.shortName() + "/module.ini", text);
+                       info.shortName() + "/module" + GL_FORMAT_MODULE, text);
 
     return false;
 }

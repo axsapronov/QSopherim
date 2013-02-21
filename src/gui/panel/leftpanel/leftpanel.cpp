@@ -6,7 +6,7 @@
 #include "filecommon.h"
 
 #include "config.h"
-
+#include "defines.h"
 
 #include <QStandardItemModel>
 #include <QStringListModel>
@@ -249,7 +249,9 @@ void LeftPanel::showChapter(QModelIndex ind)
 
     t_pathToModule = Config::configuration()->getAppDir() +
             moduleList->getModuleWithName(t_curModule)->getModulePath();
-    t_pathToModule.replace("module.ini", "text.xml");
+
+    t_pathToModule.replace("module" + GL_FORMAT_MODULE
+                           , "text" + GL_FORMAT_TEXT);
 
     ModuleViewer::viewer()->setModuleName(t_curModule);
     ModuleViewer::viewer()->showChapter(t_pathToModule, m_lastNameOfBook ,
@@ -314,7 +316,8 @@ void LeftPanel::showChapterFromJournal(QString module, QString book, QString cha
     QString t_pathToModule = Config::configuration()->getAppDir() +
             moduleList->getModuleWithName(module)->getModulePath();
 
-    t_pathToModule.replace("module.ini", "text.xml");
+    t_pathToModule.replace("module" + GL_FORMAT_MODULE
+                           , "text" + GL_FORMAT_TEXT);
     m_lastNameOfBook  = book;
 
 
@@ -346,7 +349,7 @@ void LeftPanel::showChapterFromJournal(QString module, QString book, QString cha
 void LeftPanel::refreshWordListFromDict(QString curText)
 {
     QString t_pathToFile = QString(Config::configuration()->getAppDir() + "dictionary/" +
-                                   curText + "/dict.xml");
+                                   curText + "/dict" + GL_FORMAT_TEXT);
     QStringList wordList = getListWord(t_pathToFile);
 
     QStandardItemModel* modelWord = new QStandardItemModel;
@@ -359,13 +362,12 @@ void LeftPanel::refreshWordListFromDict(QString curText)
     ui->ListViewWordList->setModel(modelWord);
 
     // find desc from other dict
-
 }
 //------------------------------------------------------------------------------
 void LeftPanel::showDescriptionWord(QString word)
 {
     QString t_pathToFile = QString(Config::configuration()->getAppDir() + "dictionary/" +
-                                   ui->comBDictList->currentText() + "/dict.xml");
+                                   ui->comBDictList->currentText() + "/dict" + GL_FORMAT_TEXT);
 
     QString t_text = QString(tr("<b>Word: <i>%1</i></b><br><br>")).arg(word) + getDescriptionForWordFromDict(t_pathToFile, word);
     ui->view->setText(t_text);
@@ -375,7 +377,7 @@ void LeftPanel::showDescriptionWordFromOtherModules(QString word)
 {
     word = m_curWord;
     QString t_pathToFile = QString(Config::configuration()->getAppDir() + "dictionary/" +
-                                   ui->comBDictListFindWord->currentText() + "/dict.xml");
+                                   ui->comBDictListFindWord->currentText() + "/dict" + GL_FORMAT_TEXT);
 
     QString t_text = getDescriptionForWordFromDict(t_pathToFile, word);
     ui->view->setText(t_text);

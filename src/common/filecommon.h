@@ -194,7 +194,7 @@ QHash<QString, int> getNumberOfChaptersInBook(QString filename);
  * @param format
  * @return
  */
-QStringList getListModulesFromPath(QString path, QString format=".ini");
+QStringList getListModulesFromPath(QString path, QString format=".qsi");
 /**
  * @brief recursiveFind
  * @param directory

@@ -182,7 +182,7 @@ void FindDialog::updateComBBook(int f_moduleIndex)
     t_list << tr("All books");
     if (f_moduleIndex != 0)
     {
-        t_list.append(getBookList(Config::configuration()->getAppDir() + "bible/" + ui->comBModule->currentText() + "/module.ini"));
+        t_list.append(getBookList(Config::configuration()->getAppDir() + "bible/" + ui->comBModule->currentText() + "/module" + GL_FORMAT_MODULE));
     }
     ui->comBBook->clear();
     ui->comBBook->addItems(t_list);
@@ -195,7 +195,7 @@ void FindDialog::updateComBChapter(int f_bookIndex)
     listChapters << tr("All chapters");
     if (f_bookIndex != 0)
     {
-        QHash<QString, int> t_hash = getNumberOfChaptersInBook(Config::configuration()->getAppDir() + "bible/" + ui->comBModule->currentText() + "/module.ini");
+        QHash<QString, int> t_hash = getNumberOfChaptersInBook(Config::configuration()->getAppDir() + "bible/" + ui->comBModule->currentText() + "/module" + GL_FORMAT_MODULE);
 
         int countChapters = t_hash[ui->comBBook->currentText()];
 
@@ -283,7 +283,7 @@ void FindDialog::updateItemforTable(SearchData &data)
     {
         QString str = data.files.at(i);
         QStringList list;
-        // path to file text.xml
+        // path to file text.qst
         list << str.split("/");
         // case intens
         app[2] = list.last().remove(".htm").remove(".html").remove(".HTML").remove(".HTM");
@@ -294,7 +294,7 @@ void FindDialog::updateItemforTable(SearchData &data)
         {
             prev = data.files.at(i);
             QString t_str = data.files.at(i);
-            t_str.replace("text.xml", "module.ini");
+            t_str.replace("text" + GL_FORMAT_TEXT, "module" + GL_FORMAT_MODULE);
             curModuleName = getModuleNameFromIni(t_str);
         }
         app[1] = curModuleName;

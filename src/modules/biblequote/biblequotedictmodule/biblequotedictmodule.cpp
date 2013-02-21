@@ -1,5 +1,7 @@
 #include "biblequotedictmodule.h"
 
+#include "defines.h"
+
 #include "debughelper.h"
 #include "stringcommon.h"
 
@@ -70,16 +72,16 @@ bool BibleQuoteDictModule::createIniFile()
             "\nDescription = " + m_description +
             "\nRight = " + m_copyright +
             "\nNumbering= " + m_numbering +
-            "\nPathToModule = " + "dictionary/" +  m_name + "/module.ini";
+            "\nPathToModule = " + "dictionary/" +  m_name + "/module" + GL_FORMAT_MODULE;
     //    myDebug() << m_bookPath;
     QString t_pathToIniFile = QString(Config::configuration()->getAppDir() + "bible/" +
-                                      m_name + "/module.ini");
+                                      m_name + "/module" + GL_FORMAT_MODULE);
     if (QFile::exists(t_pathToIniFile))
     {
         QFile::remove(t_pathToIniFile);
     }
     return createEmpty(Config::configuration()->getAppDir() + "dictionary/" +
-                       m_name + "/module.ini", text);
+                       m_name + "/module" + GL_FORMAT_MODULE, text);
     return false;
 }
 //------------------------------------------------------------------------------
@@ -108,7 +110,7 @@ void BibleQuoteDictModule::writeDictFile(QHash<int, WordDictList> *wordList)
 {
     QString path;
     path = QString(Config::configuration()->getAppDir() + "dictionary/" +
-                   m_name + "/dict.xml");
+                   m_name + "/dict" + GL_FORMAT_TEXT);
     QFile file(path);
     if (file.exists())
         file.remove();

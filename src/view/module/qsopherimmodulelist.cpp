@@ -2,6 +2,7 @@
 #include "debughelper.h"
 #include "filecommon.h"
 #include "config.h"
+#include "defines.h"
 
 #include <QVector>
 #include <QDir>
@@ -88,7 +89,7 @@ QStringList QSopherimModuleList::getModuleFilesList(QStringList files)
     QStringList list;
     for(int i = 0; i < files.size(); i++)
     {
-        if(files.at(i).indexOf(".ini") >= 0)
+        if(files.at(i).indexOf(GL_FORMAT_MODULE) >= 0)
         {
             list << files.at(i);
         }
@@ -126,11 +127,11 @@ void QSopherimModuleList::deleteModule(QString nameModule)
         {
             QString t_path = Config::configuration()->getAppDir() + moduleList.at(i)->getModulePath();
             QFile::remove(t_path);
-            t_path.replace("module.ini", "text.xml");
-            QFile::remove(QString(t_path).replace("module.ini", "text.xml"));
-            t_path.replace("text.xml", "dict.xml");
-            QFile::remove(QString(t_path).replace("module.ini", "dict.xml"));
-            t_path.remove("dict.xml");
+            t_path.replace("module" + GL_FORMAT_MODULE, "text" + GL_FORMAT_TEXT);
+            QFile::remove(QString(t_path).replace("module" + GL_FORMAT_MODULE, "text" + GL_FORMAT_TEXT));
+            t_path.replace("text" + GL_FORMAT_TEXT, "dict" + GL_FORMAT_TEXT);
+            QFile::remove(QString(t_path).replace("module" + GL_FORMAT_MODULE, "dict" + GL_FORMAT_TEXT));
+            t_path.remove("dict" + GL_FORMAT_TEXT);
             QDir dir (t_path);
 
             dir.rmpath(t_path);

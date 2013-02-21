@@ -7,4 +7,10 @@
 #define GL_PROG_AUTHOR          "Sapronov Alexander"
 #define GL_WEB_SITE             "http://warmonger1.github.com/QSopherim"
 
+
+//
+
+#define GL_FORMAT_MODULE QString(".qsi")
+#define GL_FORMAT_TEXT QString(".qst")
+
 #endif // __DEFINES_H
