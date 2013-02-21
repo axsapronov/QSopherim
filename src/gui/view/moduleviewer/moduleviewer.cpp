@@ -140,8 +140,9 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
     m_curBook = nameBook;
     m_curPath = pathToFile;
     m_curChapter = QString::number(numberchapter);
-    ui->LAStatus->setText(m_curModule + " : " + m_curBook + " : " + m_curChapter );
 
+    if (!m_curChapter.isEmpty())
+        ui->LAStatus->setText(m_curModule + " : " + m_curBook + " : " + m_curChapter );
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::init()

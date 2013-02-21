@@ -367,7 +367,7 @@ void LeftPanel::showDescriptionWord(QString word)
     QString t_pathToFile = QString(Config::configuration()->getAppDir() + "dictionary/" +
                                    ui->comBDictList->currentText() + "/dict.xml");
 
-    QString t_text = getDescriptionForWordFromDict(t_pathToFile, word);
+    QString t_text = QString(tr("<b>Word: <i>%1</i></b><br><br>")).arg(word) + getDescriptionForWordFromDict(t_pathToFile, word);
     ui->view->setText(t_text);
 }
 //------------------------------------------------------------------------------

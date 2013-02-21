@@ -16,6 +16,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../resources/resources.qrc">
+    <normaloff>:/icons/images/logo.png</normaloff>:/icons/images/logo.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <property name="mouseTracking">
     <bool>true</bool>
@@ -42,7 +46,7 @@
    </widget>
    <widget class="QMenu" name="mView">
     <property name="title">
-     <string>View</string>
+     <string>Interface</string>
     </property>
    </widget>
    <widget class="QMenu" name="mSettings">
@@ -148,6 +152,9 @@
   <action name="action_Settings_General">
    <property name="text">
     <string>Settings</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+U</string>
    </property>
   </action>
   <action name="action_Settings_Lan">
@@ -286,6 +293,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../../resources/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

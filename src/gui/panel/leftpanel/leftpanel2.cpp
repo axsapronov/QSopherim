@@ -6,6 +6,9 @@
 #include "strongcommon.h"
 
 
+// panel for info:
+// strongs , journal, and other
+
 LeftPanel2::LeftPanel2(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::LeftPanel2)

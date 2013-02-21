@@ -16,7 +16,14 @@ Config::Config()
         m_fontSize = 12;
         m_fontColor = QColor(qRgb(0, 0, 0));
         m_viewerColor = QColor(qRgb(255, 255, 255));
-        m_fontFamily = "DejaVu Sans";
+
+        #ifdef Q_OS_WIN
+            m_fontFamily = "Tahoma";
+        #endif
+        #ifdef Q_OS_LINUX
+            m_fontFamily = "DejaVu Sans";
+        #endif
+
         m_appLang = "Russian";
         m_fontBold = false;
         m_fontItalic = false;
