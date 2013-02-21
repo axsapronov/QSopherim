@@ -71,7 +71,7 @@ void NoteEditor::setTextToLabel()
 //------------------------------------------------------------------------------
 void NoteEditor::setPath(QString name)
 {
-    name.replace("text.xml", "notes.xml");
+    name.replace("text" + GL_FORMAT_TEXT, "notes.xml");
     m_path = name;
 }
 //------------------------------------------------------------------------------

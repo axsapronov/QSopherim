@@ -525,6 +525,7 @@ void MainWindow::loadModulesFromFolder()
         QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
         loadProgress.setValue(0);
         loadProgress.setGeometry(750, 300, 400, 170);
+        loadProgress.setWindowTitle(tr("Convert") + QString(" | %1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
         loadProgress.show();
 
         QLabel overallLabel(&loadProgress);
@@ -533,7 +534,7 @@ void MainWindow::loadModulesFromFolder()
 
         overallLabel.show();
 
-        QStringList listModules = getListModulesFromPath(Config::configuration()->getBibleDir());
+        QStringList listModules = getListModulesFromPath(Config::configuration()->getBibleDir(), ".ini");
         for (int i = 0; i < listModules.size(); i++)
         {
             prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
@@ -554,6 +555,7 @@ void MainWindow::loadDictFromFolder()
         QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
         loadProgress.setValue(0);
         loadProgress.setGeometry(750, 300, 400, 170);
+        loadProgress.setWindowTitle(tr("Convert") + QString(" | %1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
         loadProgress.show();
 
         QLabel overallLabel(&loadProgress);

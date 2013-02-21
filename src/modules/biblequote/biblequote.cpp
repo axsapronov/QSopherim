@@ -199,7 +199,7 @@ bool BibleQuoteModule::createBookFiles(QString pathToFiles)
 {
     Q_UNUSED (pathToFiles)
     QString t_pathToXmlFile = QString(Config::configuration()->getAppDir() + "bible/" +
-                                      m_moduleShortName + "/text.xml");
+                                      m_moduleShortName + "/text" + GL_FORMAT_TEXT);
 
     if (QFile::exists(t_pathToXmlFile))
     {
@@ -533,7 +533,7 @@ int BibleQuoteModule::readBook(const int id)
     //    myDebug() << chapterText;
 
     QString t_pathToXmlFile = QString(Config::configuration()->getAppDir() + "bible/" +
-                                      m_moduleShortName + "/text.xml");
+                                      m_moduleShortName + "/text" + GL_FORMAT_TEXT);
     //    myDebug() << t_pathToXmlFile;
     //    qDebug() << m_book.size();
     /// надо брать название книги, а не путь к ней

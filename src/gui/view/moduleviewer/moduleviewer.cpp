@@ -5,6 +5,7 @@
 
 #include "stringcommon.h"
 #include "filecommon.h"
+#include "defines.h"
 
 
 #include <QMenu>
@@ -51,7 +52,7 @@ void ModuleViewer::sShowContextMenu(QPoint pt)
     menu->addSeparator();
 
 
-    if (!m_curChapter.isEmpty())
+    if (!m_curBook.isEmpty())
     {
         QAction *act = new QAction(QString(m_curModule
                                            + " : "
@@ -71,7 +72,7 @@ ModuleViewer *ModuleViewer::viewer()
 //------------------------------------------------------------------------------
 void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberchapter)
 {
-    //    myDebug() << pathToFile << nameBook << numberchapter;
+//        myDebug() << pathToFile << nameBook << numberchapter;
 
     QXmlStreamReader xmlReader;
     xmlReader.addData(getTextFromHtmlFile(pathToFile));
@@ -145,7 +146,7 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
     m_curPath = pathToFile;
     m_curChapter = QString::number(numberchapter);
 
-    if (!m_curChapter.isEmpty())
+    if (!m_curBook.isEmpty())
         ui->LAStatus->setText(m_curModule + " : " + m_curBook + " : " + m_curChapter );
 }
 //------------------------------------------------------------------------------
@@ -238,7 +239,7 @@ void ModuleViewer::showNoteList()
      */
 
     QString path = m_curPath;
-    path.replace("text.xml", "notes.xml");
+    path.replace("text" + GL_FORMAT_TEXT, "notes.xml");
     emit SIGNAL_ShowNoteList(m_curModule,
                              m_curBook,
                              m_curChapter,
