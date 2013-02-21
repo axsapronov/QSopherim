@@ -2,6 +2,8 @@
 #include "stringcommon.h"
 
 #include "debughelper.h"
+#include "defines.h"
+
 
 
 //------------------------------------------------------------------------------
@@ -512,7 +514,7 @@ QStringList getBookList(QString file)
     QString param = "BookList";
     // translate to hindi
     QString str = getParamModule(file, param);
-    bookList << str.split(":");
+    bookList << str.split(GL_SYMBOL_SPLIT_BOOK);
     bookList = removeEmptyQStringFromQStringList(&bookList);
     return bookList;
 }
@@ -524,7 +526,7 @@ QHash<QString, int> getNumberOfChaptersInBook(QString filename)
     QString param = "NumberChapter";
     //     translate to hindi
     QString str = getParamModule(filename, param);
-    bookList << str.split("::");
+    bookList << str.split(GL_SYMBOL_SPLIT_CHAPTER);
     bookList = removeEmptyQStringFromQStringList(&bookList);
     QHash<QString, int> list;
 

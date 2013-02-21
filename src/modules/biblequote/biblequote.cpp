@@ -170,15 +170,14 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
     text.append("\nBookList = ");
     for(int i = 0; i < m_bookList.size(); i++)
     {
-        text.append(m_bookList.at(i) + ":");
+        text.append(m_bookList.at(i) + "[*:*]");
     }
 
     text.append("\nNumberChapter = ");
     for(int i = 0; i < m_bookList.size(); i++)
     {
         QString str = m_bookList.at(i) + "^" + QString::number(m_bookCountSize[i])
-                + "::" ;
-        //        QString str = m_bookList.at(i) + "^" + QString::number(m_bookList.at(i).size()) + "::";
+                + GL_SYMBOL_SPLIT_CHAPTER ;
         text.append(str);
     }
 
@@ -264,13 +263,6 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
 
     QFile file;
     file.setFileName(path);
-    //QString encoding;
-    //    ModuleSettings *settings = m_settings->getModuleSettings(m_moduleID);
-    //    if(settings->encoding == "Default" || settings->encoding.isEmpty()) {
-    //        encoding = m_settings->encoding;
-    //    } else {
-    //        encoding = settings->encoding;
-    //    }
     m_codec = getCodecOfEncoding(getEncodingFromFile(path));
     QTextDecoder *decoder = m_codec->makeDecoder();
     if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -410,7 +402,7 @@ int BibleQuoteModule::readBook(const int id)
     QFile file;
     file.setFileName(path);
 
-    QString tab = "    ";
+    //QString tab = "    ";
 
     QString out;
     QString out2;
@@ -442,6 +434,7 @@ int BibleQuoteModule::readBook(const int id)
 
 //            line.remove("&nbsp;");
             line.replace("&nbsp;", " ");
+            line.remove("^&к").remove("&");
             out2 += line;
             if(chapterstarted == false && line.contains(m_chapterSign))
             {
@@ -454,16 +447,12 @@ int BibleQuoteModule::readBook(const int id)
             }
             else if(chapterstarted == true)
             {
-//                line = getCoolLine(line);
-
                 out += line;
             }
         }
         //  chapter_tag is ANAME
         if (m_chapterSign != getEndOfTag(m_chapterSign))
             out2.remove(QRegExp("=\\d+>")); // hindi remove text =NUMBERCHAPTER>
-        out2.remove("^&к").remove("&");
-        //        out2 = getClearText(&out2);
         chapterText << out2.split(m_chapterSign);
     }
     else

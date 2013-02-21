@@ -13,4 +13,7 @@
 #define GL_FORMAT_MODULE QString(".qsi")
 #define GL_FORMAT_TEXT QString(".qst")
 
+#define GL_SYMBOL_SPLIT_CHAPTER QString("[*::*]")
+#define GL_SYMBOL_SPLIT_BOOK QString("[*:*]")
+
 #endif // __DEFINES_H
