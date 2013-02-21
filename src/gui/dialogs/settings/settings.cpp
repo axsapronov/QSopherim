@@ -280,7 +280,7 @@ void Settings::selectFontColor()
         return;
     }
 
-    if (button->text().indexOf("background") >= 0)
+    if (button == ui->pBBackgroundColor)
     {
         // set like background (viewer) color
         m_viewerColor = t_color;
