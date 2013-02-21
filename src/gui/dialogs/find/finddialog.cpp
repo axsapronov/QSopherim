@@ -74,6 +74,7 @@ void FindDialog::find()
         data.chapter = find.chapters;
         updateItemforTable(data);
         showFiles(data);
+        QMessageBox::information(this, tr("Search is completed"), tr("Search is completed"));
     }
 }
 //------------------------------------------------------------------------------
@@ -87,7 +88,7 @@ FindData FindDialog::findFiles(const QStringList &files, const QString &text)
     progressDialog.setWindowTitle(tr("Find Files"));
 
     QStringList foundFiles;
-    QStringList verses;
+//    QStringList verses;
     QStringList books;
     QStringList chapters;
 
@@ -203,11 +204,10 @@ void FindDialog::updateComBChapter(int f_bookIndex)
         {
             listChapters << QString::number(i + 1);
         }
-
     }
+
     ui->comBChapter->clear();
     ui->comBChapter->addItems(listChapters);
-
 }
 //------------------------------------------------------------------------------
 void FindDialog::accept ()
