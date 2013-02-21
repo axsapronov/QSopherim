@@ -30,6 +30,7 @@ Config::Config()
         m_fontStrike = false;
         m_fontUnderline = false;
         m_optionChangeTextColor = true;
+        m_guiTray = true;
 
         m_listHiddenModules = new QStringList;
     }
@@ -99,6 +100,9 @@ void Config::loadSettings()
 
     m_strongGreek = settings.value("strongs/greek").toString();
     m_strongHebrew = settings.value("strongs/hebrew").toString();
+
+    // gui settings
+    m_guiTray = settings.value("gui/tray").toBool();
 
     if (!QFile::exists(m_appDir + "strongs.xml"))
         createEmptyXML(m_appDir + "strongs.xml");
@@ -189,6 +193,9 @@ void Config::saveSettings()
     // strongs settings
     settings.setValue(QString("strongs/hebrew"), m_strongHebrew);
     settings.setValue(QString("strongs/greek"), m_strongGreek);
+
+    // gui settings
+    settings.setValue(QString("gui/tray"), m_guiTray);
 
     // hide settings
     QString t_hiddenModules;
@@ -434,5 +441,15 @@ void Config::setOptionChangeTextColor(bool state)
 bool Config::getOptionChangeTextColor()
 {
     return m_optionChangeTextColor;
+}
+//------------------------------------------------------------------------------
+bool Config::getGuiTray()
+{
+    return m_guiTray;
+}
+//------------------------------------------------------------------------------
+void Config::setGuiTray(bool state)
+{
+    m_guiTray = state;
 }
 //------------------------------------------------------------------------------

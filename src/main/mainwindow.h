@@ -126,6 +126,12 @@ private slots:
      */
     void loadDictFromFolder();
 
+    /**
+     * @brief showHideTray
+     * @param state
+     */
+    void showHideTray();
+
 //    void loadModules();
 
 protected:
@@ -183,7 +189,6 @@ private:
       @function
       */
     void saveSettings();
-
 
 };
 

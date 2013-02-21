@@ -96,6 +96,19 @@ public:
      */
     QString getAppLang();
 
+    // gui
+
+    /**
+     * @brief setGuiTray
+     * @param state
+     */
+    void setGuiTray(bool state);
+    /**
+     * @brief getGuiTray
+     * @return
+     */
+    bool getGuiTray();
+
     QString getStrongHebrew();
     QString getStrongGreek();
 
@@ -170,6 +183,9 @@ private:
     bool m_fontItalic;
     bool m_fontUnderline;
     bool m_fontStrike;
+
+    // gui
+    bool m_guiTray;
 
     bool m_optionChangeTextColor;
 

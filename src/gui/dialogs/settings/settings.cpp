@@ -93,6 +93,9 @@ void Settings::loadSettings()
     m_fontColor = Config::configuration()->getFontColor();
     m_viewerColor = Config::configuration()->getViewerColor();
 
+    // gui
+    ui->chBGuiTray->setChecked(Config::configuration()->getGuiTray());
+
 
     /// replace to AppDir/*  if empty
 
@@ -129,6 +132,8 @@ void Settings::saveSettings()
     Config::configuration()->setFontUnderline(ui->chBUnderline->checkState());
 
     Config::configuration()->setOptionChangeTextColor(ui->chBChangindTextColor->checkState());
+
+    Config::configuration()->setGuiTray(ui->chBGuiTray->checkState());
 
     //    ui->sBFontSize->setValue(Config::configuration()->getFontSize());
 
@@ -170,6 +175,8 @@ void Settings::accept()
 
             emit SIGNAL_ReLoadModules();
             emit SIGNAL_ReLoadFontSettings();
+            emit SIGNAL_UpdateTray();
+
             QWidget::hide();
             break;
         case QMessageBox::Discard:
@@ -215,6 +222,7 @@ bool Settings::getModifySettings()
             || ui->chBItalic->checkState() != Config::configuration()->getFontItalic()
             || ui->chBStrike->checkState() != Config::configuration()->getFontStrike()
             || ui->chBUnderline->checkState() != Config::configuration()->getFontUnderline()
+            || ui->chBGuiTray->checkState() != Config::configuration()->getGuiTray()
             )
     {
         return true;

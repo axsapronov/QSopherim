@@ -66,6 +66,7 @@ MainWindow::~MainWindow()
     delete maximizeAction;
     delete restoreAction;
     delete quitAction;
+
     delete prModule;
 
     delete ui;
@@ -163,10 +164,10 @@ void MainWindow::init()
 
     createActions(); // create action for tray
     createTrayIcon(); // add actionts to tray menu
+
     createConnects(); // moved func
-    trIcon->show();  //display tray
 
-
+    showHideTray();
 }
 //------------------------------------------------------------------------------
 void MainWindow::debug()
@@ -245,14 +246,18 @@ void MainWindow::debug()
 //------------------------------------------------------------------------------
 void MainWindow::createConnects()
 {
-    //tray
-    connect(trIcon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)), SLOT(showHide(QSystemTrayIcon::ActivationReason)));
+    if (Config::configuration()->getGuiTray())
+    {
+        //tray
+        connect(trIcon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)), SLOT(showHide(QSystemTrayIcon::ActivationReason)));
+    }
 
     // menu file
     connect(ui->action_File_Close, SIGNAL(triggered()), this, SLOT(close()));
 
     // menu settings
     connect(ui->action_Settings_General, SIGNAL(triggered()), SLOT(showSettings()));
+    connect(GUI_Settings, SIGNAL(SIGNAL_UpdateTray()), SLOT(showHideTray()));
 
     // manager module
     connect(ui->action_Settings_Module, SIGNAL(triggered()), SLOT(showModuleManager()));
@@ -661,5 +666,17 @@ void MainWindow::findInModules()
 {
     GUI_FindDialog->preShowDialog();
     GUI_FindDialog->show();
+}
+//------------------------------------------------------------------------------
+void MainWindow::showHideTray()
+{
+    if (Config::configuration()->getGuiTray())
+    {
+        trIcon->show();  //display tray
+    }
+    else
+    {
+        trIcon->hide();
+    }
 }
 //------------------------------------------------------------------------------
