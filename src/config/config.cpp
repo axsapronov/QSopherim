@@ -32,6 +32,11 @@ Config::Config()
         m_optionChangeTextColor = true;
         m_guiTray = true;
 
+        m_lastChapter = "";
+        m_lastBook = "";
+        m_lastModule = "";
+        m_lastType = "Bible";
+
         m_listHiddenModules = new QStringList;
     }
     else
@@ -104,6 +109,13 @@ void Config::loadSettings()
     // gui settings
     m_guiTray = settings.value("gui/tray").toBool();
 
+    // last
+    m_lastChapter = settings.value("last/chapter").toString();
+    m_lastBook = settings.value("last/book").toString();
+    m_lastModule = settings.value("last/module").toString();
+    m_lastType = settings.value("last/type").toString();
+
+    // strongs
     if (!QFile::exists(m_appDir + "strongs.xml"))
         createEmptyXML(m_appDir + "strongs.xml");
 
@@ -196,6 +208,12 @@ void Config::saveSettings()
 
     // gui settings
     settings.setValue(QString("gui/tray"), m_guiTray);
+
+    // last module
+    settings.setValue(QString("last/module"), m_lastModule);
+    settings.setValue(QString("last/book"), m_lastBook);
+    settings.setValue(QString("last/chapter"), m_lastChapter);
+    settings.setValue(QString("last/type"), m_lastType);
 
     // hide settings
     QString t_hiddenModules;
@@ -451,5 +469,45 @@ bool Config::getGuiTray()
 void Config::setGuiTray(bool state)
 {
     m_guiTray = state;
+}
+//------------------------------------------------------------------------------
+void Config::setLastChapter(QString state)
+{
+    m_lastChapter = state;
+}
+//------------------------------------------------------------------------------
+void Config::setLastBook(QString state)
+{
+    m_lastBook = state;
+}
+//------------------------------------------------------------------------------
+void Config::setLastModule(QString state)
+{
+    m_lastModule = state;
+}
+//------------------------------------------------------------------------------
+QString Config::getLastChapter()
+{
+    return m_lastChapter;
+}
+//------------------------------------------------------------------------------
+QString Config::getLastBook()
+{
+    return m_lastBook;
+}
+//------------------------------------------------------------------------------
+QString Config::getLastModule()
+{
+    return m_lastModule;
+}
+//------------------------------------------------------------------------------
+QString Config::getLastType()
+{
+    return m_lastType;
+}
+//------------------------------------------------------------------------------
+void Config::setLastType(QString state)
+{
+    m_lastType = state;
 }
 //------------------------------------------------------------------------------

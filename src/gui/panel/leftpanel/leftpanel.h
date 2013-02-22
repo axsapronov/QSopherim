@@ -5,14 +5,20 @@
 #include <QModelIndex>
 #include <QTranslator>
 
+#include "leftpaneloperator.h"
+
 class QStandardItemModel;
 class QModelIndex;
 class QStringListModel;
 
-namespace Ui {
-class LeftPanel;
+namespace Ui
+{
+    class LeftPanel;
 }
+
 class QSopherimModuleList;
+
+
 class LeftPanel : public QDockWidget
 {
     Q_OBJECT
@@ -32,8 +38,20 @@ public:
      * retranslate gui
      */
     void retranslate();
+
+
 public slots:
+    /**
+     * @brief showChapterFromJournal
+     * @param module
+     * @param book
+     * @param chapter
+     */
     void showChapterFromJournal(QString module, QString book, QString chapter);
+    /**
+     * @brief sUpdateGUI
+     */
+    void sUpdateGUI();
 
 signals:
     void SIGNAL_AddRecordToJournal(QString, QString, QString);
@@ -44,7 +62,8 @@ private slots:
     /**
      * @brief refreshChapterList
      */
-    void refreshChapterList(QModelIndex);
+    void refreshChapterList(const QModelIndex f_ind);
+
     /**
      * @brief refreshBookList
      * @param nameOfModule
@@ -95,6 +114,8 @@ private:
     QStringListModel *typeModel;
     QStringListModel *typeModelBook;
 
+    LeftPanelOperator *m_operator;
+
     QString m_curWord;
     /**
      * @brief init
@@ -109,6 +130,8 @@ private:
     void createConnects();
 
     void refreshComboBooks();
+
+    void refreshChapterList(const QString f_type, const QModelIndex f_ind);
 
     QStringList getListDictWithWord(QString word);
 };

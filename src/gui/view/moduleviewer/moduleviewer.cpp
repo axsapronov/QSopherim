@@ -39,7 +39,7 @@ void ModuleViewer::createActions()
     connect(act_addBookmarks, SIGNAL(triggered()), this, SLOT(sAddBookmark()));
 
 
-    act_addNote= new QAction(tr("&Add note"), this);
+    act_addNote = new QAction(tr("&Add note"), this);
     connect(act_addNote, SIGNAL(triggered()), this, SLOT(sAddNote()));
 }
 //------------------------------------------------------------------------------
@@ -70,9 +70,15 @@ ModuleViewer *ModuleViewer::viewer()
     return static_viewer;
 }
 //------------------------------------------------------------------------------
-void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberchapter)
+void ModuleViewer::showChapter(const QString f_module, const QString f_nameBook, const int f_numberchapter)
 {
-//        myDebug() << pathToFile << nameBook << numberchapter;
+//    myDebug() << f_module << f_nameBook << f_numberchapter;
+    QString pathToFile = Config::configuration()->getAppDir() +
+            Config::configuration()->getListBibles()->getModuleWithName(f_module)->getModulePath();
+
+    pathToFile.replace("module" + GL_FORMAT_MODULE
+                       , "text" + GL_FORMAT_TEXT);
+//    myDebug() << f_module << pathToFile << f_nameBook << f_numberchapter;
 
     QXmlStreamReader xmlReader;
     xmlReader.addData(getTextFromHtmlFile(pathToFile));
@@ -101,12 +107,12 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
             QStringList sl;
             sl << xmlReader.name().toString();
             QXmlStreamAttributes attrs = xmlReader.attributes();
-            if (attrs.value("name") == nameBook)
+            if (attrs.value("name") == f_nameBook)
             {
                 while(!xmlReader.atEnd() and !flag)
                 {
                     if (xmlReader.attributes().value("number") ==
-                            QString::number(numberchapter))
+                            QString::number(f_numberchapter))
                     {
                         flag = true;
                         QString str = xmlReader.readElementText();
@@ -142,12 +148,24 @@ void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberc
         }
         xmlReader.readNext();
     }
-    m_curBook = nameBook;
+    m_curBook = f_nameBook;
     m_curPath = pathToFile;
-    m_curChapter = QString::number(numberchapter);
+    m_curChapter = QString::number(f_numberchapter);
 
     if (!m_curBook.isEmpty())
+    {
         ui->LAStatus->setText(m_curModule + " : " + m_curBook + " : " + m_curChapter );
+
+        // make 3 in 1?
+        Config::configuration()->setLastChapter(m_curChapter);
+        Config::configuration()->setLastBook(m_curBook);
+        Config::configuration()->setLastModule(m_curModule);
+        Config::configuration()->setLastType(
+                    Config::configuration()->getListBibles()->getModuleWithName(m_curModule)->getModuleType()
+                    );
+    }
+    // todo
+    emit SIGNAL_ShowChapterFinish();
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::init()
@@ -352,9 +370,9 @@ void ModuleViewer::updateFontSettings()
 //------------------------------------------------------------------------------
 void ModuleViewer::sAddBookmark()
 {
-    QString bookm = m_curModule + " : "
-            + m_curBook + " : "
-            + m_curChapter;
+    QString bookm = Config::configuration()->getLastModule() + " : "
+            + Config::configuration()->getLastModule() + " : "
+            + Config::configuration()->getLastChapter();
     emit SIGNAL_AddNewBookmark(bookm);
 }
 //------------------------------------------------------------------------------
@@ -485,5 +503,17 @@ void ModuleViewer::setStyleSettings()
         sheet.append(t_color + "\n");
     }
     ui->viewer->document()->setDefaultStyleSheet(sheet);
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::openLastChapter()
+{
+    if (Config::configuration()->getLastModule() != "")
+    {
+        m_curModule = Config::configuration()->getLastModule();
+        m_curBook = Config::configuration()->getLastBook();
+        m_curChapter = Config::configuration()->getLastChapter();
+
+        showChapter(m_curModule, m_curBook, m_curChapter.toInt());
+    }
 }
 //------------------------------------------------------------------------------

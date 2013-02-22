@@ -41,6 +41,10 @@ MainWindow::MainWindow(QWidget *parent) :
     init();
     loadModulesFromFolder();
     loadDictFromFolder();
+
+    // open last text
+    GUI_ModuleViewer->openLastChapter();
+
     //    loadModules();
     //        debug();
 }
@@ -292,6 +296,9 @@ void MainWindow::createConnects()
             GUI_LeftPanel2, SLOT(showStrong(QString)));
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNote()), SLOT(createNote()));
 
+    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowChapterFinish())
+            , GUI_LeftPanel, SLOT(sUpdateGUI()));
+
     // settings
     connect(GUI_Settings, SIGNAL(SIGNAL_RetranslateGUI(QString)),
             SLOT(retranslate(QString)));
@@ -299,23 +306,23 @@ void MainWindow::createConnects()
 
 
     // manager module
-
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), SLOT(processFinishDict()));
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), SLOT(processFinishModule()));
 
-    connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetGreekStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongGreek(QString)));
-    connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetHebrewStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongHebrew(QString)));
-
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetGreekStrong(QString))
+            , GUI_LeftPanel2, SLOT(sSetStrongGreek(QString)));
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetHebrewStrong(QString))
+            , GUI_LeftPanel2, SLOT(sSetStrongHebrew(QString)));
 
     // connect fron left1 to left2 panels
-    connect(GUI_LeftPanel, SIGNAL(SIGNAL_AddRecordToJournal(QString,QString,QString)),
-            GUI_LeftPanel2, SLOT(addRecordToJournal(QString,QString,QString)));
+    connect(GUI_LeftPanel, SIGNAL(SIGNAL_AddRecordToJournal(QString,QString,QString))
+            , GUI_LeftPanel2, SLOT(addRecordToJournal(QString,QString,QString)));
 
-    connect(GUI_LeftPanel2, SIGNAL(SIGNAL_ShowChapterFromJournal(QString,QString,QString)),
-            GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
+    connect(GUI_LeftPanel2, SIGNAL(SIGNAL_ShowChapterFromJournal(QString,QString,QString))
+            , GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
 
-    connect(GUI_LeftPanel, SIGNAL(SIGNAL_ShowHideLeftPanel2(bool)), GUI_LeftPanel2,
-            SLOT(setHidden(bool)));
+    connect(GUI_LeftPanel, SIGNAL(SIGNAL_ShowHideLeftPanel2(bool))
+            , GUI_LeftPanel2, SLOT(setHidden(bool)));
 
     // connect settings and module viewer
     connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadFontSettings()), GUI_ModuleViewer,

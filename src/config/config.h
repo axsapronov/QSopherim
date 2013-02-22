@@ -96,6 +96,50 @@ public:
      */
     QString getAppLang();
 
+    // last chapter
+
+    /**
+     * @brief setLastType
+     * @param state
+     */
+    void setLastType(QString state);
+
+    /**
+     * @brief getLastType
+     * @return
+     */
+    QString getLastType();
+
+    /**
+     * @brief setLastChapter
+     * @param state
+     */
+    void setLastChapter(QString state);
+    /**
+     * @brief setLastBook
+     * @param state
+     */
+    void setLastBook(QString state);
+    /**
+     * @brief setLastModule
+     * @param state
+     */
+    void setLastModule(QString state);
+    /**
+     * @brief getLastChapter
+     * @return
+     */
+    QString getLastChapter();
+    /**
+     * @brief getLastBook
+     * @return
+     */
+    QString getLastBook();
+    /**
+     * @brief getLastModule
+     * @return
+     */
+    QString getLastModule();
     // gui
 
     /**
@@ -164,6 +208,12 @@ private:
 
     QString m_strongHebrew;
     QString m_strongGreek;
+
+    QString m_lastChapter;
+    QString m_lastBook;
+    QString m_lastModule;
+
+    QString m_lastType;
 
     QSopherimModuleList* m_listBibles;
     QSopherimModuleList* m_listDictinaries;

@@ -141,42 +141,58 @@ void LeftPanel::refreshBookList(QSopherimModuleList* list)
 
 }
 //------------------------------------------------------------------------------
-void LeftPanel::refreshChapterList(QModelIndex moind)
+void LeftPanel::refreshChapterList(const QModelIndex f_ind)
 {
     QTableView *t_table = (QTableView*)sender();
 
+    if (t_table == ui->tableBook)
+    {
+        refreshChapterList("Bible", f_ind);
+    }
+
+    if (t_table == ui->tableBookBook)
+    {
+        refreshChapterList("Book", f_ind);
+    }
+}
+//------------------------------------------------------------------------------
+void LeftPanel::refreshChapterList(const QString f_type, const QModelIndex f_ind)
+{
     modelChapters->clear();
     int chapterValue = 0;
 
-    if (t_table == ui->tableBook)
+    if (f_type == "Bible")
+    {
         chapterValue = moduleList->getModuleWithName(ui->comBModules->currentText())
-                ->getValueChapterForBookFromModule(moind.data(0).toString());
+                ->getValueChapterForBookFromModule(f_ind.data(0).toString());
+    }
 
-    if (t_table == ui->tableBookBook)
+    if (f_type == "Book")
+    {
         chapterValue = moduleList->getModuleWithName(ui->comBModulesBook->currentText())
-                ->getValueChapterForBookFromModule(moind.data(0).toString());
+                ->getValueChapterForBookFromModule(f_ind.data(0).toString());
+    }
 
     modelChapters->clear();
     for (int i = 0; i < chapterValue; i++)
     {
         modelChapters->setItem(i, 0, new QStandardItem(QString::number(i + 1)));
-        //        myDebug() << "yes";
     }
 
 
-    if (t_table == ui->tableBook)
+    if (f_type == "Bible")
     {
         ui->tableChapter->setModel(modelChapters);
         ui->tableChapter->resizeColumnsToContents();
     }
 
-    if (t_table == ui->tableBookBook)
+    if (f_type == "Book")
     {
         ui->tableChapterBook->setModel(modelChapters);
         ui->tableChapterBook->resizeColumnsToContents();
     }
 
-    m_lastNameOfBook  = moind.data(0).toString();
+    m_lastNameOfBook  = f_ind.data(0).toString();
 }
 //------------------------------------------------------------------------------
 void LeftPanel::init()
@@ -254,7 +270,7 @@ void LeftPanel::showChapter(QModelIndex ind)
                            , "text" + GL_FORMAT_TEXT);
 
     ModuleViewer::viewer()->setModuleName(t_curModule);
-    ModuleViewer::viewer()->showChapter(t_pathToModule, m_lastNameOfBook ,
+    ModuleViewer::viewer()->showChapter(t_curModule, m_lastNameOfBook ,
                                         ind.row() + 1);
 
 
@@ -292,10 +308,10 @@ void LeftPanel::refreshBookList(QString nameOfModule)
 {
     QComboBox *combo = (QComboBox*)sender();
 
-    if (combo == ui->comBModules)
+    if (combo == ui->comBModules and Config::configuration()->getListBibles()->getModuleWithName(ui->comBModules->currentText())->getModuleType() == "Bible")
         refreshBookList(nameOfModule, "Bible");
 
-    if (combo == ui->comBModulesBook)
+    if (combo == ui->comBModulesBook and Config::configuration()->getListBibles()->getModuleWithName(ui->comBModulesBook->currentText())->getModuleType() == "Book")
         refreshBookList(nameOfModule, "Book");
 }
 //------------------------------------------------------------------------------
@@ -337,11 +353,8 @@ void LeftPanel::showChapterFromJournal(QString module, QString book, QString cha
         ui->tabWidget->setCurrentIndex(GUI_TAB_BOOK); // book
     }
 
-
-
-
     ModuleViewer::viewer()->setModuleName(module);
-    ModuleViewer::viewer()->showChapter(t_pathToModule, book,
+    ModuleViewer::viewer()->showChapter(module, book,
                                         chapter.toInt());
 
 }
@@ -435,6 +448,36 @@ void LeftPanel::sShowHideLeftPanel2(int f_tab)
     case GUI_TAB_DICT : emit SIGNAL_ShowHideLeftPanel2(true); // hide if select dict
     }
 
+}
+//------------------------------------------------------------------------------
+void LeftPanel::sUpdateGUI()
+{
+    refreshBookList(Config::configuration()->getLastModule()
+                    , Config::configuration()->getLastType());
+
+    for (int i = 0; i < ui->tableBook->model()->rowCount(); i++)
+    {
+        if (ui->tableBook->model()->data(ui->tableBook->model()->index(i, 0), 0).toString() == Config::configuration()->getLastBook())
+        {
+            if (Config::configuration()->getLastType() == "Bible")
+            {
+                ui->comBModules->setCurrentIndex(ui->comBModules->findText(Config::configuration()->getLastModule()));
+                ui->tableBook->setCurrentIndex(ui->tableBook->model()->index(i, 0));
+                refreshChapterList(Config::configuration()->getLastType(), ui->tableBook->currentIndex());
+                ui->tableChapter->setCurrentIndex(ui->tableChapter->model()->index(Config::configuration()->getLastChapter().toInt() - 1, 0));
+            }
+
+            if (Config::configuration()->getLastType() == "Book")
+            {
+                ui->comBModulesBook->setCurrentIndex(ui->comBModulesBook->findText(Config::configuration()->getLastModule()));
+                ui->tableBookBook->setCurrentIndex(ui->tableBookBook->model()->index(i, 0));
+                refreshChapterList(Config::configuration()->getLastType(), ui->tableBookBook->currentIndex());
+                ui->tableChapterBook->setCurrentIndex(ui->tableChapterBook->model()->index(Config::configuration()->getLastChapter().toInt() - 1, 0));
+            }
+
+
+        }
+    }
 }
 //------------------------------------------------------------------------------
 

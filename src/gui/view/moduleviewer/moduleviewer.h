@@ -39,12 +39,20 @@ public:
     void setPath(QString newPath);
     QString getPath();
 
-    void showChapter(QString pathToFile, QString nameBook, int numberchapter);
+    void showChapter(const QString f_module
+                     , const QString f_nameBook
+                     , const int f_numberchapter);
 
     void setStrongList(QString path);
     void retranslate();
 
     QString getLastNumberLine();
+
+    /**
+     * function for open last chapter (get last chapter from settings)
+     * @brief openLastChapter
+     */
+    void openLastChapter();
 
 public slots:
 
@@ -76,6 +84,8 @@ signals:
     void SIGNAL_AddNote();
 
     void SIGNAL_ShowStrong(QString);
+
+    void SIGNAL_ShowChapterFinish();
 
 private slots:
     /**
