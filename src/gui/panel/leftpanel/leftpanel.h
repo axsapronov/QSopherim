@@ -5,8 +5,6 @@
 #include <QModelIndex>
 #include <QTranslator>
 
-#include "leftpaneloperator.h"
-
 class QStandardItemModel;
 class QModelIndex;
 class QStringListModel;
@@ -113,8 +111,6 @@ private:
 
     QStringListModel *typeModel;
     QStringListModel *typeModelBook;
-
-    LeftPanelOperator *m_operator;
 
     QString m_curWord;
     /**

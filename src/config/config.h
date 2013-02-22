@@ -96,13 +96,25 @@ public:
      */
     QString getAppLang();
 
-    // last chapter
 
+    // history
+    /**
+     * @brief getJournalHistory
+     * @return
+     */
+    QStringList *getJournalHistory();
+    /**
+     * @brief setJournalHistory
+     * @param state
+     */
+    void setJournalHistory(const QStringList *state);
+
+    // last chapter
     /**
      * @brief setLastType
      * @param state
      */
-    void setLastType(QString state);
+    void setLastType(const QString state);
 
     /**
      * @brief getLastType
@@ -218,6 +230,7 @@ private:
     QSopherimModuleList* m_listBibles;
     QSopherimModuleList* m_listDictinaries;
     QStringList* m_listHiddenModules;
+    QStringList* m_journalHistory;
 
     // viewer settings
 
@@ -228,6 +241,8 @@ private:
     QColor m_fontColor;
     int m_fontSize;
     QString m_fontFamily;
+
+
 
     bool m_fontBold;
     bool m_fontItalic;

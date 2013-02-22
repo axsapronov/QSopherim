@@ -31,6 +31,11 @@ public:
      */
     void retranslate();
 
+    /**
+     * @brief loadJournal
+     */
+    void loadJournal();
+
 signals:
     void SIGNAL_ShowChapterFromJournal(QString, QString, QString);
 

@@ -16,4 +16,6 @@
 #define GL_SYMBOL_SPLIT_CHAPTER QString("[*::*]")
 #define GL_SYMBOL_SPLIT_BOOK QString("[*:*]")
 
+#define GL_SYMBOL_SPLIT_JOURNAL QString("[^:^]")
+
 #endif // __DEFINES_H

@@ -168,3 +168,13 @@ void QSopherimModuleList::clearList()
     moduleList.clear();
 }
 //------------------------------------------------------------------------------
+bool QSopherimModuleList::isExist(const QString nameModule)
+{
+    for (int i = 0; moduleList.size(); i++)
+    {
+        if (nameModule == getModule(i)->getModuleName())
+            return true;
+    }
+    return false;
+}
+//------------------------------------------------------------------------------

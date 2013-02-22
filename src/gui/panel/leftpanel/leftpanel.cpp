@@ -328,34 +328,36 @@ void LeftPanel::retranslate()
 //------------------------------------------------------------------------------
 void LeftPanel::showChapterFromJournal(QString module, QString book, QString chapter)
 {
-
-    QString t_pathToModule = Config::configuration()->getAppDir() +
-            moduleList->getModuleWithName(module)->getModulePath();
-
-    t_pathToModule.replace("module" + GL_FORMAT_MODULE
-                           , "text" + GL_FORMAT_TEXT);
-    m_lastNameOfBook  = book;
-
-
-    // refresh tab for bible modules or book modules
-    refreshBookList(module, moduleList->getModuleWithName(module)->getModuleType());
-
-    if (moduleList->getModuleWithName(module)->getModuleType() == "Bible")
+    if (moduleList->isExist(module))
     {
-        ui->comBModules->setCurrentIndex(ui->comBModules->findText(module));
-        ui->tabWidget->setCurrentIndex(GUI_TAB_BIBLE); // bible
-        //todo добавить автоматический выбор открытой главы и книги
-    }
+        QString t_pathToModule = Config::configuration()->getAppDir() +
+                moduleList->getModuleWithName(module)->getModulePath();
 
-    if (moduleList->getModuleWithName(module)->getModuleType() == "Book")
-    {
-        ui->comBModulesBook->setCurrentIndex(ui->comBModulesBook->findText(module));
-        ui->tabWidget->setCurrentIndex(GUI_TAB_BOOK); // book
-    }
+        t_pathToModule.replace("module" + GL_FORMAT_MODULE
+                               , "text" + GL_FORMAT_TEXT);
+        m_lastNameOfBook  = book;
 
-    ModuleViewer::viewer()->setModuleName(module);
-    ModuleViewer::viewer()->showChapter(module, book,
-                                        chapter.toInt());
+
+        // refresh tab for bible modules or book modules
+        refreshBookList(module, moduleList->getModuleWithName(module)->getModuleType());
+
+        if (moduleList->getModuleWithName(module)->getModuleType() == "Bible")
+        {
+            ui->comBModules->setCurrentIndex(ui->comBModules->findText(module));
+            ui->tabWidget->setCurrentIndex(GUI_TAB_BIBLE); // bible
+            //todo добавить автоматический выбор открытой главы и книги
+        }
+
+        if (moduleList->getModuleWithName(module)->getModuleType() == "Book")
+        {
+            ui->comBModulesBook->setCurrentIndex(ui->comBModulesBook->findText(module));
+            ui->tabWidget->setCurrentIndex(GUI_TAB_BOOK); // book
+        }
+
+        ModuleViewer::viewer()->setModuleName(module);
+        ModuleViewer::viewer()->showChapter(module, book,
+                                            chapter.toInt());
+    }
 
 }
 //------------------------------------------------------------------------------
@@ -455,27 +457,33 @@ void LeftPanel::sUpdateGUI()
     refreshBookList(Config::configuration()->getLastModule()
                     , Config::configuration()->getLastType());
 
-    for (int i = 0; i < ui->tableBook->model()->rowCount(); i++)
+    if (Config::configuration()->getLastType() == "Bible")
     {
-        if (ui->tableBook->model()->data(ui->tableBook->model()->index(i, 0), 0).toString() == Config::configuration()->getLastBook())
+        for (int i = 0; i < ui->tableBook->model()->rowCount(); i++)
         {
-            if (Config::configuration()->getLastType() == "Bible")
+            if (ui->tableBook->model()->data(ui->tableBook->model()->index(i, 0), 0).toString() == Config::configuration()->getLastBook())
             {
+                ui->tabWidget->setCurrentIndex(GUI_TAB_BIBLE);
                 ui->comBModules->setCurrentIndex(ui->comBModules->findText(Config::configuration()->getLastModule()));
                 ui->tableBook->setCurrentIndex(ui->tableBook->model()->index(i, 0));
                 refreshChapterList(Config::configuration()->getLastType(), ui->tableBook->currentIndex());
                 ui->tableChapter->setCurrentIndex(ui->tableChapter->model()->index(Config::configuration()->getLastChapter().toInt() - 1, 0));
             }
+        }
+    }
 
-            if (Config::configuration()->getLastType() == "Book")
+    if (Config::configuration()->getLastType() == "Book")
+    {
+        for (int i = 0; i < ui->tableBookBook->model()->rowCount(); i++)
+        {
+            if (ui->tableBookBook->model()->data(ui->tableBookBook->model()->index(i, 0), 0).toString() == Config::configuration()->getLastBook())
             {
+                ui->tabWidget->setCurrentIndex(GUI_TAB_BOOK);
                 ui->comBModulesBook->setCurrentIndex(ui->comBModulesBook->findText(Config::configuration()->getLastModule()));
                 ui->tableBookBook->setCurrentIndex(ui->tableBookBook->model()->index(i, 0));
                 refreshChapterList(Config::configuration()->getLastType(), ui->tableBookBook->currentIndex());
                 ui->tableChapterBook->setCurrentIndex(ui->tableChapterBook->model()->index(Config::configuration()->getLastChapter().toInt() - 1, 0));
             }
-
-
         }
     }
 }

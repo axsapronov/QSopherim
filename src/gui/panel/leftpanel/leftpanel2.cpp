@@ -90,25 +90,32 @@ void LeftPanel2::addRecordToJournal(QString modulename,
             bookname + ":" +
             chaptervalue;
 
-    QStringList t_list;
-    m_journalList << t_record;
     QStandardItemModel *model = new QStandardItemModel(m_journalList.size(), 0);
     model->clear();
     ui->ListViewJournal->setModel(model);
 
-    int i = m_journalList.size();
-    int count = 10;  // last 10 chapters to history
-    while(i > 0 and count != 0)
+    QStringList t_list;
+    t_list << t_record;
+
+    int count = 10;
+
+    for (int i = 0; i < count - 1 && i < m_journalList.size(); i++)
     {
-        QStandardItem *item = new QStandardItem();
-        item->setData(m_journalList.at(i -1 ), Qt::DisplayRole );
-        item->setEditable( false );
-        model->appendRow( item );
-        t_list << m_journalList.at(i-1);
-        i--;
-        count--;
+        t_list << m_journalList.at(i);
+        // add to model
+        model->appendRow( new QStandardItem(t_list.at(i)));
     }
+    //add to model last elem
+    model->appendRow( new QStandardItem(t_list.at(t_list.size() - 1)));
+
+    // or this - this is add to model
+//    for (int i = 0; i < count && i < t_list.size(); i++)
+//    {
+//        model->appendRow( new QStandardItem(t_list.at(i)));
+//    }
+
     m_journalList = t_list;
+    Config::configuration()->setJournalHistory(&m_journalList);
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::showChapterFromJournal(QModelIndex ind)
@@ -214,7 +221,6 @@ void LeftPanel2::showStrong(QString number)
             i++;
         } while (i < m_listStrongHebrew.size());
     }
-
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::sSetStrongHebrew(QString path)
@@ -229,4 +235,19 @@ void LeftPanel2::sSetStrongGreek(QString path)
     m_strongGreek_on = true;
 }
 //------------------------------------------------------------------------------
+void LeftPanel2::loadJournal()
+{
+    m_journalList = *(Config::configuration()->getJournalHistory());
+
+    QStandardItemModel *model = new QStandardItemModel(m_journalList.size(), 0);
+    model->clear();
+    ui->ListViewJournal->setModel(model);
+
+    int count = 10;
+    for (int i = 0; i < count && i < m_journalList.size(); i++)
+    {
+        // add to model
+        model->appendRow( new QStandardItem(m_journalList.at(i)));
+    }
+}
 //------------------------------------------------------------------------------

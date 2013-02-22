@@ -44,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // open last text
     GUI_ModuleViewer->openLastChapter();
+    GUI_LeftPanel2->loadJournal();
 
     //    loadModules();
     //        debug();

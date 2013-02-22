@@ -44,6 +44,13 @@ public:
     void showModule(QString nameModule);
 
     /**
+     * @brief isExist
+     * @param nameModule
+     * @return
+     */
+    bool isExist(const QString nameModule);
+
+    /**
      * @brief getCurNumberModule
      * @return
      */

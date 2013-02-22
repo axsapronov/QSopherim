@@ -3,6 +3,8 @@
 #include "filecommon.h"
 #include "stringcommon.h"
 
+#include "defines.h"
+
 #include <QSettings>
 #include <QDir>
 
@@ -38,6 +40,7 @@ Config::Config()
         m_lastType = "Bible";
 
         m_listHiddenModules = new QStringList;
+        m_journalHistory = new QStringList;
     }
     else
     {
@@ -48,6 +51,7 @@ Config::Config()
 Config::~Config()
 {
     delete m_listHiddenModules;
+    delete m_journalHistory;
     delete m_listBibles;
     delete m_listDictinaries;
     delete this;
@@ -110,10 +114,10 @@ void Config::loadSettings()
     m_guiTray = settings.value("gui/tray").toBool();
 
     // last
-    m_lastChapter = settings.value("last/chapter").toString();
-    m_lastBook = settings.value("last/book").toString();
-    m_lastModule = settings.value("last/module").toString();
-    m_lastType = settings.value("last/type").toString();
+    m_lastChapter = settings.value("history/chapter").toString();
+    m_lastBook = settings.value("history/book").toString();
+    m_lastModule = settings.value("history/module").toString();
+    m_lastType = settings.value("history/type").toString();
 
     // strongs
     if (!QFile::exists(m_appDir + "strongs.xml"))
@@ -123,7 +127,9 @@ void Config::loadSettings()
     // hide settings
     m_listHiddenModules->append(settings.value(QString("modules/hidden")).toString().split("_:_"));
     *m_listHiddenModules = removeEmptyQStringFromQStringList(m_listHiddenModules);
-    //    myDebug() << m_listHiddenModules->size() << *m_listHiddenModules;
+
+    m_journalHistory->append(settings.value(QString("history/journal")).toString().split(GL_SYMBOL_SPLIT_JOURNAL));
+    *m_journalHistory = removeEmptyQStringFromQStringList(m_journalHistory);
 
 
     //    myDebug() << QString(getAppDir() + bibleDir);
@@ -210,10 +216,10 @@ void Config::saveSettings()
     settings.setValue(QString("gui/tray"), m_guiTray);
 
     // last module
-    settings.setValue(QString("last/module"), m_lastModule);
-    settings.setValue(QString("last/book"), m_lastBook);
-    settings.setValue(QString("last/chapter"), m_lastChapter);
-    settings.setValue(QString("last/type"), m_lastType);
+    settings.setValue(QString("history/module"), m_lastModule);
+    settings.setValue(QString("history/book"), m_lastBook);
+    settings.setValue(QString("history/chapter"), m_lastChapter);
+    settings.setValue(QString("history/type"), m_lastType);
 
     // hide settings
     QString t_hiddenModules;
@@ -222,6 +228,14 @@ void Config::saveSettings()
         t_hiddenModules.append(m_listHiddenModules->at(i) + "_:_");
     }
     settings.setValue(QString("modules/hidden"), t_hiddenModules);
+
+    // journal
+    QString t_journalHistory;
+    for (int i = 0; i < m_journalHistory->size(); i++)
+    {
+        t_journalHistory.append(m_journalHistory->at(i) + GL_SYMBOL_SPLIT_JOURNAL);
+    }
+    settings.setValue(QString("history/journal"), t_journalHistory);
 
     //    //miscellaneous settings
 
@@ -506,8 +520,18 @@ QString Config::getLastType()
     return m_lastType;
 }
 //------------------------------------------------------------------------------
-void Config::setLastType(QString state)
+void Config::setLastType(const QString state)
 {
     m_lastType = state;
+}
+//------------------------------------------------------------------------------
+void Config::setJournalHistory(const QStringList* list)
+{
+    *m_journalHistory = *list;
+}
+//------------------------------------------------------------------------------
+QStringList* Config::getJournalHistory()
+{
+    return m_journalHistory;
 }
 //------------------------------------------------------------------------------
