@@ -529,12 +529,16 @@ void MainWindow::loadModulesFromFolder()
     {
         QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
         loadProgress.setValue(0);
-        loadProgress.setGeometry(750, 300, 400, 170);
+        loadProgress.setMinimumWidth(300);
+        // move center
+        QRect rect = QApplication::desktop()->availableGeometry(this);
+        loadProgress.move(rect.width() / 2 - loadProgress.width() / 2,
+                          rect.height() / 2 - loadProgress.height() / 2 );
         loadProgress.setWindowTitle(tr("Convert") + QString(" | %1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
         loadProgress.show();
 
         QLabel overallLabel(&loadProgress);
-        overallLabel.setGeometry(11, 10, 378, 20);
+        overallLabel.setGeometry(11, 10, 400, 20);
         overallLabel.setText(tr("Convert: bible modules"));
 
         overallLabel.show();
@@ -559,12 +563,19 @@ void MainWindow::loadDictFromFolder()
     {
         QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
         loadProgress.setValue(0);
-        loadProgress.setGeometry(750, 300, 400, 170);
+
+        loadProgress.setMinimumWidth(300);
+        // move to center
+        QRect rect = QApplication::desktop()->availableGeometry(this);
+        loadProgress.move(rect.width() / 2 - loadProgress.width() / 2 ,
+                          rect.height() / 2 - loadProgress.height() / 2 );
+
+
         loadProgress.setWindowTitle(tr("Convert") + QString(" | %1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
         loadProgress.show();
 
         QLabel overallLabel(&loadProgress);
-        overallLabel.setGeometry(11, 10, 378, 20);
+        overallLabel.setGeometry(11, 10, 400, 20);
         overallLabel.setText(tr("Convert: dictionary modules"));
         overallLabel.show();
 

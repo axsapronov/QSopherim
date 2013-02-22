@@ -168,7 +168,6 @@ void Settings::accept()
             // Save was clicked
             saveSettings();
 
-
             //            msgBox.setText("Settings has been modified. Please restart the"
             //                           "application for the entry into force of the settings");
             //            msgBox.exec();
