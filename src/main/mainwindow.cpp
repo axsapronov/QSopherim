@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    ui->menuBar->setFont(newFont);
     //    loadModules();
     //        debug();
+
 }
 //------------------------------------------------------------------------------
 MainWindow::~MainWindow()
