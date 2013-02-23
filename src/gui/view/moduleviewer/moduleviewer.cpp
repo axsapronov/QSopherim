@@ -512,7 +512,7 @@ void ModuleViewer::setStyleSettings()
 //------------------------------------------------------------------------------
 void ModuleViewer::openLastChapter()
 {
-    if (Config::configuration()->getLastModule() != "")
+    if (!Config::configuration()->getLastChapter().isEmpty())
     {
         m_curModule = Config::configuration()->getLastModule();
         m_curBook = Config::configuration()->getLastBook();

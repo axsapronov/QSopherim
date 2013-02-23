@@ -500,6 +500,9 @@ void LeftPanel::sUpdateGUI()
 
         if (Config::configuration()->getLastType() == "Book")
         {
+            refreshBookList(Config::configuration()->getLastModule()
+                            , Config::configuration()->getLastType());
+
             for (int i = 0; i < ui->tableBookBook->model()->rowCount(); i++)
             {
                 if (ui->tableBookBook->model()->data(ui->tableBookBook->model()->index(i, 0), 0).toString() == Config::configuration()->getLastBook())
@@ -518,14 +521,23 @@ void LeftPanel::sUpdateGUI()
 bool LeftPanel::checkedNewAndOldChapter()
 {
     bool flag = false;
-    if (Config::configuration()->getLastType() == "Bible")
+    if (Config::configuration()->getLastType() == "Bible"
+            and !ui->comBModules->currentText().isEmpty()
+            and !ui->tableBook->model()->data(ui->tableBook->currentIndex()).toString().isEmpty()
+            and !ui->tableChapter->model()->data(ui->tableChapter->currentIndex()).toString().isEmpty())
     {
-        flag = Config::configuration()->getLastModule() != ui->comBModules->currentText()
-                and ui->tableBook->model()->data(ui->tableBook->currentIndex()).toString() != Config::configuration()->getLastBook()
-                and ui->tableChapter->model()->data(ui->tableChapter->currentIndex()).toString() != Config::configuration()->getLastChapter();
+
+
+            flag = Config::configuration()->getLastModule() != ui->comBModules->currentText()
+                    and ui->tableBook->model()->data(ui->tableBook->currentIndex()).toString() != Config::configuration()->getLastBook()
+                    and ui->tableChapter->model()->data(ui->tableChapter->currentIndex()).toString() != Config::configuration()->getLastChapter();
+
     }
 
-    if (Config::configuration()->getLastType() == "Book")
+    if (Config::configuration()->getLastType() == "Book"
+            and !ui->comBModulesBook->currentText().isEmpty()
+            and !ui->tableBookBook->model()->data(ui->tableBookBook->currentIndex()).toString().isEmpty()
+            and !ui->tableChapterBook->model()->data(ui->tableChapterBook->currentIndex()).toString().isEmpty())
     {
         flag = Config::configuration()->getLastModule() != ui->comBModulesBook->currentText()
                 and ui->tableBookBook->model()->data(ui->tableBookBook->currentIndex()).toString() != Config::configuration()->getLastBook()
