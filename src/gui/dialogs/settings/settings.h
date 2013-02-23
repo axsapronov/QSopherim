@@ -3,7 +3,10 @@
 
 #include <QDialog>
 
-namespace Ui {
+#include "fontdialog.h"
+
+namespace Ui
+{
 class Settings;
 }
 
@@ -70,11 +73,15 @@ private slots:
     void browseOtherDir();
     void selectFontColor();
 
+    void fontSettings();
+
 private:
     Ui::Settings *ui;
     QString m_APP_Lang;
     QColor m_fontColor;
     QColor m_viewerColor;
+
+    FontDialog GUI_Font;
     /**
       @function
       Debug function

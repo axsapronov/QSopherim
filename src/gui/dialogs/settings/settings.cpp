@@ -169,6 +169,9 @@ void Settings::createConnect()
 
     connect(ui->pBColor, SIGNAL(clicked()), SLOT(selectFontColor()));
     connect(ui->pBBackgroundColor, SIGNAL(clicked()), SLOT(selectFontColor()));
+
+    // font settings
+    connect(ui->pBFontMenu, SIGNAL(clicked()), SLOT(fontSettings()));
 }
 ///----------------------------------------------------------------------------
 void Settings::accept()
@@ -335,5 +338,15 @@ void Settings::retranslate()
     ui->retranslateUi(this);
 }
 ///----------------------------------------------------------------------------
+void Settings::fontSettings()
+{
+    QPushButton *button = (QPushButton *)sender();
+    if (button == ui->pBFontMenu)
+    {
+        GUI_Font.setNameOption("FontName");
+    }
+
+    GUI_Font.show();
+}
 ///----------------------------------------------------------------------------
 ///----------------------------------------------------------------------------
