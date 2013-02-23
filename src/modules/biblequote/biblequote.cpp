@@ -330,6 +330,7 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
             {
                 const QString bible = getParamFromStr(&line, "Greek");
                 m_greek = bible.compare("Y", Qt::CaseInsensitive) == 0;
+
             }
 
             if(line.contains("StrongNumbers", Qt::CaseInsensitive))

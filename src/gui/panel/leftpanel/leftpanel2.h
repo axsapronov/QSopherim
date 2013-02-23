@@ -81,6 +81,9 @@ private:
     QVector<StrongList> m_listStrongGreek;
     QVector<StrongList> m_listStrongHebrew;
 
+    QMap<int, StrongList> m_mapStrongGreek;
+    QMap<int, StrongList> m_mapStrongHebrew;
+
     QStandardItemModel *m_modelNotes;
 
     NoteEditor *GUI_NoteEditor;

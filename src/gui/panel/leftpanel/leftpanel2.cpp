@@ -38,7 +38,7 @@ void LeftPanel2::init()
     }
     else
     {
-        m_listStrongHebrew = getListStrongs(Config::configuration()->getStrongHebrew());
+        getMapStrongs(Config::configuration()->getStrongHebrew(), m_mapStrongHebrew);
         m_strongHebrew_on = true;
     }
 
@@ -48,7 +48,7 @@ void LeftPanel2::init()
     }
     else
     {
-        m_listStrongGreek = getListStrongs(Config::configuration()->getStrongGreek());
+        getMapStrongs(Config::configuration()->getStrongGreek(), m_mapStrongGreek);
         m_strongGreek_on = true;
     }
 
@@ -111,10 +111,10 @@ void LeftPanel2::addRecordToJournal(QString modulename,
     model->appendRow( new QStandardItem(t_list.at(t_list.size() - 1)));
 
     // or this - this is add to model
-//    for (int i = 0; i < count && i < t_list.size(); i++)
-//    {
-//        model->appendRow( new QStandardItem(t_list.at(i)));
-//    }
+    //    for (int i = 0; i < count && i < t_list.size(); i++)
+    //    {
+    //        model->appendRow( new QStandardItem(t_list.at(i)));
+    //    }
 
     m_journalList = t_list;
     Config::configuration()->setJournalHistory(&m_journalList);
@@ -186,54 +186,38 @@ void LeftPanel2::showNoteList(QString curModule,
 //------------------------------------------------------------------------------
 void LeftPanel2::showStrong(QString number)
 {
-    // добавить вывод сразу и гречески и иврит
-    //    if (m_strongGreek_on)
-    //    {
-    //        //    myDebug() << m_listStrong.size();
-    //        int i = 0;
-    //        do
-    //        {
-    //            if (m_listStrongGreek.at(i).number == number.toInt())
-    //            {
-    //    QString str =
-    //            tr("Strong number: ")
-    //            + number
-    //            + "\n<br>"
-    //            + m_listStrongHebrew.at(i).text;
-    //    ui->textBrStrong->setHtml(str);
-    //            }
-    //            i++;
-    //        } while (i < m_listStrongGreek.size());
-    //    }
-
-    if (m_strongHebrew_on)
+    if (getTypeStrong() == "Hebrew"
+            and m_strongHebrew_on)
     {
-        int i = 0;
-        do
-        {
-            if (m_listStrongHebrew.at(i).number == number.toInt())
-            {
-                QString str =
-                        tr("Strong number: ")
-                        + number
-                        + "\n<br>"
-                        + m_listStrongHebrew.at(i).text;
-                ui->textBrStrong->setHtml(str);
-            }
-            i++;
-        } while (i < m_listStrongHebrew.size());
+        QString str =
+                tr("Strong number: ")
+                + "<b>" + number + "</b>"
+                + "\n<br>"
+                + m_mapStrongHebrew[number.toInt()].text;
+        ui->textBrStrong->setHtml(str);
+    }
+
+    if (getTypeStrong() == "Greek"
+            and m_strongHebrew_on)
+    {
+        QString str =
+                tr("Strong number: ")
+                + "<b>" + number + "</b>"
+                + "\n<br>"
+                + m_mapStrongGreek[number.toInt()].text;
+        ui->textBrStrong->setHtml(str);
     }
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::sSetStrongHebrew(QString path)
 {
-    m_listStrongHebrew = getListStrongs(path);
+    getMapStrongs(path, m_mapStrongHebrew );
     m_strongHebrew_on = true;
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::sSetStrongGreek(QString path)
 {
-    m_listStrongGreek = getListStrongs(path);
+    getMapStrongs(path, m_mapStrongGreek);
     m_strongGreek_on = true;
 }
 //------------------------------------------------------------------------------

@@ -37,8 +37,6 @@ void ManagerModules::init()
     modelBiblies = new QStandardItemModel(0, 1, this);
     modelDictionaries = new QStandardItemModel(0, 0, this);
     createConnects();
-
-
 }
 //------------------------------------------------------------------------------
 void ManagerModules::createConnects()
@@ -138,9 +136,11 @@ void ManagerModules::loadListModules()
         m_countBiblies = list->getSize();
 
         // fill dict
+
         list = Config::configuration()->getListDictionaries();
-        for (int i = 0; i < list->getSize(); i++)
-            m_listModule->addModule(list->getModule(i));
+        if (list->getSize() != 0)
+            for (int i = 0; i < list->getSize(); i++)
+                m_listModule->addModule(list->getModule(i));
 
         updateList();
         //        ui->tableViewStateModules->setModel(modelBiblies);
@@ -205,7 +205,7 @@ void ManagerModules::sAddStrongToGreek()
 
     if (ui->comBGreekStrong->findText(ui->LEStrongName->text()) >= 0)
     {
-//        myDebug() << "yes1";
+        //        myDebug() << "yes1";
         // input other name
     }
     else
@@ -214,7 +214,6 @@ void ManagerModules::sAddStrongToGreek()
         createListStrongs(t_str, ui->LEStrongName->text());
         ui->ListWGreek->addItem(ui->LEStrongName->text());
         ui->comBGreekStrong->addItem(ui->LEStrongName->text());
-
 
         addStrongToConfFile(ui->LEStrongName->text(), "greek");
 

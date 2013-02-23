@@ -128,8 +128,20 @@ QString QSopherimModule::getModuleType()
     return m_moduleType;
 }
 //------------------------------------------------------------------------------
-void QSopherimModule::setModuleType(QString newType)
+void QSopherimModule::setModuleType(const QString newType)
 {
     m_moduleType = newType;
 }
-//------------------------------------------------------------------------------
+////------------------------------------------------------------------------------
+//void QSopherimModule::setStrongType(const QString f_state)
+//{
+//    m_strongType = f_state;
+//}
+////------------------------------------------------------------------------------
+//QString QSopherimModule::getStrongType()
+//{
+//    return m_strongType;
+//}
+
+////------------------------------------------------------------------------------
+
