@@ -185,27 +185,109 @@ public:
 
     // settings font for viewer
 
+    /**
+     * @brief getFontSize
+     * @return
+     */
     int getFontSize();
+    /**
+     * @brief getFontColor
+     * @return
+     */
     QColor getFontColor();
+    /**
+     * @brief getFontFamily
+     * @return
+     */
     QString getFontFamily();
 
+    /**
+     * @brief getFontBold
+     * @return
+     */
     bool getFontBold();
+    /**
+     * @brief getFontStrike
+     * @return
+     */
     bool getFontStrike();
+    /**
+     * @brief getFontUnderline
+     * @return
+     */
     bool getFontUnderline();
+    /**
+     * @brief getFontItalic
+     * @return
+     */
     bool getFontItalic();
 
+    /**
+     * @brief getOptionChangeTextColor
+     * @return
+     */
     bool getOptionChangeTextColor();
 
+    /**
+     * @brief setFontSize
+     * @param newSize
+     */
     void setFontSize(int  newSize);
+    /**
+     * @brief setFontColor
+     * @param newColor
+     */
     void setFontColor(QColor newColor);
+    /**
+     * @brief setFontFamily
+     * @param newFamily
+     */
     void setFontFamily(QString newFamily);
 
+    /**
+     * @brief setFontBold
+     * @param state
+     */
     void setFontBold(bool state);
+    /**
+     * @brief setFontStrike
+     * @param state
+     */
     void setFontStrike(bool state);
+    /**
+     * @brief setFontUnderline
+     * @param state
+     */
     void setFontUnderline(bool state);
+    /**
+     * @brief setFontItalic
+     * @param state
+     */
     void setFontItalic(bool state);
 
+    /**
+     * @brief setOptionChangeTextColor
+     * @param state
+     */
     void setOptionChangeTextColor(bool state);
+
+    void setFontMenu(QString newFamily);
+    void setFontModulesName(QString newFamily);
+    void setFontBookName(QString newFamily);
+    void setFontStrongsHebrew(QString newFamily);
+    void setFontStrongsGreek(QString newFamily);
+    void setFontJournal(QString newFamily);
+    void setFontNotes(QString newFamily);
+    void setFontReadingPlan(QString newFamily);
+
+    QString getFontMenu();
+    QString getFontModulesName();
+    QString getFontBookName();
+    QString getFontStrongsHebrew();
+    QString getFontStrongsGreek();
+    QString getFontJournal();
+    QString getFontNotes();
+    QString getFontReadingPlan();
 
     static Config *configuration();
 
@@ -242,7 +324,15 @@ private:
     int m_fontSize;
     QString m_fontFamily;
 
-
+    // fonts
+    QString m_fontMenu;
+    QString m_fontModulesName;
+    QString m_fontBookName;
+    QString m_fontStrongsHebrew;
+    QString m_fontStrongsGreek;
+    QString m_fontJournal;
+    QString m_fontNotes;
+    QString m_fontReadingPlan;
 
     bool m_fontBold;
     bool m_fontItalic;

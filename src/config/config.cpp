@@ -21,10 +21,28 @@ Config::Config()
 
         #ifdef Q_OS_WIN
             m_fontFamily = "Tahoma";
+            m_fontMenu = "Tahoma";
+            m_fontModulesName = "Tahoma";
+            m_fontBookName = "Tahoma";
+            m_fontStrongsHebrew = "Tahoma";
+            m_fontStrongsGreek = "Tahoma";
+            m_fontJournal = "Tahoma";
+            m_fontNotes = "Tahoma";
+            m_fontReadingPlan = "Tahoma";
         #endif
+
         #ifdef Q_OS_LINUX
             m_fontFamily = "DejaVu Sans";
+            m_fontMenu = "DejaVu Sans";
+            m_fontModulesName = "DejaVu Sans";
+            m_fontBookName = "DejaVu Sans";
+            m_fontStrongsHebrew = "DejaVu Sans";
+            m_fontStrongsGreek = "DejaVu Sans";
+            m_fontJournal = "DejaVu Sans";
+            m_fontNotes = "DejaVu Sans";
+            m_fontReadingPlan = "DejaVu Sans";
         #endif
+
 
         m_appLang = "Russian";
         m_fontBold = false;
@@ -107,6 +125,16 @@ void Config::loadSettings()
     m_fontUnderline = settings.value("font/underline").toBool();
     m_fontStrike = settings.value("font/strike").toBool();
 
+    // font settings
+    m_fontMenu = settings.value("font/menu").toString();
+    m_fontModulesName = settings.value("font/modulesname").toString();
+    m_fontBookName = settings.value("font/bookname").toString();
+    m_fontStrongsHebrew = settings.value("font/strongshebrew").toString();
+    m_fontStrongsGreek = settings.value("font/strongsgreek").toString();
+    m_fontJournal = settings.value("font/journal").toString();
+    m_fontNotes = settings.value("font/notes").toString();
+    m_fontReadingPlan = settings.value("font/readingplan").toString();
+
     m_strongGreek = settings.value("strongs/greek").toString();
     m_strongHebrew = settings.value("strongs/hebrew").toString();
 
@@ -144,15 +172,6 @@ void Config::loadSettings()
     //        winGeometry = settings.value(QString("WindowGeometry")).toByteArray();
     //        mainWinState = settings.value(QString("MainWindowState")).toByteArray();
     //        pointFntSize = settings.value(QString("FontSize"), qApp -> font().pointSizeF()).toDouble();
-    //        m_fontSettings.windowFont = qVariantValue<QFont>(settings.value(QString("WindowFont"), qApp -> font()));
-    //        m_fontSettings.browserFont = qVariantValue<QFont>(settings.value(QString("BrowserFont"), qApp -> font()));
-    //        m_fontSettings.useWindowFont = settings.value(QString("UseWindowFont"), false).toBool();
-    //        m_fontSettings.useBrowserFont = settings.value(QString("UseBrowserFont"), false).toBool();
-    //        m_fontSettings.windowWritingSystem = static_cast<QFontDatabase::WritingSystem>(
-    //                    settings.value(QString("WindowWritingSystem"), QFontDatabase::Latin).toInt());
-    //        m_fontSettings.browserWritingSystem = static_cast<QFontDatabase::WritingSystem>(
-    //                    settings.value(QString("BrowserWritingSystem"), QFontDatabase::Latin).toInt());
-    //        m_fontSettings.browserFont.setPointSizeF(pointFntSize);
 
     //        //settings from Settings window
     //        setContentsAdditionalView(	settings.value(QString("ContentsAdditionalView")).toBool() );
@@ -208,6 +227,16 @@ void Config::saveSettings()
     settings.setValue(QString("font/underline"), m_fontUnderline);
     settings.setValue(QString("font/strike"), m_fontStrike);
 
+    // font settings
+    settings.setValue(QString("font/menu"), m_fontMenu);
+    settings.setValue(QString("font/modulesname"), m_fontModulesName);
+    settings.setValue(QString("font/bookname"), m_fontBookName);
+    settings.setValue(QString("font/strongshebrew"), m_fontStrongsHebrew);
+    settings.setValue(QString("font/strongsgreek"), m_fontStrongsGreek);
+    settings.setValue(QString("font/journal"), m_fontJournal);
+    settings.setValue(QString("font/notes"), m_fontNotes);
+    settings.setValue(QString("font/readingplan"), m_fontReadingPlan);
+
     // strongs settings
     settings.setValue(QString("strongs/hebrew"), m_strongHebrew);
     settings.setValue(QString("strongs/greek"), m_strongGreek);
@@ -237,18 +266,6 @@ void Config::saveSettings()
     }
     settings.setValue(QString("history/journal"), t_journalHistory);
 
-    //    //miscellaneous settings
-
-    //    //window and font settings
-    //    settings.setValue(QString("WindowGeometry"), winGeometry);
-    //    settings.setValue(QString("MainWindowState"), mainWinState );
-    //    settings.setValue(QString("FontSize"), pointFntSize);
-    //    settings.setValue(QString("WindowFont"), m_fontSettings.windowFont);
-    //    settings.setValue(QString("BrowserFont"), m_fontSettings.browserFont);
-    //    settings.setValue(QString("UseWindowFont"), m_fontSettings.useWindowFont);
-    //    settings.setValue(QString("UseBrowserFont"), m_fontSettings.useBrowserFont);
-    //    settings.setValue(QString("WindowWritingSystem"), m_fontSettings.windowWritingSystem);
-    //    settings.setValue(QString("BrowserWritingSystem"), m_fontSettings.browserWritingSystem);
 
     //    //settings from Settings window
     ////    settings.setValue(QString("ExternalEditor"), relatifyFileName(externalEditor, prjDir) );
@@ -412,7 +429,7 @@ QString Config::getStrongGreek()
 //------------------------------------------------------------------------------
 void Config::setStrongGreek(QString strong)
 {
-    m_strongGreek= strong;
+    m_strongGreek = strong;
 }
 //------------------------------------------------------------------------------
 void Config::setFontBold(bool state)
@@ -533,5 +550,85 @@ void Config::setJournalHistory(const QStringList* list)
 QStringList* Config::getJournalHistory()
 {
     return m_journalHistory;
+}
+//------------------------------------------------------------------------------
+void Config::setFontMenu(QString newFamily)
+{
+    m_fontMenu = newFamily;
+}
+//------------------------------------------------------------------------------
+QString Config::getFontMenu()
+{
+    return m_fontMenu;
+}
+//------------------------------------------------------------------------------
+void Config::setFontModulesName(QString newFamily)
+{
+    m_fontModulesName = newFamily;
+}
+//------------------------------------------------------------------------------
+QString Config::getFontModulesName()
+{
+    return m_fontModulesName;
+}
+//------------------------------------------------------------------------------
+void Config::setFontBookName(QString newFamily)
+{
+    m_fontBookName = newFamily;
+}
+//------------------------------------------------------------------------------
+QString Config::getFontBookName()
+{
+    return m_fontBookName;
+}
+//------------------------------------------------------------------------------
+void Config::setFontStrongsHebrew(QString newFamily)
+{
+    m_fontStrongsHebrew = newFamily;
+}
+//------------------------------------------------------------------------------
+QString Config::getFontStrongsHebrew()
+{
+    return m_fontStrongsHebrew;
+}
+//------------------------------------------------------------------------------
+void Config::setFontStrongsGreek(QString newFamily)
+{
+    m_fontStrongsGreek = newFamily;
+}
+//------------------------------------------------------------------------------
+QString Config::getFontStrongsGreek()
+{
+    return m_fontStrongsGreek;
+}
+//------------------------------------------------------------------------------
+void Config::setFontJournal(QString newFamily)
+{
+    m_fontJournal = newFamily;
+}
+//------------------------------------------------------------------------------
+QString Config::getFontJournal()
+{
+    return m_fontJournal;
+}
+//------------------------------------------------------------------------------
+void Config::setFontNotes(QString newFamily)
+{
+    m_fontNotes = newFamily;
+}
+//------------------------------------------------------------------------------
+QString Config::getFontNotes()
+{
+    return m_fontNotes;
+}
+//------------------------------------------------------------------------------
+void Config::setFontReadingPlan(QString newFamily)
+{
+    m_fontReadingPlan = newFamily;
+}
+//------------------------------------------------------------------------------
+QString Config::getFontReadingPlan()
+{
+    return m_fontReadingPlan;
 }
 //------------------------------------------------------------------------------

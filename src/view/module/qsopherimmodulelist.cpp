@@ -45,7 +45,7 @@ QSopherimModule* QSopherimModuleList::getModule(int id)
 //------------------------------------------------------------------------------
 void QSopherimModuleList::init()
 {
-//    moduleList = new QVector<QSopherimModule*>;
+    //    moduleList = new QVector<QSopherimModule*>;
     moduleList.clear();
     cur_int = -1;
 }
@@ -76,7 +76,7 @@ void QSopherimModuleList::findModules(QString dir)
         {
 
             QSopherimModule* module = new QSopherimModule(getModuleInfo(files.at(i)));
-//            myDebug() <<  module.getBookList().size();
+            //            myDebug() <<  module.getBookList().size();
 
             addModule(module);
             //            myDebug() << getModuleInfo(files.at(i));
@@ -104,13 +104,17 @@ int QSopherimModuleList::getSize()
 //------------------------------------------------------------------------------
 QSopherimModule* QSopherimModuleList::getModuleWithName(QString name)
 {
-    for (int i = 0; moduleList.size(); i++)
+    if (!name.isEmpty())
     {
-        if (name == getModule(i)->getModuleName())
-            return getModule(i);
+        for (int i = 0; moduleList.size(); i++)
+        {
+            if (name == getModule(i)->getModuleName())
+                return getModule(i);
+        }
     }
     QSopherimModule *tes = new QSopherimModule();
     return tes;
+
 }
 //------------------------------------------------------------------------------
 QStringList QSopherimModuleList::getModuleBooks(QString nameOfModule)

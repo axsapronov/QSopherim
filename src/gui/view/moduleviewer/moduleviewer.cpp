@@ -365,7 +365,8 @@ void ModuleViewer::retranslate()
 void ModuleViewer::updateFontSettings()
 {
     setStyleSettings();
-    showChapter(m_curPath, m_curBook, m_curChapter.toInt());
+    if (!m_curChapter.isEmpty())
+        showChapter(m_curModule, m_curBook, m_curChapter.toInt());
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::sAddBookmark()

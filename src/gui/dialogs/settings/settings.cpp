@@ -42,14 +42,14 @@ void Settings::init()
     ui->comBLanguage->addItem("Deutsch");
 
     // load module settings
-//    ui->LEBibleFolder->setText(Config::configuration()->getBibleDir());
-//    ui->LEDictFolder->setText(Config::configuration()->getDictDir());
-//    ui->LEOtherFolder->setText(Config::configuration()->getOtherDir());
-//    // font
-//    ui->sBFontSize->setValue(Config::configuration()->getFontSize());
-//    ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
-//    m_fontColor = Config::configuration()->getFontColor();
-//    m_viewerColor = Config::configuration()->getViewerColor();
+    //    ui->LEBibleFolder->setText(Config::configuration()->getBibleDir());
+    //    ui->LEDictFolder->setText(Config::configuration()->getDictDir());
+    //    ui->LEOtherFolder->setText(Config::configuration()->getOtherDir());
+    //    // font
+    //    ui->sBFontSize->setValue(Config::configuration()->getFontSize());
+    //    ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
+    //    m_fontColor = Config::configuration()->getFontColor();
+    //    m_viewerColor = Config::configuration()->getViewerColor();
 
     loadSettings();
 
@@ -96,8 +96,17 @@ void Settings::loadSettings()
     // gui
     ui->chBGuiTray->setChecked(Config::configuration()->getGuiTray());
 
+    // fonts
+    ui->fontComBMenu->setCurrentFont(QFont(Config::configuration()->getFontMenu()));
+    ui->fontComBModulesName->setCurrentFont(QFont(Config::configuration()->getFontModulesName()));
+    ui->fontComBBookName->setCurrentFont(QFont(Config::configuration()->getFontBookName()));
+    ui->fontComBStrongsHebrew->setCurrentFont(QFont(Config::configuration()->getFontStrongsHebrew()));
+    ui->fontComBStrongsGreek->setCurrentFont(QFont(Config::configuration()->getFontStrongsHebrew()));
+    ui->fontComBJornal->setCurrentFont(QFont(Config::configuration()->getFontJournal()));
+    ui->fontComBNotes->setCurrentFont(QFont(Config::configuration()->getFontNotes()));
+    ui->fontComBReadingPlan->setCurrentFont(QFont(Config::configuration()->getFontReadingPlan()));
 
-    /// replace to AppDir/*  if empty
+    // replace to AppDir/*  if empty
 
     //    QDir::currentPath();
 
@@ -130,6 +139,16 @@ void Settings::saveSettings()
     Config::configuration()->setFontItalic(ui->chBItalic->checkState());
     Config::configuration()->setFontStrike(ui->chBStrike->checkState());
     Config::configuration()->setFontUnderline(ui->chBUnderline->checkState());
+
+    // save fonts settings
+    Config::configuration()->setFontMenu(ui->fontComBMenu->currentText());
+    Config::configuration()->setFontModulesName(ui->fontComBModulesName->currentText());
+    Config::configuration()->setFontBookName(ui->fontComBBookName->currentText());
+    Config::configuration()->setFontStrongsGreek(ui->fontComBStrongsGreek->currentText());
+    Config::configuration()->setFontStrongsHebrew(ui->fontComBStrongsHebrew->currentText());
+    Config::configuration()->setFontJournal(ui->fontComBJornal->currentText());
+    Config::configuration()->setFontNotes(ui->fontComBNotes->currentText());
+    Config::configuration()->setFontReadingPlan(ui->fontComBReadingPlan->currentText());
 
     Config::configuration()->setOptionChangeTextColor(ui->chBChangindTextColor->checkState());
 
@@ -222,6 +241,14 @@ bool Settings::getModifySettings()
             || ui->chBStrike->checkState() != Config::configuration()->getFontStrike()
             || ui->chBUnderline->checkState() != Config::configuration()->getFontUnderline()
             || ui->chBGuiTray->checkState() != Config::configuration()->getGuiTray()
+            || ui->fontComBMenu->currentText() != Config::configuration()->getFontMenu()
+            || ui->fontComBBookName->currentText() != Config::configuration()->getFontBookName()
+            || ui->fontComBModulesName->currentText() != Config::configuration()->getFontModulesName()
+            || ui->fontComBStrongsHebrew->currentText() != Config::configuration()->getFontStrongsHebrew()
+            || ui->fontComBStrongsGreek->currentText() != Config::configuration()->getFontStrongsGreek()
+            || ui->fontComBJornal->currentText() != Config::configuration()->getFontJournal()
+            || ui->fontComBNotes->currentText() != Config::configuration()->getFontNotes()
+            || ui->fontComBReadingPlan->currentText() != Config::configuration()->getFontReadingPlan()
             )
     {
         return true;
