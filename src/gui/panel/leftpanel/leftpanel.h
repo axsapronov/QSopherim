@@ -120,6 +120,15 @@ private:
      */
     void init();
 
+
+    /**
+     * check current module, current book, current chapter and
+     * Config::configuration()->getLastModule and other
+     * @brief checkedNewAndOldChapter
+     * @return
+     */
+    bool checkedNewAndOldChapter();
+
     /**
      * @brief createConnects
      */

@@ -46,8 +46,8 @@ MainWindow::MainWindow(QWidget *parent) :
     GUI_ModuleViewer->openLastChapter();
     GUI_LeftPanel2->loadJournal();
 
-//    QFont newFont("Courier", 8, QFont::Bold, true);
-//    ui->menuBar->setFont(newFont);
+    //    QFont newFont("Courier", 8, QFont::Bold, true);
+    //    ui->menuBar->setFont(newFont);
     //    loadModules();
     //        debug();
 
@@ -532,6 +532,7 @@ void MainWindow::processFinishDict()
     QSopherimModuleList* list = new QSopherimModuleList();
     list->refreshList("dictionary/");
     GUI_LeftPanel->refreshListDict(list);
+
 }
 //------------------------------------------------------------------------------
 void MainWindow::loadModulesFromFolder()
