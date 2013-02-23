@@ -37,6 +37,8 @@ void ManagerModules::init()
     modelBiblies = new QStandardItemModel(0, 1, this);
     modelDictionaries = new QStandardItemModel(0, 0, this);
     createConnects();
+
+
 }
 //------------------------------------------------------------------------------
 void ManagerModules::createConnects()
@@ -148,31 +150,38 @@ void ManagerModules::loadListModules()
 //------------------------------------------------------------------------------
 void ManagerModules::updateList()
 {
-
     modelBiblies->clear();
     for(int i = 0; i < m_listModule->getSize(); i++)
     {
         modelBiblies->setItem(i, 0, new QStandardItem(m_listModule->getModule(i)->getModuleName()));
         if (i < m_countBiblies)
         {
-            modelBiblies->setItem(i, 1, new QStandardItem("bible"));
+            modelBiblies->setItem(i, 1, new QStandardItem(tr("bible")));
         }
         else
         {
-            modelBiblies->setItem(i, 1, new QStandardItem("dictionaries"));
+            modelBiblies->setItem(i, 1, new QStandardItem(tr("dictionaries")));
         }
         // set hide show
         if (!Config::configuration()->getListHiddenModules()->contains(m_listModule->getModule(i)->getModuleName()))
         {
-            modelBiblies->setItem(i, 2, new QStandardItem("show"));
+            modelBiblies->setItem(i, 2, new QStandardItem(tr("show")));
         }
         else
         {
-            modelBiblies->setItem(i, 2, new QStandardItem("hidden"));
+            modelBiblies->setItem(i, 2, new QStandardItem(tr("hidden")));
         }
     }
+
     ui->tableViewStateModules->setModel(modelBiblies);
     ui->tableViewStateModules->resizeColumnsToContents();
+
+    //todo
+    // how to do differently?
+    ui->tableViewStateModules->model()->setHeaderData( 0, Qt::Horizontal, QObject::tr("Module") );
+    ui->tableViewStateModules->model()->setHeaderData( 1, Qt::Horizontal, QObject::tr("Type") );
+    ui->tableViewStateModules->model()->setHeaderData( 2, Qt::Horizontal, QObject::tr("State") );
+
     emit SIGNAL_RefreshModules();
 }
 //------------------------------------------------------------------------------
