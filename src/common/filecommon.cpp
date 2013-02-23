@@ -484,21 +484,28 @@ QSopherimModuleInfo getModuleInfo(QString fileName)
 QString getParamModule(QString filename, QString param)
 {
     // translate to hindi
+
     QString str = "";
     QString line;
     QString parama = param + " = ";
+
     QFile file(filename);
-    file.close();
+
+    if (file.isOpen())
+        file.close();
+
     if (file.open(QIODevice::ReadOnly))
     {
         QTextStream stream( &file );
-        do {
+        do
+        {
             line = stream.readLine();
             if (line.indexOf(parama) >= 0)
             {
                 str = line.remove(parama);
             }
         } while (str.isEmpty() and !line.isNull());
+
         file.close();
     }
     else

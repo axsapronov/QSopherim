@@ -88,7 +88,7 @@ FindData FindDialog::findFiles(const QStringList &files, const QString &text)
     progressDialog.setWindowTitle(tr("Find Files"));
 
     QStringList foundFiles;
-//    QStringList verses;
+    //    QStringList verses;
     QStringList books;
     QStringList chapters;
 
@@ -183,11 +183,16 @@ void FindDialog::updateComBBook(int f_moduleIndex)
     t_list << tr("All books");
     if (f_moduleIndex != 0)
     {
-        t_list.append(getBookList(Config::configuration()->getAppDir() + "bible/" + ui->comBModule->currentText() + "/module" + GL_FORMAT_MODULE));
+        t_list.append(getBookList(Config::configuration()->getAppDir()
+                                  + Config::configuration()->getListBibles()->getModuleWithName(ui->comBModule->currentText())->getModulePath()));
+
     }
+
     ui->comBBook->clear();
     ui->comBBook->addItems(t_list);
-    updateComBChapter(1);
+
+    if (f_moduleIndex != 0)
+        updateComBChapter(1);
 }
 //------------------------------------------------------------------------------
 void FindDialog::updateComBChapter(int f_bookIndex)
@@ -196,7 +201,11 @@ void FindDialog::updateComBChapter(int f_bookIndex)
     listChapters << tr("All chapters");
     if (f_bookIndex != 0)
     {
-        QHash<QString, int> t_hash = getNumberOfChaptersInBook(Config::configuration()->getAppDir() + "bible/" + ui->comBModule->currentText() + "/module" + GL_FORMAT_MODULE);
+        QHash<QString, int> t_hash = getNumberOfChaptersInBook
+                (
+                    Config::configuration()->getAppDir()
+                    + Config::configuration()->getListBibles()->getModuleWithName(ui->comBModule->currentText())->getModulePath()
+                    );
 
         int countChapters = t_hash[ui->comBBook->currentText()];
 
@@ -227,10 +236,13 @@ void FindDialog::reject ()
 QString FindDialog::getPathFind()
 {
     QString str;
-    str = Config::configuration()->getAppDir() + "/bible";
+    str = Config::configuration()->getAppDir() + "/";
 
     if (ui->comBModule->currentIndex() != 0)
-        str.append("/").append(ui->comBModule->currentText());
+        str.append(Config::configuration()->getListBibles()->getModuleWithName(ui->comBModule->currentText())->getModulePath().remove("module" + GL_FORMAT_MODULE));
+    else
+        str.append("bible");
+
     return str;
 }
 //------------------------------------------------------------------------------
