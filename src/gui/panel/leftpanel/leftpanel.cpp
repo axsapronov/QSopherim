@@ -568,5 +568,9 @@ void LeftPanel::sUpdateGUIDayMode()
     ui->ListViewWordList->setPalette(p);
     ui->view->setPalette(p);
     ui->comBWordList->setPalette(p);
+    ui->comBDictList->setPalette(p);
+    ui->comBModules->setPalette(p);
+    ui->comBModulesBook->setPalette(p);
+    ui->comBDictListFindWord->setPalette(p);
 }
 //------------------------------------------------------------------------------
