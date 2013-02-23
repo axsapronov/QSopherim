@@ -46,6 +46,8 @@ MainWindow::MainWindow(QWidget *parent) :
     GUI_ModuleViewer->openLastChapter();
     GUI_LeftPanel2->loadJournal();
 
+//    QFont newFont("Courier", 8, QFont::Bold, true);
+//    ui->menuBar->setFont(newFont);
     //    loadModules();
     //        debug();
 }

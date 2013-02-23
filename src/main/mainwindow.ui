@@ -96,12 +96,21 @@
    <property name="windowTitle">
     <string>main toolbar</string>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="action_Settings_Module"/>
+   <addaction name="action_Search_Find_In_Modules"/>
+   <addaction name="action_Settings_General"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="toolBar">
@@ -276,6 +285,10 @@
    </property>
   </action>
   <action name="action_Settings_Module">
+   <property name="icon">
+    <iconset resource="../../resources/resources.qrc">
+     <normaloff>:/icons/images/iconManagerModules.png</normaloff>:/icons/images/iconManagerModules.png</iconset>
+   </property>
    <property name="text">
     <string>Manager modules</string>
    </property>
@@ -284,6 +297,10 @@
    </property>
   </action>
   <action name="action_Search_Find_In_Modules">
+   <property name="icon">
+    <iconset resource="../../resources/resources.qrc">
+     <normaloff>:/icons/images/iconFind.png</normaloff>:/icons/images/iconFind.png</iconset>
+   </property>
    <property name="text">
     <string>Find in modules</string>
    </property>

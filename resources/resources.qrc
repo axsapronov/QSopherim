@@ -8,6 +8,8 @@
     <qresource prefix="/icons">
         <file>images/qt-logo.png</file>
         <file>images/logo.png</file>
+        <file>images/iconFind.png</file>
+        <file>images/iconManagerModules.png</file>
     </qresource>
     <qresource prefix="/other"/>
     <qresource prefix="/images">
