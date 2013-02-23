@@ -5,6 +5,7 @@
 #include "debughelper.h"
 #include "strongcommon.h"
 
+#include "defines.h"
 
 // panel for info:
 // strongs , journal, and other
@@ -51,6 +52,7 @@ void LeftPanel2::init()
         m_strongGreek_on = true;
     }
 
+    sUpdateGUIDayMode();
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::createConnects()
@@ -249,5 +251,21 @@ void LeftPanel2::loadJournal()
         // add to model
         model->appendRow( new QStandardItem(m_journalList.at(i)));
     }
+}
+//------------------------------------------------------------------------------
+void LeftPanel2::sUpdateGUIDayMode()
+{
+    QPalette p = ui->ListViewJournal->palette();
+    if (Config::configuration()->getDayMode())
+    {
+        p.setColor(QPalette::Base, GL_COLOR_DAY);
+    }
+    else
+    {
+        p.setColor(QPalette::Base, GL_COLOR_NIGHT);
+    }
+    ui->ListViewJournal->setPalette(p);
+    ui->ListViewNote->setPalette(p);
+    ui->textBrStrong->setPalette(p);
 }
 //------------------------------------------------------------------------------

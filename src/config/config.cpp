@@ -17,7 +17,8 @@ Config::Config()
 
         m_fontSize = 12;
         m_fontColor = QColor(qRgb(0, 0, 0));
-        m_viewerColor = QColor(qRgb(255, 255, 255));
+        m_viewerColor = QColor(qRgb(240, 240, 255));
+        m_dayMode = true;
 
         #ifdef Q_OS_WIN
             m_fontFamily = "Tahoma";
@@ -140,6 +141,7 @@ void Config::loadSettings()
 
     // gui settings
     m_guiTray = settings.value("gui/tray").toBool();
+    m_dayMode = settings.value("gui/daymode").toBool();
 
     // last
     m_lastChapter = settings.value("history/chapter").toString();
@@ -243,6 +245,7 @@ void Config::saveSettings()
 
     // gui settings
     settings.setValue(QString("gui/tray"), m_guiTray);
+    settings.setValue(QString("gui/daymode"), m_dayMode);
 
     // last module
     settings.setValue(QString("history/module"), m_lastModule);
@@ -630,5 +633,15 @@ void Config::setFontReadingPlan(QString newFamily)
 QString Config::getFontReadingPlan()
 {
     return m_fontReadingPlan;
+}
+//------------------------------------------------------------------------------
+void Config::setDayMode(bool state)
+{
+    m_dayMode = state;
+}
+//------------------------------------------------------------------------------
+bool Config::getDayMode()
+{
+    return m_dayMode;
 }
 //------------------------------------------------------------------------------

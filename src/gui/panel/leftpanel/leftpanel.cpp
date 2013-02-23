@@ -39,6 +39,45 @@ LeftPanel::~LeftPanel()
     delete ui;
 }
 //------------------------------------------------------------------------------
+void LeftPanel::init()
+{
+    createConnects();
+    modelModules = new QStandardItemModel(0, 0, this);
+    modelBooks = new QStandardItemModel(0, 0, this);
+    modelChapters = new QStandardItemModel(0, 0, this);
+    modelClear = new QStandardItemModel(0, 0, this);
+    moduleList = new QSopherimModuleList();
+    typeModelBook = new QStringListModel();
+    typeModel = new QStringListModel();
+    m_lastNameOfBook  = "";
+    ui->tableBook->reset();
+    ui->tableChapter->reset();
+
+    sUpdateGUIDayMode();
+}
+//------------------------------------------------------------------------------
+void LeftPanel::createConnects()
+{
+    // bible or book
+    connect(ui->comBModules, SIGNAL(activated(QString)), SLOT(refreshBookList(QString)));
+    connect(ui->comBModulesBook, SIGNAL(activated(QString)), SLOT(refreshBookList(QString)));
+
+    connect(ui->tableBook, SIGNAL(clicked(QModelIndex)), SLOT(refreshChapterList(QModelIndex)));
+    connect(ui->tableBookBook, SIGNAL(clicked(QModelIndex)), SLOT(refreshChapterList(QModelIndex)));
+
+    connect(ui->tableChapter, SIGNAL(clicked(QModelIndex)), SLOT(showChapter(QModelIndex)));
+    connect(ui->tableChapterBook, SIGNAL(clicked(QModelIndex)), SLOT(showChapter(QModelIndex)));
+
+    // dict
+    connect(ui->comBDictList, SIGNAL(activated(QString)), SLOT(refreshWordListFromDict(QString)));
+    connect(ui->comBWordList, SIGNAL(activated(QString)), SLOT(showDescriptionWord(QString)));
+    connect(ui->ListViewWordList, SIGNAL(clicked(QModelIndex)), SLOT(showWord(QModelIndex)));
+
+    connect(ui->comBDictListFindWord, SIGNAL(activated(QString)), SLOT(showDescriptionWordFromOtherModules(QString)));
+
+    connect(ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(sShowHideLeftPanel2(int)));
+}
+//------------------------------------------------------------------------------
 void LeftPanel::refreshListModule(QSopherimModuleList* list)
 {
     if (list->getSize() != 0 )
@@ -215,43 +254,6 @@ void LeftPanel::refreshChapterList(const QString f_type, const QModelIndex f_ind
     }
 
     m_lastNameOfBook  = f_ind.data(0).toString();
-}
-//------------------------------------------------------------------------------
-void LeftPanel::init()
-{
-    createConnects();
-    modelModules = new QStandardItemModel(0, 0, this);
-    modelBooks = new QStandardItemModel(0, 0, this);
-    modelChapters = new QStandardItemModel(0, 0, this);
-    modelClear = new QStandardItemModel(0, 0, this);
-    moduleList = new QSopherimModuleList();
-    typeModelBook = new QStringListModel();
-    typeModel = new QStringListModel();
-    m_lastNameOfBook  = "";
-    ui->tableBook->reset();
-    ui->tableChapter->reset();
-}
-//------------------------------------------------------------------------------
-void LeftPanel::createConnects()
-{
-    // bible or book
-    connect(ui->comBModules, SIGNAL(activated(QString)), SLOT(refreshBookList(QString)));
-    connect(ui->comBModulesBook, SIGNAL(activated(QString)), SLOT(refreshBookList(QString)));
-
-    connect(ui->tableBook, SIGNAL(clicked(QModelIndex)), SLOT(refreshChapterList(QModelIndex)));
-    connect(ui->tableBookBook, SIGNAL(clicked(QModelIndex)), SLOT(refreshChapterList(QModelIndex)));
-
-    connect(ui->tableChapter, SIGNAL(clicked(QModelIndex)), SLOT(showChapter(QModelIndex)));
-    connect(ui->tableChapterBook, SIGNAL(clicked(QModelIndex)), SLOT(showChapter(QModelIndex)));
-
-    // dict
-    connect(ui->comBDictList, SIGNAL(activated(QString)), SLOT(refreshWordListFromDict(QString)));
-    connect(ui->comBWordList, SIGNAL(activated(QString)), SLOT(showDescriptionWord(QString)));
-    connect(ui->ListViewWordList, SIGNAL(clicked(QModelIndex)), SLOT(showWord(QModelIndex)));
-
-    connect(ui->comBDictListFindWord, SIGNAL(activated(QString)), SLOT(showDescriptionWordFromOtherModules(QString)));
-
-    connect(ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(sShowHideLeftPanel2(int)));
 }
 //------------------------------------------------------------------------------
 void LeftPanel::showChapter(QModelIndex ind)
@@ -479,7 +481,6 @@ void LeftPanel::sUpdateGUI()
     if (!checkedNewAndOldChapter())
     {
         // old != new
-        myDebug() << "yes";
         if (Config::configuration()->getLastType() == "Bible")
         {
             refreshBookList(Config::configuration()->getLastModule()
@@ -534,4 +535,26 @@ bool LeftPanel::checkedNewAndOldChapter()
     return flag;
 }
 //------------------------------------------------------------------------------
-
+void LeftPanel::sUpdateGUIDayMode()
+{
+    // todo
+    // добавить настройку цвета шрифта
+    // добавить настройку цвета выделения и тд и тп
+    QPalette p = ui->tableBook->palette();
+    if (Config::configuration()->getDayMode())
+    {
+        p.setColor(QPalette::Base, GL_COLOR_DAY);
+    }
+    else
+    {
+        p.setColor(QPalette::Base, GL_COLOR_NIGHT);
+    }
+    ui->tableBookBook->setPalette(p);
+    ui->tableChapter->setPalette(p);
+    ui->tableChapterBook->setPalette(p);
+    ui->tableBook->setPalette(p);
+    ui->ListViewWordList->setPalette(p);
+    ui->view->setPalette(p);
+    ui->comBWordList->setPalette(p);
+}
+//------------------------------------------------------------------------------

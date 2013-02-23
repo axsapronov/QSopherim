@@ -18,4 +18,8 @@
 
 #define GL_SYMBOL_SPLIT_JOURNAL QString("[^:^]")
 
+#define GL_COLOR_DAY QColor(240, 240, 255)
+#define GL_COLOR_NIGHT QColor(120, 120, 120)
+#define GL_COLOR_NIGHT_TEXT QColor(240, 240, 255)
+
 #endif // __DEFINES_H

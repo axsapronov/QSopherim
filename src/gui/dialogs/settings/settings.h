@@ -49,6 +49,7 @@ signals:
     void SIGNAL_ReLoadModules();
     void SIGNAL_ReLoadFontSettings();
     void SIGNAL_UpdateTray();
+    void SIGNAL_UpdateDayMode();
 
 private slots:
     void accept();

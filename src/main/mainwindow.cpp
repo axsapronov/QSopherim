@@ -335,6 +335,11 @@ void MainWindow::createConnects()
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNewBookmark(QString)),
             GUI_RightPanel, SLOT(addNewBookmark(QString)));
 
+
+    connect(GUI_Settings, SIGNAL(SIGNAL_UpdateDayMode()), GUI_LeftPanel, SLOT(sUpdateGUIDayMode()));
+    connect(GUI_Settings, SIGNAL(SIGNAL_UpdateDayMode()), GUI_LeftPanel2, SLOT(sUpdateGUIDayMode()));
+
+
     // connect find dialog to left2 panel
     connect(GUI_FindDialog, SIGNAL(SIGNAL_ShowChapter(QString, QString, QString)),
             GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));

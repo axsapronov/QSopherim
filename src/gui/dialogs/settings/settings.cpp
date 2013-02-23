@@ -95,6 +95,7 @@ void Settings::loadSettings()
 
     // gui
     ui->chBGuiTray->setChecked(Config::configuration()->getGuiTray());
+    ui->chBDayMode->setChecked(Config::configuration()->getDayMode());
 
     // fonts
     ui->fontComBMenu->setCurrentFont(QFont(Config::configuration()->getFontMenu()));
@@ -153,6 +154,7 @@ void Settings::saveSettings()
     Config::configuration()->setOptionChangeTextColor(ui->chBChangindTextColor->checkState());
 
     Config::configuration()->setGuiTray(ui->chBGuiTray->checkState());
+    Config::configuration()->setDayMode(ui->chBDayMode->checkState());
 
     //    ui->sBFontSize->setValue(Config::configuration()->getFontSize());
 
@@ -194,6 +196,7 @@ void Settings::accept()
             emit SIGNAL_ReLoadModules();
             emit SIGNAL_ReLoadFontSettings();
             emit SIGNAL_UpdateTray();
+            emit SIGNAL_UpdateDayMode();
 
             QWidget::hide();
             break;
@@ -249,6 +252,7 @@ bool Settings::getModifySettings()
             || ui->fontComBJornal->currentText() != Config::configuration()->getFontJournal()
             || ui->fontComBNotes->currentText() != Config::configuration()->getFontNotes()
             || ui->fontComBReadingPlan->currentText() != Config::configuration()->getFontReadingPlan()
+            || ui->chBDayMode->checkState() != Config::configuration()->getDayMode()
             )
     {
         return true;

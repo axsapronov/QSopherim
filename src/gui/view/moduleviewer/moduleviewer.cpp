@@ -504,6 +504,10 @@ void ModuleViewer::setStyleSettings()
         sheet.append(t_color + "\n");
     }
     ui->viewer->document()->setDefaultStyleSheet(sheet);
+
+    QPalette p = ui->viewer->palette();
+    p.setColor(QPalette::Base, Config::configuration()->getViewerColor());
+    ui->viewer->setPalette(p);
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::openLastChapter()

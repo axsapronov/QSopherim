@@ -36,6 +36,8 @@ public:
      */
     void loadJournal();
 
+
+
 signals:
     void SIGNAL_ShowChapterFromJournal(QString, QString, QString);
 
@@ -51,6 +53,8 @@ public slots:
 
     void sSetStrongHebrew(QString path);
     void sSetStrongGreek(QString path);
+
+    void sUpdateGUIDayMode();
 
 private slots:
 

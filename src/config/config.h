@@ -289,6 +289,9 @@ public:
     QString getFontNotes();
     QString getFontReadingPlan();
 
+    bool getDayMode();
+    void setDayMode(bool state);
+
     static Config *configuration();
 
 private:
@@ -341,6 +344,9 @@ private:
 
     // gui
     bool m_guiTray;
+
+    // mode
+    bool m_dayMode;
 
     bool m_optionChangeTextColor;
 

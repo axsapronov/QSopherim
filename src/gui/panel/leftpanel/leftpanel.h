@@ -38,6 +38,8 @@ public:
     void retranslate();
 
 
+
+
 public slots:
     /**
      * @brief showChapterFromJournal
@@ -50,6 +52,8 @@ public slots:
      * @brief sUpdateGUI
      */
     void sUpdateGUI();
+
+    void sUpdateGUIDayMode();
 
 signals:
     void SIGNAL_AddRecordToJournal(QString, QString, QString);
