@@ -83,11 +83,44 @@ void writeXmlStrongFile(QHash<int, StrongList> *strong, QString f_path)
 //-------------------------------------------------------------------------------
 QString getTypeStrong()
 {
-    QString r_str;
+    QString r_str = "";
 
-    r_str = "Hebrew";
+    QString t_lastBook = Config::configuration()->getLastBook();
+    int t_numberBook = getNumberOfBook(t_lastBook);
+
+    if (t_numberBook <= 66 )
+        r_str = "Hebrew";
+
+    if (t_numberBook > 66 and t_numberBook <= 77)
+        r_str = "Greek";
 
     return r_str;
-
 }
+//-------------------------------------------------------------------------------
+int getNumberOfBook(const QString f_book)
+{
+    int r_number = 1;
+    QString t_name = "numberBook.txt";
+
+    QString t_text = getTextFromHtmlFile(Config::configuration()->getStrongDir() + t_name);
+    QStringList t_list;
+    t_list << t_text.split("\n");
+
+    int i = 0;
+    QString t_str;
+    bool flag = false;
+    do
+    {
+        t_str = getParamFromStr(&t_list.at(i), f_book);
+        if (t_str != t_list.at(i))
+        {
+            r_number = t_str.toInt();
+        }
+
+        i++;
+    } while (!flag and i < t_list.size() );
+
+    return r_number;
+}
+//-------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------

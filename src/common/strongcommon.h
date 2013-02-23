@@ -34,6 +34,7 @@ void writeXmlStrongFile(QHash<int, StrongList> *strong, QString f_path);
 
 QString getTypeStrong();
 
+int getNumberOfBook(const QString f_book);
 
 
 #endif
