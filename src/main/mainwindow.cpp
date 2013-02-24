@@ -46,11 +46,9 @@ MainWindow::MainWindow(QWidget *parent) :
     GUI_ModuleViewer->openLastChapter();
     GUI_LeftPanel2->loadJournal();
 
-    //    QFont newFont("Courier", 8, QFont::Bold, true);
-    //    ui->menuBar->setFont(newFont);
     //    loadModules();
     //        debug();
-
+    ui->menuBar->setFont(Config::configuration()->getGUIMapFont()["FontMenu"]);
 }
 //------------------------------------------------------------------------------
 MainWindow::~MainWindow()
@@ -150,7 +148,6 @@ void MainWindow::init()
         setLangFr();
     }
 
-
     //    ui->centralWidget->setMouseTracking(true);
     GUI_ModuleViewer = new ModuleViewer(this);
     GUI_NoteEditor = new NoteEditor(this);
@@ -180,9 +177,7 @@ void MainWindow::init()
 //------------------------------------------------------------------------------
 void MainWindow::debug()
 {
-    QStringList fileName;
-
-
+//    QStringList fileName;
     //    fileName << "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
     //    fileName << "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
     //    fileName << "/home/files/Documents/Bible/unrar/NT_Russian_Kassian/Bibleqt.ini";

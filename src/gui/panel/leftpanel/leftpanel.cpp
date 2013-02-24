@@ -16,7 +16,6 @@
 #define GUI_TAB_DICT 2
 
 
-
 LeftPanel::LeftPanel(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::LeftPanel)
@@ -54,6 +53,12 @@ void LeftPanel::init()
     ui->tableChapter->reset();
 
     sUpdateGUIDayMode();
+
+    ui->comBModules->setFont(Config::configuration()->getGUIMapFont()["ModulesName"]);
+    ui->comBModulesBook->setFont(Config::configuration()->getGUIMapFont()["ModulesName"]);
+
+    ui->tableBook->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
+    ui->tableBookBook->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
 }
 //------------------------------------------------------------------------------
 void LeftPanel::createConnects()
@@ -157,7 +162,6 @@ void LeftPanel::refreshListDict(QSopherimModuleList* list)
         // dict tab
         ui->tabWidget->removeTab(GUI_TAB_DICT);
     }
-
 }
 //------------------------------------------------------------------------------
 void LeftPanel::refreshBookList(QSopherimModuleList* list)

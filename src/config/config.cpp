@@ -33,45 +33,32 @@ Config::Config()
 #endif
 
 #ifdef Q_OS_LINUX
-        m_GUIFontMenu = QFont("Courier");
-        m_GUIFontMenu.setPointSize(12);
-        m_GUIFontModulesName = QFont("Courier");
-        m_GUIFontModulesName.setPointSize(12);
-        m_GUIFontBookName = QFont("Courier");
-        m_GUIFontBookName.setPointSize(12);
-        m_GUIFontStrongsHebrew = QFont("Courier");
-        m_GUIFontStrongsHebrew.setPointSize(12);
-        m_GUIFontStrongsGreek = QFont("Courier");
-        m_GUIFontStrongsGreek.setPointSize(12);
-        m_GUIFontJournal = QFont("Courier");
-        m_GUIFontJournal.setPointSize(12);
-        m_GUIFontNotes = QFont("Courier");
-        m_GUIFontNotes.setPointSize(12);
-        m_GUIFontReadingPlan = QFont("Courier");
-        m_GUIFontReadingPlan.setPointSize(12);
-
-
-        m_fontFamily = "DejaVu Sans";
-        m_fontMenu = "DejaVu Sans";
-        m_fontModulesName = "DejaVu Sans";
-        m_fontBookName = "DejaVu Sans";
-        m_fontStrongsHebrew = "DejaVu Sans";
-        m_fontStrongsGreek = "DejaVu Sans";
-        m_fontJournal = "DejaVu Sans";
-        m_fontNotes = "DejaVu Sans";
-        m_fontReadingPlan = "DejaVu Sans";
+        QFont t_GUIFontMenu = QFont("Courier");
+        t_GUIFontMenu.setPointSize(12);
+        QFont t_GUIFontModulesName = QFont("Courier");
+        t_GUIFontModulesName.setPointSize(12);
+        QFont t_GUIFontBookName = QFont("Courier");
+        t_GUIFontBookName.setPointSize(12);
+        QFont t_GUIFontStrongsHebrew = QFont("Courier");
+        t_GUIFontStrongsHebrew.setPointSize(12);
+        QFont t_GUIFontStrongsGreek = QFont("Courier");
+        t_GUIFontStrongsGreek.setPointSize(12);
+        QFont t_GUIFontJournal = QFont("Courier");
+        t_GUIFontJournal.setPointSize(12);
+        QFont t_GUIFontNotes = QFont("Courier");
+        t_GUIFontNotes.setPointSize(12);
+        QFont t_GUIFontReadingPlan = QFont("Courier");
+        t_GUIFontReadingPlan.setPointSize(12);
 #endif
 
-
-        m_GUIMapFont["FontMenu"] = m_GUIFontMenu;
-        m_GUIMapFont["FontModulesName"] = m_GUIFontModulesName;
-        m_GUIMapFont["FontBookName"] = m_GUIFontBookName;
-        m_GUIMapFont["FontStrongsGreek"] = m_GUIFontStrongsGreek;
-        m_GUIMapFont["FontStrongsHebrew"] = m_GUIFontStrongsHebrew;
-        m_GUIMapFont["FontJournal"] = m_GUIFontJournal;
-        m_GUIMapFont["FontMenu"] = m_GUIFontMenu;
-        m_GUIMapFont["FontMenu"] = m_GUIFontMenu;
-
+        m_GUIMapFont["FontMenu"] = t_GUIFontMenu;
+        m_GUIMapFont["FontModulesName"] = t_GUIFontModulesName;
+        m_GUIMapFont["FontBookName"] = t_GUIFontBookName;
+        m_GUIMapFont["FontStrongsGreek"] = t_GUIFontStrongsGreek;
+        m_GUIMapFont["FontStrongsHebrew"] = t_GUIFontStrongsHebrew;
+        m_GUIMapFont["FontJournal"] = t_GUIFontJournal;
+        m_GUIMapFont["FontNotes"] = t_GUIFontNotes;
+        m_GUIMapFont["FontReadingPlan"] = t_GUIFontReadingPlan;
 
         m_appLang = "Russian";
         m_fontBold = false;
@@ -591,86 +578,6 @@ void Config::setJournalHistory(const QStringList* list)
 QStringList* Config::getJournalHistory()
 {
     return m_journalHistory;
-}
-//------------------------------------------------------------------------------
-void Config::setFontMenu(QString newFamily)
-{
-    m_fontMenu = newFamily;
-}
-//------------------------------------------------------------------------------
-QString Config::getFontMenu()
-{
-    return m_fontMenu;
-}
-//------------------------------------------------------------------------------
-void Config::setFontModulesName(QString newFamily)
-{
-    m_fontModulesName = newFamily;
-}
-//------------------------------------------------------------------------------
-QString Config::getFontModulesName()
-{
-    return m_fontModulesName;
-}
-//------------------------------------------------------------------------------
-void Config::setFontBookName(QString newFamily)
-{
-    m_fontBookName = newFamily;
-}
-//------------------------------------------------------------------------------
-QString Config::getFontBookName()
-{
-    return m_fontBookName;
-}
-//------------------------------------------------------------------------------
-void Config::setFontStrongsHebrew(QString newFamily)
-{
-    m_fontStrongsHebrew = newFamily;
-}
-//------------------------------------------------------------------------------
-QString Config::getFontStrongsHebrew()
-{
-    return m_fontStrongsHebrew;
-}
-//------------------------------------------------------------------------------
-void Config::setFontStrongsGreek(QString newFamily)
-{
-    m_fontStrongsGreek = newFamily;
-}
-//------------------------------------------------------------------------------
-QString Config::getFontStrongsGreek()
-{
-    return m_fontStrongsGreek;
-}
-//------------------------------------------------------------------------------
-void Config::setFontJournal(QString newFamily)
-{
-    m_fontJournal = newFamily;
-}
-//------------------------------------------------------------------------------
-QString Config::getFontJournal()
-{
-    return m_fontJournal;
-}
-//------------------------------------------------------------------------------
-void Config::setFontNotes(QString newFamily)
-{
-    m_fontNotes = newFamily;
-}
-//------------------------------------------------------------------------------
-QString Config::getFontNotes()
-{
-    return m_fontNotes;
-}
-//------------------------------------------------------------------------------
-void Config::setFontReadingPlan(QString newFamily)
-{
-    m_fontReadingPlan = newFamily;
-}
-//------------------------------------------------------------------------------
-QString Config::getFontReadingPlan()
-{
-    return m_fontReadingPlan;
 }
 //------------------------------------------------------------------------------
 void Config::setDayMode(bool state)

@@ -53,6 +53,9 @@ void LeftPanel2::init()
     }
 
     sUpdateGUIDayMode();
+
+    ui->ListViewJournal->setFont(Config::configuration()->getGUIMapFont()["FontJournal"]);
+    ui->ListViewNote->setFont(Config::configuration()->getGUIMapFont()["FontNotes"]);
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::createConnects()
@@ -189,6 +192,7 @@ void LeftPanel2::showStrong(QString number)
     if (getTypeStrong() == "Hebrew"
             and m_strongHebrew_on)
     {
+        ui->textBrStrong->setFont(Config::configuration()->getGUIMapFont()["FontStrongsHebrew"]);
         QString str =
                 tr("Strong number: ")
                 + "<b>" + number + "</b>"
@@ -200,6 +204,7 @@ void LeftPanel2::showStrong(QString number)
     if (getTypeStrong() == "Greek"
             and m_strongHebrew_on)
     {
+        ui->textBrStrong->setFont(Config::configuration()->getGUIMapFont()["FontStrongsGreek"]);
         QString str =
                 tr("Strong number: ")
                 + "<b>" + number + "</b>"

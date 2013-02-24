@@ -277,24 +277,6 @@ public:
      */
     void setOptionChangeTextColor(bool state);
 
-    void setFontMenu(QString newFamily);
-    void setFontModulesName(QString newFamily);
-    void setFontBookName(QString newFamily);
-    void setFontStrongsHebrew(QString newFamily);
-    void setFontStrongsGreek(QString newFamily);
-    void setFontJournal(QString newFamily);
-    void setFontNotes(QString newFamily);
-    void setFontReadingPlan(QString newFamily);
-
-    QString getFontMenu();
-    QString getFontModulesName();
-    QString getFontBookName();
-    QString getFontStrongsHebrew();
-    QString getFontStrongsGreek();
-    QString getFontJournal();
-    QString getFontNotes();
-    QString getFontReadingPlan();
-
     bool getDayMode();
     void setDayMode(bool state);
 
@@ -334,28 +316,11 @@ private:
     QString m_fontFamily;
 
     // fonts
-    QString m_fontMenu;
-    QString m_fontModulesName;
-    QString m_fontBookName;
-    QString m_fontStrongsHebrew;
-    QString m_fontStrongsGreek;
-    QString m_fontJournal;
-    QString m_fontNotes;
-    QString m_fontReadingPlan;
 
     bool m_fontBold;
     bool m_fontItalic;
     bool m_fontUnderline;
     bool m_fontStrike;
-
-    QFont m_GUIFontMenu;
-    QFont m_GUIFontModulesName;
-    QFont m_GUIFontBookName;
-    QFont m_GUIFontStrongsHebrew;
-    QFont m_GUIFontStrongsGreek;
-    QFont m_GUIFontJournal;
-    QFont m_GUIFontNotes;
-    QFont m_GUIFontReadingPlan;
 
     QMap<QString, QFont> m_GUIMapFont;
     // gui
