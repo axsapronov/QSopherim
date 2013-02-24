@@ -33,22 +33,22 @@ Config::Config()
 #endif
 
 #ifdef Q_OS_LINUX
-        QFont t_GUIFontMenu = QFont("Courier");
-        t_GUIFontMenu.setPointSize(12);
-        QFont t_GUIFontModulesName = QFont("Courier");
-        t_GUIFontModulesName.setPointSize(12);
-        QFont t_GUIFontBookName = QFont("Courier");
-        t_GUIFontBookName.setPointSize(12);
-        QFont t_GUIFontStrongsHebrew = QFont("Courier");
-        t_GUIFontStrongsHebrew.setPointSize(12);
-        QFont t_GUIFontStrongsGreek = QFont("Courier");
-        t_GUIFontStrongsGreek.setPointSize(12);
-        QFont t_GUIFontJournal = QFont("Courier");
-        t_GUIFontJournal.setPointSize(12);
-        QFont t_GUIFontNotes = QFont("Courier");
-        t_GUIFontNotes.setPointSize(12);
-        QFont t_GUIFontReadingPlan = QFont("Courier");
-        t_GUIFontReadingPlan.setPointSize(12);
+        QFont t_GUIFontMenu = QFont("Sans Serif");
+        t_GUIFontMenu.setPointSize(9);
+        QFont t_GUIFontModulesName = QFont("Sans Serif");
+        t_GUIFontModulesName.setPointSize(9);
+        QFont t_GUIFontBookName = QFont("Sans Serif");
+        t_GUIFontBookName.setPointSize(9);
+        QFont t_GUIFontStrongsHebrew = QFont("Sans Serif");
+        t_GUIFontStrongsHebrew.setPointSize(9);
+        QFont t_GUIFontStrongsGreek = QFont("Sans Serif");
+        t_GUIFontStrongsGreek.setPointSize(9);
+        QFont t_GUIFontJournal = QFont("Sans Serif");
+        t_GUIFontJournal.setPointSize(9);
+        QFont t_GUIFontNotes = QFont("Sans Serif");
+        t_GUIFontNotes.setPointSize(9);
+        QFont t_GUIFontReadingPlan = QFont("Sans Serif");
+        t_GUIFontReadingPlan.setPointSize(9);
 #endif
 
         m_GUIMapFont["FontMenu"] = t_GUIFontMenu;
