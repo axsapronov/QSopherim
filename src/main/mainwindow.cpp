@@ -39,8 +39,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowTitle(QString("%1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
     init();
-    loadModulesFromFolder();
-    loadDictFromFolder();
+//    loadModulesFromFolder();
+//    loadDictFromFolder();
+
+    // load modules
+    processFinishModule();
+    processFinishDict();
 
     // open last text
     GUI_ModuleViewer->openLastChapter();
@@ -305,8 +309,6 @@ void MainWindow::createConnects()
     // settings
     connect(GUI_Settings, SIGNAL(SIGNAL_RetranslateGUI(QString)),
             SLOT(retranslate(QString)));
-    connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadModules()), SLOT(loadModulesFromFolder()));
-
 
     // manager module
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), SLOT(processFinishDict()));
@@ -316,6 +318,10 @@ void MainWindow::createConnects()
             , GUI_LeftPanel2, SLOT(sSetStrongGreek(QString)));
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetHebrewStrong(QString))
             , GUI_LeftPanel2, SLOT(sSetStrongHebrew(QString)));
+
+    // import modules
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_UpdateModules()), SLOT(loadModulesFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_UpdateModulesDict()), SLOT(loadDictFromFolder()));
 
     // connect fron left1 to left2 panels
     connect(GUI_LeftPanel, SIGNAL(SIGNAL_AddRecordToJournal(QString,QString,QString))
@@ -342,7 +348,6 @@ void MainWindow::createConnects()
     // connect find dialog to left2 panel
     connect(GUI_FindDialog, SIGNAL(SIGNAL_ShowChapter(QString, QString, QString)),
             GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
-
 
 
     connect(GUI_RightPanel, SIGNAL(SIGNAL_OpenBookmark(QString, QString, QString)),

@@ -49,28 +49,12 @@ public:
 
 signals:
     void SIGNAL_RetranslateGUI(QString);
-    void SIGNAL_ReLoadModules();
     void SIGNAL_ReLoadFontSettings();
     void SIGNAL_UpdateTray();
     void SIGNAL_UpdateDayMode();
 
 private slots:
     void accept();
-    /**
-       @function
-       Browse path to dict modules
-       */
-    void browseDictDir();
-    /**
-       @function
-       Browse path to bible modules
-       */
-    void browseBibleDir();
-    /**
-       @function
-       Browse path to other modules
-       */
-    void browseOtherDir();
     void selectFontColor();
 
     void fontSettings();

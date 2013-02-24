@@ -21,19 +21,19 @@ Settings::Settings(QWidget *parent) :
     init();
     createConnect();
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 Settings::~Settings()
 {
     delete GUI_Font;
     delete ui;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void Settings::debug()
 {
 
     myDebug() << "debug: appwsettings";
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void Settings::init()
 {
     // add item to combobox
@@ -64,7 +64,7 @@ void Settings::init()
     //    settings->setValue("language/lang", value);
     //    settings->sync();
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void Settings::loadSettings()
 {
     //    QString lang = settings->value("language/lang").toString();
@@ -73,12 +73,6 @@ void Settings::loadSettings()
     setAPPLang(lang);
     ui->comBLanguage->setCurrentIndex(ui->comBLanguage->findText(lang));
 
-    // load module settings
-
-    QString t_folderbible = Config::configuration()->getBibleDir();
-    QString t_folderdict = Config::configuration()->getDictDir();
-    QString t_folderother = Config::configuration()->getOtherDir();
-
     // load font and viewer settings
     ui->chBBold->setChecked(Config::configuration()->getFontBold());
     ui->chBItalic->setChecked(Config::configuration()->getFontItalic());
@@ -86,10 +80,6 @@ void Settings::loadSettings()
     ui->chBUnderline->setChecked(Config::configuration()->getFontUnderline());
 
     ui->chBChangindTextColor->setChecked(Config::configuration()->getOptionChangeTextColor());
-
-    ui->LEBibleFolder->setText(t_folderbible);
-    ui->LEDictFolder->setText(t_folderdict);
-    ui->LEOtherFolder->setText(t_folderother);
 
     ui->sBFontSize->setValue(Config::configuration()->getFontSize());
     ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
@@ -111,7 +101,7 @@ void Settings::loadSettings()
     //    setAPPLang(lang);
     //    ui->comBLanguage->setCurrentIndex(ui->comBLanguage->findText(lang));
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void Settings::saveSettings()
 {
     if (ui->comBLanguage->currentText() != Config::configuration()->getAppLang())
@@ -119,10 +109,6 @@ void Settings::saveSettings()
         emit SIGNAL_RetranslateGUI(ui->comBLanguage->currentText());
     }
     Config::configuration()->setAppLang(ui->comBLanguage->currentText());
-    // save module settings
-    Config::configuration()->setBibleDir(ui->LEBibleFolder->text());
-    Config::configuration()->setDictDir(ui->LEDictFolder->text());
-    Config::configuration()->setOtherDir(ui->LEOtherFolder->text());
 
     // save font settings and viewer settings
     Config::configuration()->setFontFamily(ui->fontComB->currentText());
@@ -144,13 +130,9 @@ void Settings::saveSettings()
 
     //    ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void Settings::createConnect()
 {
-    connect(ui->pBBibleFolder, SIGNAL(clicked()), SLOT(browseBibleDir()));
-    connect(ui->pBOtherFolder, SIGNAL(clicked()), SLOT(browseOtherDir()));
-    connect(ui->pBDictFolder, SIGNAL(clicked()), SLOT(browseDictDir()));
-
     connect(ui->pBColor, SIGNAL(clicked()), SLOT(selectFontColor()));
     connect(ui->pBBackgroundColor, SIGNAL(clicked()), SLOT(selectFontColor()));
 
@@ -166,7 +148,7 @@ void Settings::createConnect()
 
     connect(GUI_Font, SIGNAL(SIGNAL_SendInfo()), SLOT(updateFontSettings()));
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void Settings::accept()
 {
     if (getModifySettings())
@@ -188,8 +170,6 @@ void Settings::accept()
             //            msgBox.setText("Settings has been modified. Please restart the"
             //                           "application for the entry into force of the settings");
             //            msgBox.exec();
-
-            emit SIGNAL_ReLoadModules();
             emit SIGNAL_ReLoadFontSettings();
             emit SIGNAL_UpdateTray();
             emit SIGNAL_UpdateDayMode();
@@ -213,24 +193,21 @@ void Settings::accept()
         QWidget::hide();
     }
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QString Settings::getAPPLang()
 {
     return m_APP_Lang;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void Settings::setAPPLang(QString new_lang)
 {
     m_APP_Lang = new_lang;
     return;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 bool Settings::getModifySettings()
 {
     if (ui->comBLanguage->currentText() != Config::configuration()->getAppLang()
-            || ui->LEBibleFolder->text() != Config::configuration()->getBibleDir()
-            || ui->LEDictFolder->text() != Config::configuration()->getDictDir()
-            || ui->LEOtherFolder->text() != Config::configuration()->getOtherDir()
             || ui->sBFontSize->value() != Config::configuration()->getFontSize()
             || ui->fontComB->currentText() != Config::configuration()->getFontFamily()
             || m_fontColor != Config::configuration()->getFontColor()
@@ -240,14 +217,6 @@ bool Settings::getModifySettings()
             || ui->chBStrike->checkState() != Config::configuration()->getFontStrike()
             || ui->chBUnderline->checkState() != Config::configuration()->getFontUnderline()
             || ui->chBGuiTray->checkState() != Config::configuration()->getGuiTray()
-//            || ui->fontComBMenu->currentText() != Config::configuration()->getFontMenu()
-//            || ui->fontComBBookName->currentText() != Config::configuration()->getFontBookName()
-//            || ui->fontComBModulesName->currentText() != Config::configuration()->getFontModulesName()
-//            || ui->fontComBStrongsHebrew->currentText() != Config::configuration()->getFontStrongsHebrew()
-//            || ui->fontComBStrongsGreek->currentText() != Config::configuration()->getFontStrongsGreek()
-//            || ui->fontComBJornal->currentText() != Config::configuration()->getFontJournal()
-//            || ui->fontComBNotes->currentText() != Config::configuration()->getFontNotes()
-//            || ui->fontComBReadingPlan->currentText() != Config::configuration()->getFontReadingPlan()
             || ui->chBDayMode->checkState() != Config::configuration()->getDayMode()
             )
     {
@@ -256,54 +225,12 @@ bool Settings::getModifySettings()
 
     return false;
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void Settings::setParams()
 {
     ui->comBLanguage->setCurrentIndex(ui->comBLanguage->findText(getAPPLang()));
-    ui->LEBibleFolder->setText(Config::configuration()->getBibleDir());
-    ui->LEOtherFolder->setText(Config::configuration()->getOtherDir());
-    ui->LEDictFolder->setText(Config::configuration()->getDictDir());
 }
 //------------------------------------------------------------------------------
-void Settings::browseBibleDir()
-{
-    QFileDialog::Options options = QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly;
-    QString directory = QFileDialog::getExistingDirectory(this,
-                                                          tr("Select dir for bible modules"),
-                                                          Config::configuration()->getAppDir(),
-                                                          options);
-    if (!directory.isEmpty())
-    {
-        ui->LEBibleFolder->setText(directory);
-    }
-}
-//------------------------------------------------------------------------------
-void Settings::browseDictDir()
-{
-    QFileDialog::Options options = QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly;
-    QString directory = QFileDialog::getExistingDirectory(this,
-                                                          tr("Select dir for dict modules"),
-                                                          Config::configuration()->getAppDir(),
-                                                          options);
-    if (!directory.isEmpty())
-    {
-        ui->LEDictFolder->setText(directory);
-    }
-}
-//------------------------------------------------------------------------------
-void Settings::browseOtherDir()
-{
-    QFileDialog::Options options = QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly;
-    QString directory = QFileDialog::getExistingDirectory(this,
-                                                          tr("Select dir for other modules"),
-                                                          Config::configuration()->getAppDir(),
-                                                          options);
-    if (!directory.isEmpty())
-    {
-        ui->LEOtherFolder->setText(directory);
-    }
-}
-///----------------------------------------------------------------------------
 void Settings::selectFontColor()
 {
     QPushButton *button = (QPushButton *)sender();
@@ -325,12 +252,12 @@ void Settings::selectFontColor()
         m_fontColor = t_color;
     }
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void Settings::retranslate()
 {
     ui->retranslateUi(this);
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void Settings::fontSettings()
 {
     QPushButton *button = (QPushButton *)sender();
@@ -360,7 +287,7 @@ void Settings::fontSettings()
 
     GUI_Font->show();
 }
-///----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void Settings::updateFontSettings()
 {
     // fonts
@@ -382,4 +309,4 @@ void Settings::updateFontSettings()
     ui->sBFontNotesSize->setValue(Config::configuration()->getGUIMapFont()["FontNotes"].pointSize());
     ui->sBFontReadingPlanSize->setValue(Config::configuration()->getGUIMapFont()["FontReadingPlan"].pointSize());
 }
-///-----------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
