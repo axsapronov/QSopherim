@@ -65,6 +65,7 @@
     <addaction name="action_Settings_General"/>
     <addaction name="mSettingsLanguage"/>
     <addaction name="action_Settings_Module"/>
+    <addaction name="action_Settings_Module_Import"/>
    </widget>
    <widget class="QMenu" name="mSearch">
     <property name="title">
@@ -110,6 +111,7 @@
    </attribute>
    <addaction name="action_Settings_Module"/>
    <addaction name="action_Search_Find_In_Modules"/>
+   <addaction name="action_Settings_Module_Import"/>
    <addaction name="action_Settings_General"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -306,6 +308,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+F</string>
+   </property>
+  </action>
+  <action name="action_Settings_Module_Import">
+   <property name="text">
+    <string>Module Import</string>
    </property>
   </action>
  </widget>

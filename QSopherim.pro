@@ -22,6 +22,7 @@ DEPENDPATH += \
         src/gui/panel/bottompanel/ \
         src/gui/dialogs/lansettings \
         src/gui/dialogs/managermodules \
+        src/gui/dialogs/moduleimport \
         src/gui/dialogs/font \
         src/gui/dialogs/find \
         src/main \
@@ -49,6 +50,7 @@ INCLUDEPATH += \
         src/gui/dialogs/about \
         src/gui/dialogs/settings \
         src/gui/panel/leftpanel/ \
+        src/gui/dialogs/moduleimport \
         src/gui/panel/rightpanel/ \
         src/gui/panel/bottompanel/ \
         src/gui/dialogs/lansettings \
@@ -119,7 +121,8 @@ SOURCES  += \
         managermodules.cpp \
         biblequotedictmodule.cpp \
         finddialog.cpp \
-        fontdialog.cpp
+        fontdialog.cpp \
+        moduleimportdialog.cpp
 
 HEADERS  += \
         mainwindow.h \
@@ -166,7 +169,8 @@ HEADERS  += \
         managermodules.h \
         biblequotedictmodule.h \
         finddialog.h \
-        fontdialog.h
+        fontdialog.h \
+        moduleimportdialog.h
 
 FORMS    += \
         mainwindow.ui \
@@ -180,7 +184,8 @@ FORMS    += \
         noteeditor.ui \
         managermodules.ui \
         finddialog.ui \
-        fontdialog.ui
+        fontdialog.ui \
+        moduleimportdialog.ui
 
 RESOURCES += \
         resources/resources.qrc

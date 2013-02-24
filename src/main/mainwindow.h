@@ -28,6 +28,7 @@ QT_END_NAMESPACE
 #include "finddialog.h"
 #include "noteeditor.h"
 #include "managermodules.h"
+#include "moduleimportdialog.h"
 
 class MainWindow : public QMainWindow
 {
@@ -152,6 +153,7 @@ private:
     NoteEditor *GUI_NoteEditor;
     ManagerModules *GUI_ManagerModules;
     FindDialog *GUI_FindDialog;
+    ModuleImportDialog *GUI_ModuleImportDialog;
 
     //tray
     QSystemTrayIcon *trIcon;

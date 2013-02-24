@@ -65,6 +65,7 @@ MainWindow::~MainWindow()
     delete GUI_NoteEditor;
     delete GUI_ManagerModules;
     delete GUI_FindDialog;
+    delete GUI_ModuleImportDialog;
 
     delete trayIconMenu;
     delete trIcon;
@@ -85,6 +86,7 @@ void MainWindow::init()
 
     GUI_ManagerModules = new ManagerModules(this);
     GUI_FindDialog = new FindDialog(this);
+    GUI_ModuleImportDialog = new ModuleImportDialog(this);
 
     /// panel init
     GUI_RightPanel = new RightPanel(this);
@@ -261,6 +263,8 @@ void MainWindow::createConnects()
     // menu settings
     connect(ui->action_Settings_General, SIGNAL(triggered()), SLOT(showSettings()));
     connect(GUI_Settings, SIGNAL(SIGNAL_UpdateTray()), SLOT(showHideTray()));
+
+    connect(ui->action_Settings_Module_Import, SIGNAL(triggered()), GUI_ModuleImportDialog, SLOT(show()));
 
     // manager module
     connect(ui->action_Settings_Module, SIGNAL(triggered()), SLOT(showModuleManager()));
