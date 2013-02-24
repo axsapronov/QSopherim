@@ -5,6 +5,9 @@
 #include <QColor>
 #include <QTranslator>
 
+#include <QFont>
+#include <QMap>
+
 #include "qsopherimmodulelist.h"
 
 //====================== class Config ============================
@@ -96,6 +99,9 @@ public:
      */
     QString getAppLang();
 
+    void setGUIMapFont(const QMap<QString, QFont> f_map);
+    void setGUIMapFontName(const QString, const QFont);
+    QMap<QString, QFont> getGUIMapFont();
 
     // history
     /**
@@ -342,6 +348,16 @@ private:
     bool m_fontUnderline;
     bool m_fontStrike;
 
+    QFont m_GUIFontMenu;
+    QFont m_GUIFontModulesName;
+    QFont m_GUIFontBookName;
+    QFont m_GUIFontStrongsHebrew;
+    QFont m_GUIFontStrongsGreek;
+    QFont m_GUIFontJournal;
+    QFont m_GUIFontNotes;
+    QFont m_GUIFontReadingPlan;
+
+    QMap<QString, QFont> m_GUIMapFont;
     // gui
     bool m_guiTray;
 

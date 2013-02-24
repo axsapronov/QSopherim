@@ -20,29 +20,57 @@ Config::Config()
         m_viewerColor = QColor(qRgb(240, 240, 255));
         m_dayMode = true;
 
-        #ifdef Q_OS_WIN
-            m_fontFamily = "Tahoma";
-            m_fontMenu = "Tahoma";
-            m_fontModulesName = "Tahoma";
-            m_fontBookName = "Tahoma";
-            m_fontStrongsHebrew = "Tahoma";
-            m_fontStrongsGreek = "Tahoma";
-            m_fontJournal = "Tahoma";
-            m_fontNotes = "Tahoma";
-            m_fontReadingPlan = "Tahoma";
-        #endif
+#ifdef Q_OS_WIN
+        m_fontFamily = "Tahoma";
+        m_fontMenu = "Tahoma";
+        m_fontModulesName = "Tahoma";
+        m_fontBookName = "Tahoma";
+        m_fontStrongsHebrew = "Tahoma";
+        m_fontStrongsGreek = "Tahoma";
+        m_fontJournal = "Tahoma";
+        m_fontNotes = "Tahoma";
+        m_fontReadingPlan = "Tahoma";
+#endif
 
-        #ifdef Q_OS_LINUX
-            m_fontFamily = "DejaVu Sans";
-            m_fontMenu = "DejaVu Sans";
-            m_fontModulesName = "DejaVu Sans";
-            m_fontBookName = "DejaVu Sans";
-            m_fontStrongsHebrew = "DejaVu Sans";
-            m_fontStrongsGreek = "DejaVu Sans";
-            m_fontJournal = "DejaVu Sans";
-            m_fontNotes = "DejaVu Sans";
-            m_fontReadingPlan = "DejaVu Sans";
-        #endif
+#ifdef Q_OS_LINUX
+        m_GUIFontMenu = QFont("Courier");
+        m_GUIFontMenu.setPointSize(12);
+        m_GUIFontModulesName = QFont("Courier");
+        m_GUIFontModulesName.setPointSize(12);
+        m_GUIFontBookName = QFont("Courier");
+        m_GUIFontBookName.setPointSize(12);
+        m_GUIFontStrongsHebrew = QFont("Courier");
+        m_GUIFontStrongsHebrew.setPointSize(12);
+        m_GUIFontStrongsGreek = QFont("Courier");
+        m_GUIFontStrongsGreek.setPointSize(12);
+        m_GUIFontJournal = QFont("Courier");
+        m_GUIFontJournal.setPointSize(12);
+        m_GUIFontNotes = QFont("Courier");
+        m_GUIFontNotes.setPointSize(12);
+        m_GUIFontReadingPlan = QFont("Courier");
+        m_GUIFontReadingPlan.setPointSize(12);
+
+
+        m_fontFamily = "DejaVu Sans";
+        m_fontMenu = "DejaVu Sans";
+        m_fontModulesName = "DejaVu Sans";
+        m_fontBookName = "DejaVu Sans";
+        m_fontStrongsHebrew = "DejaVu Sans";
+        m_fontStrongsGreek = "DejaVu Sans";
+        m_fontJournal = "DejaVu Sans";
+        m_fontNotes = "DejaVu Sans";
+        m_fontReadingPlan = "DejaVu Sans";
+#endif
+
+
+        m_GUIMapFont["FontMenu"] = m_GUIFontMenu;
+        m_GUIMapFont["FontModulesName"] = m_GUIFontModulesName;
+        m_GUIMapFont["FontBookName"] = m_GUIFontBookName;
+        m_GUIMapFont["FontStrongsGreek"] = m_GUIFontStrongsGreek;
+        m_GUIMapFont["FontStrongsHebrew"] = m_GUIFontStrongsHebrew;
+        m_GUIMapFont["FontJournal"] = m_GUIFontJournal;
+        m_GUIMapFont["FontMenu"] = m_GUIFontMenu;
+        m_GUIMapFont["FontMenu"] = m_GUIFontMenu;
 
 
         m_appLang = "Russian";
@@ -94,12 +122,12 @@ Config *Config::configuration()
 //------------------------------------------------------------------------------
 void Config::loadSettings()
 {
-    #ifdef Q_OS_WIN
-        QSettings settings("settings.ini", QSettings::IniFormat);
-    #endif
-    #ifdef Q_OS_LINUX
-        QSettings settings("settings.conf", QSettings::NativeFormat);
-    #endif
+#ifdef Q_OS_WIN
+    QSettings settings("settings.ini", QSettings::IniFormat);
+#endif
+#ifdef Q_OS_LINUX
+    QSettings settings("settings.conf", QSettings::NativeFormat);
+#endif
 
     m_bibleDir = settings.value(QString("dir/bible")).toString();
     m_dictDir = settings.value(QString("dir/dict")).toString();
@@ -127,14 +155,14 @@ void Config::loadSettings()
     m_fontStrike = settings.value("font/strike").toBool();
 
     // font settings
-    m_fontMenu = settings.value("font/menu").toString();
-    m_fontModulesName = settings.value("font/modulesname").toString();
-    m_fontBookName = settings.value("font/bookname").toString();
-    m_fontStrongsHebrew = settings.value("font/strongshebrew").toString();
-    m_fontStrongsGreek = settings.value("font/strongsgreek").toString();
-    m_fontJournal = settings.value("font/journal").toString();
-    m_fontNotes = settings.value("font/notes").toString();
-    m_fontReadingPlan = settings.value("font/readingplan").toString();
+
+    settings.beginGroup("fonts");
+    QStringList keys = settings.childKeys();
+    foreach (QString key, keys)
+    {
+         m_GUIMapFont[key] = qVariantValue<QFont> (settings.value(key));
+    }
+    settings.endGroup();
 
     m_strongGreek = settings.value("strongs/greek").toString();
     m_strongHebrew = settings.value("strongs/hebrew").toString();
@@ -230,14 +258,24 @@ void Config::saveSettings()
     settings.setValue(QString("font/strike"), m_fontStrike);
 
     // font settings
-    settings.setValue(QString("font/menu"), m_fontMenu);
-    settings.setValue(QString("font/modulesname"), m_fontModulesName);
-    settings.setValue(QString("font/bookname"), m_fontBookName);
-    settings.setValue(QString("font/strongshebrew"), m_fontStrongsHebrew);
-    settings.setValue(QString("font/strongsgreek"), m_fontStrongsGreek);
-    settings.setValue(QString("font/journal"), m_fontJournal);
-    settings.setValue(QString("font/notes"), m_fontNotes);
-    settings.setValue(QString("font/readingplan"), m_fontReadingPlan);
+
+    settings.beginGroup("fonts");
+    QMap<QString, QFont>::const_iterator i = m_GUIMapFont.constBegin();
+    while (i != m_GUIMapFont.constEnd())
+    {
+         settings.setValue(i.key(), i.value());
+         ++i;
+     }
+    settings.endGroup();
+/*
+    settings.beginGroup("fonts");
+    QMap<QString, int>::const_iterator i = map.constBegin();
+    while (i != map.constEnd()) {
+         settings.setValue(i.key(), i.value());
+         ++i;
+     }
+    settings.endGroup()*/;
+
 
     // strongs settings
     settings.setValue(QString("strongs/hebrew"), m_strongHebrew);
@@ -643,5 +681,15 @@ void Config::setDayMode(bool state)
 bool Config::getDayMode()
 {
     return m_dayMode;
+}
+//------------------------------------------------------------------------------
+QMap<QString, QFont> Config::getGUIMapFont()
+{
+    return m_GUIMapFont;
+}
+//------------------------------------------------------------------------------
+void Config::setGUIMapFontName(const QString f_name, const QFont f_font)
+{
+    m_GUIMapFont[f_name] = f_font;
 }
 //------------------------------------------------------------------------------

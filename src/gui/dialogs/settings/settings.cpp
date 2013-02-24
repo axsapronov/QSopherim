@@ -53,6 +53,8 @@ void Settings::init()
 
     loadSettings();
 
+
+    GUI_Font = new FontDialog(this);
     //    ui->sBFontSize->setValue(Config);
 
     /// create QSettings
@@ -97,18 +99,9 @@ void Settings::loadSettings()
     ui->chBGuiTray->setChecked(Config::configuration()->getGuiTray());
     ui->chBDayMode->setChecked(Config::configuration()->getDayMode());
 
-    // fonts
-    ui->fontComBMenu->setCurrentFont(QFont(Config::configuration()->getFontMenu()));
-    ui->fontComBModulesName->setCurrentFont(QFont(Config::configuration()->getFontModulesName()));
-    ui->fontComBBookName->setCurrentFont(QFont(Config::configuration()->getFontBookName()));
-    ui->fontComBStrongsHebrew->setCurrentFont(QFont(Config::configuration()->getFontStrongsHebrew()));
-    ui->fontComBStrongsGreek->setCurrentFont(QFont(Config::configuration()->getFontStrongsHebrew()));
-    ui->fontComBJornal->setCurrentFont(QFont(Config::configuration()->getFontJournal()));
-    ui->fontComBNotes->setCurrentFont(QFont(Config::configuration()->getFontNotes()));
-    ui->fontComBReadingPlan->setCurrentFont(QFont(Config::configuration()->getFontReadingPlan()));
+    updateFontSettings();
 
     // replace to AppDir/*  if empty
-
     //    QDir::currentPath();
 
     //    myDebug() << settings->value("language/lang");
@@ -141,16 +134,6 @@ void Settings::saveSettings()
     Config::configuration()->setFontStrike(ui->chBStrike->checkState());
     Config::configuration()->setFontUnderline(ui->chBUnderline->checkState());
 
-    // save fonts settings
-    Config::configuration()->setFontMenu(ui->fontComBMenu->currentText());
-    Config::configuration()->setFontModulesName(ui->fontComBModulesName->currentText());
-    Config::configuration()->setFontBookName(ui->fontComBBookName->currentText());
-    Config::configuration()->setFontStrongsGreek(ui->fontComBStrongsGreek->currentText());
-    Config::configuration()->setFontStrongsHebrew(ui->fontComBStrongsHebrew->currentText());
-    Config::configuration()->setFontJournal(ui->fontComBJornal->currentText());
-    Config::configuration()->setFontNotes(ui->fontComBNotes->currentText());
-    Config::configuration()->setFontReadingPlan(ui->fontComBReadingPlan->currentText());
-
     Config::configuration()->setOptionChangeTextColor(ui->chBChangindTextColor->checkState());
 
     Config::configuration()->setGuiTray(ui->chBGuiTray->checkState());
@@ -172,6 +155,15 @@ void Settings::createConnect()
 
     // font settings
     connect(ui->pBFontMenu, SIGNAL(clicked()), SLOT(fontSettings()));
+    connect(ui->pBFontModulesName, SIGNAL(clicked()), SLOT(fontSettings()));
+    connect(ui->pBFontBookName, SIGNAL(clicked()), SLOT(fontSettings()));
+    connect(ui->pBFontStrongsHebrew, SIGNAL(clicked()), SLOT(fontSettings()));
+    connect(ui->pBFontStrongsGreek, SIGNAL(clicked()), SLOT(fontSettings()));
+    connect(ui->pBFontJornal, SIGNAL(clicked()), SLOT(fontSettings()));
+    connect(ui->pBFontNotes, SIGNAL(clicked()), SLOT(fontSettings()));
+    connect(ui->pBFontReadingPlan, SIGNAL(clicked()), SLOT(fontSettings()));
+
+    connect(GUI_Font, SIGNAL(SIGNAL_SendInfo()), SLOT(updateFontSettings()));
 }
 ///----------------------------------------------------------------------------
 void Settings::accept()
@@ -247,14 +239,14 @@ bool Settings::getModifySettings()
             || ui->chBStrike->checkState() != Config::configuration()->getFontStrike()
             || ui->chBUnderline->checkState() != Config::configuration()->getFontUnderline()
             || ui->chBGuiTray->checkState() != Config::configuration()->getGuiTray()
-            || ui->fontComBMenu->currentText() != Config::configuration()->getFontMenu()
-            || ui->fontComBBookName->currentText() != Config::configuration()->getFontBookName()
-            || ui->fontComBModulesName->currentText() != Config::configuration()->getFontModulesName()
-            || ui->fontComBStrongsHebrew->currentText() != Config::configuration()->getFontStrongsHebrew()
-            || ui->fontComBStrongsGreek->currentText() != Config::configuration()->getFontStrongsGreek()
-            || ui->fontComBJornal->currentText() != Config::configuration()->getFontJournal()
-            || ui->fontComBNotes->currentText() != Config::configuration()->getFontNotes()
-            || ui->fontComBReadingPlan->currentText() != Config::configuration()->getFontReadingPlan()
+//            || ui->fontComBMenu->currentText() != Config::configuration()->getFontMenu()
+//            || ui->fontComBBookName->currentText() != Config::configuration()->getFontBookName()
+//            || ui->fontComBModulesName->currentText() != Config::configuration()->getFontModulesName()
+//            || ui->fontComBStrongsHebrew->currentText() != Config::configuration()->getFontStrongsHebrew()
+//            || ui->fontComBStrongsGreek->currentText() != Config::configuration()->getFontStrongsGreek()
+//            || ui->fontComBJornal->currentText() != Config::configuration()->getFontJournal()
+//            || ui->fontComBNotes->currentText() != Config::configuration()->getFontNotes()
+//            || ui->fontComBReadingPlan->currentText() != Config::configuration()->getFontReadingPlan()
             || ui->chBDayMode->checkState() != Config::configuration()->getDayMode()
             )
     {
@@ -342,11 +334,51 @@ void Settings::fontSettings()
 {
     QPushButton *button = (QPushButton *)sender();
     if (button == ui->pBFontMenu)
-    {
-        GUI_Font.setNameOption("FontName");
-    }
+        GUI_Font->setNameOption("FontMenu");
 
-    GUI_Font.show();
+    if (button == ui->pBFontModulesName)
+        GUI_Font->setNameOption("FontModulesName");
+
+    if (button == ui->pBFontBookName)
+        GUI_Font->setNameOption("FontBookName");
+
+    if (button == ui->pBFontStrongsHebrew)
+        GUI_Font->setNameOption("FontStrongsHebrew");
+
+    if (button == ui->pBFontStrongsGreek)
+        GUI_Font->setNameOption("FontStrongsGreek");
+
+    if (button == ui->pBFontJornal)
+        GUI_Font->setNameOption("FontJournal");
+
+    if (button == ui->pBFontNotes)
+        GUI_Font->setNameOption("FontNotes");
+
+    if (button == ui->pBFontReadingPlan)
+        GUI_Font->setNameOption("FontReadingPlan");
+
+    GUI_Font->show();
 }
 ///----------------------------------------------------------------------------
-///----------------------------------------------------------------------------
+void Settings::updateFontSettings()
+{
+    // fonts
+    ui->fontComBMenu->setCurrentIndex(ui->fontComBMenu->findText(Config::configuration()->getGUIMapFont()["FontMenu"].family()));
+    ui->fontComBModulesName->setCurrentIndex(ui->fontComBModulesName->findText(Config::configuration()->getGUIMapFont()["FontModulesName"].family()));
+    ui->fontComBBookName->setCurrentIndex(ui->fontComBBookName->findText(Config::configuration()->getGUIMapFont()["FontBookName"].family()));
+    ui->fontComBStrongsHebrew->setCurrentIndex(ui->fontComBStrongsHebrew->findText(Config::configuration()->getGUIMapFont()["FontStrongsHebrew"].family()));
+    ui->fontComBStrongsGreek->setCurrentIndex(ui->fontComBStrongsGreek->findText(Config::configuration()->getGUIMapFont()["FontStrongsGreek"].family()));
+    ui->fontComBJornal->setCurrentIndex(ui->fontComBJornal->findText(Config::configuration()->getGUIMapFont()["FontJournal"].family()));
+    ui->fontComBNotes->setCurrentIndex(ui->fontComBNotes->findText(Config::configuration()->getGUIMapFont()["FontNotes"].family()));
+    ui->fontComBReadingPlan->setCurrentIndex(ui->fontComBReadingPlan->findText(Config::configuration()->getGUIMapFont()["FontReadingPlan"].family()));
+
+    ui->sBFontMenuSize->setValue(Config::configuration()->getGUIMapFont()["FontMenu"].pointSize());
+    ui->sBFontModulesNameSize->setValue(Config::configuration()->getGUIMapFont()["FontModulesName"].pointSize());
+    ui->sBFontBookNameSize->setValue(Config::configuration()->getGUIMapFont()["FontBookName"].pointSize());
+    ui->sBFontStrongsHebrewSize->setValue(Config::configuration()->getGUIMapFont()["FontStrongsHebrew"].pointSize());
+    ui->sBFontStrongsGreekSize->setValue(Config::configuration()->getGUIMapFont()["FontStrongsGreek"].pointSize());
+    ui->sBFontJournalSize->setValue(Config::configuration()->getGUIMapFont()["FontJournal"].pointSize());
+    ui->sBFontNotesSize->setValue(Config::configuration()->getGUIMapFont()["FontNotes"].pointSize());
+    ui->sBFontReadingPlanSize->setValue(Config::configuration()->getGUIMapFont()["FontReadingPlan"].pointSize());
+}
+///-----------------------------------------------------------------------------

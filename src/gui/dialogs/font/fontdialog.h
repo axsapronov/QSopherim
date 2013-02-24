@@ -24,11 +24,17 @@ private:
     Ui::FontDialog *ui;
 
     QString m_name;
+    QFont m_font;
 
     void createConnects();
 
     void accept();
     void reject();
+
+    void setOptionFromFont(const QFont f_font);
+    void saveOption();
+
+    bool isModilySettings();
 
 
 };

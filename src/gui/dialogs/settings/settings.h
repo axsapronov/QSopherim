@@ -74,6 +74,7 @@ private slots:
     void selectFontColor();
 
     void fontSettings();
+    void updateFontSettings();
 
 private:
     Ui::Settings *ui;
@@ -81,7 +82,7 @@ private:
     QColor m_fontColor;
     QColor m_viewerColor;
 
-    FontDialog GUI_Font;
+    FontDialog *GUI_Font;
     /**
       @function
       Debug function
@@ -99,6 +100,8 @@ private:
       */
     bool getModifySettings();
     void setParams();
+
+
 };
 
 #endif // Settings_H
