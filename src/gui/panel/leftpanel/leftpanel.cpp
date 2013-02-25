@@ -16,6 +16,8 @@
 #define GUI_TAB_BIBLE 0
 #define GUI_TAB_BOOK 1
 #define GUI_TAB_DICT 2
+#define GUI_TAB_COMMENTS 3
+#define GUI_TAB_OTHER 4
 
 
 LeftPanel::LeftPanel(QWidget *parent) :
@@ -58,9 +60,12 @@ void LeftPanel::init()
 
     ui->comBModules->setFont(Config::configuration()->getGUIMapFont()["ModulesName"]);
     ui->comBModulesBook->setFont(Config::configuration()->getGUIMapFont()["ModulesName"]);
+    ui->comBComments->setFont(Config::configuration()->getGUIMapFont()["ModulesName"]);
 
     ui->tableBook->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
     ui->tableBookBook->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
+
+    ui->tabWidget->removeTab(GUI_TAB_OTHER);
 }
 //------------------------------------------------------------------------------
 void LeftPanel::createConnects()
@@ -68,6 +73,9 @@ void LeftPanel::createConnects()
     // bible or book
     connect(ui->comBModules, SIGNAL(activated(QString)), SLOT(refreshBookList(QString)));
     connect(ui->comBModulesBook, SIGNAL(activated(QString)), SLOT(refreshBookList(QString)));
+
+    // comments
+    connect(ui->comBComments, SIGNAL(activated(QString)), SLOT(sSetCommentsFromModule(QString)));
 
     connect(ui->tableBook, SIGNAL(clicked(QModelIndex)), SLOT(refreshChapterList(QModelIndex)));
     connect(ui->tableBookBook, SIGNAL(clicked(QModelIndex)), SLOT(refreshChapterList(QModelIndex)));
@@ -96,6 +104,7 @@ void LeftPanel::refreshListModule(QSopherimModuleList* list)
         modelChapters->clear();
         moduleList = list;
         QStringList items_bible;
+        QStringList items_comments;
         QStringList items_book;
         for (int i = 0; i < list->getSize(); i++)
         {
@@ -106,6 +115,9 @@ void LeftPanel::refreshListModule(QSopherimModuleList* list)
 
                 if (list->getModule(i)->getModuleType() == "Book")
                     items_book << QString(list->getModule(i)->getModuleName());
+
+                if (list->getModule(i)->getModuleType() == "Comments")
+                    items_comments << QString(list->getModule(i)->getModuleName());
             }
         }
 
@@ -130,6 +142,16 @@ void LeftPanel::refreshListModule(QSopherimModuleList* list)
         else
         {
             //ui->tabWidget->removeTab(GUI_TAB_BIBLE);
+        }
+
+        if (!items_comments.isEmpty())
+        {
+            typeModel = new QStringListModel(items_comments, this);
+            ui->comBComments->setModel(typeModel);
+        }
+        else
+        {
+            ui->tabWidget->removeTab(GUI_TAB_COMMENTS);
         }
     }
     else
@@ -354,7 +376,6 @@ void LeftPanel::refreshBookList(const QString nameOfModule, const QString f_type
         ui->tableBookBook->setModel(modelBooks);
         ui->tableBookBook->resizeColumnsToContents();
     }
-
 }
 //------------------------------------------------------------------------------
 void LeftPanel::refreshBookList(QString nameOfModule)
@@ -619,5 +640,13 @@ void LeftPanel::sUpdateGUIDayMode()
     ui->comBModules->setPalette(p);
     ui->comBModulesBook->setPalette(p);
     ui->comBDictListFindWord->setPalette(p);
+}
+//------------------------------------------------------------------------------
+void LeftPanel::sSetCommentsFromModule(QString f_nameModule)
+{
+//    Config::configuration()->getLastBook();
+//    getCommentsFromFile(Config::configuration()->getListBibles())
+
+    ui->textBrComments->setText(f_nameModule);
 }
 //------------------------------------------------------------------------------

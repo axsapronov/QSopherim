@@ -24,18 +24,19 @@ ProcessModule::ProcessModule(QString pathToModule, int typeModule)
 //------------------------------------------------------------------------------
 ProcessModule::~ProcessModule()
 {
-    m_biblequote->deleteLater();
+    m_BibleQuote->deleteLater();
 }
 //------------------------------------------------------------------------------
 void ProcessModule::createConnects()
 {
-    connect(m_biblequote, SIGNAL(SIGNAL_CreateFolderForModule(QString)), SLOT(createFolderForModule(QString)));
+    connect(m_BibleQuote, SIGNAL(SIGNAL_CreateFolderForModule(QString)), SLOT(createFolderForModule(QString)));
+    connect(m_BibleQuoteComments, SIGNAL(SIGNAL_CreateFolderForModule(QString)), SLOT(createFolderForModule(QString)));
 }
 //------------------------------------------------------------------------------
 void ProcessModule::init()
 {
-    m_biblequote = new BibleQuoteModule();
-    m_biblequotedictmodule = new BibleQuoteDictModule();
+    m_BibleQuote = new BibleQuoteModule();
+    m_BibleQuoteDictModule = new BibleQuoteDictModule();
     //    connect(m_biblequote, SIGNAL(createFolderForModule(QString)), SLOT(createFolderForModule(QString)));
 }
 //------------------------------------------------------------------------------
@@ -47,13 +48,18 @@ bool ProcessModule::processing(QString pathToModule, int type)
     {
     case OBVCore::Type_BibleQuoteModule:
         //        myDebug() << "this is biblequote module";
-        m_biblequote->parseModule(p_pathToModule);
+        m_BibleQuote->parseModule(p_pathToModule);
         emit SIGNAL_ProcessModuleOk();
         break;
     case OBVCore::Type_BibleQuoteDictModule:
-        m_biblequotedictmodule->parseModule(p_pathToModule);
+        m_BibleQuoteDictModule->parseModule(p_pathToModule);
         emit SIGNAL_ProcessDictOk();
         break;
+    case OBVCore::Type_BibleQuoteComments:
+        m_BibleQuoteComments->parseModule(p_pathToModule);
+        emit SIGNAL_ProcessDictOk();
+        break;
+
     case OBVCore::Type_SwordBibleModule:
         //        myDebug() << "this is sword module";
         break;

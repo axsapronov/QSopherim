@@ -23,6 +23,7 @@ private slots:
 signals:
     void SIGNAL_UpdateModules();
     void SIGNAL_UpdateModulesDict();
+    void SIGNAL_UpdateModulesComments();
 
 private:
     Ui::ModuleImportDialog *ui;

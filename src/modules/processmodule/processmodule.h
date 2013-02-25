@@ -3,6 +3,7 @@
 #include <QObject>
 
 #include "biblequote.h"
+//#include "biblequotedictmodule/biblequotecomments.h"
 #include "biblequotedictmodule/biblequotedictmodule.h"
 #include <QString>
 
@@ -21,11 +22,14 @@ public:
 signals:
     void SIGNAL_ProcessModuleOk();
     void SIGNAL_ProcessDictOk();
+
 private slots:
     void createFolderForModule(QString shortname);
+
 private:
-    BibleQuoteModule* m_biblequote;
-    BibleQuoteDictModule* m_biblequotedictmodule;
+    BibleQuoteModule* m_BibleQuote;
+    BibleQuoteModule* m_BibleQuoteComments;
+    BibleQuoteDictModule* m_BibleQuoteDictModule;
     void createConnects();
     void init();
     QString p_pathToModule;

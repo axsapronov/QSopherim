@@ -103,6 +103,8 @@ private slots:
 
     void sShowHideLeftPanel2(int f_tab);
 
+    void sSetCommentsFromModule(QString);
+
 private:
     Ui::LeftPanel *ui;
     QStandardItemModel *modelModules;

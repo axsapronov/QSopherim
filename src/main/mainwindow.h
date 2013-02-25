@@ -127,11 +127,15 @@ private slots:
      */
     void loadDictFromFolder();
 
+    void loadCommentsFromFolder();
+
     /**
      * @brief showHideTray
      * @param state
      */
     void showHideTray();
+
+
 
 //    void loadModules();
 
@@ -164,6 +168,8 @@ private:
     QAction *quitAction;
 
     ProcessModule* prModule;
+
+    void convertModules(const QString f_type);
 
     /**
       @function

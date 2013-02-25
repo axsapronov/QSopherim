@@ -35,6 +35,7 @@ void ModuleImportDialog::initGUI()
 
     t_type << tr("Bible")
            << tr("Book")
+           << tr("Comments")
            << tr("Dictionary");
 
     ui->comBFormat->addItems(t_format);
@@ -73,11 +74,15 @@ void ModuleImportDialog::sConvertModules()
                 Config::configuration()->setDictDir(ui->LEPath->text());
                 emit SIGNAL_UpdateModulesDict();
             }
+
+            if (ui->comBType->currentText() == tr("Comments"))
+            {
+                Config::configuration()->setBibleDir(ui->LEPath->text());
+                emit SIGNAL_UpdateModulesComments();
+            }
         }
-
-
-        //    if (ui->comBFormat->currentText() == tr("BibleQuote"))
-        //    {
+//            if (ui->comBFormat->currentText() == tr("BibleQuote"))
+//            {
 
         //    }
     }

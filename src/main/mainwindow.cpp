@@ -39,8 +39,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowTitle(QString("%1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
     init();
-//    loadModulesFromFolder();
-//    loadDictFromFolder();
+    //    loadModulesFromFolder();
+    //    loadDictFromFolder();
 
     // load modules
     processFinishModule();
@@ -118,6 +118,8 @@ void MainWindow::init()
 
     GUI_RightPanel->setMinimumWidth(250);
     GUI_LeftPanel->setMinimumWidth(300);
+    GUI_LeftPanel->setMaximumWidth(350);
+    GUI_LeftPanel2->setMaximumWidth(350);
     GUI_LeftPanel2->setMinimumWidth(300);
 
     //    GUI_BottomPanel->setMinimumHeight(100);
@@ -183,7 +185,7 @@ void MainWindow::init()
 //------------------------------------------------------------------------------
 void MainWindow::debug()
 {
-//    QStringList fileName;
+    //    QStringList fileName;
     //    fileName << "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
     //    fileName << "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
     //    fileName << "/home/files/Documents/Bible/unrar/NT_Russian_Kassian/Bibleqt.ini";
@@ -322,6 +324,7 @@ void MainWindow::createConnects()
     // import modules
     connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_UpdateModules()), SLOT(loadModulesFromFolder()));
     connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_UpdateModulesDict()), SLOT(loadDictFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_UpdateModulesComments()), SLOT(loadCommentsFromFolder()));
 
     // connect fron left1 to left2 panels
     connect(GUI_LeftPanel, SIGNAL(SIGNAL_AddRecordToJournal(QString,QString,QString))
@@ -544,7 +547,7 @@ void MainWindow::processFinishDict()
 
 }
 //------------------------------------------------------------------------------
-void MainWindow::loadModulesFromFolder()
+void MainWindow::convertModules(const QString f_type)
 {
     if (!Config::configuration()->getBibleDir().isEmpty())
     {
@@ -558,18 +561,53 @@ void MainWindow::loadModulesFromFolder()
         loadProgress.setWindowTitle(tr("Convert") + QString(" | %1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
         loadProgress.show();
 
+
         QLabel overallLabel(&loadProgress);
         overallLabel.setGeometry(11, 10, 400, 20);
-        overallLabel.setText(tr("Convert: bible modules"));
+        QStringList listModules;
 
-        overallLabel.show();
-
-        QStringList listModules = getListModulesFromPath(Config::configuration()->getBibleDir(), ".ini");
-        for (int i = 0; i < listModules.size(); i++)
+        if (f_type == "Book" or f_type == "Bible")
         {
-            prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
-            loadProgress.setValue(100 * i / listModules.size());
-            QApplication::processEvents();
+            overallLabel.setText(tr("Convert: bible modules"));
+            overallLabel.show();
+            listModules = getListModulesFromPath(Config::configuration()->getBibleDir(), ".ini");
+            for (int i = 0; i < listModules.size(); i++)
+            {
+                prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
+                loadProgress.setValue(100 * i / listModules.size());
+                QApplication::processEvents();
+            }
+        }
+
+        if (f_type == "Dictionary")
+        {
+            overallLabel.setText(tr("Convert: dictionary modules"));
+            overallLabel.show();
+            listModules = getListModulesFromPath(
+                        Config::configuration()->getDictDir()
+                        , ".idx");
+            for (int i = 0; i < listModules.size(); i++)
+            {
+                prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteDictModule);
+                loadProgress.setValue(100 * i / listModules.size());
+                QApplication::processEvents();
+            }
+        }
+
+        if (f_type == "Comments")
+        {
+            overallLabel.setText(tr("Convert: comments modules"));
+            overallLabel.show();
+            listModules = getListModulesFromPath(
+                        Config::configuration()->getDictDir()
+                        , ".ini");
+
+            for (int i = 0; i < listModules.size(); i++)
+            {
+                prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteComments);
+                loadProgress.setValue(100 * i / listModules.size());
+                QApplication::processEvents();
+            }
         }
     }
     else
@@ -578,42 +616,14 @@ void MainWindow::loadModulesFromFolder()
     }
 }
 //------------------------------------------------------------------------------
+void MainWindow::loadModulesFromFolder()
+{
+    convertModules("Bible");
+}
+//------------------------------------------------------------------------------
 void MainWindow::loadDictFromFolder()
 {
-    if (!Config::configuration()->getDictDir().isEmpty())
-    {
-        QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
-        loadProgress.setValue(0);
-
-        loadProgress.setMinimumWidth(300);
-        // move to center
-        QRect rect = QApplication::desktop()->availableGeometry(this);
-        loadProgress.move(rect.width() / 2 - loadProgress.width() / 2 ,
-                          rect.height() / 2 - loadProgress.height() / 2 );
-
-
-        loadProgress.setWindowTitle(tr("Convert") + QString(" | %1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
-        loadProgress.show();
-
-        QLabel overallLabel(&loadProgress);
-        overallLabel.setGeometry(11, 10, 400, 20);
-        overallLabel.setText(tr("Convert: dictionary modules"));
-        overallLabel.show();
-
-        QStringList listModules = getListModulesFromPath(
-                    Config::configuration()->getDictDir()
-                    , ".idx");
-        for (int i = 0; i < listModules.size(); i++)
-        {
-            prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteDictModule);
-            loadProgress.setValue(100 * i / listModules.size());
-            QApplication::processEvents();
-        }
-    }
-    else
-    {
-        processFinishDict();
-    }
+    convertModules("Dictionary");
 }
 //------------------------------------------------------------------------------
 //void MainWindow::loadModules()
@@ -710,5 +720,10 @@ void MainWindow::showHideTray()
     {
         trIcon->hide();
     }
+}
+//------------------------------------------------------------------------------
+void MainWindow::loadCommentsFromFolder()
+{
+    convertModules("Comments");
 }
 //------------------------------------------------------------------------------

@@ -35,7 +35,8 @@ enum ModuleType {
     Type_FolderModule = 6,
     Type_SwordBibleModule = 7,
     Type_WebPageModule = 8,
-    Type_WebDictionaryModule = 9
+    Type_WebDictionaryModule = 9,
+    Type_BibleQuoteComments = 10
 };
 
 enum DefaultModule {
