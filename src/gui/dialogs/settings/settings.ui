@@ -46,7 +46,7 @@
       <attribute name="title">
        <string>Global</string>
       </attribute>
-      <layout class="QFormLayout" name="formLayout_2">
+      <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0">
         <widget class="QLabel" name="label">
          <property name="maximumSize">
@@ -91,7 +91,21 @@
          </property>
         </widget>
        </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Auto open chapter:</string>
+         </property>
+        </widget>
+       </item>
        <item row="3" column="1">
+        <widget class="QCheckBox" name="chBOptionAutoChapter">
+         <property name="text">
+          <string>On/Off</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

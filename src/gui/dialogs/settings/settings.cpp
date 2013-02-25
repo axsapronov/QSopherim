@@ -80,6 +80,7 @@ void Settings::loadSettings()
     ui->chBUnderline->setChecked(Config::configuration()->getFontUnderline());
 
     ui->chBChangindTextColor->setChecked(Config::configuration()->getOptionChangeTextColor());
+    ui->chBOptionAutoChapter->setChecked(Config::configuration()->getOptionAutoChapter());
 
     ui->sBFontSize->setValue(Config::configuration()->getFontSize());
     ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
@@ -122,6 +123,7 @@ void Settings::saveSettings()
     Config::configuration()->setFontUnderline(ui->chBUnderline->checkState());
 
     Config::configuration()->setOptionChangeTextColor(ui->chBChangindTextColor->checkState());
+    Config::configuration()->setOptionAutoChapter(ui->chBOptionAutoChapter->checkState());
 
     Config::configuration()->setGuiTray(ui->chBGuiTray->checkState());
     Config::configuration()->setDayMode(ui->chBDayMode->checkState());
@@ -218,6 +220,7 @@ bool Settings::getModifySettings()
             || ui->chBUnderline->checkState() != Config::configuration()->getFontUnderline()
             || ui->chBGuiTray->checkState() != Config::configuration()->getGuiTray()
             || ui->chBDayMode->checkState() != Config::configuration()->getDayMode()
+            || ui->chBOptionAutoChapter->checkState() != Config::configuration()->getOptionAutoChapter()
             )
     {
         return true;

@@ -5,6 +5,8 @@
 #include "moduleviewer.h"
 #include "filecommon.h"
 
+#include "strongcommon.h" // for book number
+
 #include "config.h"
 #include "defines.h"
 
@@ -260,26 +262,22 @@ void LeftPanel::refreshChapterList(const QString f_type, const QModelIndex f_ind
     m_lastNameOfBook  = f_ind.data(0).toString();
 }
 //------------------------------------------------------------------------------
-void LeftPanel::showChapter(QModelIndex ind)
+void LeftPanel::showChapter(const QModelIndex ind, const QString f_type)
 {
-    // так как выделение с книги может спадать, то надо запоминать последнюю книгу
-
-    QTableView *t_table = (QTableView*)sender();
-
     QString t_nameOfBook;
     QModelIndexList selectedList;
     QString t_pathToModule;
     QString t_curModule;
 
     // bible
-    if (t_table == ui->tableChapter)
+    if (f_type == "Bible")
     {
         selectedList = ui->tableBook->selectionModel()->selectedRows();
         t_curModule = ui->comBModules->currentText();
     }
 
     // book
-    if (t_table == ui->tableChapterBook)
+    if (f_type == "Book")
     {
         selectedList = ui->tableBookBook->selectionModel()->selectedRows();
         t_curModule = ui->comBModulesBook->currentText();
@@ -305,24 +303,50 @@ void LeftPanel::showChapter(QModelIndex ind)
     emit SIGNAL_AddRecordToJournal(t_curModule,
                                    m_lastNameOfBook ,
                                    QString::number(ind.row() + 1));
-
 }
 //------------------------------------------------------------------------------
-void LeftPanel::refreshBookList(QString nameOfModule, QString f_type)
+void LeftPanel::showChapter(const QModelIndex ind)
+{
+    QTableView *t_table = (QTableView*)sender();
+    // bible
+    if (t_table == ui->tableChapter)
+        showChapter(ind, "Bible");
+
+    // book
+    if (t_table == ui->tableChapterBook)
+        showChapter(ind, "Book");
+}
+//------------------------------------------------------------------------------
+void LeftPanel::refreshBookList(const QString nameOfModule, const QString f_type)
 {
     modelBooks->clear();
     modelChapters->clear();
+
+    int t_number;
+    QString t_bookName;
+    bool flag = (ui->tableBook->model()
+                 and Config::configuration()->isExistLastChapter()
+                 and Config::configuration()->getOptionAutoChapter());
+
+    if (flag)
+        t_number = getNumberOfBook(Config::configuration()->getLastBook());
 
     QStringList bookList = moduleList->getModuleBooks(nameOfModule);
     for (int i = 0; i < bookList.size() - 1; i++)
     {
         modelBooks->setItem(i, 0, new QStandardItem(bookList.at(i)));
+
+        if (flag and t_number == getNumberOfBook(bookList.at(i)))
+            t_bookName = bookList.at(i);
     }
 
     if (f_type == "Bible")
     {
         ui->tableBook->setModel(modelBooks);
         ui->tableBook->resizeColumnsToContents();
+
+        if (flag)
+            makeOptionAutoChapter(t_bookName);
     }
 
     if (f_type == "Book")
@@ -330,6 +354,7 @@ void LeftPanel::refreshBookList(QString nameOfModule, QString f_type)
         ui->tableBookBook->setModel(modelBooks);
         ui->tableBookBook->resizeColumnsToContents();
     }
+
 }
 //------------------------------------------------------------------------------
 void LeftPanel::refreshBookList(QString nameOfModule)
@@ -516,7 +541,27 @@ void LeftPanel::sUpdateGUI()
                     ui->tableBookBook->setCurrentIndex(ui->tableBookBook->model()->index(i, 0));
                     refreshChapterList(Config::configuration()->getLastType(), ui->tableBookBook->currentIndex());
                     ui->tableChapterBook->setCurrentIndex(ui->tableChapterBook->model()->index(Config::configuration()->getLastChapter().toInt() - 1, 0));
+
                 }
+            }
+        }
+    }
+}
+//------------------------------------------------------------------------------
+void LeftPanel::makeOptionAutoChapter(const QString f_bookName)
+{
+    // old != new
+    if (Config::configuration()->isExistLastChapter() and Config::configuration()->getLastType() == "Bible"
+            and ui->tableBook->model()->rowCount())
+    {
+        for (int i = 0; i < ui->tableBook->model()->rowCount(); i++)
+        {
+            if (ui->tableBook->model()->data(ui->tableBook->model()->index(i, 0), 0).toString() == f_bookName)
+            {
+                ui->tableBook->setCurrentIndex(ui->tableBook->model()->index(i, 0));
+                refreshChapterList(Config::configuration()->getLastType(), ui->tableBook->currentIndex());
+                ui->tableChapter->setCurrentIndex(ui->tableChapter->model()->index(Config::configuration()->getLastChapter().toInt() - 1, 0));
+                showChapter(ui->tableChapter->currentIndex(), "Bible");
             }
         }
     }
@@ -530,11 +575,9 @@ bool LeftPanel::checkedNewAndOldChapter()
             and !ui->tableBook->model()->data(ui->tableBook->currentIndex()).toString().isEmpty()
             and !ui->tableChapter->model()->data(ui->tableChapter->currentIndex()).toString().isEmpty())
     {
-
-
-            flag = Config::configuration()->getLastModule() != ui->comBModules->currentText()
-                    and ui->tableBook->model()->data(ui->tableBook->currentIndex()).toString() != Config::configuration()->getLastBook()
-                    and ui->tableChapter->model()->data(ui->tableChapter->currentIndex()).toString() != Config::configuration()->getLastChapter();
+        flag = Config::configuration()->getLastModule() == ui->comBModules->currentText()
+                and ui->tableBook->model()->data(ui->tableBook->currentIndex()).toString() == Config::configuration()->getLastBook();
+//                and ui->tableChapter->model()->data(ui->tableChapter->currentIndex()).toString() != Config::configuration()->getLastChapter();
 
     }
 
@@ -543,9 +586,9 @@ bool LeftPanel::checkedNewAndOldChapter()
             and !ui->tableBookBook->model()->data(ui->tableBookBook->currentIndex()).toString().isEmpty()
             and !ui->tableChapterBook->model()->data(ui->tableChapterBook->currentIndex()).toString().isEmpty())
     {
-        flag = Config::configuration()->getLastModule() != ui->comBModulesBook->currentText()
-                and ui->tableBookBook->model()->data(ui->tableBookBook->currentIndex()).toString() != Config::configuration()->getLastBook()
-                and ui->tableChapterBook->model()->data(ui->tableChapterBook->currentIndex()).toString() != Config::configuration()->getLastChapter();
+        flag = Config::configuration()->getLastModule() == ui->comBModulesBook->currentText()
+                and ui->tableBookBook->model()->data(ui->tableBookBook->currentIndex()).toString() == Config::configuration()->getLastBook();
+//                and ui->tableChapterBook->model()->data(ui->tableChapterBook->currentIndex()).toString() != Config::configuration()->getLastChapter();
     }
 
     return flag;

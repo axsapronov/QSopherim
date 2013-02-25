@@ -254,33 +254,38 @@ public:
      * @brief setFontBold
      * @param state
      */
-    void setFontBold(bool state);
+    void setFontBold(const bool state);
     /**
      * @brief setFontStrike
      * @param state
      */
-    void setFontStrike(bool state);
+    void setFontStrike(const bool state);
     /**
      * @brief setFontUnderline
      * @param state
      */
-    void setFontUnderline(bool state);
+    void setFontUnderline(const bool state);
     /**
      * @brief setFontItalic
      * @param state
      */
-    void setFontItalic(bool state);
+    void setFontItalic(const bool state);
 
     /**
      * @brief setOptionChangeTextColor
      * @param state
      */
-    void setOptionChangeTextColor(bool state);
+    void setOptionChangeTextColor(const bool state);
 
     bool getDayMode();
-    void setDayMode(bool state);
+    void setDayMode(const bool state);
+
+    bool getOptionAutoChapter();
+    void setOptionAutoChapter(const bool state);
 
     static Config *configuration();
+
+    bool isExistLastChapter();
 
 private:
     QString m_appDir;
@@ -328,7 +333,7 @@ private:
 
     // mode
     bool m_dayMode;
-
+    bool m_optionAutoChapter;
     bool m_optionChangeTextColor;
 
 };

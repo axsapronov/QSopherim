@@ -74,7 +74,7 @@ private slots:
     /**
      * @brief refreshBookList
      */
-    void refreshBookList(QString nameOfModule, QString f_type);
+    void refreshBookList(const QString nameOfModule, const QString f_type);
     /**
      * @brief showChapter
      */
@@ -143,6 +143,10 @@ private:
     void refreshChapterList(const QString f_type, const QModelIndex f_ind);
 
     QStringList getListDictWithWord(QString word);
+
+    void makeOptionAutoChapter(const QString f_bookName);
+
+    void showChapter(const QModelIndex ind, const QString f_type);
 };
 
 #endif // LEFTPANEL_H

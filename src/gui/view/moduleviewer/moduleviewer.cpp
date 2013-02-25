@@ -163,8 +163,9 @@ void ModuleViewer::showChapter(const QString f_module, const QString f_nameBook,
         Config::configuration()->setLastType(
                     Config::configuration()->getListBibles()->getModuleWithName(m_curModule)->getModuleType()
                     );
+        // todo
+
     }
-    // todo
     emit SIGNAL_ShowChapterFinish();
 }
 //------------------------------------------------------------------------------

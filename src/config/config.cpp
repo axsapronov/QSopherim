@@ -67,6 +67,7 @@ Config::Config()
         m_fontUnderline = false;
         m_optionChangeTextColor = true;
         m_guiTray = true;
+        m_optionAutoChapter = true;
 
         m_lastChapter = "";
         m_lastBook = "";
@@ -131,6 +132,7 @@ void Config::loadSettings()
     // viewer settings
     m_viewerColor = qVariantValue<QColor> (settings.value("viewer/color"));
     m_optionChangeTextColor = settings.value("viewer/colorchangind").toBool();
+    m_optionAutoChapter = settings.value("viewer/autochapter").toBool();
 
     // font settings for viewer
     m_fontColor = qVariantValue<QColor> (settings.value("font/color"));
@@ -233,6 +235,7 @@ void Config::saveSettings()
     // viewer
     settings.setValue(QString("viewer/color"), m_viewerColor);
     settings.setValue(QString("viewer/colorchanging"), m_optionChangeTextColor);
+    settings.setValue(QString("viewer/autochapter"), m_optionAutoChapter);
 
     // font settings for viewer
     settings.setValue(QString("font/color"), m_fontColor);
@@ -254,15 +257,6 @@ void Config::saveSettings()
          ++i;
      }
     settings.endGroup();
-/*
-    settings.beginGroup("fonts");
-    QMap<QString, int>::const_iterator i = map.constBegin();
-    while (i != map.constEnd()) {
-         settings.setValue(i.key(), i.value());
-         ++i;
-     }
-    settings.endGroup()*/;
-
 
     // strongs settings
     settings.setValue(QString("strongs/hebrew"), m_strongHebrew);
@@ -460,22 +454,22 @@ void Config::setStrongGreek(QString strong)
     m_strongGreek = strong;
 }
 //------------------------------------------------------------------------------
-void Config::setFontBold(bool state)
+void Config::setFontBold(const bool state)
 {
     m_fontBold = state;
 }
 //------------------------------------------------------------------------------
-void Config::setFontItalic(bool state)
+void Config::setFontItalic(const bool state)
 {
     m_fontItalic = state;
 }
 //------------------------------------------------------------------------------
-void Config::setFontStrike(bool state)
+void Config::setFontStrike(const bool state)
 {
     m_fontStrike = state;
 }
 //------------------------------------------------------------------------------
-void Config::setFontUnderline(bool state)
+void Config::setFontUnderline(const bool state)
 {
     m_fontUnderline = state;
 }
@@ -580,7 +574,7 @@ QStringList* Config::getJournalHistory()
     return m_journalHistory;
 }
 //------------------------------------------------------------------------------
-void Config::setDayMode(bool state)
+void Config::setDayMode(const bool state)
 {
     m_dayMode = state;
 }
@@ -598,5 +592,22 @@ QMap<QString, QFont> Config::getGUIMapFont()
 void Config::setGUIMapFontName(const QString f_name, const QFont f_font)
 {
     m_GUIMapFont[f_name] = f_font;
+}
+//------------------------------------------------------------------------------
+void Config::setOptionAutoChapter(const bool state)
+{
+    m_optionAutoChapter = state;
+}
+//------------------------------------------------------------------------------
+bool Config::getOptionAutoChapter()
+{
+    return m_optionAutoChapter;
+}
+//------------------------------------------------------------------------------
+bool Config::isExistLastChapter()
+{
+    return (!m_lastBook.isEmpty()
+            and !m_lastModule.isEmpty()
+            and !m_lastChapter.isEmpty());
 }
 //------------------------------------------------------------------------------
