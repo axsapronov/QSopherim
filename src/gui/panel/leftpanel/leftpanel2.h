@@ -95,12 +95,15 @@ private:
     QString m_verse;
 
     QStringList m_journalList;
+    QStringList m_readingPlanList;
 
     bool m_strongGreek_on;
     bool m_strongHebrew_on;
 
     void init();
     void createConnects();
+
+    void setReadingPlanForCurrentDay();
 };
 
 #endif // LEFTPANEL2_H

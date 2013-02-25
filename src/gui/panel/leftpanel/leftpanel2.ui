@@ -62,7 +62,7 @@
        </attribute>
        <layout class="QGridLayout" name="gridLayout_5">
         <item row="0" column="0">
-         <widget class="QTextBrowser" name="textBrReadinPlan"/>
+         <widget class="QListView" name="ListViewReadingPlan"/>
         </item>
        </layout>
       </widget>

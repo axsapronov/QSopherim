@@ -7,6 +7,11 @@
 
 #include "defines.h"
 
+#include <QDate>
+
+
+
+
 // panel for info:
 // strongs , journal, and other
 
@@ -17,6 +22,8 @@ LeftPanel2::LeftPanel2(QWidget *parent) :
     ui->setupUi(this);
     init();
     createConnects();
+
+    setReadingPlanForCurrentDay();
 }
 //------------------------------------------------------------------------------
 LeftPanel2::~LeftPanel2()
@@ -256,5 +263,21 @@ void LeftPanel2::sUpdateGUIDayMode()
     ui->ListViewJournal->setPalette(p);
     ui->ListViewNote->setPalette(p);
     ui->textBrStrong->setPalette(p);
+}
+//------------------------------------------------------------------------------
+void LeftPanel2::setReadingPlanForCurrentDay()
+{
+    QDate t_date;
+    m_readingPlanList = getReadinPlanForDay(t_date.currentDate().month(), t_date.currentDate().day());
+
+    QStandardItemModel *model = new QStandardItemModel(m_readingPlanList.size(), 0);
+    model->clear();
+    ui->ListViewReadingPlan->setModel(model);
+
+    for (int i = 0; i < m_readingPlanList.size(); i++)
+    {
+        // add to model
+        model->appendRow( new QStandardItem(m_readingPlanList.at(i)));
+    }
 }
 //------------------------------------------------------------------------------

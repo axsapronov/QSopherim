@@ -19,12 +19,27 @@
 #include "qsopherimmodule.h" /// QSopherimModuleInfo
 
 
+#define MOUNT_JANUARY 1
+#define MOUNT_FEBRUARY 2
+#define MOUNT_MARCH 3
+#define MOUNT_APRIL 4
+#define MOUNT_MAY 5
+#define MOUNT_JUNE 6
+#define MOUNT_JULY 7
+#define MOUNT_AUGUST 8
+#define MOUNT_SEPTEMBEER 9
+#define MOUNT_OCTOBER 10
+#define MOUNT_NOVEMBER 11
+#define MOUNT_DECEMBER 12
+
 
 typedef struct WordDictList
 {
     QString word;
     QString text;
 } WordDictList;
+
+
 /**
   \brief
   @function
@@ -42,18 +57,6 @@ QString getEncodingFromFile(QString file, QString language="russian");
   @return encoding(Codec)
    */
 QTextCodec* getCodecOfEncoding(QString encoding); // получает строку с названием кодировки и возвращает кодес с этй кодировкой ( написана для уменьшения дублирования кода)
-/**
-  @fucnction
-  Return list of lang
-  @retun list
-  */
-QStringList getFillLang();
-/**
-    @fucnction
-    Return list of type dict
-    @return list
-    */
-QStringList getFillType();
 /**
   @function
   Return list words from dict
@@ -257,4 +260,7 @@ void addToListBibleModule(const QString shortName);
  * @return
  */
 QString getModuleNameFromIni(const QString f_filePath);
+
+QStringList getReadinPlanForDay(const int f_mount, const int f_day);
+QStringList getReadingPlanForDayFromFile(const int f_day, const QString f_path);
 #endif // __FILECOMMON__H
