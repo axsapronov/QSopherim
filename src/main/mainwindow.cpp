@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // load modules
     GUI_LeftPanel->loadModules();
     GUI_LeftPanel->loadDictionaries();
-//    GUI_LeftPanel->loadComments();
+    GUI_LeftPanel->loadComments();
 
     // open last text
     GUI_ModuleViewer->openLastChapter();
@@ -286,7 +286,7 @@ void MainWindow::createConnects()
 
     // toolbar
     connect(ui->actionAction_Other_Create_Note, SIGNAL(triggered()), SLOT(createNote()));
-    connect(ui->actionAction_Other_Update_List_Module, SIGNAL(triggered()), SLOT(convertModulesFromFolder()));
+//    connect(ui->actionAction_Other_Update_List_Module, SIGNAL(triggered()), SLOT(convertModulesFromFolder()));
 
     // menu about
     connect(ui->action_About_About, SIGNAL(triggered()), GUI_About, SLOT(show()));
@@ -585,7 +585,7 @@ void MainWindow::convertModules(const QString f_type)
             overallLabel.setText(tr("Convert: comments modules"));
             overallLabel.show();
             listModules = getListModulesFromPath(
-                        Config::configuration()->getDictDir()
+                        Config::configuration()->getBibleDir()
                         , ".ini");
 
             for (int i = 0; i < listModules.size(); i++)

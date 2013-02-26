@@ -1,5 +1,6 @@
 #include "filecommon.h"
 #include "stringcommon.h"
+#include "strongcommon.h"
 
 #include "debughelper.h"
 #include "defines.h"
@@ -727,5 +728,75 @@ QStringList getReadingPlanForDayFromFile(const int f_day, const QString f_path)
         }
     }
     return r_list;
+}
+//------------------------------------------------------------------------------
+QString getCommentForChapter(const QString f_path, const QString f_book, const QString f_chapter)
+{
+    // hindi
+    QString r_str = "";
+
+    //    myDebug() << isExistBook(f_path, f_book);
+
+    QString t_findBook;
+    if (isExistBook(f_path, f_book, &t_findBook));
+    {
+        if (!t_findBook.isEmpty())
+        {
+            QString t_path = f_path;
+            t_path.replace("module" + GL_FORMAT_MODULE
+                           , "text" + GL_FORMAT_TEXT);
+
+            QXmlStreamReader xmlReader;
+            xmlReader.addData(getTextFromHtmlFile(t_path));
+
+            bool flag = false;
+            while(!xmlReader.atEnd() and !flag)
+            {
+                if(xmlReader.isStartElement())
+                {
+                    QStringList sl;
+                    sl << xmlReader.name().toString();
+                    QXmlStreamAttributes attrs = xmlReader.attributes();
+                    if (attrs.value("name").toString() == t_findBook)
+                    {
+                        while(!xmlReader.atEnd() and !flag)
+                        {
+                            if (xmlReader.attributes().value("number") == f_chapter)
+                            {
+                                flag = true;
+                                QString str = xmlReader.readElementText();
+                                str.remove("    ");
+                                r_str = str;
+                            }
+                            xmlReader.readNext();
+                        }
+                    }
+                }
+                xmlReader.readNext();
+            }
+        }
+    }
+    return r_str;
+}
+//------------------------------------------------------------------------------
+bool isExistBook(const QString f_path, const QString f_book, QString* r_bookName)
+{
+    bool r_bool = false;
+    QString t_str = getParamModule(f_path, "BookList");
+    QStringList t_list(t_str.split(GL_SYMBOL_SPLIT_BOOK));
+    int t_number = getNumberOfBook(f_book);
+    int i = 0;
+    do
+    {
+        if (!t_list.at(i).isEmpty()
+                and getNumberOfBook(t_list.at(i)) == t_number)
+        {
+            r_bool = true;
+            *r_bookName = t_list.at(i);
+        }
+        i++;
+    } while (!r_bool and i < t_list.size());
+
+    return r_bool;
 }
 //------------------------------------------------------------------------------

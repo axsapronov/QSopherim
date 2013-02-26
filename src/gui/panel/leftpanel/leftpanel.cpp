@@ -146,6 +146,7 @@ void LeftPanel::refreshListModule(QSopherimModuleList* list)
 
         if (!items_comments.isEmpty())
         {
+            ui->tabWidget->insertTab(GUI_TAB_COMMENTS, ui->tabBook, "Comments");
             typeModel = new QStringListModel(items_comments, this);
             ui->comBComments->setModel(typeModel);
         }
@@ -193,8 +194,8 @@ void LeftPanel::refreshListComments(QSopherimModuleList* list)
     if (list->getSize() != 0 )
     {
         // dict tab
-        ui->tabWidget->insertTab(GUI_TAB_DICT, ui->tabDictionary, tr("Comments"));
-        Config::configuration()->setListDictionaries(list);
+        ui->tabWidget->insertTab(GUI_TAB_COMMENTS, ui->tabComments, tr("Comments"));
+        Config::configuration()->setListComments(list);
         QStringList items;
         for (int i = 0; i < list->getSize(); i++)
         {
@@ -205,6 +206,7 @@ void LeftPanel::refreshListComments(QSopherimModuleList* list)
         }
         typeModel = new QStringListModel(items, this);
         ui->comBComments->setModel(typeModel);
+        sSetCommentsFromModule(ui->comBComments->itemText(0));
     }
     else
     {
@@ -546,6 +548,7 @@ void LeftPanel::sShowHideLeftPanel2(const int f_tab)
     case GUI_TAB_BIBLE: refreshBookList(ui->comBModules->currentText(), "Bible"); break;
     case GUI_TAB_BOOK: refreshBookList(ui->comBModulesBook->currentText(), "Book"); break;
     case GUI_TAB_DICT : emit SIGNAL_ShowHideLeftPanel2(true); // hide if select dict
+    case GUI_TAB_COMMENTS: emit SIGNAL_ShowHideLeftPanel2(true); break;
     }
 
 }
@@ -622,7 +625,7 @@ bool LeftPanel::checkedNewAndOldChapter()
     {
         flag = Config::configuration()->getLastModule() == ui->comBModules->currentText()
                 and ui->tableBook->model()->data(ui->tableBook->currentIndex()).toString() == Config::configuration()->getLastBook();
-//                and ui->tableChapter->model()->data(ui->tableChapter->currentIndex()).toString() != Config::configuration()->getLastChapter();
+        //                and ui->tableChapter->model()->data(ui->tableChapter->currentIndex()).toString() != Config::configuration()->getLastChapter();
 
     }
 
@@ -633,7 +636,7 @@ bool LeftPanel::checkedNewAndOldChapter()
     {
         flag = Config::configuration()->getLastModule() == ui->comBModulesBook->currentText()
                 and ui->tableBookBook->model()->data(ui->tableBookBook->currentIndex()).toString() == Config::configuration()->getLastBook();
-//                and ui->tableChapterBook->model()->data(ui->tableChapterBook->currentIndex()).toString() != Config::configuration()->getLastChapter();
+        //                and ui->tableChapterBook->model()->data(ui->tableChapterBook->currentIndex()).toString() != Config::configuration()->getLastChapter();
     }
 
     return flag;
@@ -664,14 +667,18 @@ void LeftPanel::sUpdateGUIDayMode()
     ui->comBModules->setPalette(p);
     ui->comBModulesBook->setPalette(p);
     ui->comBDictListFindWord->setPalette(p);
+    ui->textBrComments->setPalette(p);
+    ui->comBComments->setPalette(p);
 }
 //------------------------------------------------------------------------------
 void LeftPanel::sSetCommentsFromModule(const QString f_nameModule)
 {
-//    Config::configuration()->getLastBook();
-//    getCommentsFromFile(Config::configuration()->getListBibles())
-
-    ui->textBrComments->setText(f_nameModule);
+    if (Config::configuration()->isExistLastChapter())
+    {
+        ui->textBrComments->setText(getCommentForChapter(Config::configuration()->getAppDir() + Config::configuration()->getListComments()->getModuleWithName(f_nameModule)->getModulePath()
+                             , Config::configuration()->getLastBook()
+                             , Config::configuration()->getLastChapter()));
+    }
 }
 //------------------------------------------------------------------------------
 void LeftPanel::loadComments()

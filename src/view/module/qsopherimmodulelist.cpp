@@ -74,12 +74,7 @@ void QSopherimModuleList::findModules(QString dir)
         files = getModuleFilesList(files);
         for (int i = 0; i < files.size(); i++)
         {
-
-            QSopherimModule* module = new QSopherimModule(getModuleInfo(files.at(i)));
-            //            myDebug() <<  module.getBookList().size();
-
-            addModule(module);
-            //            myDebug() << getModuleInfo(files.at(i));
+            addModule(new QSopherimModule(getModuleInfo(files.at(i))));
         }
     }
 }

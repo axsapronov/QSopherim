@@ -3,7 +3,6 @@
 #include <QObject>
 
 #include "biblequote.h"
-#include "biblequotecomments.h"
 #include "biblequotedictmodule/biblequotedictmodule.h"
 #include <QString>
 
@@ -29,7 +28,7 @@ private slots:
 
 private:
     BibleQuoteModule* m_BibleQuote;
-    BibleQuoteComments* m_BibleQuoteComments;
+    BibleQuoteModule* m_BibleQuoteComments;
     BibleQuoteDictModule* m_BibleQuoteDictModule;
     void createConnects();
     void init();

@@ -32,12 +32,22 @@ void BibleQuoteModule::parseModule(QString pathToModule)
     //    myDebug() << readInfo(pathToModule).name() << readInfo(pathToModule).shortName();
 
     // добавить еще обработку типа
-    QDir d(Config::configuration()->getAppDir() + "bible/" + parseInfo.shortName());
+    QDir d;
+    if (m_typeModule == "Book" or m_typeModule == "Bible")
+        d = QDir(Config::configuration()->getAppDir() + "bible/" + parseInfo.shortName());
+
+    if (m_typeModule == "Comments")
+        d = QDir(Config::configuration()->getAppDir() + "comments/" + parseInfo.shortName());
+
     if (!d.exists())
     {
         //        emit SIGNAL_CreateFolderForModule(parseInfo.shortName());
         QDir dir;
-        dir.mkpath(Config::configuration()->getAppDir() + "bible/" + parseInfo.shortName());
+        if (m_typeModule == "Book" or m_typeModule == "Bible")
+            dir.mkpath(Config::configuration()->getAppDir() + "bible/" + parseInfo.shortName());
+
+        if (m_typeModule == "Comments")
+            dir.mkpath(Config::configuration()->getAppDir() + "comments/" + parseInfo.shortName());
 
         if (createIniFile(parseInfo))
         {
@@ -132,7 +142,13 @@ MetaInfo BibleQuoteModule::readInfo(QFile &file)
     MetaInfo ret;
     ret.setName(m_moduleName);
     ret.setShortName(m_moduleShortName);
-    ret.type = OBVCore::Type_BibleQuoteModule;
+
+    if (m_typeModule == "Comments")
+        ret.type = OBVCore::Type_BibleQuoteComments;
+
+    if (m_typeModule == "Book" or m_typeModule == "Bible")
+        ret.type = OBVCore::Type_BibleQuoteModule;
+
     return ret;
     return MetaInfo();
 }
@@ -164,8 +180,13 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
             "\nModuleChapterSign = " + m_chapterSign +
             "\nModuleChapterZero = " + m_chapterZero +
             "\nStrongNumber = " + m_strongOption +
-            "\nTypeModule = " + m_typeModule +
-            "\nPathToModule = " + "bible/" + info.shortName() + "/module" + GL_FORMAT_MODULE;
+            "\nTypeModule = " + m_typeModule;
+
+    if (m_typeModule == "Comments")
+        text.append(QString("\nPathToModule = comments/%1/module%2").arg(info.shortName()).arg(GL_FORMAT_MODULE));
+
+    if (m_typeModule == "Book" or m_typeModule == "Bible")
+        text.append(QString("\nPathToModule = bible/%1/module%2").arg(info.shortName()).arg(GL_FORMAT_MODULE));
 
     text.append("\nBookList = ");
     for(int i = 0; i < m_bookList.size(); i++)
@@ -182,14 +203,26 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
     }
 
     //    myDebug() << m_bookPath;
-    QString t_pathToIniFile = QString(Config::configuration()->getAppDir() + "bible/" +
-                                      info.shortName() + "/module" + GL_FORMAT_MODULE);
+    QString t_pathToIniFile;
+    if (m_typeModule == "Bible" or m_typeModule == "Book")
+        t_pathToIniFile = QString(Config::configuration()->getAppDir() + "bible/" +
+                                  info.shortName() + "/module" + GL_FORMAT_MODULE);
+    if (m_typeModule == "Comments")
+        t_pathToIniFile = QString(Config::configuration()->getAppDir() + "comments/" +
+                                  info.shortName() + "/module" + GL_FORMAT_MODULE);
+
     if (QFile::exists(t_pathToIniFile))
     {
         QFile::remove(t_pathToIniFile);
     }
-    return createEmpty(Config::configuration()->getAppDir() + "bible/" +
-                       info.shortName() + "/module" + GL_FORMAT_MODULE, text);
+
+    if (m_typeModule == "Bible" or m_typeModule == "Book")
+        return createEmpty(Config::configuration()->getAppDir() + "bible/" +
+                           info.shortName() + "/module" + GL_FORMAT_MODULE, text);
+
+    if (m_typeModule == "Comments")
+        return createEmpty(Config::configuration()->getAppDir() + "comments/" +
+                           info.shortName() + "/module" + GL_FORMAT_MODULE, text);
 
     return false;
 }
@@ -197,8 +230,14 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
 bool BibleQuoteModule::createBookFiles(QString pathToFiles)
 {
     Q_UNUSED (pathToFiles)
-    QString t_pathToXmlFile = QString(Config::configuration()->getAppDir() + "bible/" +
-                                      m_moduleShortName + "/text" + GL_FORMAT_TEXT);
+    QString t_pathToXmlFile;
+    if (m_typeModule == "Comments")
+        t_pathToXmlFile = QString(Config::configuration()->getAppDir() + "comments/" +
+                                  m_moduleShortName + "/text" + GL_FORMAT_TEXT);
+
+    if (m_typeModule == "Bible" or m_typeModule == "Book")
+        t_pathToXmlFile = QString(Config::configuration()->getAppDir() + "bible/" +
+                                  m_moduleShortName + "/text" + GL_FORMAT_TEXT);
 
     if (QFile::exists(t_pathToXmlFile))
     {
@@ -249,7 +288,7 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
     m_bookCount = "";
     m_chapterZero = false;
     m_strongOption = false;
-    m_typeModule = "Bible";
+    m_typeModule = m_typeModule;
     m_bookList.clear();
 
     m_uid = path;
@@ -308,8 +347,10 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
             {
                 const QString bible = getParamFromStr(&line, "Bible");
                 m_bibleType = bible.compare("Y", Qt::CaseInsensitive) == 0;
-                if (!m_bibleType)
-                    m_typeModule = "Book";
+
+                if (m_typeModule != "Comments")
+                    if (!m_bibleType)
+                        m_typeModule = "Book";
             }
             if(line.contains("Apocrypha", Qt::CaseInsensitive))
             {
@@ -433,7 +474,7 @@ int BibleQuoteModule::readBook(const int id)
             //            line.replace(m_chapterSign, getEndOfTag(m_chapterSign));
             //            }
 
-//            line.remove("&nbsp;");
+            //            line.remove("&nbsp;");
             line.replace("&nbsp;", " ");
             line.remove("^&к").remove("&");
             out2 += line;
@@ -493,17 +534,17 @@ int BibleQuoteModule::readBook(const int id)
             QString verseText = rawVerseList.at(j + 1);
 
 
-//            // strong
-//            QRegExp rx("(\\d+)");
-//            verseText.replace(rx, "<sup>%1</sup>");
-//            int pos = 0;
+            //            // strong
+            //            QRegExp rx("(\\d+)");
+            //            verseText.replace(rx, "<sup>%1</sup>");
+            //            int pos = 0;
 
-//            while ((pos = rx.indexIn(verseText, pos)) != -1)
-//            {
-////                myDebug() << "yes";
-//                verseText.replace(rx.cap(1), "<sup>" + rx.cap(1) + "</sup>");
-//                pos += rx.matchedLength() + 11;
-//            }
+            //            while ((pos = rx.indexIn(verseText, pos)) != -1)
+            //            {
+            ////                myDebug() << "yes";
+            //                verseText.replace(rx.cap(1), "<sup>" + rx.cap(1) + "</sup>");
+            //                pos += rx.matchedLength() + 11;
+            //            }
 
             //            if (!verseText.contains(m_verseSign))
             //                verseText = "";
@@ -522,8 +563,16 @@ int BibleQuoteModule::readBook(const int id)
     }
     //    myDebug() << chapterText;
 
-    QString t_pathToXmlFile = QString(Config::configuration()->getAppDir() + "bible/" +
-                                      m_moduleShortName + "/text" + GL_FORMAT_TEXT);
+    QString t_pathToXmlFile;
+    if (m_typeModule == "Bible" or m_typeModule == "Book")
+        t_pathToXmlFile = QString(Config::configuration()->getAppDir() + "bible/" +
+                                  m_moduleShortName + "/text" + GL_FORMAT_TEXT);
+
+    if (m_typeModule == "Comments")
+    {
+        t_pathToXmlFile = QString(Config::configuration()->getAppDir() + "comments/" +
+                                  m_moduleShortName + "/text" + GL_FORMAT_TEXT);
+    }
     //    myDebug() << t_pathToXmlFile;
     //    qDebug() << m_book.size();
     /// надо брать название книги, а не путь к ней
@@ -534,6 +583,10 @@ int BibleQuoteModule::readBook(const int id)
 
 }
 //------------------------------------------------------------------------------
+void BibleQuoteModule::setTypeModule(const QString f_type)
+{
+    m_typeModule = f_type;
+}
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

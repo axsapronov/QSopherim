@@ -391,6 +391,11 @@ int Config::getFontSize()
     return m_fontSize;
 }
 //------------------------------------------------------------------------------
+QSopherimModuleList* Config::getListComments()
+{
+    return m_listComments;
+}
+//------------------------------------------------------------------------------
 QSopherimModuleList* Config::getListBibles()
 {
     return m_listBibles;
@@ -404,6 +409,11 @@ QSopherimModuleList* Config::getListDictionaries()
 void Config::setListBibles(QSopherimModuleList *newlist)
 {
     m_listBibles = newlist;
+}
+//------------------------------------------------------------------------------
+void Config::setListComments(QSopherimModuleList *newlist)
+{
+    m_listComments = newlist;
 }
 //------------------------------------------------------------------------------
 void Config::setListDictionaries(QSopherimModuleList *newlist)

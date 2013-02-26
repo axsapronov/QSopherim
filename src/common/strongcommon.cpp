@@ -99,7 +99,7 @@ QString getTypeStrong()
 //-------------------------------------------------------------------------------
 int getNumberOfBook(const QString f_book)
 {
-    int r_number = 1;
+    int r_number = 0;
     QString t_name = "numberBook.txt";
 
     QString t_text = getTextFromHtmlFile(Config::configuration()->getStrongDir() + t_name);

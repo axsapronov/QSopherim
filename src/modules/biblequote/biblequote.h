@@ -29,6 +29,8 @@ public:
 
     void parseModule(QString pathToModule);
 
+    void setTypeModule(const QString f_type);
+
     int moduleID() const;
     QString modulePath() const;
     QString moduleName(bool preferShortName = false) const;

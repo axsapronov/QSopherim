@@ -63,6 +63,12 @@ public:
     void setListDictionaries(QSopherimModuleList* newlist);
 
     /**
+     * @brief setListComments
+     * @param newlist
+     */
+    void setListComments(QSopherimModuleList* newlist);
+
+    /**
      * @brief addHiddenModule
      * @param nameModule
      */
@@ -177,9 +183,9 @@ public:
     void setStrongHebrew(QString strong);
     void setStrongGreek(QString strong);
 
-
     QSopherimModuleList* getListBibles();
     QSopherimModuleList* getListDictionaries();
+    QSopherimModuleList* getListComments();
     QStringList* getListHiddenModules();
 
 
@@ -307,6 +313,8 @@ private:
 
     QSopherimModuleList* m_listBibles;
     QSopherimModuleList* m_listDictinaries;
+    QSopherimModuleList* m_listComments;
+
     QStringList* m_listHiddenModules;
     QStringList* m_journalHistory;
 
