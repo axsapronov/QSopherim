@@ -101,9 +101,6 @@ private slots:
       */
     void showHelp();
 
-    void processFinishModule();
-    void processFinishDict();
-
     void createNote();
 
     /**

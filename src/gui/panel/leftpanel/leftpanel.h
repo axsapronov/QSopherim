@@ -25,9 +25,6 @@ public:
     explicit LeftPanel(QWidget *parent = 0);
     ~LeftPanel();
 
-    void refreshBookList(QSopherimModuleList* list);
-    void refreshListModule(QSopherimModuleList* list);
-    void refreshListDict(QSopherimModuleList* list);
 
     void setListModuleFromList();
 
@@ -37,9 +34,6 @@ public:
      */
     void retranslate();
 
-
-
-
 public slots:
     /**
      * @brief showChapterFromJournal
@@ -47,13 +41,17 @@ public slots:
      * @param book
      * @param chapter
      */
-    void showChapterFromJournal(QString module, QString book, QString chapter);
+    void showChapterFromJournal(const QString module, const QString book, const QString chapter);
     /**
      * @brief sUpdateGUI
      */
     void sUpdateGUI();
 
     void sUpdateGUIDayMode();
+
+    void loadModules();
+    void loadDictionaries();
+    void loadComments();
 
 signals:
     void SIGNAL_AddRecordToJournal(QString, QString, QString);
@@ -78,32 +76,32 @@ private slots:
     /**
      * @brief showChapter
      */
-    void showChapter(QModelIndex);
+    void showChapter(const QModelIndex);
     /**
      * @brief showWord
      */
-    void showWord(QModelIndex);
+    void showWord(const QModelIndex);
 
     /**
      * @brief refreshWordListFromDict
      */
-    void refreshWordListFromDict(QString);
+    void refreshWordListFromDict(const QString);
 
     /**
      * @brief showDescriptionWordFromOtherModules
      * @param word
      */
-    void showDescriptionWordFromOtherModules(QString word);
+    void showDescriptionWordFromOtherModules(const QString word);
 
     /**
      * @brief showDescriptionWord
      * @param word
      */
-    void showDescriptionWord(QString word);
+    void showDescriptionWord(const QString word);
 
-    void sShowHideLeftPanel2(int f_tab);
+    void sShowHideLeftPanel2(const int f_tab);
 
-    void sSetCommentsFromModule(QString);
+    void sSetCommentsFromModule(const QString);
 
 private:
     Ui::LeftPanel *ui;
@@ -144,11 +142,18 @@ private:
 
     void refreshChapterList(const QString f_type, const QModelIndex f_ind);
 
-    QStringList getListDictWithWord(QString word);
+    QStringList getListDictWithWord(const QString word);
 
     void makeOptionAutoChapter(const QString f_bookName);
 
     void showChapter(const QModelIndex ind, const QString f_type);
+
+
+    void refreshBookList(QSopherimModuleList* list);
+    void refreshListModule(QSopherimModuleList* list);
+    void refreshListDict(QSopherimModuleList* list);
+    void refreshListComments(QSopherimModuleList* list);
+
 };
 
 #endif // LEFTPANEL_H

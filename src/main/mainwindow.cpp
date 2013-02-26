@@ -43,8 +43,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //    loadDictFromFolder();
 
     // load modules
-    processFinishModule();
-    processFinishDict();
+    GUI_LeftPanel->loadModules();
+    GUI_LeftPanel->loadDictionaries();
 
     // open last text
     GUI_ModuleViewer->openLastChapter();
@@ -294,9 +294,9 @@ void MainWindow::createConnects()
     connect(ui->action_About_Help, SIGNAL(triggered()), SLOT(showHelp()));
 
     // other
-    connect(prModule, SIGNAL(SIGNAL_ProcessModuleOk()), SLOT(processFinishModule()));
-    connect(prModule, SIGNAL(SIGNAL_ProcessDictOk()), SLOT(processFinishDict()));
-
+    connect(prModule, SIGNAL(SIGNAL_ProcessModuleOk()), GUI_LeftPanel, SLOT(loadModules()));
+    connect(prModule, SIGNAL(SIGNAL_ProcessDictOk()), GUI_LeftPanel, SLOT(loadDictionaries()));
+    connect(prModule, SIGNAL(SIGNAL_ProcessCommentsOk()), GUI_LeftPanel, SLOT(loadComments()));
 
     // module viewer
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowNoteList(QString,QString,QString,QString,QString)),
@@ -313,8 +313,8 @@ void MainWindow::createConnects()
             SLOT(retranslate(QString)));
 
     // manager module
-    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), SLOT(processFinishDict()));
-    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), SLOT(processFinishModule()));
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(loadDictionaries()));
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(loadModules()));
 
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetGreekStrong(QString))
             , GUI_LeftPanel2, SLOT(sSetStrongGreek(QString)));
@@ -532,21 +532,6 @@ void MainWindow::showHelp()
     //    HtmlHelp(NULL, "help.chm", HH_DISPLAY_TOPIC, 0);
 }
 //------------------------------------------------------------------------------
-void MainWindow::processFinishModule()
-{
-    QSopherimModuleList* list = new QSopherimModuleList();
-    list->refreshList();
-    GUI_LeftPanel->refreshListModule(list);
-}
-//------------------------------------------------------------------------------
-void MainWindow::processFinishDict()
-{
-    QSopherimModuleList* list = new QSopherimModuleList();
-    list->refreshList("dictionary/");
-    GUI_LeftPanel->refreshListDict(list);
-
-}
-//------------------------------------------------------------------------------
 void MainWindow::convertModules(const QString f_type)
 {
     if (!Config::configuration()->getBibleDir().isEmpty())
@@ -612,7 +597,7 @@ void MainWindow::convertModules(const QString f_type)
     }
     else
     {
-        processFinishModule();
+        GUI_LeftPanel->loadModules();
     }
 }
 //------------------------------------------------------------------------------

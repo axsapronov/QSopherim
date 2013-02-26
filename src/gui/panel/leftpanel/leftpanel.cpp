@@ -188,6 +188,31 @@ void LeftPanel::refreshListDict(QSopherimModuleList* list)
     }
 }
 //------------------------------------------------------------------------------
+void LeftPanel::refreshListComments(QSopherimModuleList* list)
+{
+    if (list->getSize() != 0 )
+    {
+        // dict tab
+        ui->tabWidget->insertTab(GUI_TAB_DICT, ui->tabDictionary, tr("Comments"));
+        Config::configuration()->setListDictionaries(list);
+        QStringList items;
+        for (int i = 0; i < list->getSize(); i++)
+        {
+            if (!Config::configuration()->getListHiddenModules()->contains(list->getModule(i)->getModuleName()))
+            {
+                items << QString(list->getModule(i)->getModuleName());
+            }
+        }
+        typeModel = new QStringListModel(items, this);
+        ui->comBComments->setModel(typeModel);
+    }
+    else
+    {
+        // dict tab
+        ui->tabWidget->removeTab(GUI_TAB_DICT);
+    }
+}
+//------------------------------------------------------------------------------
 void LeftPanel::refreshBookList(QSopherimModuleList* list)
 {
     //    moduleList = list;
@@ -378,7 +403,7 @@ void LeftPanel::refreshBookList(const QString nameOfModule, const QString f_type
     }
 }
 //------------------------------------------------------------------------------
-void LeftPanel::refreshBookList(QString nameOfModule)
+void LeftPanel::refreshBookList(const QString nameOfModule)
 {
     QComboBox *combo = (QComboBox*)sender();
 
@@ -400,7 +425,7 @@ void LeftPanel::retranslate()
     ui->retranslateUi(this);
 }
 //------------------------------------------------------------------------------
-void LeftPanel::showChapterFromJournal(QString module, QString book, QString chapter)
+void LeftPanel::showChapterFromJournal(const QString module, const QString book, const QString chapter)
 {
     if (moduleList->isExist(module))
     {
@@ -435,7 +460,7 @@ void LeftPanel::showChapterFromJournal(QString module, QString book, QString cha
 
 }
 //------------------------------------------------------------------------------
-void LeftPanel::refreshWordListFromDict(QString curText)
+void LeftPanel::refreshWordListFromDict(const QString curText)
 {
     QString t_pathToFile = QString(Config::configuration()->getAppDir() + "dictionary/" +
                                    curText + "/dict" + GL_FORMAT_TEXT);
@@ -453,7 +478,7 @@ void LeftPanel::refreshWordListFromDict(QString curText)
     // find desc from other dict
 }
 //------------------------------------------------------------------------------
-void LeftPanel::showDescriptionWord(QString word)
+void LeftPanel::showDescriptionWord(const QString word)
 {
     QString t_pathToFile = QString(Config::configuration()->getAppDir() + "dictionary/" +
                                    ui->comBDictList->currentText() + "/dict" + GL_FORMAT_TEXT);
@@ -462,9 +487,8 @@ void LeftPanel::showDescriptionWord(QString word)
     ui->view->setText(t_text);
 }
 //------------------------------------------------------------------------------
-void LeftPanel::showDescriptionWordFromOtherModules(QString word)
+void LeftPanel::showDescriptionWordFromOtherModules(const QString word)
 {
-    word = m_curWord;
     QString t_pathToFile = QString(Config::configuration()->getAppDir() + "dictionary/" +
                                    ui->comBDictListFindWord->currentText() + "/dict" + GL_FORMAT_TEXT);
 
@@ -472,7 +496,7 @@ void LeftPanel::showDescriptionWordFromOtherModules(QString word)
     ui->view->setText(t_text);
 }
 //------------------------------------------------------------------------------
-void LeftPanel::showWord(QModelIndex ind)
+void LeftPanel::showWord(const QModelIndex ind)
 {
     QString word = ind.data(0).toString();
     m_curWord = word;
@@ -489,7 +513,7 @@ void LeftPanel::setListModuleFromList()
     Config::configuration()->setListBibles(moduleList);
 }
 //------------------------------------------------------------------------------
-QStringList LeftPanel::getListDictWithWord(QString word)
+QStringList LeftPanel::getListDictWithWord(const QString word)
 {
     QStringList r_list;
 
@@ -510,7 +534,7 @@ QStringList LeftPanel::getListDictWithWord(QString word)
     return r_list;
 }
 //------------------------------------------------------------------------------
-void LeftPanel::sShowHideLeftPanel2(int f_tab)
+void LeftPanel::sShowHideLeftPanel2(const int f_tab)
 {
     // not copy many of tab 1, tab 2, tab N
     if (f_tab != GUI_TAB_DICT) // dict
@@ -642,11 +666,32 @@ void LeftPanel::sUpdateGUIDayMode()
     ui->comBDictListFindWord->setPalette(p);
 }
 //------------------------------------------------------------------------------
-void LeftPanel::sSetCommentsFromModule(QString f_nameModule)
+void LeftPanel::sSetCommentsFromModule(const QString f_nameModule)
 {
 //    Config::configuration()->getLastBook();
 //    getCommentsFromFile(Config::configuration()->getListBibles())
 
     ui->textBrComments->setText(f_nameModule);
+}
+//------------------------------------------------------------------------------
+void LeftPanel::loadComments()
+{
+    QSopherimModuleList* list = new QSopherimModuleList();
+    list->refreshList("comments/");
+    refreshListComments(list);
+}
+//------------------------------------------------------------------------------
+void LeftPanel::loadDictionaries()
+{
+    QSopherimModuleList* list = new QSopherimModuleList();
+    list->refreshList("dictionary/");
+    refreshListDict(list);
+}
+//------------------------------------------------------------------------------
+void LeftPanel::loadModules()
+{
+    QSopherimModuleList* list = new QSopherimModuleList();
+    list->refreshList();
+    refreshListModule(list);
 }
 //------------------------------------------------------------------------------

@@ -22,6 +22,7 @@ public:
 signals:
     void SIGNAL_ProcessModuleOk();
     void SIGNAL_ProcessDictOk();
+    void SIGNAL_ProcessCommentsOk();
 
 private slots:
     void createFolderForModule(QString shortname);

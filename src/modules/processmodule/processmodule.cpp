@@ -30,7 +30,7 @@ ProcessModule::~ProcessModule()
 void ProcessModule::createConnects()
 {
     connect(m_BibleQuote, SIGNAL(SIGNAL_CreateFolderForModule(QString)), SLOT(createFolderForModule(QString)));
-    connect(m_BibleQuoteComments, SIGNAL(SIGNAL_CreateFolderForModule(QString)), SLOT(createFolderForModule(QString)));
+//    connect(m_BibleQuoteComments, SIGNAL(SIGNAL_CreateFolderForModule(QString)), SLOT(createFolderForModule(QString)));
 }
 //------------------------------------------------------------------------------
 void ProcessModule::init()
