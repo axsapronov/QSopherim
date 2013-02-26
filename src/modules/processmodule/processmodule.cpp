@@ -37,7 +37,7 @@ void ProcessModule::init()
 {
     m_BibleQuote = new BibleQuoteModule();
     m_BibleQuoteDictModule = new BibleQuoteDictModule();
-    //    connect(m_biblequote, SIGNAL(createFolderForModule(QString)), SLOT(createFolderForModule(QString)));
+//        connect(m_biblequote, SIGNAL(createFolderForModule(QString)), SLOT(createFolderForModule(QString)));
 }
 //------------------------------------------------------------------------------
 bool ProcessModule::processing(QString pathToModule, int type)

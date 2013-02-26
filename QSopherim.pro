@@ -29,6 +29,7 @@ DEPENDPATH += \
         src/modules/biblequote \
         src/modules/biblemodule \
         src/modules/biblequote/biblequotedictmodule\
+        src/modules/biblequote/comments\
         src/modules/format \
         src/modules/metainfo \
         src/modules/ \
@@ -63,6 +64,7 @@ INCLUDEPATH += \
         src/modules/biblequote \
         src/modules/biblemodule \
         src/modules/biblequote/biblequotedictmodule\
+        src/modules/biblequote/comments\
         src/modules/format \
         src/modules/processmodule \
         src/config \
@@ -122,7 +124,8 @@ SOURCES  += \
         biblequotedictmodule.cpp \
         finddialog.cpp \
         fontdialog.cpp \
-        moduleimportdialog.cpp
+        moduleimportdialog.cpp \
+        biblequotecomments.cpp
 
 HEADERS  += \
         mainwindow.h \
@@ -170,7 +173,8 @@ HEADERS  += \
         biblequotedictmodule.h \
         finddialog.h \
         fontdialog.h \
-        moduleimportdialog.h
+        moduleimportdialog.h \
+        biblequotecomments.h
 
 FORMS    += \
         mainwindow.ui \

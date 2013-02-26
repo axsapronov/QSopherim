@@ -39,12 +39,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowTitle(QString("%1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
     init();
-    //    loadModulesFromFolder();
-    //    loadDictFromFolder();
+    //    convertModulesFromFolder();
+    //    convertDictFromFolder();
 
     // load modules
     GUI_LeftPanel->loadModules();
     GUI_LeftPanel->loadDictionaries();
+//    GUI_LeftPanel->loadComments();
 
     // open last text
     GUI_ModuleViewer->openLastChapter();
@@ -240,7 +241,7 @@ void MainWindow::debug()
     //    //        myDebug() << "yes";
     //    //    }
 
-    //    //    loadModulesFromFolder();
+    //    //    convertModulesFromFolder();
     //    //    for (int i = 0; i < fileName.size(); i++)
     //    //    {
     //    //        prModule->processing(fileName.at(i), OBVCore::Type_BibleQuoteModule);
@@ -285,7 +286,7 @@ void MainWindow::createConnects()
 
     // toolbar
     connect(ui->actionAction_Other_Create_Note, SIGNAL(triggered()), SLOT(createNote()));
-    connect(ui->actionAction_Other_Update_List_Module, SIGNAL(triggered()), SLOT(loadModulesFromFolder()));
+    connect(ui->actionAction_Other_Update_List_Module, SIGNAL(triggered()), SLOT(convertModulesFromFolder()));
 
     // menu about
     connect(ui->action_About_About, SIGNAL(triggered()), GUI_About, SLOT(show()));
@@ -322,9 +323,9 @@ void MainWindow::createConnects()
             , GUI_LeftPanel2, SLOT(sSetStrongHebrew(QString)));
 
     // import modules
-    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_UpdateModules()), SLOT(loadModulesFromFolder()));
-    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_UpdateModulesDict()), SLOT(loadDictFromFolder()));
-    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_UpdateModulesComments()), SLOT(loadCommentsFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_UpdateModules()), SLOT(convertModulesFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_UpdateModulesDict()), SLOT(convertDictFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_UpdateModulesComments()), SLOT(convertCommentsFromFolder()));
 
     // connect fron left1 to left2 panels
     connect(GUI_LeftPanel, SIGNAL(SIGNAL_AddRecordToJournal(QString,QString,QString))
@@ -601,12 +602,12 @@ void MainWindow::convertModules(const QString f_type)
     }
 }
 //------------------------------------------------------------------------------
-void MainWindow::loadModulesFromFolder()
+void MainWindow::convertModulesFromFolder()
 {
     convertModules("Bible");
 }
 //------------------------------------------------------------------------------
-void MainWindow::loadDictFromFolder()
+void MainWindow::convertDictFromFolder()
 {
     convertModules("Dictionary");
 }
@@ -707,7 +708,7 @@ void MainWindow::showHideTray()
     }
 }
 //------------------------------------------------------------------------------
-void MainWindow::loadCommentsFromFolder()
+void MainWindow::convertCommentsFromFolder()
 {
     convertModules("Comments");
 }

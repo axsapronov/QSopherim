@@ -115,16 +115,16 @@ private slots:
      * @functon
      * Load modules from path and add to list in app
      */
-    void loadModulesFromFolder();
+    void convertModulesFromFolder();
 
     /**
      * @brief loadDictFromFolder
      * @function
      * Load dictionaryes from path and add to list in app
      */
-    void loadDictFromFolder();
+    void convertDictFromFolder();
 
-    void loadCommentsFromFolder();
+    void convertCommentsFromFolder();
 
     /**
      * @brief showHideTray
