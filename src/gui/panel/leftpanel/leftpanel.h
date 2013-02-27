@@ -142,6 +142,8 @@ private:
 
     void refreshComboBooks();
 
+    void showHideTabs();
+
     void refreshChapterList(const QString f_type, const QModelIndex f_ind);
 
     QStringList getListDictWithWord(const QString word);

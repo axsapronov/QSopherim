@@ -47,10 +47,10 @@ MainWindow::MainWindow(QWidget *parent) :
     GUI_LeftPanel->loadBooks();
     GUI_LeftPanel->loadDictionaries();
     GUI_LeftPanel->loadComments();
-//    GUI_LeftPanel->loadApocrypha();
+    GUI_LeftPanel->loadApocrypha();
 
     // open last text
-//    GUI_ModuleViewer->openLastChapter();
+    GUI_ModuleViewer->openLastChapter();
     GUI_LeftPanel2->loadJournal();
 
     //    loadModules();

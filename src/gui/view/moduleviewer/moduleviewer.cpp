@@ -527,8 +527,9 @@ void ModuleViewer::openLastChapter()
         m_curModule = Config::configuration()->getLastModule();
         m_curBook = Config::configuration()->getLastBook();
         m_curChapter = Config::configuration()->getLastChapter();
+        QString t_type = Config::configuration()->getLastType();
 
-        showChapter(m_curModule, m_curBook, m_curChapter.toInt());
+        showChapter(m_curModule, m_curBook, m_curChapter.toInt(), t_type);
     }
 }
 //------------------------------------------------------------------------------
