@@ -33,21 +33,13 @@ void BibleQuoteModule::parseModule(QString pathToModule)
 
     // добавить еще обработку типа
     QDir d;
-    if (m_typeModule == "Book" or m_typeModule == "Bible")
-        d = QDir(Config::configuration()->getAppDir() + "bible/" + parseInfo.shortName());
-
-    if (m_typeModule == "Comments")
-        d = QDir(Config::configuration()->getAppDir() + "comments/" + parseInfo.shortName());
+    d = QDir(QString(Config::configuration()->getAppDir() + "%1/" + parseInfo.shortName()).arg(m_typeModule.toLower()));
 
     if (!d.exists())
     {
         //        emit SIGNAL_CreateFolderForModule(parseInfo.shortName());
         QDir dir;
-        if (m_typeModule == "Book" or m_typeModule == "Bible")
-            dir.mkpath(Config::configuration()->getAppDir() + "bible/" + parseInfo.shortName());
-
-        if (m_typeModule == "Comments")
-            dir.mkpath(Config::configuration()->getAppDir() + "comments/" + parseInfo.shortName());
+        dir.mkpath(QString(Config::configuration()->getAppDir() + "%1/" + parseInfo.shortName()).arg(m_typeModule.toLower()));
 
         if (createIniFile(parseInfo))
         {

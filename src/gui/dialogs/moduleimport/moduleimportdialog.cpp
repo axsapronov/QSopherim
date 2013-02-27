@@ -62,12 +62,16 @@ void ModuleImportDialog::sConvertModules()
     {
         if (ui->comBFormat->currentText() == tr("BibleQuote"))
         {
-            if (ui->comBType->currentText() == tr("Bible")
-                    || ui->comBType->currentText() == tr("Book")
-                    )
+            if (ui->comBType->currentText() == tr("Bible"))
             {
                 Config::configuration()->setBibleDir(ui->LEPath->text());
                 emit SIGNAL_StartConvertModules();
+            }
+
+            if (ui->comBType->currentText() == tr("Book"))
+            {
+                Config::configuration()->setBookDir(ui->LEPath->text());
+                emit SIGNAL_StartConvertBook();
             }
 
             if (ui->comBType->currentText() == tr("Dictionary"))
@@ -88,6 +92,7 @@ void ModuleImportDialog::sConvertModules()
                 emit SIGNAL_StartConvertApocrypha();
             }
         }
+
         //            if (ui->comBFormat->currentText() == tr("BibleQuote"))
         //            {
 

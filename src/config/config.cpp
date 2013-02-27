@@ -89,6 +89,9 @@ Config::~Config()
     delete m_journalHistory;
     delete m_listBibles;
     delete m_listDictinaries;
+    delete m_listBook;
+    delete m_listApocrypha;
+    delete m_listComments;
     delete this;
 }
 //------------------------------------------------------------------------------
@@ -410,6 +413,16 @@ QSopherimModuleList* Config::getListDictionaries()
     return m_listDictinaries;
 }
 //------------------------------------------------------------------------------
+QSopherimModuleList* Config::getListApocrypha()
+{
+    return m_listApocrypha;
+}
+//------------------------------------------------------------------------------
+QSopherimModuleList* Config::getListBook()
+{
+    return m_listBook;
+}
+//------------------------------------------------------------------------------
 void Config::setListBibles(QSopherimModuleList *newlist)
 {
     m_listBibles = newlist;
@@ -418,6 +431,16 @@ void Config::setListBibles(QSopherimModuleList *newlist)
 void Config::setListComments(QSopherimModuleList *newlist)
 {
     m_listComments = newlist;
+}
+//------------------------------------------------------------------------------
+void Config::setListBook(QSopherimModuleList *newlist)
+{
+    m_listBook = newlist;
+}
+//------------------------------------------------------------------------------
+void Config::setListApocrypha(QSopherimModuleList *newlist)
+{
+    m_listApocrypha = newlist;
 }
 //------------------------------------------------------------------------------
 void Config::setListDictionaries(QSopherimModuleList *newlist)

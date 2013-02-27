@@ -44,11 +44,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // load modules
     GUI_LeftPanel->loadModules();
+    GUI_LeftPanel->loadBooks();
     GUI_LeftPanel->loadDictionaries();
     GUI_LeftPanel->loadComments();
+//    GUI_LeftPanel->loadApocrypha();
 
     // open last text
-    GUI_ModuleViewer->openLastChapter();
+//    GUI_ModuleViewer->openLastChapter();
     GUI_LeftPanel2->loadJournal();
 
     //    loadModules();
@@ -119,8 +121,8 @@ void MainWindow::init()
 
     GUI_RightPanel->setMinimumWidth(250);
     GUI_LeftPanel->setMinimumWidth(300);
-//    GUI_LeftPanel->setMaximumWidth(350);
-//    GUI_LeftPanel2->setMaximumWidth(350);
+    //    GUI_LeftPanel->setMaximumWidth(350);
+    //    GUI_LeftPanel2->setMaximumWidth(350);
     GUI_LeftPanel2->setMinimumWidth(300);
 
     //    GUI_BottomPanel->setMinimumHeight(100);
@@ -286,18 +288,13 @@ void MainWindow::createConnects()
 
     // toolbar
     connect(ui->actionAction_Other_Create_Note, SIGNAL(triggered()), SLOT(createNote()));
-//    connect(ui->actionAction_Other_Update_List_Module, SIGNAL(triggered()), SLOT(convertModulesFromFolder()));
+    //    connect(ui->actionAction_Other_Update_List_Module, SIGNAL(triggered()), SLOT(convertModulesFromFolder()));
 
     // menu about
     connect(ui->action_About_About, SIGNAL(triggered()), GUI_About, SLOT(show()));
     connect(ui->action_About_About_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(ui->action_About_Site, SIGNAL(triggered()), this, SLOT(aboutOpenSite()));
     connect(ui->action_About_Help, SIGNAL(triggered()), SLOT(showHelp()));
-
-    // other
-//    connect(prModule, SIGNAL(SIGNAL_ProcessModuleOk()), GUI_LeftPanel, SLOT(loadModules()));
-//    connect(prModule, SIGNAL(SIGNAL_ProcessDictOk()), GUI_LeftPanel, SLOT(loadDictionaries()));
-//    connect(prModule, SIGNAL(SIGNAL_ProcessCommentsOk()), GUI_LeftPanel, SLOT(loadComments()));
 
     // module viewer
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowNoteList(QString,QString,QString,QString,QString)),
@@ -327,6 +324,7 @@ void MainWindow::createConnects()
     connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertDict()), SLOT(convertDictFromFolder()));
     connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertComments()), SLOT(convertCommentsFromFolder()));
     connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertApocrypha()), SLOT(convertApocryphaFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertBook()), SLOT(convertBooksFromFolder()));
 
     // connect fron left1 to left2 panels
     connect(GUI_LeftPanel, SIGNAL(SIGNAL_AddRecordToJournal(QString,QString,QString))
@@ -536,7 +534,14 @@ void MainWindow::showHelp()
 //------------------------------------------------------------------------------
 void MainWindow::convertModules(const QString f_type)
 {
-    if (!Config::configuration()->getBibleDir().isEmpty())
+    // hindi
+    if (
+            (!Config::configuration()->getBibleDir().isEmpty() and (f_type == "Bible" or f_type == "Book"))
+            or (!Config::configuration()->getCommentsDir().isEmpty() and f_type == "Comments")
+            or (!Config::configuration()->getApocryphaDir().isEmpty() and f_type == "Apocrypha")
+            or (!Config::configuration()->getDictDir().isEmpty() and f_type == "Dictionary")
+            )
+
     {
         QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
         loadProgress.setValue(0);
@@ -552,12 +557,24 @@ void MainWindow::convertModules(const QString f_type)
         QLabel overallLabel(&loadProgress);
         overallLabel.setGeometry(11, 10, 400, 20);
         QStringList listModules;
-
-        if (f_type == "Book" or f_type == "Bible")
-        {
-            overallLabel.setText(tr("Convert: bible modules"));
+            overallLabel.setText(tr("Convert: %1 modules").arg(f_type));
             overallLabel.show();
+
+        if (f_type == "Book")
+        {
             listModules = getListModulesFromPath(Config::configuration()->getBibleDir(), ".ini");
+            for (int i = 0; i < listModules.size(); i++)
+            {
+                prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
+                loadProgress.setValue(100 * i / listModules.size());
+                QApplication::processEvents();
+            }
+            GUI_LeftPanel->loadModules();
+        }
+
+        if (f_type == "Book")
+        {
+            listModules = getListModulesFromPath(Config::configuration()->getBookDir(), ".ini");
             for (int i = 0; i < listModules.size(); i++)
             {
                 prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
@@ -569,8 +586,6 @@ void MainWindow::convertModules(const QString f_type)
 
         if (f_type == "Dictionary")
         {
-            overallLabel.setText(tr("Convert: dictionary modules"));
-            overallLabel.show();
             listModules = getListModulesFromPath(
                         Config::configuration()->getDictDir()
                         , ".idx");
@@ -585,12 +600,9 @@ void MainWindow::convertModules(const QString f_type)
 
         if (f_type == "Comments")
         {
-            overallLabel.setText(tr("Convert: comments modules"));
-            overallLabel.show();
             listModules = getListModulesFromPath(
-                        Config::configuration()->getBibleDir()
+                        Config::configuration()->getCommentsDir()
                         , ".ini");
-
             for (int i = 0; i < listModules.size(); i++)
             {
                 prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteComments);
@@ -600,11 +612,8 @@ void MainWindow::convertModules(const QString f_type)
             GUI_LeftPanel->loadComments();
         }
 
-
         if (f_type == "Apocrypha")
         {
-            overallLabel.setText(tr("Convert: apocrypha modules"));
-            overallLabel.show();
             listModules = getListModulesFromPath(Config::configuration()->getApocryphaDir(), ".ini");
             for (int i = 0; i < listModules.size(); i++)
             {
@@ -614,8 +623,6 @@ void MainWindow::convertModules(const QString f_type)
             }
             GUI_LeftPanel->loadApocrypha();
         }
-
-
     }
     else
     {
@@ -626,6 +633,11 @@ void MainWindow::convertModules(const QString f_type)
 void MainWindow::convertModulesFromFolder()
 {
     convertModules("Bible");
+}
+//------------------------------------------------------------------------------
+void MainWindow::convertBooksFromFolder()
+{
+    convertModules("Book");
 }
 //------------------------------------------------------------------------------
 void MainWindow::convertDictFromFolder()

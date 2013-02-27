@@ -41,7 +41,8 @@ public:
 
     void showChapter(const QString f_module
                      , const QString f_nameBook
-                     , const int f_numberchapter);
+                     , const int f_numberchapter
+                     , const QString f_type = "Bible");
 
     void setStrongList(QString path);
     void retranslate();

@@ -58,6 +58,8 @@ public:
      * @param newlist
      */
     void setListBibles(QSopherimModuleList* newlist);
+    void setListBook(QSopherimModuleList* newlist);
+    void setListApocrypha(QSopherimModuleList* newlist);
 
     /**
      * @brief setListDictionaries
@@ -192,6 +194,9 @@ public:
     QSopherimModuleList* getListBibles();
     QSopherimModuleList* getListDictionaries();
     QSopherimModuleList* getListComments();
+    QSopherimModuleList* getListBook();
+    QSopherimModuleList* getListApocrypha();
+
     QStringList* getListHiddenModules();
 
 
@@ -323,6 +328,8 @@ private:
     QSopherimModuleList* m_listBibles;
     QSopherimModuleList* m_listDictinaries;
     QSopherimModuleList* m_listComments;
+    QSopherimModuleList* m_listApocrypha;
+    QSopherimModuleList* m_listBook;
 
     QStringList* m_listHiddenModules;
     QStringList* m_journalHistory;

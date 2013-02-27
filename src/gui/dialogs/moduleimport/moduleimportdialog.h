@@ -25,6 +25,7 @@ signals:
     void SIGNAL_StartConvertDict();
     void SIGNAL_StartConvertComments();
     void SIGNAL_StartConvertApocrypha();
+    void SIGNAL_StartConvertBook();
 
 private:
     Ui::ModuleImportDialog *ui;

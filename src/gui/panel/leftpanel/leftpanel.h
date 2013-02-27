@@ -53,6 +53,7 @@ public slots:
     void loadDictionaries();
     void loadComments();
     void loadApocrypha();
+    void loadBooks();
 
 signals:
     void SIGNAL_AddRecordToJournal(QString, QString, QString);
@@ -151,7 +152,7 @@ private:
 
 
     void refreshBookList(QSopherimModuleList* list);
-    void refreshListModule(QSopherimModuleList* list);
+    void refreshListModule(QSopherimModuleList* list, const QString f_type);
     void refreshListDict(QSopherimModuleList* list);
     void refreshListComments(QSopherimModuleList* list);
 

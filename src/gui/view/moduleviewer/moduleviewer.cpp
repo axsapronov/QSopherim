@@ -33,6 +33,41 @@ ModuleViewer::~ModuleViewer()
     delete ui;
 }
 //------------------------------------------------------------------------------
+void ModuleViewer::init()
+{
+    if( !static_viewer)
+    {
+        static_viewer = this;
+    }
+    else
+    {
+        qWarning( "Multiple viewers not allowed!" );
+    }
+    createActions();
+
+    ui->viewer->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->viewer->viewport()->installEventFilter(this);
+
+    setStyleSettings();
+
+    connect(ui->toolClose, SIGNAL(clicked()), ui->frameFind, SLOT(hide()));
+    connect(ui->toolPrevious, SIGNAL(clicked()), this, SLOT(findPrevious()));
+    connect(ui->toolNext, SIGNAL(clicked()), this, SLOT(findNext()));
+    connect(ui->LEEditFind, SIGNAL(returnPressed()), this, SLOT(findNext()));
+    connect(ui->LEEditFind, SIGNAL(textEdited(const QString&)), this, SLOT(sFind(QString)));
+    ui->frameFind -> setVisible(false);
+    ui->LAWrapped -> setVisible(false);
+
+    autoHideTimer = new QTimer(this);
+    autoHideTimer -> setInterval(5000);
+    autoHideTimer -> setSingleShot(true);
+    QObject::connect(autoHideTimer, SIGNAL(timeout()), ui->frameFind, SLOT(hide()));
+
+    connect(ui->viewer, SIGNAL(customContextMenuRequested(QPoint)),
+            this,SLOT(sShowContextMenu(QPoint)));
+
+}
+//------------------------------------------------------------------------------
 void ModuleViewer::createActions()
 {
     act_addBookmarks = new QAction(tr("&Add bookmarks"), this);
@@ -70,15 +105,27 @@ ModuleViewer *ModuleViewer::viewer()
     return static_viewer;
 }
 //------------------------------------------------------------------------------
-void ModuleViewer::showChapter(const QString f_module, const QString f_nameBook, const int f_numberchapter)
+void ModuleViewer::showChapter(const QString f_module, const QString f_nameBook, const int f_numberchapter, const QString f_type)
 {
-//    myDebug() << f_module << f_nameBook << f_numberchapter;
-    QString pathToFile = Config::configuration()->getAppDir() +
-            Config::configuration()->getListBibles()->getModuleWithName(f_module)->getModulePath();
+    //    myDebug() << f_module << f_nameBook << f_numberchapter;
+
+    QString pathToFile;
+
+    if (f_type == "Bible")
+        pathToFile = Config::configuration()->getAppDir() +
+                Config::configuration()->getListBibles()->getModuleWithName(f_module)->getModulePath();
+
+    if (f_type == "Book")
+        pathToFile = Config::configuration()->getAppDir() +
+                Config::configuration()->getListBook()->getModuleWithName(f_module)->getModulePath();
+
+    if (f_type == "Apocrypha")
+        pathToFile = Config::configuration()->getAppDir() +
+                Config::configuration()->getListApocrypha()->getModuleWithName(f_module)->getModulePath();
 
     pathToFile.replace("module" + GL_FORMAT_MODULE
                        , "text" + GL_FORMAT_TEXT);
-//    myDebug() << f_module << pathToFile << f_nameBook << f_numberchapter;
+    //    myDebug() << f_module << pathToFile << f_nameBook << f_numberchapter;
 
     QXmlStreamReader xmlReader;
     xmlReader.addData(getTextFromHtmlFile(pathToFile));
@@ -160,48 +207,10 @@ void ModuleViewer::showChapter(const QString f_module, const QString f_nameBook,
         Config::configuration()->setLastChapter(m_curChapter);
         Config::configuration()->setLastBook(m_curBook);
         Config::configuration()->setLastModule(m_curModule);
-        Config::configuration()->setLastType(
-                    Config::configuration()->getListBibles()->getModuleWithName(m_curModule)->getModuleType()
-                    );
+        Config::configuration()->setLastType(f_type);
         // todo
-
     }
     emit SIGNAL_ShowChapterFinish();
-}
-//------------------------------------------------------------------------------
-void ModuleViewer::init()
-{
-    if( !static_viewer)
-    {
-        static_viewer = this;
-    }
-    else
-    {
-        qWarning( "Multiple viewers not allowed!" );
-    }
-    createActions();
-
-    ui->viewer->setContextMenuPolicy(Qt::CustomContextMenu);
-    ui->viewer->viewport()->installEventFilter(this);
-
-    setStyleSettings();
-
-    connect(ui->toolClose, SIGNAL(clicked()), ui->frameFind, SLOT(hide()));
-    connect(ui->toolPrevious, SIGNAL(clicked()), this, SLOT(findPrevious()));
-    connect(ui->toolNext, SIGNAL(clicked()), this, SLOT(findNext()));
-    connect(ui->LEEditFind, SIGNAL(returnPressed()), this, SLOT(findNext()));
-    connect(ui->LEEditFind, SIGNAL(textEdited(const QString&)), this, SLOT(sFind(QString)));
-    ui->frameFind -> setVisible(false);
-    ui->LAWrapped -> setVisible(false);
-
-    autoHideTimer = new QTimer(this);
-    autoHideTimer -> setInterval(5000);
-    autoHideTimer -> setSingleShot(true);
-    QObject::connect(autoHideTimer, SIGNAL(timeout()), ui->frameFind, SLOT(hide()));
-
-    connect(ui->viewer, SIGNAL(customContextMenuRequested(QPoint)),
-            this,SLOT(sShowContextMenu(QPoint)));
-
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::setModuleName(QString newModule)
