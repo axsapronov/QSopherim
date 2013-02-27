@@ -27,6 +27,7 @@ ProcessModule::~ProcessModule()
     m_BibleQuote->deleteLater();
     delete m_BibleQuoteDictModule;
     delete m_BibleQuoteComments;
+    delete m_BibleQuoteApocrypha;
 }
 //------------------------------------------------------------------------------
 void ProcessModule::createConnects()

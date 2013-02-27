@@ -61,9 +61,11 @@ void LeftPanel::init()
     ui->comBModules->setFont(Config::configuration()->getGUIMapFont()["ModulesName"]);
     ui->comBModulesBook->setFont(Config::configuration()->getGUIMapFont()["ModulesName"]);
     ui->comBComments->setFont(Config::configuration()->getGUIMapFont()["ModulesName"]);
+    ui->comBModulesApocrypha->setFont(Config::configuration()->getGUIMapFont()["ModulesName"]);
 
     ui->tableBook->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
     ui->tableBookBook->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
+    ui->tableBookApocrypha->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
 
     ui->tabWidget->removeTab(GUI_TAB_OTHER);
     ui->tabWidget->removeTab(GUI_TAB_COMMENTS);
@@ -76,15 +78,18 @@ void LeftPanel::createConnects()
     // bible or book
     connect(ui->comBModules, SIGNAL(activated(QString)), SLOT(refreshBookList(QString)));
     connect(ui->comBModulesBook, SIGNAL(activated(QString)), SLOT(refreshBookList(QString)));
+    connect(ui->comBModulesBook, SIGNAL(activated(QString)), SLOT(refreshBookList(QString)));
 
     // comments
     connect(ui->comBComments, SIGNAL(activated(QString)), SLOT(sSetCommentsFromModule(QString)));
 
     connect(ui->tableBook, SIGNAL(clicked(QModelIndex)), SLOT(refreshChapterList(QModelIndex)));
     connect(ui->tableBookBook, SIGNAL(clicked(QModelIndex)), SLOT(refreshChapterList(QModelIndex)));
+    connect(ui->tableBookApocrypha, SIGNAL(clicked(QModelIndex)), SLOT(refreshChapterList(QModelIndex)));
 
     connect(ui->tableChapter, SIGNAL(clicked(QModelIndex)), SLOT(showChapter(QModelIndex)));
     connect(ui->tableChapterBook, SIGNAL(clicked(QModelIndex)), SLOT(showChapter(QModelIndex)));
+    connect(ui->tableChapterApocrypha, SIGNAL(clicked(QModelIndex)), SLOT(showChapter(QModelIndex)));
 
     // dict
     connect(ui->comBDictList, SIGNAL(activated(QString)), SLOT(refreshWordListFromDict(QString)));
@@ -293,7 +298,7 @@ void LeftPanel::refreshChapterList(const QString f_type, const QModelIndex f_ind
 
     if (f_type == "Apocrypha")
     {
-        chapterValue = Config::configuration()->getListApocrypha()->getModuleWithName(ui->comBModulesBook->currentText())
+        chapterValue = Config::configuration()->getListApocrypha()->getModuleWithName(ui->comBModulesApocrypha->currentText())
                 ->getValueChapterForBookFromModule(f_ind.data(0).toString());
     }
 
@@ -597,7 +602,7 @@ void LeftPanel::sShowHideLeftPanel2(const int f_tab)
     {
     case GUI_TAB_BIBLE: refreshBookList(ui->comBModules->currentText(), "Bible"); break;
     case GUI_TAB_BOOK: refreshBookList(ui->comBModulesBook->currentText(), "Book"); break;
-    case GUI_TAB_APOCRYPHA: refreshBookList(ui->comBModulesBook->currentText(), "Apocrypha"); break;
+    case GUI_TAB_APOCRYPHA: refreshBookList(ui->comBModulesApocrypha->currentText(), "Apocrypha"); break;
         //    case GUI_TAB_OTHER: refreshBookList(ui->comBModulesBook->currentText(), "Other"); break;
     case GUI_TAB_DICT : emit SIGNAL_ShowHideLeftPanel2(true); // hide if select dict
     case GUI_TAB_COMMENTS: emit SIGNAL_ShowHideLeftPanel2(true); break;
@@ -618,7 +623,7 @@ void LeftPanel::sUpdateGUI()
             {
                 if (ui->tableBook->model()->data(ui->tableBook->model()->index(i, 0), 0).toString() == Config::configuration()->getLastBook())
                 {
-                    ui->tabWidget->setCurrentIndex(GUI_TAB_BIBLE);
+                    ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tabBible));
                     ui->comBModules->setCurrentIndex(ui->comBModules->findText(Config::configuration()->getLastModule()));
                     ui->tableBook->setCurrentIndex(ui->tableBook->model()->index(i, 0));
                     refreshChapterList(Config::configuration()->getLastType(), ui->tableBook->currentIndex());
@@ -636,11 +641,30 @@ void LeftPanel::sUpdateGUI()
             {
                 if (ui->tableBookBook->model()->data(ui->tableBookBook->model()->index(i, 0), 0).toString() == Config::configuration()->getLastBook())
                 {
-                    ui->tabWidget->setCurrentIndex(GUI_TAB_BOOK);
+                    ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tabBook));
                     ui->comBModulesBook->setCurrentIndex(ui->comBModulesBook->findText(Config::configuration()->getLastModule()));
                     ui->tableBookBook->setCurrentIndex(ui->tableBookBook->model()->index(i, 0));
                     refreshChapterList(Config::configuration()->getLastType(), ui->tableBookBook->currentIndex());
                     ui->tableChapterBook->setCurrentIndex(ui->tableChapterBook->model()->index(Config::configuration()->getLastChapter().toInt() - 1, 0));
+
+                }
+            }
+        }
+
+        if (Config::configuration()->getLastType() == "Apocrypha")
+        {
+            refreshBookList(Config::configuration()->getLastModule()
+                            , Config::configuration()->getLastType());
+
+            for (int i = 0; i < ui->tableBookApocrypha->model()->rowCount(); i++)
+            {
+                if (ui->tableBookApocrypha->model()->data(ui->tableBookApocrypha->model()->index(i, 0), 0).toString() == Config::configuration()->getLastBook())
+                {
+                    ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tabApocrypha));
+                    ui->comBModulesApocrypha->setCurrentIndex(ui->comBModulesApocrypha->findText(Config::configuration()->getLastModule()));
+                    ui->tableBookApocrypha->setCurrentIndex(ui->tableBookApocrypha->model()->index(i, 0));
+                    refreshChapterList(Config::configuration()->getLastType(), ui->tableBookApocrypha->currentIndex());
+                    ui->tableChapterApocrypha->setCurrentIndex(ui->tableChapterApocrypha->model()->index(Config::configuration()->getLastChapter().toInt() - 1, 0));
 
                 }
             }

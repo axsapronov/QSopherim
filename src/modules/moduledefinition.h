@@ -37,7 +37,8 @@ enum ModuleType {
     Type_WebPageModule = 8,
     Type_WebDictionaryModule = 9,
     Type_BibleQuoteComments = 10,
-    Type_BibleQuoteApocrypha = 11
+    Type_BibleQuoteApocrypha = 11,
+    Type_BibleQuoteBook = 12
 };
 
 enum DefaultModule {

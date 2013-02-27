@@ -135,11 +135,17 @@ MetaInfo BibleQuoteModule::readInfo(QFile &file)
     ret.setName(m_moduleName);
     ret.setShortName(m_moduleShortName);
 
+    if (m_typeModule == "Apocrypha")
+        ret.type = OBVCore::Type_BibleQuoteApocrypha;
+
     if (m_typeModule == "Comments")
         ret.type = OBVCore::Type_BibleQuoteComments;
 
-    if (m_typeModule == "Book" or m_typeModule == "Bible")
+    if (m_typeModule == "Bible")
         ret.type = OBVCore::Type_BibleQuoteModule;
+
+    if (m_typeModule == "Book")
+        ret.type = OBVCore::Type_BibleQuoteBook;
 
     return ret;
     return MetaInfo();
@@ -174,11 +180,11 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
             "\nStrongNumber = " + m_strongOption +
             "\nTypeModule = " + m_typeModule;
 
-    if (m_typeModule == "Comments")
-        text.append(QString("\nPathToModule = comments/%1/module%2").arg(info.shortName()).arg(GL_FORMAT_MODULE));
 
-    if (m_typeModule == "Book" or m_typeModule == "Bible")
-        text.append(QString("\nPathToModule = bible/%1/module%2").arg(info.shortName()).arg(GL_FORMAT_MODULE));
+    text.append(QString("\nPathToModule = %1/%2/module%3")
+                .arg(m_typeModule.toLower())
+                .arg(info.shortName())
+                .arg(GL_FORMAT_MODULE));
 
     text.append("\nBookList = ");
     for(int i = 0; i < m_bookList.size(); i++)
@@ -195,26 +201,21 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
     }
 
     //    myDebug() << m_bookPath;
-    QString t_pathToIniFile;
-    if (m_typeModule == "Bible" or m_typeModule == "Book")
-        t_pathToIniFile = QString(Config::configuration()->getAppDir() + "bible/" +
-                                  info.shortName() + "/module" + GL_FORMAT_MODULE);
-    if (m_typeModule == "Comments")
-        t_pathToIniFile = QString(Config::configuration()->getAppDir() + "comments/" +
-                                  info.shortName() + "/module" + GL_FORMAT_MODULE);
+    QString t_pathToIniFile = QString(QString(Config::configuration()->getAppDir() + "%1/" +
+                                                                info.shortName() + "/module" + GL_FORMAT_MODULE).arg(m_typeModule.toLower()));
 
     if (QFile::exists(t_pathToIniFile))
     {
         QFile::remove(t_pathToIniFile);
     }
 
-    if (m_typeModule == "Bible" or m_typeModule == "Book")
-        return createEmpty(Config::configuration()->getAppDir() + "bible/" +
-                           info.shortName() + "/module" + GL_FORMAT_MODULE, text);
 
-    if (m_typeModule == "Comments")
-        return createEmpty(Config::configuration()->getAppDir() + "comments/" +
-                           info.shortName() + "/module" + GL_FORMAT_MODULE, text);
+
+    QString r_str = QString(Config::configuration()->getAppDir() + "%1/" +
+                           info.shortName() + "/module" + GL_FORMAT_MODULE)
+                       .arg(m_typeModule.toLower());
+
+    return createEmpty(r_str, text);
 
     return false;
 }
@@ -222,14 +223,8 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
 bool BibleQuoteModule::createBookFiles(QString pathToFiles)
 {
     Q_UNUSED (pathToFiles)
-    QString t_pathToXmlFile;
-    if (m_typeModule == "Comments")
-        t_pathToXmlFile = QString(Config::configuration()->getAppDir() + "comments/" +
-                                  m_moduleShortName + "/text" + GL_FORMAT_TEXT);
-
-    if (m_typeModule == "Bible" or m_typeModule == "Book")
-        t_pathToXmlFile = QString(Config::configuration()->getAppDir() + "bible/" +
-                                  m_moduleShortName + "/text" + GL_FORMAT_TEXT);
+    QString t_pathToXmlFile = QString(QString(Config::configuration()->getAppDir() + "%1/" +
+                                              m_moduleShortName + "/text" + GL_FORMAT_TEXT).arg(m_typeModule.toLower()));
 
     if (QFile::exists(t_pathToXmlFile))
     {
@@ -340,9 +335,9 @@ int BibleQuoteModule::loadBibleData(const int bibleID, const QString &path)
                 const QString bible = getParamFromStr(&line, "Bible");
                 m_bibleType = bible.compare("Y", Qt::CaseInsensitive) == 0;
 
-                if (m_typeModule != "Comments")
-                    if (!m_bibleType)
-                        m_typeModule = "Book";
+                //                if (m_typeModule != "Comments")
+                //                    if (!m_bibleType)
+                //                        m_typeModule = "Book";
             }
             if(line.contains("Apocrypha", Qt::CaseInsensitive))
             {
@@ -555,16 +550,8 @@ int BibleQuoteModule::readBook(const int id)
     }
     //    myDebug() << chapterText;
 
-    QString t_pathToXmlFile;
-    if (m_typeModule == "Bible" or m_typeModule == "Book")
-        t_pathToXmlFile = QString(Config::configuration()->getAppDir() + "bible/" +
-                                  m_moduleShortName + "/text" + GL_FORMAT_TEXT);
-
-    if (m_typeModule == "Comments")
-    {
-        t_pathToXmlFile = QString(Config::configuration()->getAppDir() + "comments/" +
-                                  m_moduleShortName + "/text" + GL_FORMAT_TEXT);
-    }
+    QString t_pathToXmlFile =  QString(Config::configuration()->getAppDir() + "%1/" +
+                                       m_moduleShortName + "/text" + GL_FORMAT_TEXT).arg(m_typeModule.toLower());
     //    myDebug() << t_pathToXmlFile;
     //    qDebug() << m_book.size();
     /// надо брать название книги, а не путь к ней
