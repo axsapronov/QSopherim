@@ -21,9 +21,10 @@ private slots:
     void sConvertModules();
 
 signals:
-    void SIGNAL_UpdateModules();
-    void SIGNAL_UpdateModulesDict();
-    void SIGNAL_UpdateModulesComments();
+    void SIGNAL_StartConvertModules();
+    void SIGNAL_StartConvertDict();
+    void SIGNAL_StartConvertComments();
+    void SIGNAL_StartConvertApocrypha();
 
 private:
     Ui::ModuleImportDialog *ui;

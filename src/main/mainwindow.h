@@ -125,6 +125,7 @@ private slots:
     void convertDictFromFolder();
 
     void convertCommentsFromFolder();
+    void convertApocryphaFromFolder();
 
     /**
      * @brief showHideTray

@@ -97,7 +97,7 @@ QString Config::getAppDir()
     return m_appDir;
 }
 //------------------------------------------------------------------------------
-void Config::setAppDir(QString newst)
+void Config::setAppDir(const QString newst)
 {
     m_appDir = newst;
 }
@@ -120,6 +120,8 @@ void Config::loadSettings()
     m_bibleDir = settings.value(QString("dir/bible")).toString();
     m_dictDir = settings.value(QString("dir/dict")).toString();
     m_otherDir = settings.value(QString("dir/other")).toString();
+    m_apocryphaDir = settings.value(QString("dir/apocrypha")).toString();
+    m_commentsDir = settings.value(QString("dir/comments")).toString();
     m_appLang = settings.value(QString("language/lang")).toString();
     if (m_appLang.isEmpty())
         m_appLang = "Russian";
@@ -231,6 +233,8 @@ void Config::saveSettings()
     settings.setValue(QString("dir/bible"), m_bibleDir);
     settings.setValue(QString("dir/other"), m_otherDir);
     settings.setValue(QString("dir/dict"), m_dictDir);
+    settings.setValue(QString("dir/comments"), m_commentsDir);
+    settings.setValue(QString("dir/apocrypha"), m_apocryphaDir);
 
     // viewer
     settings.setValue(QString("viewer/color"), m_viewerColor);
@@ -316,7 +320,7 @@ QString Config::getStrongDir()
     return m_strongDir;
 }
 //------------------------------------------------------------------------------
-void Config::setStrongDir(QString dir)
+void Config::setStrongDir(const QString dir)
 {
     m_strongDir = dir;
 }
@@ -326,7 +330,7 @@ QString Config::getBibleDir()
     return m_bibleDir;
 }
 //------------------------------------------------------------------------------
-void Config::setBibleDir(QString dir)
+void Config::setBibleDir(const QString dir)
 {
     m_bibleDir = dir;
 }
@@ -336,7 +340,7 @@ QString Config::getDictDir()
     return m_dictDir;
 }
 //------------------------------------------------------------------------------
-void Config::setDictDir(QString dir)
+void Config::setDictDir(const QString dir)
 {
     m_dictDir = dir;
 }
@@ -346,7 +350,7 @@ QString Config::getOtherDir()
     return m_otherDir;
 }
 //------------------------------------------------------------------------------
-void Config::setOtherDir(QString dir)
+void Config::setOtherDir(const QString dir)
 {
     m_otherDir = dir;
 }
@@ -356,22 +360,22 @@ QString Config::getAppLang()
     return m_appLang;
 }
 //------------------------------------------------------------------------------
-void Config::setAppLang(QString lang)
+void Config::setAppLang(const QString lang)
 {
     m_appLang = lang;
 }
 //------------------------------------------------------------------------------
-void Config::setFontColor(QColor newColor)
+void Config::setFontColor(const QColor newColor)
 {
     m_fontColor = newColor;
 }
 //------------------------------------------------------------------------------
-void Config::setFontFamily(QString newFamily)
+void Config::setFontFamily(const QString newFamily)
 {
     m_fontFamily = newFamily;
 }
 //------------------------------------------------------------------------------
-void Config::setFontSize(int newSize)
+void Config::setFontSize(const int newSize)
 {
     m_fontSize = newSize;
 }
@@ -421,12 +425,12 @@ void Config::setListDictionaries(QSopherimModuleList *newlist)
     m_listDictinaries = newlist;
 }
 //------------------------------------------------------------------------------
-void Config::addHiddenModule(QString nameModule)
+void Config::addHiddenModule(const QString nameModule)
 {
     m_listHiddenModules->append(nameModule);
 }
 //------------------------------------------------------------------------------
-void Config::showHiddenModule(QString nameModule)
+void Config::showHiddenModule(const QString nameModule)
 {
     int i = m_listHiddenModules->size() - 1;
     do
@@ -449,7 +453,7 @@ QString Config::getStrongHebrew()
     return m_strongHebrew;
 }
 //------------------------------------------------------------------------------
-void Config::setStrongHebrew(QString strong)
+void Config::setStrongHebrew(const QString strong)
 {
     m_strongHebrew = strong;
 }
@@ -459,7 +463,7 @@ QString Config::getStrongGreek()
     return m_strongGreek;
 }
 //------------------------------------------------------------------------------
-void Config::setStrongGreek(QString strong)
+void Config::setStrongGreek(const QString strong)
 {
     m_strongGreek = strong;
 }
@@ -509,12 +513,12 @@ QColor Config::getViewerColor()
     return m_viewerColor;
 }
 //------------------------------------------------------------------------------
-void Config::setViewerColor(QColor newColor)
+void Config::setViewerColor(const QColor newColor)
 {
     m_viewerColor = newColor;
 }
 //------------------------------------------------------------------------------
-void Config::setOptionChangeTextColor(bool state)
+void Config::setOptionChangeTextColor(const bool state)
 {
     m_optionChangeTextColor = state;
 }
@@ -529,22 +533,22 @@ bool Config::getGuiTray()
     return m_guiTray;
 }
 //------------------------------------------------------------------------------
-void Config::setGuiTray(bool state)
+void Config::setGuiTray(const bool state)
 {
     m_guiTray = state;
 }
 //------------------------------------------------------------------------------
-void Config::setLastChapter(QString state)
+void Config::setLastChapter(const QString state)
 {
     m_lastChapter = state;
 }
 //------------------------------------------------------------------------------
-void Config::setLastBook(QString state)
+void Config::setLastBook(const QString state)
 {
     m_lastBook = state;
 }
 //------------------------------------------------------------------------------
-void Config::setLastModule(QString state)
+void Config::setLastModule(const QString state)
 {
     m_lastModule = state;
 }
@@ -619,5 +623,25 @@ bool Config::isExistLastChapter()
     return (!m_lastBook.isEmpty()
             and !m_lastModule.isEmpty()
             and !m_lastChapter.isEmpty());
+}
+//------------------------------------------------------------------------------
+void Config::setCommentsDir(const QString dir)
+{
+    m_commentsDir = dir;
+}
+//------------------------------------------------------------------------------
+void Config::setApocryphaDir(const QString dir)
+{
+    m_apocryphaDir = dir;
+}
+//------------------------------------------------------------------------------
+QString Config::getApocryphaDir()
+{
+    return m_apocryphaDir;
+}
+//------------------------------------------------------------------------------
+QString Config::getCommentsDir()
+{
+    return m_commentsDir;
 }
 //------------------------------------------------------------------------------

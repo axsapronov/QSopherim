@@ -17,8 +17,8 @@
 #define GUI_TAB_BOOK 1
 #define GUI_TAB_DICT 2
 #define GUI_TAB_COMMENTS 3
-#define GUI_TAB_OTHER 4
-
+#define GUI_TAB_APOCRYPHA 4
+#define GUI_TAB_OTHER 5
 
 LeftPanel::LeftPanel(QWidget *parent) :
     QDockWidget(parent),

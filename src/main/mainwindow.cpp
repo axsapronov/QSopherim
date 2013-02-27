@@ -119,8 +119,8 @@ void MainWindow::init()
 
     GUI_RightPanel->setMinimumWidth(250);
     GUI_LeftPanel->setMinimumWidth(300);
-    GUI_LeftPanel->setMaximumWidth(350);
-    GUI_LeftPanel2->setMaximumWidth(350);
+//    GUI_LeftPanel->setMaximumWidth(350);
+//    GUI_LeftPanel2->setMaximumWidth(350);
     GUI_LeftPanel2->setMinimumWidth(300);
 
     //    GUI_BottomPanel->setMinimumHeight(100);
@@ -323,9 +323,10 @@ void MainWindow::createConnects()
             , GUI_LeftPanel2, SLOT(sSetStrongHebrew(QString)));
 
     // import modules
-    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_UpdateModules()), SLOT(convertModulesFromFolder()));
-    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_UpdateModulesDict()), SLOT(convertDictFromFolder()));
-    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_UpdateModulesComments()), SLOT(convertCommentsFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertModules()), SLOT(convertModulesFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertDict()), SLOT(convertDictFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertComments()), SLOT(convertCommentsFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertApocrypha()), SLOT(convertApocryphaFromFolder()));
 
     // connect fron left1 to left2 panels
     connect(GUI_LeftPanel, SIGNAL(SIGNAL_AddRecordToJournal(QString,QString,QString))
@@ -711,5 +712,10 @@ void MainWindow::showHideTray()
 void MainWindow::convertCommentsFromFolder()
 {
     convertModules("Comments");
+}
+//------------------------------------------------------------------------------
+void MainWindow::convertApocryphaFromFolder()
+{
+//    convertModules("Apocrypha");
 }
 //------------------------------------------------------------------------------
