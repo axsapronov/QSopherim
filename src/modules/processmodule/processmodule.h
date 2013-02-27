@@ -22,6 +22,7 @@ signals:
     void SIGNAL_ProcessModuleOk();
     void SIGNAL_ProcessDictOk();
     void SIGNAL_ProcessCommentsOk();
+    void SIGNAL_ProcessApocryphaOk();
 
 private slots:
     void createFolderForModule(QString shortname);
@@ -29,6 +30,7 @@ private slots:
 private:
     BibleQuoteModule* m_BibleQuote;
     BibleQuoteModule* m_BibleQuoteComments;
+    BibleQuoteModule* m_BibleQuoteApocrypha;
     BibleQuoteDictModule* m_BibleQuoteDictModule;
     void createConnects();
     void init();

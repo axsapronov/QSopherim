@@ -702,3 +702,10 @@ void LeftPanel::loadModules()
     refreshListModule(list);
 }
 //------------------------------------------------------------------------------
+void LeftPanel::loadApocrypha()
+{
+//    QSopherimModuleList* list = new QSopherimModuleList();
+//    list->refreshList("apocrypha/");
+//    refreshListModule(list);
+}
+//------------------------------------------------------------------------------

@@ -52,6 +52,7 @@ public slots:
     void loadModules();
     void loadDictionaries();
     void loadComments();
+    void loadApocrypha();
 
 signals:
     void SIGNAL_AddRecordToJournal(QString, QString, QString);

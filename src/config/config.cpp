@@ -645,3 +645,13 @@ QString Config::getCommentsDir()
     return m_commentsDir;
 }
 //------------------------------------------------------------------------------
+QString Config::getBookDir()
+{
+    return m_bookDir;
+}
+//------------------------------------------------------------------------------
+void Config::setBookDir(const QString dir)
+{
+    m_bookDir = dir;
+}
+//------------------------------------------------------------------------------

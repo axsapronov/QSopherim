@@ -295,9 +295,9 @@ void MainWindow::createConnects()
     connect(ui->action_About_Help, SIGNAL(triggered()), SLOT(showHelp()));
 
     // other
-    connect(prModule, SIGNAL(SIGNAL_ProcessModuleOk()), GUI_LeftPanel, SLOT(loadModules()));
-    connect(prModule, SIGNAL(SIGNAL_ProcessDictOk()), GUI_LeftPanel, SLOT(loadDictionaries()));
-    connect(prModule, SIGNAL(SIGNAL_ProcessCommentsOk()), GUI_LeftPanel, SLOT(loadComments()));
+//    connect(prModule, SIGNAL(SIGNAL_ProcessModuleOk()), GUI_LeftPanel, SLOT(loadModules()));
+//    connect(prModule, SIGNAL(SIGNAL_ProcessDictOk()), GUI_LeftPanel, SLOT(loadDictionaries()));
+//    connect(prModule, SIGNAL(SIGNAL_ProcessCommentsOk()), GUI_LeftPanel, SLOT(loadComments()));
 
     // module viewer
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowNoteList(QString,QString,QString,QString,QString)),
@@ -564,6 +564,7 @@ void MainWindow::convertModules(const QString f_type)
                 loadProgress.setValue(100 * i / listModules.size());
                 QApplication::processEvents();
             }
+            GUI_LeftPanel->loadModules();
         }
 
         if (f_type == "Dictionary")
@@ -579,6 +580,7 @@ void MainWindow::convertModules(const QString f_type)
                 loadProgress.setValue(100 * i / listModules.size());
                 QApplication::processEvents();
             }
+            GUI_LeftPanel->loadDictionaries();
         }
 
         if (f_type == "Comments")
@@ -595,7 +597,25 @@ void MainWindow::convertModules(const QString f_type)
                 loadProgress.setValue(100 * i / listModules.size());
                 QApplication::processEvents();
             }
+            GUI_LeftPanel->loadComments();
         }
+
+
+        if (f_type == "Apocrypha")
+        {
+            overallLabel.setText(tr("Convert: apocrypha modules"));
+            overallLabel.show();
+            listModules = getListModulesFromPath(Config::configuration()->getApocryphaDir(), ".ini");
+            for (int i = 0; i < listModules.size(); i++)
+            {
+                prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteApocrypha);
+                loadProgress.setValue(100 * i / listModules.size());
+                QApplication::processEvents();
+            }
+            GUI_LeftPanel->loadApocrypha();
+        }
+
+
     }
     else
     {
@@ -716,6 +736,6 @@ void MainWindow::convertCommentsFromFolder()
 //------------------------------------------------------------------------------
 void MainWindow::convertApocryphaFromFolder()
 {
-//    convertModules("Apocrypha");
+    convertModules("Apocrypha");
 }
 //------------------------------------------------------------------------------

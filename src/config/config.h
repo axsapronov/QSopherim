@@ -30,6 +30,7 @@ public:
      */
     void setBibleDir(const QString dir);
     void setApocryphaDir(const QString dir);
+    void setBookDir(const QString dir);
     void setCommentsDir(const QString dir);
     /**
      * @brief setOtherDir
@@ -86,6 +87,7 @@ public:
      * @return
      */
     QString getBibleDir();
+    QString getBookDir();
     QString getCommentsDir();
     QString getApocryphaDir();
     /**
@@ -307,6 +309,7 @@ private:
     QString m_appLang;
     QString m_commentsDir;
     QString m_apocryphaDir;
+    QString m_bookDir;
 
     QString m_strongHebrew;
     QString m_strongGreek;
