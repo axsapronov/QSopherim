@@ -55,6 +55,10 @@ void LeftPanel::init()
     m_lastNameOfBook  = "";
     ui->tableBook->reset();
     ui->tableChapter->reset();
+    ui->tableBookApocrypha->reset();
+    ui->tableBookBook->reset();
+    ui->tableChapterApocrypha->reset();
+    ui->tableChapterBook->reset();
 
     sUpdateGUIDayMode();
 
@@ -66,6 +70,7 @@ void LeftPanel::init()
     ui->tableBook->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
     ui->tableBookBook->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
     ui->tableBookApocrypha->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
+    ui->textBrComments->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
 
     ui->tabWidget->removeTab(GUI_TAB_OTHER);
     ui->tabWidget->removeTab(GUI_TAB_COMMENTS);
@@ -594,19 +599,36 @@ void LeftPanel::sShowHideLeftPanel2(const int f_tab)
     // todo
     // скратывать вкладки по названию, а не по индексу, т.к. если некотоых вкладок
     // нет, то индексы сбиваются
-    if (f_tab != GUI_TAB_DICT) // dict
-        // show if select module
+//    if (f_tab != GUI_TAB_DICT) // dict
+
+    // show if select module
+    if (ui->tabWidget->currentWidget() != ui->tabDictionary)
         emit SIGNAL_ShowHideLeftPanel2(false);
 
-    switch (f_tab)
-    {
-    case GUI_TAB_BIBLE: refreshBookList(ui->comBModules->currentText(), "Bible"); break;
-    case GUI_TAB_BOOK: refreshBookList(ui->comBModulesBook->currentText(), "Book"); break;
-    case GUI_TAB_APOCRYPHA: refreshBookList(ui->comBModulesApocrypha->currentText(), "Apocrypha"); break;
-        //    case GUI_TAB_OTHER: refreshBookList(ui->comBModulesBook->currentText(), "Other"); break;
-    case GUI_TAB_DICT : emit SIGNAL_ShowHideLeftPanel2(true); // hide if select dict
-    case GUI_TAB_COMMENTS: emit SIGNAL_ShowHideLeftPanel2(true); break;
-    }
+//    switch (f_tab)
+//    {
+//    case GUI_TAB_BIBLE: refreshBookList(ui->comBModules->currentText(), "Bible"); break;
+//    case GUI_TAB_BOOK: refreshBookList(ui->comBModulesBook->currentText(), "Book"); break;
+//    case GUI_TAB_APOCRYPHA: refreshBookList(ui->comBModulesApocrypha->currentText(), "Apocrypha"); break;
+//        //    case GUI_TAB_OTHER: refreshBookList(ui->comBModulesBook->currentText(), "Other"); break;
+//    case GUI_TAB_DICT : emit SIGNAL_ShowHideLeftPanel2(true); // hide if select dict
+//    case GUI_TAB_COMMENTS: emit SIGNAL_ShowHideLeftPanel2(true); break;
+//    }
+
+    if (ui->tabWidget->currentWidget() == ui->tabBible)
+        refreshBookList(ui->comBModules->currentText(), "Bible");
+
+    if (ui->tabWidget->currentWidget() == ui->tabBook)
+        refreshBookList(ui->comBModulesBook->currentText(), "Book");
+
+    if (ui->tabWidget->currentWidget() == ui->tabComments)
+        emit SIGNAL_ShowHideLeftPanel2(true);
+
+    if (ui->tabWidget->currentWidget() == ui->tabApocrypha)
+        refreshBookList(ui->comBModulesApocrypha->currentText(), "Apocrypha");
+
+    if (ui->tabWidget->currentWidget() == ui->tabDictionary)
+        emit SIGNAL_ShowHideLeftPanel2(true);
 
 }
 //------------------------------------------------------------------------------
@@ -746,6 +768,9 @@ void LeftPanel::sUpdateGUIDayMode()
     ui->comBDictListFindWord->setPalette(p);
     ui->textBrComments->setPalette(p);
     ui->comBComments->setPalette(p);
+    ui->comBModulesApocrypha->setPalette(p);
+    ui->tableBookApocrypha->setPalette(p);
+    ui->tableChapterApocrypha->setPalette(p);
 }
 //------------------------------------------------------------------------------
 void LeftPanel::sSetCommentsFromModule(const QString f_nameModule)
