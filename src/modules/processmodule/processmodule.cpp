@@ -28,6 +28,7 @@ ProcessModule::~ProcessModule()
     delete m_BibleQuoteDictModule;
     delete m_BibleQuoteComments;
     delete m_BibleQuoteApocrypha;
+    delete m_BibleQuoteBook;
 }
 //------------------------------------------------------------------------------
 void ProcessModule::createConnects()
@@ -35,6 +36,7 @@ void ProcessModule::createConnects()
     connect(m_BibleQuote, SIGNAL(SIGNAL_CreateFolderForModule(QString)), SLOT(createFolderForModule(QString)));
     connect(m_BibleQuoteComments, SIGNAL(SIGNAL_CreateFolderForModule(QString)), SLOT(createFolderForModule(QString)));
     connect(m_BibleQuoteApocrypha, SIGNAL(SIGNAL_CreateFolderForModule(QString)), SLOT(createFolderForModule(QString)));
+    connect(m_BibleQuoteBook, SIGNAL(SIGNAL_CreateFolderForModule(QString)), SLOT(createFolderForModule(QString)));
 }
 //------------------------------------------------------------------------------
 void ProcessModule::init()
@@ -43,6 +45,7 @@ void ProcessModule::init()
     m_BibleQuoteDictModule = new BibleQuoteDictModule();
     m_BibleQuoteComments = new BibleQuoteModule();
     m_BibleQuoteApocrypha = new BibleQuoteModule();
+    m_BibleQuoteBook = new BibleQuoteModule();
 }
 //------------------------------------------------------------------------------
 bool ProcessModule::processing(QString pathToModule, int type)
@@ -52,6 +55,7 @@ bool ProcessModule::processing(QString pathToModule, int type)
     switch (type)
     {
     case OBVCore::Type_BibleQuoteModule:
+        m_BibleQuote->setTypeModule("Bible");
         m_BibleQuote->parseModule(p_pathToModule);
         break;
     case OBVCore::Type_BibleQuoteDictModule:
@@ -64,6 +68,10 @@ bool ProcessModule::processing(QString pathToModule, int type)
     case OBVCore::Type_BibleQuoteApocrypha:
         m_BibleQuoteApocrypha->setTypeModule("Apocrypha");
         m_BibleQuoteApocrypha->parseModule(p_pathToModule);
+        break;
+    case OBVCore::Type_BibleQuoteBook:
+        m_BibleQuoteBook->setTypeModule("Book");
+        m_BibleQuoteBook->parseModule(p_pathToModule);
         break;
 
     case OBVCore::Type_SwordBibleModule:
@@ -78,10 +86,9 @@ bool ProcessModule::processing(QString pathToModule, int type)
 //------------------------------------------------------------------------------
 void ProcessModule::createFolderForModule(QString shortname)
 {
-//    myDebug() << shortname;
-    /// create folder for module
-    QDir dir;
-    dir.mkpath(Config::configuration()->getAppDir() + "bible/" + shortname);
+    // create folder for module
+//    QDir dir;
+//    dir.mkpath(Config::configuration()->getAppDir() + "bible/" + shortname);
 }
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

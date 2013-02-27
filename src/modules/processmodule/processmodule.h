@@ -30,6 +30,7 @@ private slots:
 private:
     BibleQuoteModule* m_BibleQuote;
     BibleQuoteModule* m_BibleQuoteComments;
+    BibleQuoteModule* m_BibleQuoteBook;
     BibleQuoteModule* m_BibleQuoteApocrypha;
     BibleQuoteDictModule* m_BibleQuoteDictModule;
     void createConnects();

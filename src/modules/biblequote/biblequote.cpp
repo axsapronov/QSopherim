@@ -31,7 +31,6 @@ void BibleQuoteModule::parseModule(QString pathToModule)
     loadBibleData(1, pathToModule);
     //    myDebug() << readInfo(pathToModule).name() << readInfo(pathToModule).shortName();
 
-    // добавить еще обработку типа
     QDir d;
     d = QDir(QString(Config::configuration()->getAppDir() + "%1/" + parseInfo.shortName()).arg(m_typeModule.toLower()));
 
@@ -463,6 +462,7 @@ int BibleQuoteModule::readBook(const int id)
 
             //            line.remove("&nbsp;");
             line.replace("&nbsp;", " ");
+//            line.remove(QRegExp("\\s\\d+"));
             line.remove("^&к").remove("&");
             out2 += line;
             if(chapterstarted == false && line.contains(m_chapterSign))
@@ -559,7 +559,6 @@ int BibleQuoteModule::readBook(const int id)
     addBookToXML(t_pathToXmlFile, m_bookList.at(id), m_book);
     file.close();
     return 0;
-
 }
 //------------------------------------------------------------------------------
 void BibleQuoteModule::setTypeModule(const QString f_type)

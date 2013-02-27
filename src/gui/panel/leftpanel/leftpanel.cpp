@@ -83,7 +83,7 @@ void LeftPanel::createConnects()
     // bible or book
     connect(ui->comBModules, SIGNAL(activated(QString)), SLOT(refreshBookList(QString)));
     connect(ui->comBModulesBook, SIGNAL(activated(QString)), SLOT(refreshBookList(QString)));
-    connect(ui->comBModulesBook, SIGNAL(activated(QString)), SLOT(refreshBookList(QString)));
+    connect(ui->comBModulesApocrypha, SIGNAL(activated(QString)), SLOT(refreshBookList(QString)));
 
     // comments
     connect(ui->comBComments, SIGNAL(activated(QString)), SLOT(sSetCommentsFromModule(QString)));
@@ -110,15 +110,6 @@ void LeftPanel::refreshListModule(QSopherimModuleList* list, const QString f_typ
 {
     if (list->getSize() != 0 )
     {
-        if (f_type == "Bible")
-            Config::configuration()->setListBibles(list);
-
-        if (f_type == "Book")
-            Config::configuration()->setListBook(list);
-
-        if (f_type == "Apocrypha")
-            Config::configuration()->setListApocrypha(list);
-
         //    this->modelModules = new QStandardItemModel(moduleList->getSize(), 1, this);
         //* Rows and 1 Columns
         modelBooks->clear();
@@ -165,9 +156,11 @@ void LeftPanel::refreshListModule(QSopherimModuleList* list, const QString f_typ
                     refreshBookList(ui->comBModulesApocrypha->currentText(), f_type);
             }
         }
-        // show hide tabs if modules (of type) is empty
-        showHideTabs();
+
     }
+
+    // show hide tabs if modules (of type) is empty
+    showHideTabs();
 }
 //------------------------------------------------------------------------------
 void LeftPanel::refreshListDict(QSopherimModuleList* list)
@@ -220,48 +213,6 @@ void LeftPanel::refreshListComments(QSopherimModuleList* list)
         // dict tab
         ui->tabWidget->removeTab(GUI_TAB_DICT);
     }
-}
-//------------------------------------------------------------------------------
-void LeftPanel::refreshBookList(QSopherimModuleList* list)
-{
-    //    moduleList = list;
-    Q_UNUSED (list)
-    myDebug() << "refresh";
-
-
-    //    myDebug() << list->getSize();
-    /*
-     *Принимает лист модулей
-     *После чего создает элементы в вью
-     *Если рассматривать по алфавиту, то парсит первый модуль первую главу
-     *чтобы отобразить
-     *Наверное, лучше сделать отдельный виджет для показывания
-     *Связать его с левой панелью и работать.
-     */
-
-    //    this->modelBooks = new QStandardItemModel(moduleList->getSize(), 1, this);
-    //    //* Rows and 1 Columns
-
-    //    for (int i = 0; i < moduleList->getSize(); i++)
-    //    {
-    //        modelBooks->setItem(i, 0, new QStandardItem(
-    //                                  QString(moduleList->getModule(i)->getModuleName())));
-    ////    model->setHorizontalHeaderItem(0, new QStandardItem(QString("Column1 Header")));
-    ////    model->setHorizontalHeaderItem(0, new QStandardItem(QString("Column2 Header")));
-    ////    model->setHorizontalHeaderItem(0, new QStandardItem(QString("Column3 Header")));
-    //    }
-
-    //    ui->tableBook->setModel(modelBooks);
-    //    ui->tableBook->resizeColumnsToContents();
-
-    //    // Demonstrating look and feel features
-
-
-    //    ui->tableBook->setAnimated(false);
-    //    ui->tableBook->setIndentation(20);
-    //    ui->tableBook->setSortingEnabled(true);
-
-
 }
 //------------------------------------------------------------------------------
 void LeftPanel::refreshChapterList(const QModelIndex f_ind)
@@ -414,23 +365,33 @@ void LeftPanel::refreshBookList(const QString nameOfModule, const QString f_type
 
     int t_number;
     QString t_bookName;
-    bool flag = (ui->tableBook->model()
-                 and Config::configuration()->isExistLastChapter()
-                 and Config::configuration()->getOptionAutoChapter());
 
-    if (flag)
-        t_number = getNumberOfBook(Config::configuration()->getLastBook());
+    bool flag;
+    bool flag2 = Config::configuration()->isExistLastChapter()
+            and Config::configuration()->getOptionAutoChapter();
 
     QStringList bookList;
     if (f_type == "Bible")
+    {
         bookList = Config::configuration()->getListBibles()->getModuleBooks(nameOfModule);
+        flag = (ui->tableBook->model() and flag2);
+    }
 
     if (f_type == "Book")
+    {
         bookList = Config::configuration()->getListBook()->getModuleBooks(nameOfModule);
+        flag = (ui->tableBookBook->model() and flag2);
+    }
 
     if (f_type == "Apocrypha")
+    {
         bookList = Config::configuration()->getListApocrypha()->getModuleBooks(nameOfModule);
+        flag = (ui->tableBookApocrypha->model()and flag2);
+    }
 
+
+    if (flag)
+        t_number = getNumberOfBook(Config::configuration()->getLastBook());
 
     for (int i = 0; i < bookList.size() - 1; i++)
     {
@@ -466,17 +427,21 @@ void LeftPanel::refreshBookList(const QString nameOfModule)
 {
     QComboBox *combo = (QComboBox*)sender();
 
-    if (combo == ui->comBModules and Config::configuration()->getListBibles()->getModuleWithName(ui->comBModules->currentText())->getModuleType() == "Bible")
+    if (combo == ui->comBModules)
         refreshBookList(nameOfModule, "Bible");
 
-    if (combo == ui->comBModulesBook and Config::configuration()->getListBibles()->getModuleWithName(ui->comBModulesBook->currentText())->getModuleType() == "Book")
+    if (combo == ui->comBModulesBook)
         refreshBookList(nameOfModule, "Book");
+
+    if (combo == ui->comBModulesApocrypha)
+        refreshBookList(nameOfModule, "Apocrypha");
 }
 //------------------------------------------------------------------------------
 void LeftPanel::refreshComboBooks()
 {
     refreshBookList(ui->comBModulesBook->currentText(), "Book");
     refreshBookList(ui->comBModules->currentText(), "Bible");
+    refreshBookList(ui->comBModulesApocrypha->currentText(), "Apocrypha");
 }
 //------------------------------------------------------------------------------
 void LeftPanel::retranslate()
@@ -595,25 +560,22 @@ QStringList LeftPanel::getListDictWithWord(const QString word)
 //------------------------------------------------------------------------------
 void LeftPanel::sShowHideLeftPanel2(const int f_tab)
 {
-    // not copy many of tab 1, tab 2, tab N
-    // todo
-    // скратывать вкладки по названию, а не по индексу, т.к. если некотоых вкладок
-    // нет, то индексы сбиваются
-//    if (f_tab != GUI_TAB_DICT) // dict
+    Q_UNUSED(f_tab);
+    //    if (f_tab != GUI_TAB_DICT) // dict
 
     // show if select module
     if (ui->tabWidget->currentWidget() != ui->tabDictionary)
         emit SIGNAL_ShowHideLeftPanel2(false);
 
-//    switch (f_tab)
-//    {
-//    case GUI_TAB_BIBLE: refreshBookList(ui->comBModules->currentText(), "Bible"); break;
-//    case GUI_TAB_BOOK: refreshBookList(ui->comBModulesBook->currentText(), "Book"); break;
-//    case GUI_TAB_APOCRYPHA: refreshBookList(ui->comBModulesApocrypha->currentText(), "Apocrypha"); break;
-//        //    case GUI_TAB_OTHER: refreshBookList(ui->comBModulesBook->currentText(), "Other"); break;
-//    case GUI_TAB_DICT : emit SIGNAL_ShowHideLeftPanel2(true); // hide if select dict
-//    case GUI_TAB_COMMENTS: emit SIGNAL_ShowHideLeftPanel2(true); break;
-//    }
+    //    switch (f_tab)
+    //    {
+    //    case GUI_TAB_BIBLE: refreshBookList(ui->comBModules->currentText(), "Bible"); break;
+    //    case GUI_TAB_BOOK: refreshBookList(ui->comBModulesBook->currentText(), "Book"); break;
+    //    case GUI_TAB_APOCRYPHA: refreshBookList(ui->comBModulesApocrypha->currentText(), "Apocrypha"); break;
+    //        //    case GUI_TAB_OTHER: refreshBookList(ui->comBModulesBook->currentText(), "Other"); break;
+    //    case GUI_TAB_DICT : emit SIGNAL_ShowHideLeftPanel2(true); // hide if select dict
+    //    case GUI_TAB_COMMENTS: emit SIGNAL_ShowHideLeftPanel2(true); break;
+    //    }
 
     if (ui->tabWidget->currentWidget() == ui->tabBible)
         refreshBookList(ui->comBModules->currentText(), "Bible");
@@ -801,6 +763,7 @@ void LeftPanel::loadModules()
 {
     QSopherimModuleList* list = new QSopherimModuleList();
     list->refreshList();
+    Config::configuration()->setListBibles(list);
     refreshListModule(list, "Bible");
 }
 //------------------------------------------------------------------------------
@@ -808,6 +771,7 @@ void LeftPanel::loadBooks()
 {
     QSopherimModuleList* list = new QSopherimModuleList();
     list->refreshList("book/");
+    Config::configuration()->setListBook(list);
     refreshListModule(list, "Book");
 }
 //------------------------------------------------------------------------------
@@ -815,6 +779,7 @@ void LeftPanel::loadApocrypha()
 {
     QSopherimModuleList* list = new QSopherimModuleList();
     list->refreshList("apocrypha/");
+    Config::configuration()->setListApocrypha(list);
     refreshListModule(list, "Apocrypha");
 }
 //------------------------------------------------------------------------------
@@ -835,6 +800,11 @@ void LeftPanel::showHideTabs()
     if (ui->comBDictList->count() == 0)
         ui->tabWidget->removeTab(ui->tabWidget->indexOf(ui->tabDictionary));
 
-
 }
+//------------------------------------------------------------------------------
+void LeftPanel::loadFirstBook()
+{
+    refreshBookList(ui->comBModules->currentText(), "Bible");
+}
+
 //------------------------------------------------------------------------------

@@ -34,6 +34,8 @@ public:
      */
     void retranslate();
 
+    void loadFirstBook();
+
 public slots:
     /**
      * @brief showChapterFromJournal
@@ -152,8 +154,6 @@ private:
 
     void showChapter(const QModelIndex ind, const QString f_type);
 
-
-    void refreshBookList(QSopherimModuleList* list);
     void refreshListModule(QSopherimModuleList* list, const QString f_type);
     void refreshListDict(QSopherimModuleList* list);
     void refreshListComments(QSopherimModuleList* list);

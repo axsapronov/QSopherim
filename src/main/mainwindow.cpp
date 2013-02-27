@@ -49,8 +49,16 @@ MainWindow::MainWindow(QWidget *parent) :
     GUI_LeftPanel->loadComments();
     GUI_LeftPanel->loadApocrypha();
 
-    // open last text
-    GUI_ModuleViewer->openLastChapter();
+    if (Config::configuration()->isExistLastChapter())
+    {
+        // open last text
+        GUI_ModuleViewer->openLastChapter();
+    }
+    else
+    {
+        GUI_LeftPanel->loadFirstBook();
+    }
+
     GUI_LeftPanel2->loadJournal();
 
     //    loadModules();
@@ -299,25 +307,23 @@ void MainWindow::createConnects()
     // module viewer
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowNoteList(QString,QString,QString,QString,QString)),
             GUI_LeftPanel2, SLOT(showNoteList(QString,QString,QString,QString,QString)));
-    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowStrong(QString)),
-            GUI_LeftPanel2, SLOT(showStrong(QString)));
+    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowStrong(QString)), GUI_LeftPanel2, SLOT(showStrong(QString)));
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNote()), SLOT(createNote()));
 
-    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowChapterFinish())
-            , GUI_LeftPanel, SLOT(sUpdateGUI()));
+    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowChapterFinish()), GUI_LeftPanel, SLOT(sUpdateGUI()));
 
     // settings
-    connect(GUI_Settings, SIGNAL(SIGNAL_RetranslateGUI(QString)),
-            SLOT(retranslate(QString)));
+    connect(GUI_Settings, SIGNAL(SIGNAL_RetranslateGUI(QString)), SLOT(retranslate(QString)));
 
     // manager module
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(loadDictionaries()));
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(loadModules()));
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(loadBooks()));
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(loadApocrypha()));
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(loadComments()));
 
-    connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetGreekStrong(QString))
-            , GUI_LeftPanel2, SLOT(sSetStrongGreek(QString)));
-    connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetHebrewStrong(QString))
-            , GUI_LeftPanel2, SLOT(sSetStrongHebrew(QString)));
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetGreekStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongGreek(QString)));
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetHebrewStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongHebrew(QString)));
 
     // import modules
     connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertModules()), SLOT(convertModulesFromFolder()));
@@ -536,7 +542,8 @@ void MainWindow::convertModules(const QString f_type)
 {
     // hindi
     if (
-            (!Config::configuration()->getBibleDir().isEmpty() and (f_type == "Bible" or f_type == "Book"))
+            (!Config::configuration()->getBibleDir().isEmpty() and f_type == "Bible")
+            or (!Config::configuration()->getBookDir().isEmpty() and f_type == "Book")
             or (!Config::configuration()->getCommentsDir().isEmpty() and f_type == "Comments")
             or (!Config::configuration()->getApocryphaDir().isEmpty() and f_type == "Apocrypha")
             or (!Config::configuration()->getDictDir().isEmpty() and f_type == "Dictionary")
@@ -560,7 +567,7 @@ void MainWindow::convertModules(const QString f_type)
             overallLabel.setText(tr("Convert: %1 modules").arg(f_type));
             overallLabel.show();
 
-        if (f_type == "Book")
+        if (f_type == "Bible")
         {
             listModules = getListModulesFromPath(Config::configuration()->getBibleDir(), ".ini");
             for (int i = 0; i < listModules.size(); i++)
@@ -577,11 +584,11 @@ void MainWindow::convertModules(const QString f_type)
             listModules = getListModulesFromPath(Config::configuration()->getBookDir(), ".ini");
             for (int i = 0; i < listModules.size(); i++)
             {
-                prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
+                prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteBook);
                 loadProgress.setValue(100 * i / listModules.size());
                 QApplication::processEvents();
             }
-            GUI_LeftPanel->loadModules();
+            GUI_LeftPanel->loadBooks();
         }
 
         if (f_type == "Dictionary")
@@ -623,6 +630,8 @@ void MainWindow::convertModules(const QString f_type)
             }
             GUI_LeftPanel->loadApocrypha();
         }
+
+        QMessageBox::information(this, tr("Convert complete"), tr("Convert complete"));
     }
     else
     {
