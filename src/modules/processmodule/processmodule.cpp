@@ -86,6 +86,8 @@ bool ProcessModule::processing(QString pathToModule, int type)
 //------------------------------------------------------------------------------
 void ProcessModule::createFolderForModule(QString shortname)
 {
+    // todo
+    Q_UNUSED (shortname);
     // create folder for module
 //    QDir dir;
 //    dir.mkpath(Config::configuration()->getAppDir() + "bible/" + shortname);
