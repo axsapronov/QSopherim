@@ -219,6 +219,10 @@ QHash<int, QString> getNoteOfParams(QString curPath,
                                     QString curBook,
                                     QString curChapter,
                                     QString firstVerse);
+
+QMap<int, QString> getNoteOfParams(QString f_module, QString f_book, QString f_chapter,
+                                   QString f_path);
+
 /**
  * @brief getVerseNumberFromNote
  * @param line

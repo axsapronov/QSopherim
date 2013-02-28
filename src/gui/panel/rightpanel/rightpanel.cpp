@@ -21,7 +21,7 @@ RightPanel::~RightPanel()
 //------------------------------------------------------------------------------
 void RightPanel::init()
 {
-    m_data.clear();
+    m_mapNotes.clear();
     GUI_NoteEditor = new NoteEditor(this);
 
     ui->ListNotes->setFont(Config::configuration()->getGUIMapFont()["FontNotes"]);
@@ -29,6 +29,14 @@ void RightPanel::init()
     sUpdateGUIDayMode();
 
     fillModulesList();
+
+    // Если понадобится переключаться между заметками модулей
+    // то понадобятся
+    //todo
+    ui->comBBooks->setHidden(true);
+    ui->comBModules->setHidden(true);
+    ui->sBChapter->setHidden(true);
+    ui->pBLoad->setHidden(true);
 }
 //------------------------------------------------------------------------------
 void RightPanel::createConnect()
@@ -36,11 +44,13 @@ void RightPanel::createConnect()
     connect(ui->ListViewBookmark, SIGNAL(activated(QModelIndex)), SLOT(openBookmark(QModelIndex)));
     connect(ui->pBDelete, SIGNAL(clicked()), SLOT(deleteBookmark()));
 
-    connect(ui->ListNotes, SIGNAL(clicked(QModelIndex)), SLOT(sEditNote(QModelIndex)));
-    connect(ui->pBLoad, SIGNAL(clicked()), SLOT(sLoadNotes()));
+    connect(ui->ListNotes, SIGNAL(doubleClicked(QModelIndex)), SLOT(sEditNote(QModelIndex)));
+//    connect(ui->pBLoad, SIGNAL(clicked()), SLOT(sLoadNotes()));
     connect(ui->pBDeleteNote, SIGNAL(clicked()), SLOT(sDeleteNote()));
     connect(ui->pBEditNote, SIGNAL(clicked()), SLOT(sEditNote()));
     connect(ui->pBNewNote, SIGNAL(clicked()), SLOT(sNewNote()));
+
+    connect(GUI_NoteEditor, SIGNAL(SIGNAL_HideNotes()), SLOT(sUpdateListNotes()));
 }
 //------------------------------------------------------------------------------
 void RightPanel::retranslate()
@@ -137,55 +147,13 @@ void RightPanel::openBookmark(QModelIndex ind)
     emit SIGNAL_OpenBookmark(moduleName, bookName, chapterValue);
 }
 //------------------------------------------------------------------------------
-void RightPanel::showNoteList(QString curModule,
-                              QString curBook,
-                              QString curChapter,
-                              QString curPath,
-                              QString firstVerse)
-{
-    m_data = getNoteOfParams(curPath,
-                             curModule,
-                             curBook,
-                             curChapter,
-                             firstVerse);
-
-    m_curModule = curModule;
-    m_curBook = curBook;
-    m_curChapter = curChapter;
-    m_curPath = curPath;
-    m_verse = firstVerse;
-
-    if (m_data.size() != 0)
-    {
-        QStandardItemModel *model = new QStandardItemModel(m_data.size(), 0);
-        model->clear();
-        ui->ListNotes->setModel(model);
-
-        for (int i = 0; i < m_data.size(); i++)
-        {
-            QStandardItem *item = new QStandardItem();
-            QString first50Simbols = m_data[i].mid(0, 50);
-            item->setData(first50Simbols, Qt::DisplayRole );
-            item->setEditable( false );
-            model->appendRow( item );
-        }
-
-    }
-    else
-    {
-        // reset
-        ui->ListNotes->setModel(new QStandardItemModel());
-    }
-}
-//------------------------------------------------------------------------------
 void RightPanel::sEditNote(QModelIndex ind)
 {
     GUI_NoteEditor->setModuleName(m_curModule);
     GUI_NoteEditor->setBookName(m_curBook);
     GUI_NoteEditor->setChapterValue(m_curChapter);
     GUI_NoteEditor->setPath(m_curPath);
-    GUI_NoteEditor->setVerse(m_verse);
-    GUI_NoteEditor->editNote(m_data[ind.row()]);
+    GUI_NoteEditor->editNote(m_mapNotes[ind.row()]);
 }
 //------------------------------------------------------------------------------
 void RightPanel::sUpdateGUIDayMode()
@@ -209,31 +177,31 @@ void RightPanel::sUpdateGUIDayMode()
 //------------------------------------------------------------------------------
 void RightPanel::fillModulesList()
 {
-    QStringList t_listModules;
-    QStringList files;
-    files = recursiveFind(Config::configuration()->getAppDir());
+//    QStringList t_listModules;
+//    QStringList files;
+//    files = recursiveFind(Config::configuration()->getAppDir());
 
-    for(int i = 0; i < files.size(); i++)
-    {
-        if(files.at(i).indexOf(GL_FORMAT_NOTES) >= 0)
-        {
-            // hindi
-            // get type module and module name
-            QStringList t_list = QStringList
-                    (
-                        QString(files.at(i)).remove(Config::configuration()->getAppDir())
-                        .split("/")
-                        );
-            m_notes[t_list.at(1)] == t_list.at(0);
-            t_listModules << t_list.at(1);
-        }
-    }
+//    for(int i = 0; i < files.size(); i++)
+//    {
+//        if(files.at(i).indexOf(GL_FORMAT_NOTES) >= 0)
+//        {
+//            // hindi
+//            // get type module and module name
+//            QStringList t_list = QStringList
+//                    (
+//                        QString(files.at(i)).remove(Config::configuration()->getAppDir())
+//                        .split("/")
+//                        );
+//            m_notes[t_list.at(1)] == t_list.at(0);
+//            t_listModules << t_list.at(1);
+//        }
+//    }
 
-    // получить список модулей в папках которых есть заметки
-    // добавить в combobox
-    // для текущего модуля загружать заметки, если нет, то показывать пустой список
+//    // получить список модулей в папках которых есть заметки
+//    // добавить в combobox
+//    // для текущего модуля загружать заметки, если нет, то показывать пустой список
 
-    ui->comBModules->setModel(new QStringListModel(t_listModules, this));
+//    ui->comBModules->setModel(new QStringListModel(t_listModules, this));
 }
 //------------------------------------------------------------------------------
 void RightPanel::sLoadNotes()
@@ -243,16 +211,84 @@ void RightPanel::sLoadNotes()
 //------------------------------------------------------------------------------
 void RightPanel::sNewNote()
 {
+    if (m_curPath.isEmpty())
+        return;
 
+    GUI_NoteEditor->setModuleName(m_curModule);
+    GUI_NoteEditor->setBookName(m_curBook);
+    GUI_NoteEditor->setChapterValue(m_curChapter);
+    GUI_NoteEditor->setPath(m_curPath);
+    GUI_NoteEditor->show();
 }
 //------------------------------------------------------------------------------
 void RightPanel::sDeleteNote()
 {
-
+    GUI_NoteEditor->deleteNote(m_curModule, m_curBook, m_curChapter, m_curPath,
+                               ui->ListNotes->currentIndex().data(0).toString());
+    sUpdateListNotes();
 }
 //------------------------------------------------------------------------------
 void RightPanel::sEditNote()
 {
     sEditNote(ui->ListNotes->currentIndex());
+}
+//------------------------------------------------------------------------------
+void RightPanel::sShowNoteList(QString f_module,
+                              QString f_book,
+                              QString f_chapter,
+                              QString f_path)
+{
+    m_mapNotes = getNoteOfParams(f_module, f_book, f_chapter, f_path);
+    m_curBook = f_book;
+    m_curModule = f_module;
+    m_curChapter = f_chapter;
+    m_curPath = f_path;
+
+    if (m_mapNotes.size() != 0)
+    {
+        QStandardItemModel *model = new QStandardItemModel(m_mapNotes.size(), 0);
+        model->clear();
+        ui->ListNotes->setModel(model);
+
+        for (int i = 0; i < m_mapNotes.size(); i++)
+        {
+            QStandardItem *item = new QStandardItem();
+            QString first50Simbols = m_mapNotes[i].mid(0, 50);
+            item->setData(first50Simbols, Qt::DisplayRole );
+            item->setEditable( false );
+            model->appendRow( item );
+        }
+    }
+    else
+    {
+        // reset
+        ui->ListNotes->setModel(new QStandardItemModel());
+    }
+}
+//------------------------------------------------------------------------------
+void RightPanel::sUpdateListNotes()
+{
+    sShowNoteList(m_curModule, m_curBook, m_curChapter, m_curPath);
+}
+//------------------------------------------------------------------------------
+void RightPanel::loadFirstSettings()
+{
+
+    if (Config::configuration()->isExistLastChapter())
+    {
+        m_curModule = Config::configuration()->getLastModule();
+        m_curBook = Config::configuration()->getLastBook();
+        m_curChapter = Config::configuration()->getLastChapter();
+
+        if (Config::configuration()->getLastType() == "Bible")
+            m_curPath = Config::configuration()->getAppDir() + Config::configuration()->getListBibles()->getModuleWithName(m_curModule)->getModulePath();
+
+        if (Config::configuration()->getLastType() == "Book")
+            m_curPath = Config::configuration()->getAppDir() + Config::configuration()->getListBook()->getModuleWithName(m_curModule)->getModulePath();
+
+        if (Config::configuration()->getLastType() == "Apocrypha")
+            m_curPath = Config::configuration()->getAppDir() + Config::configuration()->getListApocrypha()->getModuleWithName(m_curModule)->getModulePath();
+        m_curPath.replace("module" + GL_FORMAT_MODULE, "notes" + GL_FORMAT_NOTES);
+    }
 }
 //------------------------------------------------------------------------------

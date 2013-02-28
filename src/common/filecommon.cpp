@@ -536,60 +536,17 @@ QStringList recursiveFind(QString directory)
     return list;
 }
 //-------------------------------------------------------------------------------
-QHash<int, QString> getNoteOfParams(QString curPath,
-                                    QString curModule,
-                                    QString curBook,
-                                    QString curChapter,
-                                    QString firstVerse)
-{
-    QHash<int, QString> hash;
-    Q_UNUSED (firstVerse)
+//QString getVerseNumberFromNote(QString* line)
+//{
 
-    QString text = getTextFromHtmlFile(curPath);
-    QStringList list;
-    int count = 0;
-    text.remove("<xml>").remove("</xml>");
+//    QString str = *line;
+//    QString t_str ="verse=\"";
+//    int pos = str.indexOf(t_str);
+//    int pos2 = str.indexOf("\"", pos + t_str.length());
 
-    list << text.split("</note>");
-    list = removeEmptyQStringFromQStringList(&list);
-    for (int i = 0; i < list.size(); i++)
-    {
-        QString str1 = "module=\"" + curModule + "\"";
-        QString str2 = "book=\"" + curBook + "\"";
-        QString str3 = "chapter=\"" + curChapter + "\"";
-        QString line = list.at(i);
-        if (line.contains(str1) &&
-                line.contains(str2) &&
-                line.contains(str3) &&
-                getVerseNumberFromNote(&line) == firstVerse)
-        {
-            //            QString text = "<note " + str1 + str2 + str3;
-            //            hash[count] = strat.remove(text).remove("</note>");
-            //            myDebug() << getVerseBeginNumberFromNote(&line) << getVerseEndNumberFromNote(&line);
-
-            /// remove tag before text
-            int pos = line.indexOf(">");
-            line.remove(0, pos + 1);
-            hash[count] = line;
-            count++;
-        }
-    }
-    return hash;
-}
-
-//-------------------------------------------------------------------------------
-QString getVerseNumberFromNote(QString* line)
-{
-
-    QString str = *line;
-    QString t_str ="verse=\"";
-    int pos = str.indexOf(t_str);
-    int pos2 = str.indexOf("\"", pos + t_str.length());
-
-    str = str.mid(pos + t_str.length(), pos2  - pos - t_str.length());
-    return str;
-}
-
+//    str = str.mid(pos + t_str.length(), pos2  - pos - t_str.length());
+//    return str;
+//}
 //-------------------------------------------------------------------------------
 QString getDescriptionForWordFromDict(QString t_pathToFile, QString word)
 {
@@ -800,3 +757,33 @@ bool isExistBook(const QString f_path, const QString f_book, QString* r_bookName
     return r_bool;
 }
 //------------------------------------------------------------------------------
+QMap<int, QString> getNoteOfParams(QString f_module, QString f_book, QString f_chapter, QString f_path)
+{
+    QMap<int, QString> r_map;
+
+    QString t_text = getTextFromHtmlFile(f_path);
+    QStringList t_list;
+    int t_count = 0;
+    t_text.remove("<xml>").remove("</xml>");
+    t_list << t_text.split("</note>");
+    t_list = removeEmptyQStringFromQStringList(&t_list);
+    for (int i = 0; i < t_list.size(); i++)
+    {
+        QString str1 = "module=\"" + f_module + "\"";
+        QString str2 = "book=\"" + f_book + "\"";
+        QString str3 = "chapter=\"" + f_chapter + "\"";
+        QString t_line = t_list.at(i);
+        if (t_line.contains(str1) &&
+                t_line.contains(str2) &&
+                t_line.contains(str3))
+        {
+            // remove tag before text
+            int pos = t_line.indexOf(">");
+            t_line.remove(0, pos + 1);
+            r_map[t_count] = t_line;
+            t_count++;
+        }
+    }
+    return r_map;
+}
+//-------------------------------------------------------------------------------

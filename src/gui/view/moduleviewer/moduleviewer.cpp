@@ -30,6 +30,8 @@ ModuleViewer::ModuleViewer(QWidget *parent) :
 //------------------------------------------------------------------------------
 ModuleViewer::~ModuleViewer()
 {
+    delete act_addBookmarks;
+    delete autoHideTimer;
     delete ui;
 }
 //------------------------------------------------------------------------------
@@ -73,9 +75,6 @@ void ModuleViewer::createActions()
     act_addBookmarks = new QAction(tr("&Add bookmarks"), this);
     connect(act_addBookmarks, SIGNAL(triggered()), this, SLOT(sAddBookmark()));
 
-
-    act_addNote = new QAction(tr("&Add note"), this);
-    connect(act_addNote, SIGNAL(triggered()), this, SLOT(sAddNote()));
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::sShowContextMenu(QPoint pt)
@@ -83,7 +82,6 @@ void ModuleViewer::sShowContextMenu(QPoint pt)
     QMenu *menu = ui->viewer->createStandardContextMenu();
     menu->addSeparator();
     menu->addAction(act_addBookmarks);
-    menu->addAction(act_addNote);
     menu->addSeparator();
 
 
@@ -253,28 +251,28 @@ QString ModuleViewer::getPath()
     return m_curPath;
 }
 //------------------------------------------------------------------------------
-void ModuleViewer::showNoteList()
-{
-    /* по названию модуля
-     * книги
-     *главы
-     *и номера начального стиха
-     *получаем список заметок
-     *создаем лист для каждой из заметок
-     *в элемент листа пишем по 50 первых символов
-     *при нажатии на элемент листа
-     *открываем диалог с редактированием заметки
-     */
+//void ModuleViewer::showNoteList()
+//{
+//    /* по названию модуля
+//     * книги
+//     *главы
+//     *и номера начального стиха
+//     *получаем список заметок
+//     *создаем лист для каждой из заметок
+//     *в элемент листа пишем по 50 первых символов
+//     *при нажатии на элемент листа
+//     *открываем диалог с редактированием заметки
+//     */
 
-    QString path = m_curPath;
-    path.replace("text" + GL_FORMAT_TEXT, "notes.xml");
-    emit SIGNAL_ShowNoteList(m_curModule,
-                             m_curBook,
-                             m_curChapter,
-                             path,
-                             QString::number(m_lastLine));
+////    QString path = m_curPath;
+////    path.replace("text" + GL_FORMAT_TEXT, "notes" + GL_FORMAT_NOTES);
+////    emit SIGNAL_ShowNoteList(m_curModule,
+////                             m_curBook,
+////                             m_curChapter,
+////                             path,
+////                             QString::number(m_lastLine));
 
-}
+//}
 //------------------------------------------------------------------------------
 bool ModuleViewer::event(QEvent* event)
 {
@@ -290,12 +288,6 @@ bool ModuleViewer::event(QEvent* event)
                 //QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
                 emit SIGNAL_ShowStrong(cursor.selectedText());
             }
-
-
-
-            // show notes
-            m_lastLine = cursor.blockNumber() + 1;
-            showNoteList();
         }
         else
         {
@@ -456,15 +448,15 @@ void ModuleViewer::sFind(QString ttf, bool forward, bool backward)
         autoHideTimer -> start();
 }
 //------------------------------------------------------------------------------
-void ModuleViewer::sAddNote()
-{
-    emit SIGNAL_AddNote();
-}
+//void ModuleViewer::sAddNote()
+//{
+//    emit SIGNAL_AddNote();
+//}
 //------------------------------------------------------------------------------
-QString ModuleViewer::getLastNumberLine()
-{
-    return QString::number(m_lastLine);
-}
+//QString ModuleViewer::getLastNumberLine()
+//{
+//    return QString::number(m_lastLine);
+//}
 //------------------------------------------------------------------------------
 void ModuleViewer::setStyleSettings()
 {

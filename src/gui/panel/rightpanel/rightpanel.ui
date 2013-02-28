@@ -61,6 +61,9 @@
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="1" column="0" colspan="4">
          <widget class="QPushButton" name="pBLoad">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="text">
            <string>Load notes</string>
           </property>
@@ -91,13 +94,25 @@
          </widget>
         </item>
         <item row="0" column="3">
-         <widget class="QSpinBox" name="sBChapter"/>
+         <widget class="QSpinBox" name="sBChapter">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
         <item row="0" column="2">
-         <widget class="QComboBox" name="comBBooks"/>
+         <widget class="QComboBox" name="comBBooks">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
         <item row="0" column="0" colspan="2">
-         <widget class="QComboBox" name="comBModules"/>
+         <widget class="QComboBox" name="comBModules">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

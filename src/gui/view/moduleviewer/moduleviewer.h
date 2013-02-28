@@ -47,7 +47,7 @@ public:
     void setStrongList(QString path);
     void retranslate();
 
-    QString getLastNumberLine();
+//    QString getLastNumberLine();
 
     /**
      * function for open last chapter (get last chapter from settings)
@@ -82,7 +82,7 @@ signals:
     void SIGNAL_AddNewBookmark(QString);
 
 //    void SIGNAL_AddNote(QString, QString, QString, QString, QString);
-    void SIGNAL_AddNote();
+//    void SIGNAL_AddNote();
 
     void SIGNAL_ShowStrong(QString);
 
@@ -107,7 +107,7 @@ private slots:
      */
     void sFind(QString, bool forward = false, bool backward = false);
 
-    void sAddNote();
+//    void sAddNote();
 protected:
     //    void contextMenuEvent(QContextMenuEvent *event);
 //    bool eventFilter(QObject *obj, QEvent *ev);
@@ -121,7 +121,7 @@ private:
     QHash< QString, QVector<int> > m_strongs;
 
     QAction *act_addBookmarks;
-    QAction *act_addNote;
+//    QAction *act_addNote;
 
     void init();
     void createActions();
@@ -143,7 +143,7 @@ private:
 
     QString m_backupChapter;
 
-    void showNoteList();
+//    void showNoteList();
     void showStrong();
     void debug();
 

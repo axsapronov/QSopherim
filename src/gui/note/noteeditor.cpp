@@ -22,8 +22,15 @@ NoteEditor::~NoteEditor()
 //------------------------------------------------------------------------------
 void NoteEditor::saveNote()
 {
-    QString textNote = ui->textEditor->toPlainText();
-    addTextNotes(textNote);
+    if (m_edit)
+    {
+        replaceNote(ui->textEditor->toPlainText(), m_oldText);
+        m_edit = false;
+    }
+    else
+    {
+        addTextNotes(ui->textEditor->toPlainText());
+    }
 
     m_verse = "";
     m_moduleName = "";
@@ -31,32 +38,36 @@ void NoteEditor::saveNote()
     m_chapterValue = "";
     ui->textEditor->clear();
 
+    emit SIGNAL_HideNotes();
+
     QWidget::hide();
 }
 //------------------------------------------------------------------------------
 void NoteEditor::init()
 {
+    m_edit = false;
     createConnects();
 }
 //------------------------------------------------------------------------------
 void NoteEditor::createConnects()
 {
     connect(ui->buttonBox, SIGNAL(accepted()), SLOT(saveNote()));
+    connect(ui->buttonBox, SIGNAL(rejected()), SLOT(rejectNote()));
 }
 //------------------------------------------------------------------------------
-void NoteEditor::setModuleName(QString moduleName)
+void NoteEditor::setModuleName(const QString moduleName)
 {
     m_moduleName = moduleName;
     setTextToLabel();
 }
 //------------------------------------------------------------------------------
-void NoteEditor::setBookName(QString bookname)
+void NoteEditor::setBookName(const QString bookname)
 {
     m_bookName = bookname;
     setTextToLabel();
 }
 //------------------------------------------------------------------------------
-void NoteEditor::setChapterValue(QString chapter)
+void NoteEditor::setChapterValue(const QString chapter)
 {
     m_chapterValue = chapter;
     setTextToLabel();
@@ -69,27 +80,29 @@ void NoteEditor::setTextToLabel()
                        m_chapterValue);
 }
 //------------------------------------------------------------------------------
-void NoteEditor::setPath(QString name)
+void NoteEditor::setPath(const QString name)
 {
-    name.replace("text" + GL_FORMAT_TEXT, "notes.xml");
     m_path = name;
+//    m_path.replace("text" + GL_FORMAT_TEXT, "notes" + GL_FORMAT_NOTES);
 }
 //------------------------------------------------------------------------------
-void NoteEditor::addTextNotes(QString text)
+void NoteEditor::addTextNotes(const QString text)
 {
     QFile file(m_path);
+
+    QString tab = "    ";
+    QString noteText = tab
+                    + "<note module=\"" + m_moduleName
+                    + "\" book=\"" + m_bookName
+                    + "\" chapter=\"" + m_chapterValue
+                    + "\">"
+                    + text
+                    + "</note>\n"
+                    + "</xml>";
+
     if(file.exists())
     {
-        QString tab = "    ";
         QString textFile = getTextFromHtmlFile(m_path);
-        QString noteText = tab + "<note module=\"" + m_moduleName
-                + "\" book=\"" + m_bookName
-                + "\" chapter=\"" + m_chapterValue
-                + "\" verse=\"" + m_verse
-                + "\">"
-                + text
-                + "</note>\n"
-                + "</xml>";
         textFile.replace("</xml>", noteText);
         file.remove();
 
@@ -107,28 +120,26 @@ void NoteEditor::addTextNotes(QString text)
         {
             QTextStream stream(&file);
             stream.setCodec(getCodecOfEncoding("UTF-8"));
-            QString tab = "    ";
             stream << "<xml>" << endl;
-            stream << tab
-                   << "<note module=\"" << m_moduleName
-                   << "\" book=\"" << m_bookName
-                   << "\" chapter=\"" << m_chapterValue
-                   << "\" verse=\"" + m_verse
-                   << "\">"
-                   << text
-                   << "</note>" << endl
-                   << "</xml>";
+            stream << noteText;
         }
     }
 }
 //------------------------------------------------------------------------------
-void NoteEditor::setVerse(QString first)
+void NoteEditor::replaceNote(const QString f_newText, const QString f_oldText)
+{
+    replaceStrInFile(m_path, f_oldText, f_newText);
+}
+//------------------------------------------------------------------------------
+void NoteEditor::setVerse(const QString first)
 {
     m_verse = first;
 }
 //------------------------------------------------------------------------------
-void NoteEditor::editNote(QString text)
+void NoteEditor::editNote(const QString text)
 {
+    m_edit = true;
+    m_oldText = text;
     ui->textEditor->setPlainText(text);
     show();
 }
@@ -136,5 +147,21 @@ void NoteEditor::editNote(QString text)
 void NoteEditor::retranslate()
 {
     ui->retranslateUi(this);
+}
+//------------------------------------------------------------------------------
+void NoteEditor::deleteNote(QString f_module, QString f_book, QString f_chapter, QString f_path, QString f_text)
+{
+    QString noteText = "<note module=\"" + f_module
+            + "\" book=\"" + f_book
+            + "\" chapter=\"" + f_chapter
+            + "\">"
+            + f_text
+            + "</note>\n";
+    replaceStrInFile(f_path, noteText, "");
+}
+//------------------------------------------------------------------------------
+void NoteEditor::rejectNote()
+{
+    m_edit = false;
 }
 //------------------------------------------------------------------------------

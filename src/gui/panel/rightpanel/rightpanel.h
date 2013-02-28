@@ -37,6 +37,8 @@ public:
      */
     void saveBookmarks();
 
+    void loadFirstSettings();
+
 signals:
     void SIGNAL_OpenBookmark(QString, QString, QString);
 
@@ -49,11 +51,10 @@ public slots:
      */
     void addNewBookmark(QString str);
 
-    void showNoteList(QString curModule,
-                      QString curBook,
-                      QString curChapter,
-                      QString curPath,
-                      QString verse);
+    void sShowNoteList(QString f_module,
+                      QString f_book,
+                      QString f_chapter,
+                      QString f_path);
 
     void sUpdateGUIDayMode();
 
@@ -69,6 +70,8 @@ private slots:
      */
     void openBookmark(QModelIndex);
 
+    void sUpdateListNotes();
+
     // notes slots
     void sEditNote(QModelIndex ind);
 
@@ -82,7 +85,7 @@ private:
 
     QStringList m_listBookmark;
     QStandardItemModel *m_modelNotes;
-    QHash<int, QString> m_data;
+    QMap<int, QString> m_mapNotes;
 
     QMap<QString, QString> m_notes;
 

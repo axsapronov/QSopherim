@@ -53,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         // open last text
         GUI_ModuleViewer->openLastChapter();
+        GUI_RightPanel->loadFirstSettings();
     }
     else
     {
@@ -119,10 +120,10 @@ void MainWindow::init()
     GUI_LeftPanel->setTitleBarWidget(t_emptyWidget);
     delete t_titleBar;
 
-//    t_titleBar = GUI_RightPanel->titleBarWidget();
-//    QWidget* t_emptyWidget3 = new QWidget();
-//    GUI_RightPanel->setTitleBarWidget(t_emptyWidget3);
-//    delete t_titleBar;
+    //    t_titleBar = GUI_RightPanel->titleBarWidget();
+    //    QWidget* t_emptyWidget3 = new QWidget();
+    //    GUI_RightPanel->setTitleBarWidget(t_emptyWidget3);
+    //    delete t_titleBar;
 
     GUI_RightPanel->loadBookmarks();
     //    GUI_BottomPanel = new BottomPanel(this);
@@ -137,9 +138,9 @@ void MainWindow::init()
     addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel);
     addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel2);
     addDockWidget(Qt::RightDockWidgetArea, GUI_RightPanel);
-//        addDockWidget(Qt::BottomDockWidgetArea, GUI_BottomPanel);
+    //        addDockWidget(Qt::BottomDockWidgetArea, GUI_BottomPanel);
 
-//    GUI_RightPanel->hide();
+    //    GUI_RightPanel->hide();
     prModule = new ProcessModule();
 
     //    centralWidget()->setAttribute(Qt::WA_TransparentForMouseEvents);
@@ -305,11 +306,11 @@ void MainWindow::createConnects()
     connect(ui->action_About_Help, SIGNAL(triggered()), SLOT(showHelp()));
 
     // module viewer
-    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowNoteList(QString,QString,QString,QString,QString)),
-            GUI_RightPanel, SLOT(showNoteList(QString,QString,QString,QString,QString)));
+    //    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowNoteList(QString,QString,QString,QString,QString)),
+    //            GUI_RightPanel, SLOT(showNoteList(QString,QString,QString,QString,QString)));
 
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowStrong(QString)), GUI_LeftPanel2, SLOT(showStrong(QString)));
-    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNote()), SLOT(createNote()));
+//    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNote()), SLOT(createNote()));
 
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowChapterFinish()), GUI_LeftPanel, SLOT(sUpdateGUI()));
 
@@ -343,6 +344,7 @@ void MainWindow::createConnects()
     connect(GUI_LeftPanel, SIGNAL(SIGNAL_ShowHideLeftPanel2(bool))
             , GUI_LeftPanel2, SLOT(setHidden(bool)));
 
+
     // connect settings and module viewer
     connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadFontSettings()), GUI_ModuleViewer,
             SLOT(updateFontSettings()));
@@ -364,6 +366,9 @@ void MainWindow::createConnects()
             GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
     connect(GUI_RightPanel, SIGNAL(SIGNAL_OpenBookmark(QString, QString, QString)),
             GUI_LeftPanel2, SLOT(addRecordToJournal(QString,QString,QString)));
+
+    connect(GUI_LeftPanel, SIGNAL(SIGNAL_ShowNotes(QString, QString, QString, QString))
+            , GUI_RightPanel, SLOT(sShowNoteList(QString, QString, QString, QString)));
 
     // menu search
     connect(ui->action_Search_Find_In_Text, SIGNAL(triggered()), GUI_ModuleViewer,
@@ -565,8 +570,8 @@ void MainWindow::convertModules(const QString f_type)
         QLabel overallLabel(&loadProgress);
         overallLabel.setGeometry(11, 10, 400, 20);
         QStringList listModules;
-            overallLabel.setText(tr("Convert: %1 modules").arg(f_type));
-            overallLabel.show();
+        overallLabel.setText(tr("Convert: %1 modules").arg(f_type));
+        overallLabel.show();
 
         if (f_type == "Bible")
         {
@@ -699,7 +704,7 @@ void MainWindow::createNote()
     GUI_NoteEditor->setModuleName(GUI_ModuleViewer->getModuleName());
     GUI_NoteEditor->setBookName(GUI_ModuleViewer->getBookName());
     GUI_NoteEditor->setChapterValue(GUI_ModuleViewer->getChapterValue());
-    GUI_NoteEditor->setVerse(GUI_ModuleViewer->getLastNumberLine());
+//    GUI_NoteEditor->setVerse(GUI_ModuleViewer->getLastNumberLine());
     GUI_NoteEditor->show();
 }
 //------------------------------------------------------------------------------

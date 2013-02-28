@@ -336,6 +336,9 @@ void LeftPanel::showChapter(const QModelIndex ind, const QString f_type)
     ModuleViewer::viewer()->showChapter(t_curModule, m_lastNameOfBook ,
                                         ind.row() + 1, f_type);
 
+    t_pathToModule.replace("text" + GL_FORMAT_TEXT, "notes" + GL_FORMAT_NOTES);
+    emit SIGNAL_ShowNotes(t_curModule, m_lastNameOfBook, QString::number(ind.row() + 1), t_pathToModule);
+
 
     emit SIGNAL_AddRecordToJournal(t_curModule,
                                    m_lastNameOfBook ,

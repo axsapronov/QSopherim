@@ -60,6 +60,7 @@ public slots:
 signals:
     void SIGNAL_AddRecordToJournal(QString, QString, QString);
     void SIGNAL_ShowHideLeftPanel2(bool);
+    void SIGNAL_ShowNotes(QString, QString, QString, QString);
 
 private slots:
 
