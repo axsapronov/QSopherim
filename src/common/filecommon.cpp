@@ -5,8 +5,6 @@
 #include "debughelper.h"
 #include "defines.h"
 
-
-
 //------------------------------------------------------------------------------
 QString getEncodingFromFile(QString file, QString language)
 {
@@ -785,5 +783,20 @@ QMap<int, QString> getNoteOfParams(QString f_module, QString f_book, QString f_c
         }
     }
     return r_map;
+}
+//-------------------------------------------------------------------------------
+bool toLog(QString logFN, QString logMessage)
+{
+    QFile file(logFN);
+    if(!file.open(QIODevice::Append | QIODevice::Text))
+    {
+        return false;
+    }
+    QTextStream ts(&file);
+    //ts.setCodec("UTF-8"); //do not set codec, write in system codepage yet
+    QDateTime dt = QDateTime::currentDateTime();
+    ts << dt.toString("yyyy.MM.dd hh:mm:ss  ") << logMessage << endl;
+    file.close();
+    return true;
 }
 //-------------------------------------------------------------------------------

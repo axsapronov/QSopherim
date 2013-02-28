@@ -91,6 +91,8 @@ void Settings::loadSettings()
     ui->chBGuiTray->setChecked(Config::configuration()->getGuiTray());
     ui->chBDayMode->setChecked(Config::configuration()->getDayMode());
 
+    ui->sBAppLogLevel->setValue(Config::configuration()->AppLogLevel());
+
     updateFontSettings();
 
     // replace to AppDir/*  if empty
@@ -127,6 +129,8 @@ void Settings::saveSettings()
 
     Config::configuration()->setGuiTray(ui->chBGuiTray->checkState());
     Config::configuration()->setDayMode(ui->chBDayMode->checkState());
+
+    Config::configuration()->setAppLogLevel(ui->sBAppLogLevel->value());
 
     //    ui->sBFontSize->setValue(Config::configuration()->getFontSize());
 

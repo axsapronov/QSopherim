@@ -24,6 +24,12 @@ public:
     QString getAppDir();
     void setAppDir(const QString dir);
 
+    QString AppLogFN()	{ return appLogFN; }
+    int AppLogLevel()	{ return m_appLogLevel; }
+    void setAppLogFN(QString fn)	{ appLogFN = fn; }
+    void setAppLogLevel(int n)		{ m_appLogLevel = n; }
+    void toAppLog(int logLevel, QString msg);
+
     /**
      * @brief setBibleDir
      * @param dir
@@ -359,6 +365,9 @@ private:
     bool m_dayMode;
     bool m_optionAutoChapter;
     bool m_optionChangeTextColor;
+
+    QString appLogFN;
+    int m_appLogLevel;
 
 };
 

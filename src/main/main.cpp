@@ -25,6 +25,7 @@ int main(int argc, char *argv[])
     Config *conf = new Config();
     conf->setAppDir(QDir::currentPath() + "/");
     conf->setStrongDir(QDir::currentPath() + "/strongs/");
+    conf->setAppLogFN(conf->getAppDir() + "project.log");
 
 #ifdef Q_OS_WIN
     QString t_settings = "settings.ini";
@@ -47,6 +48,10 @@ int main(int argc, char *argv[])
     if (lang == "Deutch") translator.load("QSopherim_de",":lang/lang");
     if (lang == "Français") translator.load("QSopherim_fr",":lang/lang");
     a.installTranslator(&translator);
+
+
+    toLog(conf -> AppLogFN(), "-------");
+    toLog(conf -> AppLogFN(), "Project started.");
 
     MainWindow w;
     w.show();

@@ -13,6 +13,7 @@
 #include <QXmlStreamReader>
 
 #include <QStringList>
+#include <QDateTime>
 
 #include <QDebug>
 #include "book.h"
@@ -269,4 +270,5 @@ QStringList getReadinPlanForDay(const int f_mount, const int f_day);
 QStringList getReadingPlanForDayFromFile(const int f_day, const QString f_path);
 QString getCommentForChapter(const QString f_path, const QString f_book, const QString f_chapter);
 bool isExistBook(const QString f_path, const QString f_book, QString *r_bookName);
+bool toLog(QString logFN, QString logMessage); //добавляет в журнал строку в формате "Дата Время Сообщение"
 #endif // __FILECOMMON__H

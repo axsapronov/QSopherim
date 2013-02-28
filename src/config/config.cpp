@@ -19,6 +19,7 @@ Config::Config()
         m_fontColor = QColor(qRgb(0, 0, 0));
         m_viewerColor = QColor(qRgb(240, 240, 255));
         m_dayMode = true;
+        m_appLogLevel = 3;
 
 #ifdef Q_OS_WIN
         m_fontFamily = "Tahoma";
@@ -120,6 +121,8 @@ void Config::loadSettings()
     QSettings settings("settings.conf", QSettings::NativeFormat);
 #endif
 
+    m_appLogLevel = settings.value(QString("log/app")).toInt();
+
     m_bibleDir = settings.value(QString("dir/bible")).toString();
     m_dictDir = settings.value(QString("dir/dict")).toString();
     m_otherDir = settings.value(QString("dir/other")).toString();
@@ -152,6 +155,7 @@ void Config::loadSettings()
     m_fontItalic = settings.value("font/italic").toBool();
     m_fontUnderline = settings.value("font/underline").toBool();
     m_fontStrike = settings.value("font/strike").toBool();
+
 
     // font settings
 
@@ -236,6 +240,8 @@ void Config::saveSettings()
 #ifdef Q_OS_LINUX
     QSettings settings("settings.conf", QSettings::NativeFormat);
 #endif
+
+    settings.setValue(QString("log/app"), m_appLogLevel);
 
     settings.setValue(QString("language/lang"), m_appLang);
     settings.setValue(QString("dir/bible"), m_bibleDir);
@@ -681,5 +687,11 @@ QString Config::getBookDir()
 void Config::setBookDir(const QString dir)
 {
     m_bookDir = dir;
+}
+//------------------------------------------------------------------------------
+void Config::toAppLog(int logLevel, QString msg)
+{
+    if (logLevel <= AppLogLevel())
+        toLog(AppLogFN() ,msg);
 }
 //------------------------------------------------------------------------------
