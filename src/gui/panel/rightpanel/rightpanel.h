@@ -84,6 +84,8 @@ private:
     QStandardItemModel *m_modelNotes;
     QHash<int, QString> m_data;
 
+    QMap<QString, QString> m_notes;
+
     NoteEditor *GUI_NoteEditor;
 
     QString m_curModule;

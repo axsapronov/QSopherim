@@ -209,17 +209,31 @@ void RightPanel::sUpdateGUIDayMode()
 //------------------------------------------------------------------------------
 void RightPanel::fillModulesList()
 {
+    QStringList t_listModules;
+    QStringList files;
+    files = recursiveFind(Config::configuration()->getAppDir());
 
-    QStringList t_list;
+    for(int i = 0; i < files.size(); i++)
+    {
+        if(files.at(i).indexOf(GL_FORMAT_NOTES) >= 0)
+        {
+            // hindi
+            // get type module and module name
+            QStringList t_list = QStringList
+                    (
+                        QString(files.at(i)).remove(Config::configuration()->getAppDir())
+                        .split("/")
+                        );
+            m_notes[t_list.at(1)] == t_list.at(0);
+            t_listModules << t_list.at(1);
+        }
+    }
+
     // получить список модулей в папках которых есть заметки
     // добавить в combobox
     // для текущего модуля загружать заметки, если нет, то показывать пустой список
 
-    t_list << "test1"
-           << "test2"
-           << "test3";
-
-    ui->comBModules->setModel(new QStringListModel(t_list, this));
+    ui->comBModules->setModel(new QStringListModel(t_listModules, this));
 }
 //------------------------------------------------------------------------------
 void RightPanel::sLoadNotes()
