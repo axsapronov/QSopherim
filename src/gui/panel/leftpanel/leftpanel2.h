@@ -9,8 +9,6 @@
 #include <QStandardItem>
 #include <QStandardItemModel>
 
-#include "noteeditor.h"
-
 
 class StrongList;
 
@@ -36,18 +34,10 @@ public:
      */
     void loadJournal();
 
-
-
 signals:
     void SIGNAL_ShowChapterFromJournal(QString, QString, QString);
 
 public slots:
-
-    void showNoteList(QString curModule,
-                      QString curBook,
-                      QString curChapter,
-                      QString curPath,
-                      QString verse);
 
     void showStrong(QString number);
 
@@ -57,10 +47,6 @@ public slots:
     void sUpdateGUIDayMode();
 
 private slots:
-
-    // notes slots
-    void editNote(QModelIndex ind);
-
 
     // journals slots
     void addRecordToJournal(QString modulename,
@@ -76,23 +62,11 @@ private slots:
 private:
     Ui::LeftPanel2 *ui;
 
-    QHash<int, QString> m_data;
-
     QVector<StrongList> m_listStrongGreek;
     QVector<StrongList> m_listStrongHebrew;
 
     QMap<int, StrongList> m_mapStrongGreek;
     QMap<int, StrongList> m_mapStrongHebrew;
-
-    QStandardItemModel *m_modelNotes;
-
-    NoteEditor *GUI_NoteEditor;
-
-    QString m_curModule;
-    QString m_curBook;
-    QString m_curChapter;
-    QString m_curPath;
-    QString m_verse;
 
     QStringList m_journalList;
     QStringList m_readingPlanList;

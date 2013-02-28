@@ -28,15 +28,12 @@ LeftPanel2::LeftPanel2(QWidget *parent) :
 //------------------------------------------------------------------------------
 LeftPanel2::~LeftPanel2()
 {
-    delete m_modelNotes;
-    delete GUI_NoteEditor;
     delete ui;
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::init()
 {
-    m_data.clear();
-    GUI_NoteEditor = new NoteEditor(this);
+
 
     //    QString path = m_curPath;
     if (Config::configuration()->getStrongHebrew().isEmpty())
@@ -62,30 +59,13 @@ void LeftPanel2::init()
     sUpdateGUIDayMode();
 
     ui->ListViewJournal->setFont(Config::configuration()->getGUIMapFont()["FontJournal"]);
-    ui->ListViewNote->setFont(Config::configuration()->getGUIMapFont()["FontNotes"]);
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::createConnects()
 {
-    connect(ui->ListViewNote, SIGNAL(clicked(QModelIndex)),
-            SLOT(editNote(QModelIndex)));
-
-    connect(ui->ListViewJournal, SIGNAL(clicked(QModelIndex)),
-            SLOT(showChapterFromJournal(QModelIndex)));
+    connect(ui->ListViewJournal, SIGNAL(clicked(QModelIndex)), SLOT(showChapterFromJournal(QModelIndex)));
 }
-//------------------------------------------------------------------------------
-void LeftPanel2::editNote(QModelIndex ind)
-{
-    GUI_NoteEditor->setModuleName(m_curModule);
-    GUI_NoteEditor->setBookName(m_curBook);
-    GUI_NoteEditor->setChapterValue(m_curChapter);
-    GUI_NoteEditor->setPath(m_curPath);
-    GUI_NoteEditor->setVerse(m_verse);
-    //    myDebug() << ind.row() << m_data[ind.row()];
-    //    QString str = *(m_data[ind.row()]);
-    GUI_NoteEditor->editNote(m_data[ind.row()]);
 
-}
 //------------------------------------------------------------------------------
 void LeftPanel2::retranslate()
 {
@@ -151,47 +131,6 @@ void LeftPanel2::showChapterFromJournal(QModelIndex ind)
     QString chapterValue = str;
 
     emit SIGNAL_ShowChapterFromJournal(moduleName, bookName, chapterValue);
-}
-//------------------------------------------------------------------------------
-void LeftPanel2::showNoteList(QString curModule,
-                              QString curBook,
-                              QString curChapter,
-                              QString curPath,
-                              QString firstVerse)
-{
-    m_data = getNoteOfParams(curPath,
-                             curModule,
-                             curBook,
-                             curChapter,
-                             firstVerse);
-
-    m_curModule = curModule;
-    m_curBook = curBook;
-    m_curChapter = curChapter;
-    m_curPath = curPath;
-    m_verse = firstVerse;
-
-    if (m_data.size() != 0)
-    {
-        QStandardItemModel *model = new QStandardItemModel(m_data.size(), 0);
-        model->clear();
-        ui->ListViewNote->setModel(model);
-
-        for (int i = 0; i < m_data.size(); i++)
-        {
-            QStandardItem *item = new QStandardItem();
-            QString first50Simbols = m_data[i].mid(0, 50);
-            item->setData(first50Simbols, Qt::DisplayRole );
-            item->setEditable( false );
-            model->appendRow( item );
-        }
-
-    }
-    else
-    {
-        // reset
-        ui->ListViewNote->setModel(new QStandardItemModel());
-    }
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::showStrong(QString number)
@@ -261,8 +200,8 @@ void LeftPanel2::sUpdateGUIDayMode()
         p.setColor(QPalette::Base, GL_COLOR_NIGHT);
     }
     ui->ListViewJournal->setPalette(p);
-    ui->ListViewNote->setPalette(p);
     ui->textBrStrong->setPalette(p);
+    ui->ListViewReadingPlan->setPalette(p);
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::setReadingPlanForCurrentDay()

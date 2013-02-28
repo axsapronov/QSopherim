@@ -306,7 +306,8 @@ void MainWindow::createConnects()
 
     // module viewer
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowNoteList(QString,QString,QString,QString,QString)),
-            GUI_LeftPanel2, SLOT(showNoteList(QString,QString,QString,QString,QString)));
+            GUI_RightPanel, SLOT(showNoteList(QString,QString,QString,QString,QString)));
+
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowStrong(QString)), GUI_LeftPanel2, SLOT(showStrong(QString)));
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNote()), SLOT(createNote()));
 

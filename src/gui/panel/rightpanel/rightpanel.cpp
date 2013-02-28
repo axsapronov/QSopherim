@@ -3,7 +3,7 @@
 
 #include "debughelper.h"
 #include "config.h"
-#include <QStandardItemModel>
+#include "defines.h"
 #include "filecommon.h"
 
 RightPanel::RightPanel(QWidget *parent) :
@@ -17,6 +17,30 @@ RightPanel::RightPanel(QWidget *parent) :
 RightPanel::~RightPanel()
 {
     delete ui;
+}
+//------------------------------------------------------------------------------
+void RightPanel::init()
+{
+    m_data.clear();
+    GUI_NoteEditor = new NoteEditor(this);
+
+    ui->ListNotes->setFont(Config::configuration()->getGUIMapFont()["FontNotes"]);
+    createConnect();
+    sUpdateGUIDayMode();
+
+    fillModulesList();
+}
+//------------------------------------------------------------------------------
+void RightPanel::createConnect()
+{
+    connect(ui->ListViewBookmark, SIGNAL(activated(QModelIndex)), SLOT(openBookmark(QModelIndex)));
+    connect(ui->pBDelete, SIGNAL(clicked()), SLOT(deleteBookmark()));
+
+    connect(ui->ListNotes, SIGNAL(clicked(QModelIndex)), SLOT(sEditNote(QModelIndex)));
+    connect(ui->pBLoad, SIGNAL(clicked()), SLOT(sLoadNotes()));
+    connect(ui->pBDeleteNote, SIGNAL(clicked()), SLOT(sDeleteNote()));
+    connect(ui->pBEditNote, SIGNAL(clicked()), SLOT(sEditNote()));
+    connect(ui->pBNewNote, SIGNAL(clicked()), SLOT(sNewNote()));
 }
 //------------------------------------------------------------------------------
 void RightPanel::retranslate()
@@ -98,18 +122,6 @@ void RightPanel::deleteBookmark()
     ui->ListViewBookmark->setModel(modelBookmarks);
 }
 //------------------------------------------------------------------------------
-void RightPanel::init()
-{
-    createConnect();
-}
-//------------------------------------------------------------------------------
-void RightPanel::createConnect()
-{
-    connect(ui->ListViewBookmark, SIGNAL(activated(QModelIndex)),
-            SLOT(openBookmark(QModelIndex)));
-    connect(ui->pBDelete, SIGNAL(clicked()), SLOT(deleteBookmark()));
-}
-//------------------------------------------------------------------------------
 void RightPanel::openBookmark(QModelIndex ind)
 {
     QString str = ind.data(0).toString();
@@ -125,4 +137,108 @@ void RightPanel::openBookmark(QModelIndex ind)
     emit SIGNAL_OpenBookmark(moduleName, bookName, chapterValue);
 }
 //------------------------------------------------------------------------------
+void RightPanel::showNoteList(QString curModule,
+                              QString curBook,
+                              QString curChapter,
+                              QString curPath,
+                              QString firstVerse)
+{
+    m_data = getNoteOfParams(curPath,
+                             curModule,
+                             curBook,
+                             curChapter,
+                             firstVerse);
+
+    m_curModule = curModule;
+    m_curBook = curBook;
+    m_curChapter = curChapter;
+    m_curPath = curPath;
+    m_verse = firstVerse;
+
+    if (m_data.size() != 0)
+    {
+        QStandardItemModel *model = new QStandardItemModel(m_data.size(), 0);
+        model->clear();
+        ui->ListNotes->setModel(model);
+
+        for (int i = 0; i < m_data.size(); i++)
+        {
+            QStandardItem *item = new QStandardItem();
+            QString first50Simbols = m_data[i].mid(0, 50);
+            item->setData(first50Simbols, Qt::DisplayRole );
+            item->setEditable( false );
+            model->appendRow( item );
+        }
+
+    }
+    else
+    {
+        // reset
+        ui->ListNotes->setModel(new QStandardItemModel());
+    }
+}
+//------------------------------------------------------------------------------
+void RightPanel::sEditNote(QModelIndex ind)
+{
+    GUI_NoteEditor->setModuleName(m_curModule);
+    GUI_NoteEditor->setBookName(m_curBook);
+    GUI_NoteEditor->setChapterValue(m_curChapter);
+    GUI_NoteEditor->setPath(m_curPath);
+    GUI_NoteEditor->setVerse(m_verse);
+    GUI_NoteEditor->editNote(m_data[ind.row()]);
+}
+//------------------------------------------------------------------------------
+void RightPanel::sUpdateGUIDayMode()
+{
+    QPalette p = ui->ListNotes->palette();
+    if (Config::configuration()->getDayMode())
+    {
+        p.setColor(QPalette::Base, GL_COLOR_DAY);
+    }
+    else
+    {
+        p.setColor(QPalette::Base, GL_COLOR_NIGHT);
+    }
+
+    ui->ListNotes->setPalette(p);
+    ui->comBBooks->setPalette(p);
+    ui->comBModules->setPalette(p);
+    ui->sBChapter->setPalette(p);
+    ui->ListViewBookmark->setPalette(p);
+}
+//------------------------------------------------------------------------------
+void RightPanel::fillModulesList()
+{
+
+    QStringList t_list;
+    // получить список модулей в папках которых есть заметки
+    // добавить в combobox
+    // для текущего модуля загружать заметки, если нет, то показывать пустой список
+
+    t_list << "test1"
+           << "test2"
+           << "test3";
+
+    ui->comBModules->setModel(new QStringListModel(t_list, this));
+}
+//------------------------------------------------------------------------------
+void RightPanel::sLoadNotes()
+{
+
+}
+//------------------------------------------------------------------------------
+void RightPanel::sNewNote()
+{
+
+}
+//------------------------------------------------------------------------------
+void RightPanel::sDeleteNote()
+{
+
+}
+//------------------------------------------------------------------------------
+void RightPanel::sEditNote()
+{
+    sEditNote(ui->ListNotes->currentIndex());
+}
 //------------------------------------------------------------------------------

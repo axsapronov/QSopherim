@@ -3,6 +3,10 @@
 
 #include <QDockWidget>
 #include <QModelIndex>
+#include <QStandardItemModel>
+#include <QStringListModel>
+
+#include "noteeditor.h"
 
 namespace Ui {
     class RightPanel;
@@ -45,6 +49,14 @@ public slots:
      */
     void addNewBookmark(QString str);
 
+    void showNoteList(QString curModule,
+                      QString curBook,
+                      QString curChapter,
+                      QString curPath,
+                      QString verse);
+
+    void sUpdateGUIDayMode();
+
 private slots:
     /**
      * @brief deleteBookmark
@@ -57,10 +69,28 @@ private slots:
      */
     void openBookmark(QModelIndex);
 
+    // notes slots
+    void sEditNote(QModelIndex ind);
+
+    void sEditNote();
+    void sNewNote();
+    void sDeleteNote();
+    void sLoadNotes();
+
 private:
     Ui::RightPanel *ui;
 
     QStringList m_listBookmark;
+    QStandardItemModel *m_modelNotes;
+    QHash<int, QString> m_data;
+
+    NoteEditor *GUI_NoteEditor;
+
+    QString m_curModule;
+    QString m_curBook;
+    QString m_curChapter;
+    QString m_curPath;
+    QString m_verse;
 
     /**
      * @brief init
@@ -72,6 +102,8 @@ private:
      * Create connects
      */
     void createConnect();
+
+    void fillModulesList();
 
 };
 
