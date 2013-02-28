@@ -133,6 +133,11 @@ void Config::loadSettings()
     dir.mkpath(getAppDir() + "bible");
     dir.mkpath(getAppDir() + "dictionary");
     dir.mkpath(getAppDir() + "other");
+    dir.mkpath(getAppDir() + "book");
+    dir.mkpath(getAppDir() + "comments");
+    dir.mkpath(getAppDir() + "apocrypha");
+    dir.mkpath(getAppDir() + "strongs");
+    dir.mkpath(getAppDir() + "plans");
 
     // viewer settings
     m_viewerColor = qVariantValue<QColor> (settings.value("viewer/color"));
