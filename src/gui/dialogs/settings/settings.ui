@@ -40,7 +40,7 @@
    <item row="0" column="0" colspan="2">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -344,7 +344,7 @@
        <item row="1" column="3">
         <widget class="QPushButton" name="pBFontMenu">
          <property name="text">
-          <string>Menu Font</string>
+          <string>Settings</string>
          </property>
         </widget>
        </item>
@@ -383,7 +383,7 @@
        <item row="2" column="3">
         <widget class="QPushButton" name="pBFontModulesName">
          <property name="text">
-          <string>Module name Font</string>
+          <string>Settings</string>
          </property>
         </widget>
        </item>
@@ -422,7 +422,7 @@
        <item row="3" column="3">
         <widget class="QPushButton" name="pBFontBookName">
          <property name="text">
-          <string>Book name Font</string>
+          <string>Settings</string>
          </property>
         </widget>
        </item>
@@ -475,7 +475,7 @@
        <item row="6" column="3">
         <widget class="QPushButton" name="pBFontStrongsHebrew">
          <property name="text">
-          <string>Hebrew Font</string>
+          <string>Settings</string>
          </property>
         </widget>
        </item>
@@ -511,7 +511,7 @@
        <item row="7" column="3">
         <widget class="QPushButton" name="pBFontStrongsGreek">
          <property name="text">
-          <string>Greek Font</string>
+          <string>Settings</string>
          </property>
         </widget>
        </item>
@@ -554,7 +554,7 @@
        <item row="9" column="3">
         <widget class="QPushButton" name="pBFontJornal">
          <property name="text">
-          <string>Journal Font</string>
+          <string>Settings</string>
          </property>
         </widget>
        </item>
@@ -590,7 +590,7 @@
        <item row="10" column="3">
         <widget class="QPushButton" name="pBFontNotes">
          <property name="text">
-          <string>Notes Font</string>
+          <string>Settings</string>
          </property>
         </widget>
        </item>
@@ -626,7 +626,7 @@
        <item row="11" column="3">
         <widget class="QPushButton" name="pBFontReadingPlan">
          <property name="text">
-          <string>Reading plan Font</string>
+          <string>Settings</string>
          </property>
         </widget>
        </item>
