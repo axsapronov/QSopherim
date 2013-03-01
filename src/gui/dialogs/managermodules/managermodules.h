@@ -18,8 +18,8 @@ public:
     explicit ManagerModules(QWidget *parent = 0);
     ~ManagerModules();
 
-    void loadListModules();
     void loadStrongList();
+    void loadAllModules();
 
 signals:
     void SIGNAL_RefreshModules();
@@ -100,8 +100,6 @@ private:
      * @param moduleName
      */
     void deleteModule(QString moduleName);
-
-    int m_countBiblies;
 
     /**
      * @brief updateList

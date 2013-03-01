@@ -61,6 +61,7 @@ void BibleQuoteDictModule::parseModule(QString pathToModule)
 //------------------------------------------------------------------------------
 bool BibleQuoteDictModule::createIniFile()
 {
+    m_type = "Dictionary";
     /// добавить обработку типа
     QString text =
             "////Module for QSopherim"

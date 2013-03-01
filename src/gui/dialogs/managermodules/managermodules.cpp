@@ -110,42 +110,8 @@ void ManagerModules::deleteSelectedModules()
                         selectedList.at(i).row(), 1
                         ), Qt::DisplayRole
                     ).toString();
-
-        if (t_str == "bible")
-        {
-            m_countBiblies--;
-        }
     }
     updateList();
-}
-//------------------------------------------------------------------------------
-void ManagerModules::loadListModules()
-{
-    QSopherimModuleList* list = Config::configuration()->getListBibles();
-    modelBiblies->clear();
-    //    myDebug() << "yes";
-    m_listModule->clearList();
-
-
-    if (list->getSize() != 0)
-    {
-        // fill modules
-        for (int i = 0; i < list->getSize(); i++)
-            m_listModule->addModule(list->getModule(i));
-
-        m_countBiblies = list->getSize();
-
-        // fill dict
-
-        list = Config::configuration()->getListDictionaries();
-        if (list->getSize() != 0)
-            for (int i = 0; i < list->getSize(); i++)
-                m_listModule->addModule(list->getModule(i));
-
-        updateList();
-        //        ui->tableViewStateModules->setModel(modelBiblies);
-        //        ui->tableViewStateModules->resizeColumnsToContents();
-    }
 }
 //------------------------------------------------------------------------------
 void ManagerModules::updateList()
@@ -154,14 +120,22 @@ void ManagerModules::updateList()
     for(int i = 0; i < m_listModule->getSize(); i++)
     {
         modelBiblies->setItem(i, 0, new QStandardItem(m_listModule->getModule(i)->getModuleName()));
-        if (i < m_countBiblies)
-        {
+
+        if (m_listModule->getModule(i)->getModuleType() == "Bible")
             modelBiblies->setItem(i, 1, new QStandardItem(tr("bible")));
-        }
-        else
-        {
+
+        if (m_listModule->getModule(i)->getModuleType() == "Book")
+            modelBiblies->setItem(i, 1, new QStandardItem(tr("book")));
+
+        if (m_listModule->getModule(i)->getModuleType() == "Comments")
+            modelBiblies->setItem(i, 1, new QStandardItem(tr("comments")));
+
+        if (m_listModule->getModule(i)->getModuleType() == "Apocrypha")
+            modelBiblies->setItem(i, 1, new QStandardItem(tr("apocrypha")));
+
+        if (m_listModule->getModule(i)->getModuleType() == "Dictionary")
             modelBiblies->setItem(i, 1, new QStandardItem(tr("dictionaries")));
-        }
+
         // set hide show
         if (!Config::configuration()->getListHiddenModules()->contains(m_listModule->getModule(i)->getModuleName()))
         {
@@ -349,4 +323,39 @@ void ManagerModules::loadStrongList()
     ui->ListWHebrew->addItems(m_hebrewList);
 }
 //------------------------------------------------------------------------------
+void ManagerModules::loadAllModules()
+{
+    QSopherimModuleList* list = Config::configuration()->getListBibles();
+    modelBiblies->clear();
+    m_listModule->clearList();
+
+    if (list->getSize() != 0)
+    {
+        // fill modules
+        for (int i = 0; i < list->getSize(); i++)
+            m_listModule->addModule(list->getModule(i));
+    }
+
+    list = Config::configuration()->getListDictionaries();
+    if (list->getSize() != 0)
+        for (int i = 0; i < list->getSize(); i++)
+            m_listModule->addModule(list->getModule(i));
+
+    list = Config::configuration()->getListBook();
+    if (list->getSize() != 0)
+        for (int i = 0; i < list->getSize(); i++)
+            m_listModule->addModule(list->getModule(i));
+
+    list = Config::configuration()->getListComments();
+    if (list->getSize() != 0)
+        for (int i = 0; i < list->getSize(); i++)
+            m_listModule->addModule(list->getModule(i));
+
+    list = Config::configuration()->getListApocrypha();
+    if (list->getSize() != 0)
+        for (int i = 0; i < list->getSize(); i++)
+            m_listModule->addModule(list->getModule(i));
+
+    updateList();
+}
 //------------------------------------------------------------------------------

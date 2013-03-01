@@ -641,24 +641,24 @@ QString getModuleNameFromIni(const QString f_filePath)
     return r_moduleName;
 }
 //------------------------------------------------------------------------------
-QStringList getReadinPlanForDay(const int f_mount, const int f_day)
+QStringList getReadinPlanForDay(const int f_mount, const int f_day, const QString f_type)
 {
     QStringList r_list;
 
     switch (f_mount)
     {
-    case MOUNT_JANUARY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "plans/01.xml"); break;
-    case MOUNT_FEBRUARY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "plans/02.xml"); break;
-    case MOUNT_MARCH: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "plans/03.xml"); break;
-    case MOUNT_APRIL: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "plans/04.xml"); break;
-    case MOUNT_MAY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "plans/05.xml"); break;
-    case MOUNT_JUNE: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "plans/06.xml"); break;
-    case MOUNT_JULY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "plans/07.xml"); break;
-    case MOUNT_AUGUST: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "plans/08.xml"); break;
-    case MOUNT_SEPTEMBEER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "plans/09.xml"); break;
-    case MOUNT_OCTOBER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "plans/10.xml"); break;
-    case MOUNT_NOVEMBER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "plans/11.xml"); break;
-    case MOUNT_DECEMBER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "plans/12.xml"); break;
+    case MOUNT_JANUARY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/01.xml"); break;
+    case MOUNT_FEBRUARY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/02.xml"); break;
+    case MOUNT_MARCH: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/03.xml"); break;
+    case MOUNT_APRIL: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/04.xml"); break;
+    case MOUNT_MAY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/05.xml"); break;
+    case MOUNT_JUNE: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/06.xml"); break;
+    case MOUNT_JULY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/07.xml"); break;
+    case MOUNT_AUGUST: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/08.xml"); break;
+    case MOUNT_SEPTEMBEER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/09.xml"); break;
+    case MOUNT_OCTOBER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/10.xml"); break;
+    case MOUNT_NOVEMBER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/11.xml"); break;
+    case MOUNT_DECEMBER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/12.xml"); break;
     default:
         break;
     }
@@ -669,12 +669,11 @@ QStringList getReadinPlanForDay(const int f_mount, const int f_day)
 QStringList getReadingPlanForDayFromFile(const int f_day, const QString f_path)
 {
     QStringList r_list;
-
     QStringList t_list(getTextFromHtmlFile(f_path).split("\n"));
 
     for (int i = 0; i < t_list.size(); i++)
     {
-        if (t_list.at(i).indexOf(QString("day=\"%1\"").arg(f_day)) >= 0)
+        if (t_list.at(i).indexOf(QString("day=\'%1\'").arg(f_day)) >= 0)
         {
             int pos1 = t_list.at(i).indexOf(">") + 1;
             int pos2 = t_list.at(i).indexOf("<", pos1);

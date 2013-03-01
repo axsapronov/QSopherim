@@ -266,7 +266,7 @@ void addToListBibleModule(const QString shortName);
  */
 QString getModuleNameFromIni(const QString f_filePath);
 
-QStringList getReadinPlanForDay(const int f_mount, const int f_day);
+QStringList getReadinPlanForDay(const int f_mount, const int f_day, const QString f_type);
 QStringList getReadingPlanForDayFromFile(const int f_day, const QString f_path);
 QString getCommentForChapter(const QString f_path, const QString f_book, const QString f_chapter);
 bool isExistBook(const QString f_path, const QString f_book, QString *r_bookName);

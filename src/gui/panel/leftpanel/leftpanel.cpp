@@ -454,6 +454,11 @@ void LeftPanel::retranslate()
 //------------------------------------------------------------------------------
 void LeftPanel::showChapterFromJournal(const QString module, const QString book, const QString chapter)
 {
+    // moduleList не содержит всех модулей
+    // надо получать также тип модуля
+    //todo
+    // по нему уже плучать нужный список и поперли
+
     if (moduleList->isExist(module))
     {
         QString t_pathToModule = Config::configuration()->getAppDir() +

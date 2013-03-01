@@ -338,7 +338,7 @@ void MainWindow::createConnects()
     connect(GUI_LeftPanel, SIGNAL(SIGNAL_AddRecordToJournal(QString,QString,QString))
             , GUI_LeftPanel2, SLOT(addRecordToJournal(QString,QString,QString)));
 
-    connect(GUI_LeftPanel2, SIGNAL(SIGNAL_ShowChapterFromJournal(QString,QString,QString))
+    connect(GUI_LeftPanel2, SIGNAL(SIGNAL_ShowChapterFrom(QString,QString,QString))
             , GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
 
     connect(GUI_LeftPanel, SIGNAL(SIGNAL_ShowHideLeftPanel2(bool))
@@ -355,6 +355,7 @@ void MainWindow::createConnects()
 
     connect(GUI_Settings, SIGNAL(SIGNAL_UpdateDayMode()), GUI_LeftPanel, SLOT(sUpdateGUIDayMode()));
     connect(GUI_Settings, SIGNAL(SIGNAL_UpdateDayMode()), GUI_LeftPanel2, SLOT(sUpdateGUIDayMode()));
+    connect(GUI_Settings, SIGNAL(SIGNAL_UpdateDayMode()), GUI_RightPanel, SLOT(sUpdateGUIDayMode()));
 
 
     // connect find dialog to left2 panel
@@ -493,9 +494,11 @@ void MainWindow::showSettings()
 void MainWindow::showModuleManager()
 {
     //set sett
-    GUI_LeftPanel->setListModuleFromList();
-    GUI_ManagerModules->loadListModules();
+//    GUI_LeftPanel->setListModuleFromList();
+//    GUI_ManagerModules->loadListModules();
+    GUI_ManagerModules->loadAllModules();
     GUI_ManagerModules->loadStrongList();
+
     GUI_ManagerModules->show();
 }
 //------------------------------------------------------------------------------

@@ -35,7 +35,7 @@ public:
     void loadJournal();
 
 signals:
-    void SIGNAL_ShowChapterFromJournal(QString, QString, QString);
+    void SIGNAL_ShowChapterFrom(QString, QString, QString);
 
 public slots:
 
@@ -58,6 +58,7 @@ private slots:
      If select item in journal, then open this item
      */
     void showChapterFromJournal(QModelIndex);
+    void showChapterFromPlan(QModelIndex);
 
 private:
     Ui::LeftPanel2 *ui;

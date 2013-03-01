@@ -1117,7 +1117,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="260"/>
         <source>Add to greek strongs</source>
-        <translation>Добавить в греческие Стронги</translation>
+        <translation type="unfinished">Добавить в греческие Стронги</translation>
     </message>
     <message>
         <location filename="../../src/gui/dialogs/managermodules/managermodules.ui" line="277"/>
@@ -1137,22 +1137,22 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="159"/>
         <source>bible</source>
-        <translation type="unfinished"></translation>
+        <translation>Библия</translation>
     </message>
     <message>
         <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="163"/>
         <source>dictionaries</source>
-        <translation type="unfinished"></translation>
+        <translation>Словарь</translation>
     </message>
     <message>
         <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="168"/>
         <source>show</source>
-        <translation>Показать</translation>
+        <translation>включен</translation>
     </message>
     <message>
         <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="172"/>
         <source>hidden</source>
-        <translation>Скрыть</translation>
+        <translation>скрыт</translation>
     </message>
     <message>
         <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="193"/>

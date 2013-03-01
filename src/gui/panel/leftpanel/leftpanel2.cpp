@@ -33,8 +33,6 @@ LeftPanel2::~LeftPanel2()
 //------------------------------------------------------------------------------
 void LeftPanel2::init()
 {
-
-
     //    QString path = m_curPath;
     if (Config::configuration()->getStrongHebrew().isEmpty())
     {
@@ -64,8 +62,9 @@ void LeftPanel2::init()
 void LeftPanel2::createConnects()
 {
     connect(ui->ListViewJournal, SIGNAL(clicked(QModelIndex)), SLOT(showChapterFromJournal(QModelIndex)));
-}
+    connect(ui->ListViewReadingPlan, SIGNAL(clicked(QModelIndex)), SLOT(showChapterFromPlan(QModelIndex)));
 
+}
 //------------------------------------------------------------------------------
 void LeftPanel2::retranslate()
 {
@@ -130,7 +129,23 @@ void LeftPanel2::showChapterFromJournal(QModelIndex ind)
     str.remove(bookName + ":");
     QString chapterValue = str;
 
-    emit SIGNAL_ShowChapterFromJournal(moduleName, bookName, chapterValue);
+    emit SIGNAL_ShowChapterFrom(moduleName, bookName, chapterValue);
+}
+//------------------------------------------------------------------------------
+void LeftPanel2::showChapterFromPlan(QModelIndex ind)
+{
+    // parse journal item
+    // get module name, book name, chapter value
+    QString str = ui->ListViewReadingPlan->model()->data(ind).toString();
+
+    int pos = str.indexOf(":");
+    QString bookName = QString(str).mid(0, pos);
+    str.remove(bookName + ":");
+    pos = str.indexOf(":");
+    QString chapterValue = QString(str).mid(0, pos);
+
+    if (Config::configuration()->isExistLastChapter())
+        emit SIGNAL_ShowChapterFrom(Config::configuration()->getLastModule(), bookName, chapterValue);
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::showStrong(QString number)
@@ -207,7 +222,7 @@ void LeftPanel2::sUpdateGUIDayMode()
 void LeftPanel2::setReadingPlanForCurrentDay()
 {
     QDate t_date;
-    m_readingPlanList = getReadinPlanForDay(t_date.currentDate().month(), t_date.currentDate().day());
+    m_readingPlanList = getReadinPlanForDay(t_date.currentDate().month(), t_date.currentDate().day(), "family");
 
     QStandardItemModel *model = new QStandardItemModel(m_readingPlanList.size(), 0);
     model->clear();
