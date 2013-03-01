@@ -421,7 +421,7 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/panel/leftpanel/leftpanel.cpp" line="513"/>
+        <location filename="../../src/gui/panel/leftpanel/leftpanel.cpp" line="518"/>
         <source>&lt;b&gt;Word: &lt;i&gt;%1&lt;/i&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -449,8 +449,8 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/panel/leftpanel/leftpanel2.cpp" line="143"/>
-        <location filename="../../src/gui/panel/leftpanel/leftpanel2.cpp" line="155"/>
+        <location filename="../../src/gui/panel/leftpanel/leftpanel2.cpp" line="158"/>
+        <location filename="../../src/gui/panel/leftpanel/leftpanel2.cpp" line="170"/>
         <source>Strong number: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -661,37 +661,37 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="415"/>
+        <location filename="../../src/main/mainwindow.cpp" line="416"/>
         <source>&amp;Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="418"/>
+        <location filename="../../src/main/mainwindow.cpp" line="419"/>
         <source>&amp;Expand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="421"/>
+        <location filename="../../src/main/mainwindow.cpp" line="422"/>
         <source>&amp;Restore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="424"/>
+        <location filename="../../src/main/mainwindow.cpp" line="425"/>
         <source>Q&amp;uit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="566"/>
+        <location filename="../../src/main/mainwindow.cpp" line="569"/>
         <source>Convert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="573"/>
+        <location filename="../../src/main/mainwindow.cpp" line="576"/>
         <source>Convert: %1 modules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="640"/>
+        <location filename="../../src/main/mainwindow.cpp" line="643"/>
         <source>Convert complete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -789,32 +789,47 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="159"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="125"/>
         <source>bible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="163"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="128"/>
+        <source>book</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="131"/>
+        <source>comments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="134"/>
+        <source>apocrypha</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="137"/>
         <source>dictionaries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="168"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="142"/>
         <source>show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="172"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="146"/>
         <source>hidden</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="193"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="167"/>
         <source>Select strong (.htm)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="195"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="169"/>
         <source>All Files (*);;Html Files (*.htm)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -947,17 +962,17 @@ Do you want to save your changes?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="181"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="155"/>
         <source>Module</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="182"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="156"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="183"/>
+        <location filename="../../src/gui/dialogs/managermodules/managermodules.cpp" line="157"/>
         <source>State</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1201,7 +1216,7 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/gui/dialogs/settings/settings.cpp" line="159"/>
+        <location filename="../../src/gui/dialogs/settings/settings.cpp" line="164"/>
         <source>Settings has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>

@@ -18,6 +18,7 @@ Settings::Settings(QWidget *parent) :
 
     setWindowTitle(QString(tr("Settings") + " | %1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
 
+    ui->tabWidget->removeTab(3);
     init();
     createConnect();
 }

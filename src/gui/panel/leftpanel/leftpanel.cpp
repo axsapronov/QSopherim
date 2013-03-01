@@ -129,7 +129,7 @@ void LeftPanel::refreshListModule(QSopherimModuleList* list, const QString f_typ
         {
             if (f_type == "Book")
             {
-                ui->tabWidget->insertTab(GUI_TAB_BOOK, ui->tabBook, f_type);
+                ui->tabWidget->insertTab(GUI_TAB_BOOK, ui->tabBook, tr("Book"));
                 typeModelBook = new QStringListModel(items, this);
                 ui->comBModulesBook->setModel(typeModelBook);
                 if (Config::configuration()->isExistLastChapter() and
@@ -148,7 +148,7 @@ void LeftPanel::refreshListModule(QSopherimModuleList* list, const QString f_typ
 
             if (f_type == "Apocrypha")
             {
-                ui->tabWidget->insertTab(GUI_TAB_APOCRYPHA, ui->tabApocrypha, f_type);
+                ui->tabWidget->insertTab(GUI_TAB_APOCRYPHA, ui->tabApocrypha, tr("Apocrypha"));
                 typeModel = new QStringListModel(items, this);
                 ui->comBModulesApocrypha->setModel(typeModel);
                 if (Config::configuration()->isExistLastChapter() and

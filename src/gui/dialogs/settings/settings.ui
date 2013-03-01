@@ -648,7 +648,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="tabNetwork">
       <property name="enabled">
        <bool>false</bool>
       </property>
