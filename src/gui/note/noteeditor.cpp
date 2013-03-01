@@ -165,3 +165,17 @@ void NoteEditor::rejectNote()
     m_edit = false;
 }
 //------------------------------------------------------------------------------
+void NoteEditor::sUpdateGUIDayMode()
+{
+    QPalette p = ui->textEditor->palette();
+    if (Config::configuration()->getDayMode())
+    {
+        p.setColor(QPalette::Base, GL_COLOR_DAY);
+    }
+    else
+    {
+        p.setColor(QPalette::Base, GL_COLOR_NIGHT);
+    }
+    ui->textEditor->setPalette(p);
+}
+//------------------------------------------------------------------------------

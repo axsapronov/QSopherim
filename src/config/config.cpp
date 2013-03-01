@@ -22,35 +22,35 @@ Config::Config()
         m_appLogLevel = 3;
 
 #ifdef Q_OS_WIN
-        m_fontFamily = "Tahoma";
-        m_fontMenu = "Tahoma";
-        m_fontModulesName = "Tahoma";
-        m_fontBookName = "Tahoma";
-        m_fontStrongsHebrew = "Tahoma";
-        m_fontStrongsGreek = "Tahoma";
-        m_fontJournal = "Tahoma";
-        m_fontNotes = "Tahoma";
-        m_fontReadingPlan = "Tahoma";
+        QFont t_GUIFontMenu = QFont("Tahoma");
+        QFont t_GUIFontModulesName = QFont("Tahoma");
+        QFont t_GUIFontBookName = QFont("Tahoma");
+        QFont t_GUIFontStrongsHebrew = QFont("Tahoma");
+        QFont t_GUIFontStrongsGreek = QFont("Tahoma");
+        QFont t_GUIFontJournal = QFont("Tahoma");
+        QFont t_GUIFontNotes = QFont("Tahoma");
+        QFont t_GUIFontReadingPlan = QFont("Tahoma");
 #endif
 
 #ifdef Q_OS_LINUX
         QFont t_GUIFontMenu = QFont("Sans Serif");
-        t_GUIFontMenu.setPointSize(9);
         QFont t_GUIFontModulesName = QFont("Sans Serif");
-        t_GUIFontModulesName.setPointSize(9);
         QFont t_GUIFontBookName = QFont("Sans Serif");
-        t_GUIFontBookName.setPointSize(9);
         QFont t_GUIFontStrongsHebrew = QFont("Sans Serif");
-        t_GUIFontStrongsHebrew.setPointSize(9);
         QFont t_GUIFontStrongsGreek = QFont("Sans Serif");
-        t_GUIFontStrongsGreek.setPointSize(9);
         QFont t_GUIFontJournal = QFont("Sans Serif");
-        t_GUIFontJournal.setPointSize(9);
         QFont t_GUIFontNotes = QFont("Sans Serif");
-        t_GUIFontNotes.setPointSize(9);
         QFont t_GUIFontReadingPlan = QFont("Sans Serif");
-        t_GUIFontReadingPlan.setPointSize(9);
 #endif
+
+        t_GUIFontReadingPlan.setPointSize(9);
+        t_GUIFontNotes.setPointSize(9);
+        t_GUIFontJournal.setPointSize(9);
+        t_GUIFontStrongsGreek.setPointSize(9);
+        t_GUIFontStrongsHebrew.setPointSize(9);
+        t_GUIFontBookName.setPointSize(9);
+        t_GUIFontModulesName.setPointSize(9);
+        t_GUIFontMenu.setPointSize(9);
 
         m_GUIMapFont["FontMenu"] = t_GUIFontMenu;
         m_GUIMapFont["FontModulesName"] = t_GUIFontModulesName;
@@ -77,6 +77,12 @@ Config::Config()
 
         m_listHiddenModules = new QStringList;
         m_journalHistory = new QStringList;
+
+        m_listBibles = new QSopherimModuleList();
+        m_listDictinaries = new QSopherimModuleList();;
+        m_listComments = new QSopherimModuleList();;
+        m_listApocrypha = new QSopherimModuleList();;
+        m_listBook = new QSopherimModuleList();;
     }
     else
     {

@@ -72,10 +72,11 @@ void LeftPanel::init()
     ui->tableBookApocrypha->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
     ui->textBrComments->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
 
-    ui->tabWidget->removeTab(GUI_TAB_OTHER);
-    ui->tabWidget->removeTab(GUI_TAB_COMMENTS);
-    ui->tabWidget->removeTab(GUI_TAB_DICT);
-    ui->tabWidget->removeTab(GUI_TAB_BOOK);
+    ui->tabWidget->removeTab(ui->tabWidget->indexOf(ui->tabApocrypha));
+    ui->tabWidget->removeTab(ui->tabWidget->indexOf(ui->tabComments));
+    ui->tabWidget->removeTab(ui->tabWidget->indexOf(ui->tabBook));
+    ui->tabWidget->removeTab(ui->tabWidget->indexOf(ui->tabDictionary));
+    ui->tabWidget->removeTab(ui->tabWidget->indexOf(ui->tabOther));
 }
 //------------------------------------------------------------------------------
 void LeftPanel::createConnects()
@@ -185,7 +186,7 @@ void LeftPanel::refreshListDict(QSopherimModuleList* list)
     else
     {
         // dict tab
-        ui->tabWidget->removeTab(GUI_TAB_DICT);
+        ui->tabWidget->removeTab(ui->tabWidget->indexOf(ui->tabDictionary));
     }
 }
 //------------------------------------------------------------------------------
@@ -211,7 +212,7 @@ void LeftPanel::refreshListComments(QSopherimModuleList* list)
     else
     {
         // dict tab
-        ui->tabWidget->removeTab(GUI_TAB_DICT);
+        ui->tabWidget->removeTab(ui->tabWidget->indexOf(ui->tabComments));
     }
 }
 //------------------------------------------------------------------------------
@@ -814,5 +815,4 @@ void LeftPanel::loadFirstBook()
 {
     refreshBookList(ui->comBModules->currentText(), "Bible");
 }
-
 //------------------------------------------------------------------------------

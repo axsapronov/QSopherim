@@ -26,6 +26,9 @@ public:
 
     void deleteNote(QString f_module, QString f_book, QString f_chapter, QString f_path, QString f_text);
 
+public slots:
+    void sUpdateGUIDayMode();
+
 private slots:
     void saveNote();
     void rejectNote();
