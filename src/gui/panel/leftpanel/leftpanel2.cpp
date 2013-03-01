@@ -63,7 +63,6 @@ void LeftPanel2::createConnects()
 {
     connect(ui->ListViewJournal, SIGNAL(clicked(QModelIndex)), SLOT(showChapterFromJournal(QModelIndex)));
     connect(ui->ListViewReadingPlan, SIGNAL(clicked(QModelIndex)), SLOT(showChapterFromPlan(QModelIndex)));
-
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::retranslate()
