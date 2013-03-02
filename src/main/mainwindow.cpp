@@ -78,7 +78,6 @@ MainWindow::~MainWindow()
     delete GUI_LeftPanel;
     delete GUI_LeftPanel2;
     delete GUI_ModuleViewer;
-    //    delete GUI_NoteEditor;
     delete GUI_ManagerModules;
     delete GUI_FindDialog;
     delete GUI_ModuleImportDialog;
@@ -170,7 +169,6 @@ void MainWindow::init()
 
     //    ui->centralWidget->setMouseTracking(true);
     GUI_ModuleViewer = new ModuleViewer(this);
-    //    GUI_NoteEditor = new NoteEditor(this);
 
     //    GUI_ModuleViewer->setMouseTracking(true);
     this->setCentralWidget(GUI_ModuleViewer);
@@ -293,11 +291,6 @@ void MainWindow::createConnects()
     connect(ui->action_Settings_Language_Deutsch, SIGNAL(triggered()), SLOT(setLangDe()) );
     connect(ui->action_Settings_Language_France, SIGNAL(triggered()),  SLOT(setLangFr()) );
 
-    // menu search
-
-    // toolbar
-    //    connect(ui->actionAction_Other_Create_Note, SIGNAL(triggered()), SLOT(createNote()));
-    //    connect(ui->actionAction_Other_Update_List_Module, SIGNAL(triggered()), SLOT(convertModulesFromFolder()));
 
     // menu about
     connect(ui->action_About_About, SIGNAL(triggered()), GUI_About, SLOT(show()));
@@ -306,12 +299,7 @@ void MainWindow::createConnects()
     connect(ui->action_About_Help, SIGNAL(triggered()), SLOT(showHelp()));
 
     // module viewer
-    //    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowNoteList(QString,QString,QString,QString,QString)),
-    //            GUI_RightPanel, SLOT(showNoteList(QString,QString,QString,QString,QString)));
-
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowStrong(QString)), GUI_LeftPanel2, SLOT(showStrong(QString)));
-    //    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNote()), SLOT(createNote()));
-
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowChapterFinish()), GUI_LeftPanel, SLOT(sUpdateGUI()));
 
     // settings

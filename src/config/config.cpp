@@ -169,7 +169,7 @@ void Config::loadSettings()
     QStringList keys = settings.childKeys();
     foreach (QString key, keys)
     {
-         m_GUIMapFont[key] = qVariantValue<QFont> (settings.value(key));
+        m_GUIMapFont[key] = qVariantValue<QFont> (settings.value(key));
     }
     settings.endGroup();
 
@@ -197,7 +197,6 @@ void Config::loadSettings()
 
     m_journalHistory->append(settings.value(QString("history/journal")).toString().split(GL_SYMBOL_SPLIT_JOURNAL));
     *m_journalHistory = removeEmptyQStringFromQStringList(m_journalHistory);
-
 
     //    myDebug() << QString(getAppDir() + bibleDir);
 
@@ -277,9 +276,9 @@ void Config::saveSettings()
     QMap<QString, QFont>::const_iterator i = m_GUIMapFont.constBegin();
     while (i != m_GUIMapFont.constEnd())
     {
-         settings.setValue(i.key(), i.value());
-         ++i;
-     }
+        settings.setValue(i.key(), i.value());
+        ++i;
+    }
     settings.endGroup();
 
     // strongs settings
@@ -714,5 +713,26 @@ void Config::setListModulesToMap(const QString f_type, QSopherimModuleList *f_ne
 QSopherimModuleList* Config::getListModulesFromMap(const QString f_type)
 {
     return m_listMap[f_type];
+}
+//------------------------------------------------------------------------------
+QString Config::getTypeOfModule(const QString f_module)
+{
+    QString r_str = "";
+    if (m_listMap["Bible"]->isExist(f_module))
+        return "Bible";
+
+    if (m_listMap["Comments"]->isExist(f_module))
+        return "Comments";
+
+    if (m_listMap["Book"]->isExist(f_module))
+        return "Book";
+
+    if (m_listMap["Dictionary"]->isExist(f_module))
+        return "Dictionary";
+
+    if (m_listMap["Apocrypha"]->isExist(f_module))
+        return "Apocrypha";
+
+    return r_str;
 }
 //------------------------------------------------------------------------------

@@ -312,6 +312,7 @@ public:
 
     QSopherimModuleList* getListModulesFromMap(const QString f_type);
     void setListModulesToMap(const QString f_type, QSopherimModuleList* f_newList);
+    QString getTypeOfModule(const QString f_module);
 
 private:
     QString m_appDir;

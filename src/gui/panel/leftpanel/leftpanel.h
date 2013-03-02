@@ -24,10 +24,6 @@ class LeftPanel : public QDockWidget
 public:
     explicit LeftPanel(QWidget *parent = 0);
     ~LeftPanel();
-
-
-    void setListModuleFromList();
-
     /**
      * @brief retranslate
      * retranslate gui
@@ -43,7 +39,7 @@ public slots:
      * @param book
      * @param chapter
      */
-    void showChapterFromJournal(const QString module, const QString book, const QString chapter);
+    void showChapterFromJournal(const QString f_module, const QString f_book, const QString f_chapter);
     /**
      * @brief sUpdateGUI
      */

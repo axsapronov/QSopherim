@@ -112,6 +112,8 @@ private:
     QString getFullPathToStrong(QString f_strong);
     void addStrongToConfFile(QString f_name, QString f_language);
 
+    void loadModules(const QString f_type);
+
 };
 
 #endif // MANAGERMODULES_H

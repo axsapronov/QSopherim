@@ -80,7 +80,7 @@ public:
     void clearList();
 
 private:
-    QVector<QSopherimModule*> moduleList;
+    QVector<QSopherimModule*> m_moduleList;
     int cur_int;
     void init();
     void findModules(QString dir);

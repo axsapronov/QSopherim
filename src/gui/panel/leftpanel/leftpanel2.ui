@@ -42,7 +42,11 @@
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="0" column="0">
-         <widget class="QListView" name="ListViewJournal"/>
+         <widget class="QListView" name="ListViewJournal">
+          <property name="editTriggers">
+           <set>QAbstractItemView::DoubleClicked</set>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

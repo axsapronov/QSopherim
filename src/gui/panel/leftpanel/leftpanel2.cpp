@@ -54,6 +54,7 @@ void LeftPanel2::init()
         m_strongGreek_on = true;
     }
 
+    m_journalList.clear();
     sUpdateGUIDayMode();
     sUpdateGUIFont();
 
@@ -110,12 +111,6 @@ void LeftPanel2::addRecordToJournal(QString modulename,
 //------------------------------------------------------------------------------
 void LeftPanel2::showChapterFromJournal(QModelIndex ind)
 {
-    //    GUI_NoteEditor->setModuleName(m_curModule);
-    //    GUI_NoteEditor->setBookName(m_curBook);
-    //    GUI_NoteEditor->setChapterValue(m_curChapter);
-    //    GUI_NoteEditor->setPath(m_curPath);
-
-
     // parse journal item
     // get module name, book name, chapter value
     QString str = ui->ListViewJournal->model()->data(ind).toString();
@@ -189,7 +184,6 @@ void LeftPanel2::sSetStrongGreek(QString path)
 void LeftPanel2::loadJournal()
 {
     m_journalList = *(Config::configuration()->getJournalHistory());
-
     QStandardItemModel *model = new QStandardItemModel(m_journalList.size(), 0);
     model->clear();
     ui->ListViewJournal->setModel(model);

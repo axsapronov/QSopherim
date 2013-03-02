@@ -184,7 +184,7 @@ void FindDialog::updateComBBook(int f_moduleIndex)
     if (f_moduleIndex != 0)
     {
         t_list.append(getBookList(Config::configuration()->getAppDir()
-                                  + Config::configuration()->getListBibles()->getModuleWithName(ui->comBModule->currentText())->getModulePath()));
+                                  + Config::configuration()->getListModulesFromMap("Bible")->getModuleWithName(ui->comBModule->currentText())->getModulePath()));
 
     }
 
@@ -204,7 +204,7 @@ void FindDialog::updateComBChapter(int f_bookIndex)
         QHash<QString, int> t_hash = getNumberOfChaptersInBook
                 (
                     Config::configuration()->getAppDir()
-                    + Config::configuration()->getListBibles()->getModuleWithName(ui->comBModule->currentText())->getModulePath()
+                    + Config::configuration()->getListModulesFromMap("Bible")->getModuleWithName(ui->comBModule->currentText())->getModulePath()
                     );
 
         int countChapters = t_hash[ui->comBBook->currentText()];
@@ -239,7 +239,7 @@ QString FindDialog::getPathFind()
     str = Config::configuration()->getAppDir() + "/";
 
     if (ui->comBModule->currentIndex() != 0)
-        str.append(Config::configuration()->getListBibles()->getModuleWithName(ui->comBModule->currentText())->getModulePath().remove("module" + GL_FORMAT_MODULE));
+        str.append(Config::configuration()->getListModulesFromMap("Bible")->getModuleWithName(ui->comBModule->currentText())->getModulePath().remove("module" + GL_FORMAT_MODULE));
     else
         str.append("bible");
 

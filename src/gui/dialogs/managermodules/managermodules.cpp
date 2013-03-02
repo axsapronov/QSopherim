@@ -325,38 +325,24 @@ void ManagerModules::loadStrongList()
 //------------------------------------------------------------------------------
 void ManagerModules::loadAllModules()
 {
-    QSopherimModuleList* list = Config::configuration()->getListBibles();
     modelBiblies->clear();
     m_listModule->clearList();
 
-    if (list->getSize() != 0)
-    {
-        // fill modules
-        for (int i = 0; i < list->getSize(); i++)
-            m_listModule->addModule(list->getModule(i));
-    }
-
-    list = Config::configuration()->getListDictionaries();
-    if (list->getSize() != 0)
-        for (int i = 0; i < list->getSize(); i++)
-            m_listModule->addModule(list->getModule(i));
-
-    list = Config::configuration()->getListBook();
-    if (list->getSize() != 0)
-        for (int i = 0; i < list->getSize(); i++)
-            m_listModule->addModule(list->getModule(i));
-
-    list = Config::configuration()->getListComments();
-    if (list->getSize() != 0)
-        for (int i = 0; i < list->getSize(); i++)
-            m_listModule->addModule(list->getModule(i));
-
-    list = Config::configuration()->getListApocrypha();
-    if (list->getSize() != 0)
-        for (int i = 0; i < list->getSize(); i++)
-            m_listModule->addModule(list->getModule(i));
+    loadModules("Bible");
+    loadModules("Dictionary");
+    loadModules("Comments");
+    loadModules("Apocrypha");
+    loadModules("Book");
 
     updateList();
+}
+//------------------------------------------------------------------------------
+void ManagerModules::loadModules(const QString f_type)
+{
+    QSopherimModuleList* list = Config::configuration()->getListModulesFromMap(f_type);
+    if (list->getSize() != 0)
+        for (int i = 0; i < list->getSize(); i++)
+            m_listModule->addModule(list->getModule(i));
 }
 //------------------------------------------------------------------------------
 void ManagerModules::accept()

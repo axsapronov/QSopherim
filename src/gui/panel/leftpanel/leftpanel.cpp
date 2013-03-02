@@ -34,7 +34,6 @@ LeftPanel::~LeftPanel()
     delete modelChapters;
     delete modelModules;
     delete modelClear;
-    delete moduleList;
 
     delete typeModelBook;
     delete typeModel;
@@ -49,7 +48,6 @@ void LeftPanel::init()
     modelBooks = new QStandardItemModel(0, 0, this);
     modelChapters = new QStandardItemModel(0, 0, this);
     modelClear = new QStandardItemModel(0, 0, this);
-    moduleList = new QSopherimModuleList();
     typeModelBook = new QStringListModel();
     typeModel = new QStringListModel();
     m_lastNameOfBook  = "";
@@ -102,11 +100,9 @@ void LeftPanel::refreshListModule(QSopherimModuleList* list, const QString f_typ
 {
     if (list->getSize() != 0 )
     {
-        //    this->modelModules = new QStandardItemModel(moduleList->getSize(), 1, this);
         //* Rows and 1 Columns
         modelBooks->clear();
         modelChapters->clear();
-        moduleList = list;
         QStringList items;
 
         for (int i = 0; i < list->getSize(); i++)
@@ -426,44 +422,45 @@ void LeftPanel::retranslate()
     ui->retranslateUi(this);
 }
 //------------------------------------------------------------------------------
-void LeftPanel::showChapterFromJournal(const QString module, const QString book, const QString chapter)
+void LeftPanel::showChapterFromJournal(const QString f_module, const QString f_book, const QString f_chapter)
 {
-    // moduleList не содержит всех модулей
-    // надо получать также тип модуля
-    //todo
-    // по нему уже плучать нужный список и поперли
+    QString t_type = Config::configuration()->getTypeOfModule(f_module);
 
-    if (moduleList->isExist(module))
+    if (!t_type.isEmpty())
     {
         QString t_pathToModule = Config::configuration()->getAppDir() +
-                moduleList->getModuleWithName(module)->getModulePath();
+                Config::configuration()->getListModulesFromMap(t_type)->getModuleWithName(f_module)->getModulePath();
 
         t_pathToModule.replace("module" + GL_FORMAT_MODULE
                                , "text" + GL_FORMAT_TEXT);
-        m_lastNameOfBook  = book;
+        m_lastNameOfBook  = f_book;
 
 
         // refresh tab for bible modules or book modules
-        refreshBookList(module, moduleList->getModuleWithName(module)->getModuleType());
+        refreshBookList(f_module, t_type);
 
-        if (moduleList->getModuleWithName(module)->getModuleType() == "Bible")
+        if (t_type == "Bible")
         {
-            ui->comBModules->setCurrentIndex(ui->comBModules->findText(module));
-            ui->tabWidget->setCurrentIndex(GUI_TAB_BIBLE); // bible
-            //todo добавить автоматический выбор открытой главы и книги
+            ui->comBModules->setCurrentIndex(ui->comBModules->findText(f_module));
+            ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tabBible)); // bible
         }
 
-        if (moduleList->getModuleWithName(module)->getModuleType() == "Book")
+        if (t_type == "Book")
         {
-            ui->comBModulesBook->setCurrentIndex(ui->comBModulesBook->findText(module));
-            ui->tabWidget->setCurrentIndex(GUI_TAB_BOOK); // book
+            ui->comBModulesBook->setCurrentIndex(ui->comBModulesBook->findText(f_module));
+            ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tabBook)); // book
         }
 
-        ModuleViewer::viewer()->setModuleName(module);
-        ModuleViewer::viewer()->showChapter(module, book,
-                                            chapter.toInt());
+        if (t_type == "Apocrypha")
+        {
+            ui->comBModulesApocrypha->setCurrentIndex(ui->comBModulesApocrypha->findText(f_module));
+            ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tabApocrypha)); // apocrypha
+        }
+
+        ModuleViewer::viewer()->setModuleName(f_module);
+        ModuleViewer::viewer()->showChapter(f_module, f_book,
+                                            f_chapter.toInt());
     }
-
 }
 //------------------------------------------------------------------------------
 void LeftPanel::refreshWordListFromDict(const QString curText)
@@ -512,11 +509,6 @@ void LeftPanel::showWord(const QModelIndex ind)
 
     ui->comBDictListFindWord->clear();
     ui->comBDictListFindWord->addItems(list);
-}
-//------------------------------------------------------------------------------
-void LeftPanel::setListModuleFromList()
-{
-    Config::configuration()->setListBibles(moduleList);
 }
 //------------------------------------------------------------------------------
 QStringList LeftPanel::getListDictWithWord(const QString word)
@@ -662,6 +654,7 @@ bool LeftPanel::checkedNewAndOldChapter()
     bool flag = false;
     if (Config::configuration()->getLastType() == "Bible"
             and !ui->comBModules->currentText().isEmpty()
+            and ui->tableBook->verticalHeader()->count() != 0
             and !ui->tableBook->model()->data(ui->tableBook->currentIndex()).toString().isEmpty()
             and !ui->tableChapter->model()->data(ui->tableChapter->currentIndex()).toString().isEmpty())
     {
@@ -673,6 +666,7 @@ bool LeftPanel::checkedNewAndOldChapter()
 
     if (Config::configuration()->getLastType() == "Book"
             and !ui->comBModulesBook->currentText().isEmpty()
+            and ui->tableBookBook->verticalHeader()->count() != 0
             and !ui->tableBookBook->model()->data(ui->tableBookBook->currentIndex()).toString().isEmpty()
             and !ui->tableChapterBook->model()->data(ui->tableChapterBook->currentIndex()).toString().isEmpty()
             )
