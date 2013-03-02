@@ -107,19 +107,8 @@ void ModuleViewer::showChapter(const QString f_module, const QString f_nameBook,
 {
     //    myDebug() << f_module << f_nameBook << f_numberchapter;
 
-    QString pathToFile;
-
-    if (f_type == "Bible")
-        pathToFile = Config::configuration()->getAppDir() +
-                Config::configuration()->getListBibles()->getModuleWithName(f_module)->getModulePath();
-
-    if (f_type == "Book")
-        pathToFile = Config::configuration()->getAppDir() +
-                Config::configuration()->getListBook()->getModuleWithName(f_module)->getModulePath();
-
-    if (f_type == "Apocrypha")
-        pathToFile = Config::configuration()->getAppDir() +
-                Config::configuration()->getListApocrypha()->getModuleWithName(f_module)->getModulePath();
+    QString pathToFile = Config::configuration()->getAppDir() +
+            Config::configuration()->getListModulesFromMap(f_type)->getModuleWithName(f_module)->getModulePath();
 
     pathToFile.replace("module" + GL_FORMAT_MODULE
                        , "text" + GL_FORMAT_TEXT);

@@ -55,8 +55,8 @@ void LeftPanel2::init()
     }
 
     sUpdateGUIDayMode();
+    sUpdateGUIFont();
 
-    ui->ListViewJournal->setFont(Config::configuration()->getGUIMapFont()["FontJournal"]);
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::createConnects()
@@ -232,5 +232,10 @@ void LeftPanel2::setReadingPlanForCurrentDay()
         // add to model
         model->appendRow( new QStandardItem(m_readingPlanList.at(i)));
     }
+}
+//------------------------------------------------------------------------------
+void LeftPanel2::sUpdateGUIFont()
+{
+    ui->ListViewJournal->setFont(Config::configuration()->getGUIMapFont()["FontJournal"]);
 }
 //------------------------------------------------------------------------------

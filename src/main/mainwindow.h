@@ -26,7 +26,7 @@ QT_END_NAMESPACE
 #include "debughelper.h"
 #include "qsopherimmodulelist.h"
 #include "finddialog.h"
-#include "noteeditor.h"
+//#include "noteeditor.h"
 #include "managermodules.h"
 #include "moduleimportdialog.h"
 
@@ -101,7 +101,7 @@ private slots:
       */
     void showHelp();
 
-    void createNote();
+//    void createNote();
 
     /**
      * @brief retranslate
@@ -134,7 +134,7 @@ private slots:
      */
     void showHideTray();
 
-
+    void sUpdateGUIFont();
 
 //    void loadModules();
 
@@ -153,7 +153,7 @@ private:
     LeftPanel2 *GUI_LeftPanel2;
     BottomPanel *GUI_BottomPanel;
     ModuleViewer *GUI_ModuleViewer;
-    NoteEditor *GUI_NoteEditor;
+//    NoteEditor *GUI_NoteEditor;
     ManagerModules *GUI_ManagerModules;
     FindDialog *GUI_FindDialog;
     ModuleImportDialog *GUI_ModuleImportDialog;

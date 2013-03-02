@@ -58,6 +58,8 @@ public slots:
 
     void sUpdateGUIDayMode();
 
+    void sUpdateGUIFont();
+
 private slots:
     /**
      * @brief deleteBookmark

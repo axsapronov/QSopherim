@@ -50,6 +50,7 @@ public slots:
     void sUpdateGUI();
 
     void sUpdateGUIDayMode();
+    void sUpdateGUIFont();
 
     void loadModules();
     void loadDictionaries();

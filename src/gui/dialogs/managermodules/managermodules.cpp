@@ -156,7 +156,7 @@ void ManagerModules::updateList()
     ui->tableViewStateModules->model()->setHeaderData( 1, Qt::Horizontal, QObject::tr("Type") );
     ui->tableViewStateModules->model()->setHeaderData( 2, Qt::Horizontal, QObject::tr("State") );
 
-    emit SIGNAL_RefreshModules();
+
 }
 //------------------------------------------------------------------------------
 void ManagerModules::sBrowseStrong()
@@ -357,5 +357,11 @@ void ManagerModules::loadAllModules()
             m_listModule->addModule(list->getModule(i));
 
     updateList();
+}
+//------------------------------------------------------------------------------
+void ManagerModules::accept()
+{
+    emit SIGNAL_RefreshModules();
+    QWidget::hide();
 }
 //------------------------------------------------------------------------------

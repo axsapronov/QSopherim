@@ -71,7 +71,7 @@ private slots:
     void sSetHebrewStrong(QString f_strong);
     void sSetGreekStrong(QString f_strong);
 
-
+    void accept();
 
 private:
     Ui::ManagerModules *ui;

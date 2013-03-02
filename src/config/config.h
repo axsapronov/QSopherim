@@ -310,6 +310,9 @@ public:
 
     bool isExistLastChapter();
 
+    QSopherimModuleList* getListModulesFromMap(const QString f_type);
+    void setListModulesToMap(const QString f_type, QSopherimModuleList* f_newList);
+
 private:
     QString m_appDir;
 
@@ -336,6 +339,8 @@ private:
     QSopherimModuleList* m_listComments;
     QSopherimModuleList* m_listApocrypha;
     QSopherimModuleList* m_listBook;
+
+    QMap<QString, QSopherimModuleList*> m_listMap;
 
     QStringList* m_listHiddenModules;
     QStringList* m_journalHistory;

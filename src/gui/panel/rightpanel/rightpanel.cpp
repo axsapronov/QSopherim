@@ -24,7 +24,7 @@ void RightPanel::init()
     m_mapNotes.clear();
     GUI_NoteEditor = new NoteEditor(this);
 
-    ui->ListNotes->setFont(Config::configuration()->getGUIMapFont()["FontNotes"]);
+    sUpdateGUIFont();
     createConnect();
     sUpdateGUIDayMode();
 
@@ -45,7 +45,7 @@ void RightPanel::createConnect()
     connect(ui->pBDelete, SIGNAL(clicked()), SLOT(deleteBookmark()));
 
     connect(ui->ListNotes, SIGNAL(doubleClicked(QModelIndex)), SLOT(sEditNote(QModelIndex)));
-//    connect(ui->pBLoad, SIGNAL(clicked()), SLOT(sLoadNotes()));
+    //    connect(ui->pBLoad, SIGNAL(clicked()), SLOT(sLoadNotes()));
     connect(ui->pBDeleteNote, SIGNAL(clicked()), SLOT(sDeleteNote()));
     connect(ui->pBEditNote, SIGNAL(clicked()), SLOT(sEditNote()));
     connect(ui->pBNewNote, SIGNAL(clicked()), SLOT(sNewNote()));
@@ -177,31 +177,31 @@ void RightPanel::sUpdateGUIDayMode()
 //------------------------------------------------------------------------------
 void RightPanel::fillModulesList()
 {
-//    QStringList t_listModules;
-//    QStringList files;
-//    files = recursiveFind(Config::configuration()->getAppDir());
+    //    QStringList t_listModules;
+    //    QStringList files;
+    //    files = recursiveFind(Config::configuration()->getAppDir());
 
-//    for(int i = 0; i < files.size(); i++)
-//    {
-//        if(files.at(i).indexOf(GL_FORMAT_NOTES) >= 0)
-//        {
-//            // hindi
-//            // get type module and module name
-//            QStringList t_list = QStringList
-//                    (
-//                        QString(files.at(i)).remove(Config::configuration()->getAppDir())
-//                        .split("/")
-//                        );
-//            m_notes[t_list.at(1)] == t_list.at(0);
-//            t_listModules << t_list.at(1);
-//        }
-//    }
+    //    for(int i = 0; i < files.size(); i++)
+    //    {
+    //        if(files.at(i).indexOf(GL_FORMAT_NOTES) >= 0)
+    //        {
+    //            // hindi
+    //            // get type module and module name
+    //            QStringList t_list = QStringList
+    //                    (
+    //                        QString(files.at(i)).remove(Config::configuration()->getAppDir())
+    //                        .split("/")
+    //                        );
+    //            m_notes[t_list.at(1)] == t_list.at(0);
+    //            t_listModules << t_list.at(1);
+    //        }
+    //    }
 
-//    // получить список модулей в папках которых есть заметки
-//    // добавить в combobox
-//    // для текущего модуля загружать заметки, если нет, то показывать пустой список
+    //    // получить список модулей в папках которых есть заметки
+    //    // добавить в combobox
+    //    // для текущего модуля загружать заметки, если нет, то показывать пустой список
 
-//    ui->comBModules->setModel(new QStringListModel(t_listModules, this));
+    //    ui->comBModules->setModel(new QStringListModel(t_listModules, this));
 }
 //------------------------------------------------------------------------------
 void RightPanel::sLoadNotes()
@@ -234,9 +234,9 @@ void RightPanel::sEditNote()
 }
 //------------------------------------------------------------------------------
 void RightPanel::sShowNoteList(QString f_module,
-                              QString f_book,
-                              QString f_chapter,
-                              QString f_path)
+                               QString f_book,
+                               QString f_chapter,
+                               QString f_path)
 {
     m_mapNotes = getNoteOfParams(f_module, f_book, f_chapter, f_path);
     m_curBook = f_book;
@@ -280,15 +280,15 @@ void RightPanel::loadFirstSettings()
         m_curBook = Config::configuration()->getLastBook();
         m_curChapter = Config::configuration()->getLastChapter();
 
-        if (Config::configuration()->getLastType() == "Bible")
-            m_curPath = Config::configuration()->getAppDir() + Config::configuration()->getListBibles()->getModuleWithName(m_curModule)->getModulePath();
+        m_curPath = Config::configuration()->getAppDir()
+                + Config::configuration()->getListModulesFromMap(Config::configuration()->getLastType())->getModuleWithName(m_curModule)->getModulePath();
 
-        if (Config::configuration()->getLastType() == "Book")
-            m_curPath = Config::configuration()->getAppDir() + Config::configuration()->getListBook()->getModuleWithName(m_curModule)->getModulePath();
-
-        if (Config::configuration()->getLastType() == "Apocrypha")
-            m_curPath = Config::configuration()->getAppDir() + Config::configuration()->getListApocrypha()->getModuleWithName(m_curModule)->getModulePath();
         m_curPath.replace("module" + GL_FORMAT_MODULE, "notes" + GL_FORMAT_NOTES);
     }
+}
+//------------------------------------------------------------------------------
+void RightPanel::sUpdateGUIFont()
+{
+    ui->ListNotes->setFont(Config::configuration()->getGUIMapFont()["FontNotes"]);
 }
 //------------------------------------------------------------------------------

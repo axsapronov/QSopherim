@@ -443,26 +443,31 @@ QSopherimModuleList* Config::getListBook()
 void Config::setListBibles(QSopherimModuleList *newlist)
 {
     m_listBibles = newlist;
+    m_listMap["Bible"] = newlist;
 }
 //------------------------------------------------------------------------------
 void Config::setListComments(QSopherimModuleList *newlist)
 {
     m_listComments = newlist;
+    m_listMap["Comments"] = newlist;
 }
 //------------------------------------------------------------------------------
 void Config::setListBook(QSopherimModuleList *newlist)
 {
     m_listBook = newlist;
+    m_listMap["Book"] = newlist;
 }
 //------------------------------------------------------------------------------
 void Config::setListApocrypha(QSopherimModuleList *newlist)
 {
     m_listApocrypha = newlist;
+    m_listMap["Apocrypha"] = newlist;
 }
 //------------------------------------------------------------------------------
 void Config::setListDictionaries(QSopherimModuleList *newlist)
 {
     m_listDictinaries = newlist;
+    m_listMap["Dictionary"] = newlist;
 }
 //------------------------------------------------------------------------------
 void Config::addHiddenModule(const QString nameModule)
@@ -699,5 +704,15 @@ void Config::toAppLog(int logLevel, QString msg)
 {
     if (logLevel <= AppLogLevel())
         toLog(AppLogFN() ,msg);
+}
+//------------------------------------------------------------------------------
+void Config::setListModulesToMap(const QString f_type, QSopherimModuleList *f_newList)
+{
+    m_listMap[f_type] = f_newList;
+}
+//------------------------------------------------------------------------------
+QSopherimModuleList* Config::getListModulesFromMap(const QString f_type)
+{
+    return m_listMap[f_type];
 }
 //------------------------------------------------------------------------------

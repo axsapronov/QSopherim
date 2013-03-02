@@ -61,16 +61,7 @@ void LeftPanel::init()
     ui->tableChapterBook->reset();
 
     sUpdateGUIDayMode();
-
-    ui->comBModules->setFont(Config::configuration()->getGUIMapFont()["ModulesName"]);
-    ui->comBModulesBook->setFont(Config::configuration()->getGUIMapFont()["ModulesName"]);
-    ui->comBComments->setFont(Config::configuration()->getGUIMapFont()["ModulesName"]);
-    ui->comBModulesApocrypha->setFont(Config::configuration()->getGUIMapFont()["ModulesName"]);
-
-    ui->tableBook->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
-    ui->tableBookBook->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
-    ui->tableBookApocrypha->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
-    ui->textBrComments->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
+    sUpdateGUIFont();
 
     ui->tabWidget->removeTab(ui->tabWidget->indexOf(ui->tabApocrypha));
     ui->tabWidget->removeTab(ui->tabWidget->indexOf(ui->tabComments));
@@ -241,24 +232,19 @@ void LeftPanel::refreshChapterList(const QString f_type, const QModelIndex f_ind
     modelChapters->clear();
     int chapterValue = 0;
 
+    QString t_curModule;
+
     if (f_type == "Bible")
-    {
-        chapterValue = Config::configuration()->getListBibles()->getModuleWithName(ui->comBModules->currentText())
-                ->getValueChapterForBookFromModule(f_ind.data(0).toString());
-    }
+        t_curModule = ui->comBModules->currentText();
 
     if (f_type == "Book")
-    {
-        chapterValue = Config::configuration()->getListBook()->getModuleWithName(ui->comBModulesBook->currentText())
-                ->getValueChapterForBookFromModule(f_ind.data(0).toString());
-    }
+        t_curModule = ui->comBModulesBook->currentText();
 
     if (f_type == "Apocrypha")
-    {
-        chapterValue = Config::configuration()->getListApocrypha()->getModuleWithName(ui->comBModulesApocrypha->currentText())
-                ->getValueChapterForBookFromModule(f_ind.data(0).toString());
-    }
+        t_curModule = ui->comBModulesApocrypha->currentText();
 
+    chapterValue = Config::configuration()->getListModulesFromMap(f_type)->getModuleWithName(t_curModule)
+            ->getValueChapterForBookFromModule(f_ind.data(0).toString());
 
     modelChapters->clear();
     for (int i = 0; i < chapterValue; i++)
@@ -292,16 +278,14 @@ void LeftPanel::showChapter(const QModelIndex ind, const QString f_type)
 {
     QString t_nameOfBook;
     QModelIndexList selectedList;
-    QString t_pathToModule;
     QString t_curModule;
+
 
     // bible
     if (f_type == "Bible")
     {
         selectedList = ui->tableBook->selectionModel()->selectedRows();
         t_curModule = ui->comBModules->currentText();
-        t_pathToModule = Config::configuration()->getAppDir() +
-                Config::configuration()->getListBibles()->getModuleWithName(t_curModule)->getModulePath();
     }
 
     // book
@@ -309,19 +293,16 @@ void LeftPanel::showChapter(const QModelIndex ind, const QString f_type)
     {
         selectedList = ui->tableBookBook->selectionModel()->selectedRows();
         t_curModule = ui->comBModulesBook->currentText();
-        t_pathToModule = Config::configuration()->getAppDir() +
-                Config::configuration()->getListBook()->getModuleWithName(t_curModule)->getModulePath();
     }
 
     if (f_type == "Apocrypha")
     {
         selectedList = ui->tableBookApocrypha->selectionModel()->selectedRows();
         t_curModule = ui->comBModulesApocrypha->currentText();
-
-        t_pathToModule = Config::configuration()->getAppDir() +
-                Config::configuration()->getListApocrypha()->getModuleWithName(t_curModule)->getModulePath();
     }
 
+    QString t_pathToModule = Config::configuration()->getAppDir() +
+            Config::configuration()->getListModulesFromMap(f_type)->getModuleWithName(t_curModule)->getModulePath();
 
     for( int i = 0; i < selectedList.count(); i++)
     {
@@ -374,24 +355,16 @@ void LeftPanel::refreshBookList(const QString nameOfModule, const QString f_type
     bool flag2 = Config::configuration()->isExistLastChapter()
             and Config::configuration()->getOptionAutoChapter();
 
-    QStringList bookList;
+    QStringList bookList = Config::configuration()->getListModulesFromMap(f_type)->getModuleBooks(nameOfModule);
+
     if (f_type == "Bible")
-    {
-        bookList = Config::configuration()->getListBibles()->getModuleBooks(nameOfModule);
         flag = (ui->tableBook->model() and flag2);
-    }
 
     if (f_type == "Book")
-    {
-        bookList = Config::configuration()->getListBook()->getModuleBooks(nameOfModule);
         flag = (ui->tableBookBook->model() and flag2);
-    }
 
     if (f_type == "Apocrypha")
-    {
-        bookList = Config::configuration()->getListApocrypha()->getModuleBooks(nameOfModule);
         flag = (ui->tableBookApocrypha->model()and flag2);
-    }
 
 
     if (flag)
@@ -814,5 +787,18 @@ void LeftPanel::showHideTabs()
 void LeftPanel::loadFirstBook()
 {
     refreshBookList(ui->comBModules->currentText(), "Bible");
+}
+//------------------------------------------------------------------------------
+void LeftPanel::sUpdateGUIFont()
+{
+    ui->comBModules->setFont(Config::configuration()->getGUIMapFont()["ModulesName"]);
+    ui->comBModulesBook->setFont(Config::configuration()->getGUIMapFont()["ModulesName"]);
+    ui->comBComments->setFont(Config::configuration()->getGUIMapFont()["ModulesName"]);
+    ui->comBModulesApocrypha->setFont(Config::configuration()->getGUIMapFont()["ModulesName"]);
+
+    ui->tableBook->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
+    ui->tableBookBook->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
+    ui->tableBookApocrypha->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
+    ui->textBrComments->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
 }
 //------------------------------------------------------------------------------

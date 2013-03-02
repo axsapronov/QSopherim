@@ -64,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //    loadModules();
     //        debug();
-    ui->menuBar->setFont(Config::configuration()->getGUIMapFont()["FontMenu"]);
+
 }
 //------------------------------------------------------------------------------
 MainWindow::~MainWindow()
@@ -78,7 +78,7 @@ MainWindow::~MainWindow()
     delete GUI_LeftPanel;
     delete GUI_LeftPanel2;
     delete GUI_ModuleViewer;
-    delete GUI_NoteEditor;
+    //    delete GUI_NoteEditor;
     delete GUI_ManagerModules;
     delete GUI_FindDialog;
     delete GUI_ModuleImportDialog;
@@ -170,7 +170,7 @@ void MainWindow::init()
 
     //    ui->centralWidget->setMouseTracking(true);
     GUI_ModuleViewer = new ModuleViewer(this);
-    GUI_NoteEditor = new NoteEditor(this);
+    //    GUI_NoteEditor = new NoteEditor(this);
 
     //    GUI_ModuleViewer->setMouseTracking(true);
     this->setCentralWidget(GUI_ModuleViewer);
@@ -296,7 +296,7 @@ void MainWindow::createConnects()
     // menu search
 
     // toolbar
-    connect(ui->actionAction_Other_Create_Note, SIGNAL(triggered()), SLOT(createNote()));
+    //    connect(ui->actionAction_Other_Create_Note, SIGNAL(triggered()), SLOT(createNote()));
     //    connect(ui->actionAction_Other_Update_List_Module, SIGNAL(triggered()), SLOT(convertModulesFromFolder()));
 
     // menu about
@@ -310,7 +310,7 @@ void MainWindow::createConnects()
     //            GUI_RightPanel, SLOT(showNoteList(QString,QString,QString,QString,QString)));
 
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowStrong(QString)), GUI_LeftPanel2, SLOT(showStrong(QString)));
-//    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNote()), SLOT(createNote()));
+    //    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNote()), SLOT(createNote()));
 
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowChapterFinish()), GUI_LeftPanel, SLOT(sUpdateGUI()));
 
@@ -348,6 +348,11 @@ void MainWindow::createConnects()
     // connect settings and module viewer
     connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadFontSettings()), GUI_ModuleViewer,
             SLOT(updateFontSettings()));
+
+    connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadFontSettings()), GUI_LeftPanel, SLOT(sUpdateGUIFont()));
+    connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadFontSettings()), GUI_LeftPanel2, SLOT(sUpdateGUIFont()));
+    connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadFontSettings()), GUI_RightPanel, SLOT(sUpdateGUIFont()));
+    connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadFontSettings()), SLOT(sUpdateGUIFont()));
 
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNewBookmark(QString)),
             GUI_RightPanel, SLOT(addNewBookmark(QString)));
@@ -494,8 +499,8 @@ void MainWindow::showSettings()
 void MainWindow::showModuleManager()
 {
     //set sett
-//    GUI_LeftPanel->setListModuleFromList();
-//    GUI_ManagerModules->loadListModules();
+    //    GUI_LeftPanel->setListModuleFromList();
+    //    GUI_ManagerModules->loadListModules();
     GUI_ManagerModules->loadAllModules();
     GUI_ManagerModules->loadStrongList();
 
@@ -695,21 +700,21 @@ void MainWindow::convertDictFromFolder()
 //    }
 
 //}
-//------------------------------------------------------------------------------
-void MainWindow::createNote()
-{
-    if (GUI_ModuleViewer->getModuleName().isEmpty())
-        return;
-    if (GUI_ModuleViewer->getChapterValue().isEmpty())
-        return;
+////------------------------------------------------------------------------------
+//void MainWindow::createNote()
+//{
+//    if (GUI_ModuleViewer->getModuleName().isEmpty())
+//        return;
+//    if (GUI_ModuleViewer->getChapterValue().isEmpty())
+//        return;
 
-    GUI_NoteEditor->setPath(GUI_ModuleViewer->getPath());
-    GUI_NoteEditor->setModuleName(GUI_ModuleViewer->getModuleName());
-    GUI_NoteEditor->setBookName(GUI_ModuleViewer->getBookName());
-    GUI_NoteEditor->setChapterValue(GUI_ModuleViewer->getChapterValue());
-//    GUI_NoteEditor->setVerse(GUI_ModuleViewer->getLastNumberLine());
-    GUI_NoteEditor->show();
-}
+//    GUI_NoteEditor->setPath(GUI_ModuleViewer->getPath());
+//    GUI_NoteEditor->setModuleName(GUI_ModuleViewer->getModuleName());
+//    GUI_NoteEditor->setBookName(GUI_ModuleViewer->getBookName());
+//    GUI_NoteEditor->setChapterValue(GUI_ModuleViewer->getChapterValue());
+////    GUI_NoteEditor->setVerse(GUI_ModuleViewer->getLastNumberLine());
+//    GUI_NoteEditor->show();
+//}
 //------------------------------------------------------------------------------
 void MainWindow::retranslate(QString t_lang)
 {
@@ -737,7 +742,7 @@ void MainWindow::retranslate(QString t_lang)
     GUI_LeftPanel2->retranslate();
     //    GUI_BottomPanel->retranslate();
     GUI_ModuleViewer->retranslate();
-    GUI_NoteEditor->retranslate();
+    //    GUI_NoteEditor->retranslate();
 
 }
 //------------------------------------------------------------------------------
@@ -767,5 +772,10 @@ void MainWindow::convertCommentsFromFolder()
 void MainWindow::convertApocryphaFromFolder()
 {
     convertModules("Apocrypha");
+}
+//------------------------------------------------------------------------------
+void MainWindow::sUpdateGUIFont()
+{
+    ui->menuBar->setFont(Config::configuration()->getGUIMapFont()["FontMenu"]);
 }
 //------------------------------------------------------------------------------
