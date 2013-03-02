@@ -49,10 +49,16 @@ MainWindow::MainWindow(QWidget *parent) :
     GUI_LeftPanel->loadComments();
     GUI_LeftPanel->loadApocrypha();
 
+    GUI_LeftPanel2->loadJournal();
+
     if (Config::configuration()->isExistLastChapter())
     {
         // open last text
         GUI_ModuleViewer->openLastChapter();
+//        GUI_LeftPanel2->addRecordToJournal(
+//                    Config::configuration()->getLastModule(),
+//                    Config::configuration()->getLastBook(),
+//                    Config::configuration()->getLastChapter());
         GUI_RightPanel->loadFirstSettings();
     }
     else
@@ -60,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
         GUI_LeftPanel->loadFirstBook();
     }
 
-    GUI_LeftPanel2->loadJournal();
+
 
     //    loadModules();
     //        debug();

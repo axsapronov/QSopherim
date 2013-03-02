@@ -273,7 +273,6 @@ void RightPanel::sUpdateListNotes()
 //------------------------------------------------------------------------------
 void RightPanel::loadFirstSettings()
 {
-
     if (Config::configuration()->isExistLastChapter())
     {
         m_curModule = Config::configuration()->getLastModule();

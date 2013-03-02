@@ -34,26 +34,31 @@ public:
      */
     void loadJournal();
 
+
+
 signals:
     void SIGNAL_ShowChapterFrom(QString, QString, QString);
 
 public slots:
 
-    void showStrong(QString number);
 
     void sSetStrongHebrew(QString path);
     void sSetStrongGreek(QString path);
 
-    void sUpdateGUIDayMode();
-
-    void sUpdateGUIFont();
-
-private slots:
 
     // journals slots
     void addRecordToJournal(QString modulename,
                             QString bookname,
                             QString chaptervalue);
+private slots:
+
+
+    void sUpdateGUIDayMode();
+
+    void sUpdateGUIFont();
+
+
+    void showStrong(QString number);
 
     /**
      \brief
