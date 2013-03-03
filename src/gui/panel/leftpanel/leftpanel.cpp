@@ -43,6 +43,7 @@ LeftPanel::~LeftPanel()
 //------------------------------------------------------------------------------
 void LeftPanel::init()
 {
+    m_fromJournal = false;
     createConnects();
     modelModules = new QStandardItemModel(0, 0, this);
     modelBooks = new QStandardItemModel(0, 0, this);
@@ -181,7 +182,6 @@ void LeftPanel::refreshListComments(QSopherimModuleList* list)
 {
     if (list->getSize() != 0 )
     {
-        // dict tab
         ui->tabWidget->insertTab(GUI_TAB_COMMENTS, ui->tabComments, tr("Comments"));
         Config::configuration()->setListComments(list);
         QStringList items;
@@ -276,6 +276,7 @@ void LeftPanel::showChapter(const QModelIndex ind, const QString f_type)
     QModelIndexList selectedList;
     QString t_curModule;
 
+    m_fromJournal = false;
 
     // bible
     if (f_type == "Bible")
@@ -321,6 +322,7 @@ void LeftPanel::showChapter(const QModelIndex ind, const QString f_type)
     emit SIGNAL_AddRecordToJournal(t_curModule,
                                    m_lastNameOfBook ,
                                    QString::number(ind.row() + 1));
+    sUpdateGUI();
 }
 //------------------------------------------------------------------------------
 void LeftPanel::showChapter(const QModelIndex ind)
@@ -379,8 +381,9 @@ void LeftPanel::refreshBookList(const QString nameOfModule, const QString f_type
         ui->tableBook->setModel(modelBooks);
         ui->tableBook->resizeColumnsToContents();
 
-        if (flag)
-            makeOptionAutoChapter(t_bookName);
+        if (!m_firstLaunch)
+            if (flag)
+                makeOptionAutoChapter(t_bookName);
     }
 
     if (f_type == "Book")
@@ -428,6 +431,7 @@ void LeftPanel::showChapterFromJournal(const QString f_module, const QString f_b
 
     if (!t_type.isEmpty())
     {
+        m_fromJournal = true;
         QString t_pathToModule = Config::configuration()->getAppDir() +
                 Config::configuration()->getListModulesFromMap(t_type)->getModuleWithName(f_module)->getModulePath();
 
@@ -460,6 +464,7 @@ void LeftPanel::showChapterFromJournal(const QString f_module, const QString f_b
         ModuleViewer::viewer()->setModuleName(f_module);
         ModuleViewer::viewer()->showChapter(f_module, f_book,
                                             f_chapter.toInt());
+        sUpdateGUIFromJournal();
     }
 }
 //------------------------------------------------------------------------------
@@ -630,6 +635,69 @@ void LeftPanel::sUpdateGUI()
     }
 }
 //------------------------------------------------------------------------------
+void LeftPanel::sUpdateGUIFromJournal()
+{
+    if (m_journal)
+    {
+        m_journal = false;
+        // old != new
+        if (Config::configuration()->getLastType() == "Bible")
+        {
+            refreshBookList(Config::configuration()->getLastModule()
+                            , Config::configuration()->getLastType());
+            for (int i = 0; i < ui->tableBook->model()->rowCount(); i++)
+            {
+                if (ui->tableBook->model()->data(ui->tableBook->model()->index(i, 0), 0).toString() == Config::configuration()->getLastBook())
+                {
+                    ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tabBible));
+                    ui->comBModules->setCurrentIndex(ui->comBModules->findText(Config::configuration()->getLastModule()));
+                    ui->tableBook->setCurrentIndex(ui->tableBook->model()->index(i, 0));
+                    refreshChapterList(Config::configuration()->getLastType(), ui->tableBook->currentIndex());
+                    ui->tableChapter->setCurrentIndex(ui->tableChapter->model()->index(Config::configuration()->getLastChapter().toInt() - 1, 0));
+                }
+            }
+        }
+
+        if (Config::configuration()->getLastType() == "Book")
+        {
+            refreshBookList(Config::configuration()->getLastModule()
+                            , Config::configuration()->getLastType());
+
+            for (int i = 0; i < ui->tableBookBook->model()->rowCount(); i++)
+            {
+                if (ui->tableBookBook->model()->data(ui->tableBookBook->model()->index(i, 0), 0).toString() == Config::configuration()->getLastBook())
+                {
+                    ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tabBook));
+                    ui->comBModulesBook->setCurrentIndex(ui->comBModulesBook->findText(Config::configuration()->getLastModule()));
+                    ui->tableBookBook->setCurrentIndex(ui->tableBookBook->model()->index(i, 0));
+                    refreshChapterList(Config::configuration()->getLastType(), ui->tableBookBook->currentIndex());
+                    ui->tableChapterBook->setCurrentIndex(ui->tableChapterBook->model()->index(Config::configuration()->getLastChapter().toInt() - 1, 0));
+
+                }
+            }
+        }
+
+        if (Config::configuration()->getLastType() == "Apocrypha")
+        {
+            refreshBookList(Config::configuration()->getLastModule()
+                            , Config::configuration()->getLastType());
+
+            for (int i = 0; i < ui->tableBookApocrypha->model()->rowCount(); i++)
+            {
+                if (ui->tableBookApocrypha->model()->data(ui->tableBookApocrypha->model()->index(i, 0), 0).toString() == Config::configuration()->getLastBook())
+                {
+                    ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tabApocrypha));
+                    ui->comBModulesApocrypha->setCurrentIndex(ui->comBModulesApocrypha->findText(Config::configuration()->getLastModule()));
+                    ui->tableBookApocrypha->setCurrentIndex(ui->tableBookApocrypha->model()->index(i, 0));
+                    refreshChapterList(Config::configuration()->getLastType(), ui->tableBookApocrypha->currentIndex());
+                    ui->tableChapterApocrypha->setCurrentIndex(ui->tableChapterApocrypha->model()->index(Config::configuration()->getLastChapter().toInt() - 1, 0));
+
+                }
+            }
+        }
+    }
+}
+//------------------------------------------------------------------------------
 void LeftPanel::makeOptionAutoChapter(const QString f_bookName)
 {
     // old != new
@@ -739,24 +807,33 @@ void LeftPanel::loadModules()
 {
     QSopherimModuleList* list = new QSopherimModuleList();
     list->refreshList();
-    Config::configuration()->setListBibles(list);
-    refreshListModule(list, "Bible");
+    if (list->getSize())
+    {
+        Config::configuration()->setListBibles(list);
+        refreshListModule(list, "Bible");
+    }
 }
 //------------------------------------------------------------------------------
 void LeftPanel::loadBooks()
 {
     QSopherimModuleList* list = new QSopherimModuleList();
     list->refreshList("book/");
-    Config::configuration()->setListBook(list);
-    refreshListModule(list, "Book");
+    if (list->getSize())
+    {
+        Config::configuration()->setListBook(list);
+        refreshListModule(list, "Book");
+    }
 }
 //------------------------------------------------------------------------------
 void LeftPanel::loadApocrypha()
 {
     QSopherimModuleList* list = new QSopherimModuleList();
     list->refreshList("apocrypha/");
-    Config::configuration()->setListApocrypha(list);
-    refreshListModule(list, "Apocrypha");
+    if (list->getSize())
+    {
+        Config::configuration()->setListApocrypha(list);
+        refreshListModule(list, "Apocrypha");
+    }
 }
 //------------------------------------------------------------------------------
 void LeftPanel::showHideTabs()
@@ -794,5 +871,11 @@ void LeftPanel::sUpdateGUIFont()
     ui->tableBookBook->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
     ui->tableBookApocrypha->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
     ui->textBrComments->setFont(Config::configuration()->getGUIMapFont()["BookName"]);
+}
+//------------------------------------------------------------------------------
+void LeftPanel::setFirstLaunch(bool state)
+{
+    // hack
+    m_firstLaunch = state;
 }
 //------------------------------------------------------------------------------

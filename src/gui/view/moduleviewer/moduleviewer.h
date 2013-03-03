@@ -143,6 +143,8 @@ private:
 
     QString m_backupChapter;
 
+
+    bool m_firstLaunch;
 //    void showNoteList();
     void showStrong();
     void debug();

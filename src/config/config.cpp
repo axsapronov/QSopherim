@@ -83,6 +83,12 @@ Config::Config()
         m_listComments = new QSopherimModuleList();;
         m_listApocrypha = new QSopherimModuleList();;
         m_listBook = new QSopherimModuleList();;
+
+        m_listMap["Bible"] = m_listBibles;
+        m_listMap["Book"] = m_listBook;
+        m_listMap["Apocrypha"] = m_listApocrypha;
+        m_listMap["Comments"] = m_listComments;
+        m_listMap["Dictionary"] = m_listDictinaries;
     }
     else
     {
@@ -721,16 +727,16 @@ QString Config::getTypeOfModule(const QString f_module)
     if (m_listMap["Bible"]->isExist(f_module))
         return "Bible";
 
-    if (m_listMap["Comments"]->isExist(f_module))
-        return "Comments";
-
-    if (m_listMap["Book"]->isExist(f_module))
+    if (m_listMap["Book"]->getCurNumberModule() and m_listMap["Book"]->isExist(f_module))
         return "Book";
 
-    if (m_listMap["Dictionary"]->isExist(f_module))
+    if (m_listMap["Comments"]->getCurNumberModule() and m_listMap["Comments"]->isExist(f_module))
+        return "Comments";
+
+    if (m_listMap["Dictionary"]->getCurNumberModule() and m_listMap["Dictionary"]->isExist(f_module))
         return "Dictionary";
 
-    if (m_listMap["Apocrypha"]->isExist(f_module))
+    if (m_listMap["Apocrypha"]->getCurNumberModule() and m_listMap["Apocrypha"]->isExist(f_module))
         return "Apocrypha";
 
     return r_str;

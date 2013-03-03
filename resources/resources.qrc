@@ -10,6 +10,7 @@
         <file>images/logo.png</file>
         <file>images/iconFind.png</file>
         <file>images/iconManagerModules.png</file>
+        <file>images/iconSettings.png</file>
     </qresource>
     <qresource prefix="/other"/>
     <qresource prefix="/images">

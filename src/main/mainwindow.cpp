@@ -54,11 +54,9 @@ MainWindow::MainWindow(QWidget *parent) :
     if (Config::configuration()->isExistLastChapter())
     {
         // open last text
+        GUI_LeftPanel->setFirstLaunch(true);
         GUI_ModuleViewer->openLastChapter();
-//        GUI_LeftPanel2->addRecordToJournal(
-//                    Config::configuration()->getLastModule(),
-//                    Config::configuration()->getLastBook(),
-//                    Config::configuration()->getLastChapter());
+        GUI_LeftPanel->sUpdateGUI();
         GUI_RightPanel->loadFirstSettings();
     }
     else
@@ -66,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
         GUI_LeftPanel->loadFirstBook();
     }
 
-
+    GUI_LeftPanel->setFirstLaunch(false);
 
     //    loadModules();
     //        debug();

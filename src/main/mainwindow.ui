@@ -161,6 +161,10 @@
    </property>
   </action>
   <action name="action_Settings_General">
+   <property name="icon">
+    <iconset resource="../../resources/resources.qrc">
+     <normaloff>:/icons/images/iconSettings.png</normaloff>:/icons/images/iconSettings.png</iconset>
+   </property>
    <property name="text">
     <string>Settings</string>
    </property>

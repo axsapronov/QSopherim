@@ -197,7 +197,7 @@ void ModuleViewer::showChapter(const QString f_module, const QString f_nameBook,
         Config::configuration()->setLastType(f_type);
         // todo
     }
-    emit SIGNAL_ShowChapterFinish();
+//    emit SIGNAL_ShowChapterFinish();
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::setModuleName(QString newModule)
@@ -505,6 +505,7 @@ void ModuleViewer::openLastChapter()
 {
     if (!Config::configuration()->getLastChapter().isEmpty())
     {
+        m_firstLaunch = true;
         m_curModule = Config::configuration()->getLastModule();
         m_curBook = Config::configuration()->getLastBook();
         m_curChapter = Config::configuration()->getLastChapter();

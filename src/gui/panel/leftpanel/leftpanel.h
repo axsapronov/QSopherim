@@ -32,6 +32,8 @@ public:
 
     void loadFirstBook();
 
+    void setFirstLaunch(bool state);
+
 public slots:
     /**
      * @brief showChapterFromJournal
@@ -117,8 +119,10 @@ private:
 
     QStringListModel *typeModel;
     QStringListModel *typeModelBook;
+    bool m_firstLaunch;
 
     QString m_curWord;
+    bool m_fromJournal;
     /**
      * @brief init
      * @function
@@ -134,6 +138,9 @@ private:
      * @return
      */
     bool checkedNewAndOldChapter();
+
+    void sUpdateGUIFromJournal();
+    bool m_journal;
 
     /**
      * @brief createConnects
