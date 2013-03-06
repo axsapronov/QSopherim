@@ -101,7 +101,12 @@ void BibleQuoteDictModule::createDictFile(QString path)
         t_word = line.split("</h4>");
         WordDictList t_list;
         t_list.word = t_word.at(0);
-        t_list.text = getCoolLine(t_word.at(1));
+
+        t_word = t_word.at(1).split("\n");
+        for (int j = 0; j < t_word.size(); j++)
+        {
+            t_list.text.append(getCoolLine(t_word.at(j)) + "\n");
+        }
         wordList[i] = t_list;
     }
     writeDictFile(&wordList);

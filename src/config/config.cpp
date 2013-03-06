@@ -670,9 +670,9 @@ bool Config::getOptionAutoChapter()
 //------------------------------------------------------------------------------
 bool Config::isExistLastChapter()
 {
-    return (!m_lastBook.isEmpty()
-            and !m_lastModule.isEmpty()
-            and !m_lastChapter.isEmpty());
+    return (!m_lastChapter.isEmpty()
+            and !m_lastBook.isEmpty()
+            and !m_lastModule.isEmpty());
 }
 //------------------------------------------------------------------------------
 void Config::setCommentsDir(const QString dir)

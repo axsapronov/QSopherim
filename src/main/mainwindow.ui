@@ -315,6 +315,10 @@
    </property>
   </action>
   <action name="action_Settings_Module_Import">
+   <property name="icon">
+    <iconset resource="../../resources/resources.qrc">
+     <normaloff>:/icons/images/iconModuleImport.png</normaloff>:/icons/images/iconModuleImport.png</iconset>
+   </property>
    <property name="text">
     <string>Module Import</string>
    </property>

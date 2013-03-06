@@ -346,56 +346,64 @@ void LeftPanel::refreshBookList(const QString nameOfModule, const QString f_type
     modelBooks->clear();
     modelChapters->clear();
 
-    int t_number;
-    QString t_bookName;
-
-    bool flag;
-    bool flag2 = Config::configuration()->isExistLastChapter()
-            and Config::configuration()->getOptionAutoChapter();
-
-    QStringList bookList = Config::configuration()->getListModulesFromMap(f_type)->getModuleBooks(nameOfModule);
-
-    if (f_type == "Bible")
-        flag = (ui->tableBook->model() and flag2);
-
-    if (f_type == "Book")
-        flag = (ui->tableBookBook->model() and flag2);
-
-    if (f_type == "Apocrypha")
-        flag = (ui->tableBookApocrypha->model()and flag2);
-
-
-    if (flag)
-        t_number = getNumberOfBook(Config::configuration()->getLastBook());
-
-    for (int i = 0; i < bookList.size() - 1; i++)
+    // hack
+    // todo
+    // сделать более верную обработку первого запуска
+//    myDebug() << "-yes";
+    if (!m_firstLaunch)
     {
-        modelBooks->setItem(i, 0, new QStandardItem(bookList.at(i)));
+//        myDebug() << "--yes1";
+        int t_number;
+        QString t_bookName;
 
-        if (flag and t_number == getNumberOfBook(bookList.at(i)))
-            t_bookName = bookList.at(i);
-    }
+        bool flag;
+        bool flag2 = Config::configuration()->isExistLastChapter()
+                and Config::configuration()->getOptionAutoChapter();
 
-    if (f_type == "Bible")
-    {
-        ui->tableBook->setModel(modelBooks);
-        ui->tableBook->resizeColumnsToContents();
+        QStringList bookList = Config::configuration()->getListModulesFromMap(f_type)->getModuleBooks(nameOfModule);
 
-        if (!m_firstLaunch)
-            if (flag)
-                makeOptionAutoChapter(t_bookName);
-    }
+        if (f_type == "Bible")
+            flag = (ui->tableBook->model() and flag2);
 
-    if (f_type == "Book")
-    {
-        ui->tableBookBook->setModel(modelBooks);
-        ui->tableBookBook->resizeColumnsToContents();
-    }
+        if (f_type == "Book")
+            flag = (ui->tableBookBook->model() and flag2);
 
-    if (f_type == "Apocrypha")
-    {
-        ui->tableBookApocrypha->setModel(modelBooks);
-        ui->tableBookApocrypha->resizeColumnsToContents();
+        if (f_type == "Apocrypha")
+            flag = (ui->tableBookApocrypha->model()and flag2);
+
+
+        if (flag)
+            t_number = getNumberOfBook(Config::configuration()->getLastBook());
+
+        for (int i = 0; i < bookList.size() - 1; i++)
+        {
+            modelBooks->setItem(i, 0, new QStandardItem(bookList.at(i)));
+
+            if (flag and t_number == getNumberOfBook(bookList.at(i)))
+                t_bookName = bookList.at(i);
+        }
+
+        if (f_type == "Bible")
+        {
+            ui->tableBook->setModel(modelBooks);
+            ui->tableBook->resizeColumnsToContents();
+
+            if (!m_firstLaunch)
+                if (flag)
+                    makeOptionAutoChapter(t_bookName);
+        }
+
+        if (f_type == "Book")
+        {
+            ui->tableBookBook->setModel(modelBooks);
+            ui->tableBookBook->resizeColumnsToContents();
+        }
+
+        if (f_type == "Apocrypha")
+        {
+            ui->tableBookApocrypha->setModel(modelBooks);
+            ui->tableBookApocrypha->resizeColumnsToContents();
+        }
     }
 }
 //------------------------------------------------------------------------------
@@ -441,7 +449,7 @@ void LeftPanel::showChapterFromJournal(const QString f_module, const QString f_b
 
 
         // refresh tab for bible modules or book modules
-        refreshBookList(f_module, t_type);
+//        refreshBookList(f_module, t_type);
 
         if (t_type == "Bible")
         {

@@ -11,8 +11,8 @@
         <file>images/iconFind.png</file>
         <file>images/iconManagerModules.png</file>
         <file>images/iconSettings.png</file>
+        <file>images/iconModuleImport.png</file>
     </qresource>
-    <qresource prefix="/other"/>
     <qresource prefix="/images">
         <file>images/img.png</file>
         <file>images/searchnext.png</file>

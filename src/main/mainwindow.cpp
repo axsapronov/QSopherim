@@ -43,6 +43,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //    convertDictFromFolder();
 
     // load modules
+    GUI_LeftPanel->setFirstLaunch(true);
+
     GUI_LeftPanel->loadModules();
     GUI_LeftPanel->loadBooks();
     GUI_LeftPanel->loadDictionaries();
@@ -54,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
     if (Config::configuration()->isExistLastChapter())
     {
         // open last text
-        GUI_LeftPanel->setFirstLaunch(true);
+        GUI_LeftPanel->setFirstLaunch(false);
         GUI_ModuleViewer->openLastChapter();
         GUI_LeftPanel->sUpdateGUI();
         GUI_RightPanel->loadFirstSettings();
