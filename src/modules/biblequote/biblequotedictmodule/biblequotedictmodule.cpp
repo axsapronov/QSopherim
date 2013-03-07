@@ -114,8 +114,7 @@ void BibleQuoteDictModule::createDictFile(QString path)
 void BibleQuoteDictModule::writeDictFile(QHash<int, WordDictList> *wordList)
 {
     QString path;
-    path = QString(Config::configuration()->getAppDir() + "dictionary/" +
-                   m_name + "/dict" + GL_FORMAT_TEXT);
+    path = QString(Config::configuration()->getDictDir() + m_name + "/dict" + GL_FORMAT_TEXT);
     QFile file(path);
     if (file.exists())
         file.remove();

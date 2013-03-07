@@ -279,7 +279,7 @@ void RightPanel::loadFirstSettings()
         m_curBook = Config::configuration()->getLastBook();
         m_curChapter = Config::configuration()->getLastChapter();
 
-        m_curPath = Config::configuration()->getAppDir()
+        m_curPath = Config::configuration()->getAppDir() + GL_MODULE_PATH
                 + Config::configuration()->getListModulesFromMap(Config::configuration()->getLastType())->getModuleWithName(m_curModule)->getModulePath();
 
         m_curPath.replace("module" + GL_FORMAT_MODULE, "notes" + GL_FORMAT_NOTES);

@@ -355,7 +355,8 @@ void ModuleViewer::updateFontSettings()
 {
     setStyleSettings();
     if (!m_curChapter.isEmpty())
-        showChapter(m_curModule, m_curBook, m_curChapter.toInt());
+        showChapter(m_curModule, m_curBook, m_curChapter.toInt(),
+                    Config::configuration()->getTypeOfModule(m_curModule));
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::sAddBookmark()

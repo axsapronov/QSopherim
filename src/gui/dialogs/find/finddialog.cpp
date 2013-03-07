@@ -172,7 +172,7 @@ void FindDialog::updateComBModule()
     listModules << tr("All modules");
 
     // get all modules
-    QStringList t_list = getListModulesFromPath(Config::configuration()->getAppDir());
+    QStringList t_list = getListModulesFromPath(Config::configuration()->getAppDir() + GL_MODULE_PATH);
     QString t_moduleName;
 
     for (int i = 0; i < t_list.size(); i++)
