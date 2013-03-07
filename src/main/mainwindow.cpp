@@ -313,7 +313,7 @@ void MainWindow::createConnects()
 
     // manager module
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(sRefreshModules()));
-
+//    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(loadModules()));
 
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetGreekStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongGreek(QString)));
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetHebrewStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongHebrew(QString)));

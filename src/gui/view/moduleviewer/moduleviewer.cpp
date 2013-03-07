@@ -195,6 +195,7 @@ void ModuleViewer::showChapter(const QString f_module, const QString f_nameBook,
         Config::configuration()->setLastType(f_type);
         // todo
     }
+
     //    emit SIGNAL_ShowChapterFinish();
 }
 //------------------------------------------------------------------------------
