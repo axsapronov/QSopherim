@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //    convertDictFromFolder();
 
     // load modules
-    GUI_LeftPanel->setFirstLaunch(true);
+//    GUI_LeftPanel->setFirstLaunch(true);
 
     GUI_LeftPanel->sRefreshModules();
 //    GUI_LeftPanel->loadModules();
@@ -54,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     GUI_LeftPanel2->loadJournal();
 
-    GUI_LeftPanel->setFirstLaunch(false);
+//    GUI_LeftPanel->setFirstLaunch(false);
 
     if (Config::configuration()->isExistLastChapter())
     {
@@ -70,7 +70,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //    loadModules();
     //        debug();
-
 }
 //------------------------------------------------------------------------------
 MainWindow::~MainWindow()

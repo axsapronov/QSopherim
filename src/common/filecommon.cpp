@@ -75,8 +75,8 @@ QStringList getListWord(QString filename)
 {
     QStringList r_list;
     QXmlStreamReader xmlReader;
-    xmlReader.addData(getTextFromHtmlFile(filename));
 
+    xmlReader.addData(getTextFromHtmlFile(filename));
     while(!xmlReader.atEnd())
     {
         if(xmlReader.isStartElement())
@@ -92,7 +92,29 @@ QStringList getListWord(QString filename)
     r_list = removeEmptyQStringFromQStringList(&r_list);
     return r_list;
 }
+//------------------------------------------------------------------------------
+void getListWordFromDict(const QString f_path, QMap<QString, QString>* f_map)
+{
+    f_map->clear();
+    QXmlStreamReader xmlReader;
+    xmlReader.addData(getTextFromHtmlFile(f_path));
 
+    while(!xmlReader.atEnd())
+    {
+        if(xmlReader.isStartElement())
+        {
+            QStringList sl;
+            sl << xmlReader.name().toString();
+            QXmlStreamAttributes attrs = xmlReader.attributes();
+//            myDebug() << attrs.value("name").toString();
+
+
+            // todo
+            (*f_map)[attrs.value("name").toString()] = "Lol";
+        }
+        xmlReader.readNext();
+    }
+}
 //------------------------------------------------------------------------------
 bool createEmptyHtml(QString fileName, QString title, QString text)
 {
@@ -221,7 +243,6 @@ QString getTextFromHtmlFile(QString filePath)
             myDebug() << "Error: not open file(getTextFromHtmlFile):" << filePath;
         }
     }
-
     return str;
 }
 //------------------------------------------------------------------------------

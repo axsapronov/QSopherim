@@ -359,10 +359,17 @@
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QFontComboBox" name="fontComBModulesName"/>
+        <widget class="QFontComboBox" name="fontComBModulesName">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
        <item row="2" column="2">
         <widget class="QSpinBox" name="sBFontModulesNameSize">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="maximumSize">
           <size>
            <width>100</width>
@@ -382,6 +389,9 @@
        </item>
        <item row="2" column="3">
         <widget class="QPushButton" name="pBFontModulesName">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>Settings</string>
          </property>
@@ -398,10 +408,17 @@
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QFontComboBox" name="fontComBBookName"/>
+        <widget class="QFontComboBox" name="fontComBBookName">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
        <item row="3" column="2">
         <widget class="QSpinBox" name="sBFontBookNameSize">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="maximumSize">
           <size>
            <width>100</width>
@@ -421,6 +438,9 @@
        </item>
        <item row="3" column="3">
         <widget class="QPushButton" name="pBFontBookName">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>Settings</string>
          </property>
@@ -530,10 +550,17 @@
         </widget>
        </item>
        <item row="9" column="1">
-        <widget class="QFontComboBox" name="fontComBJornal"/>
+        <widget class="QFontComboBox" name="fontComBJornal">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
        <item row="9" column="2">
         <widget class="QSpinBox" name="sBFontJournalSize">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="maximumSize">
           <size>
            <width>100</width>
@@ -553,6 +580,9 @@
        </item>
        <item row="9" column="3">
         <widget class="QPushButton" name="pBFontJornal">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>Settings</string>
          </property>

@@ -97,6 +97,7 @@ void BibleQuoteDictModule::createDictFile(QString path)
         QString line = list.at(i + 1);
         QStringList t_word;
         t_word = line.split("</h4>");
+//        t_word.replace('"', "");
         WordDictList t_list;
         t_list.word = t_word.at(0);
 

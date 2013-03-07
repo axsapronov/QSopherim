@@ -272,4 +272,5 @@ QString getCommentForChapter(const QString f_path, const QString f_book, const Q
 bool isExistBook(const QString f_path, const QString f_book, QString *r_bookName);
 bool toLog(QString logFN, QString logMessage); //добавляет в журнал строку в формате "Дата Время Сообщение"
 QString getBookNameForNumberForModule(const QString f_module, const QString f_bookName);
+void getListWordFromDict(const QString f_path, QMap<QString, QString> *f_map);
 #endif // __FILECOMMON__H

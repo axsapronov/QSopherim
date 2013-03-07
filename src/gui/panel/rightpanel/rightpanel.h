@@ -109,9 +109,6 @@ private:
      * Create connects
      */
     void createConnect();
-
-    void fillModulesList();
-
 };
 
 #endif // RIGHTPANEL_H

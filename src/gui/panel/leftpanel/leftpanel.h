@@ -123,6 +123,8 @@ private:
     QStringListModel *typeModelBook;
     bool m_firstLaunch;
 
+    QMap<QString, QString> m_listDictWord;
+
     QString m_curWord;
     bool m_fromJournal;
     /**

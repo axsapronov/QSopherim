@@ -28,8 +28,6 @@ void RightPanel::init()
     createConnect();
     sUpdateGUIDayMode();
 
-    fillModulesList();
-
     // Если понадобится переключаться между заметками модулей
     // то понадобятся
     //todo
@@ -173,35 +171,6 @@ void RightPanel::sUpdateGUIDayMode()
     ui->comBModules->setPalette(p);
     ui->sBChapter->setPalette(p);
     ui->ListViewBookmark->setPalette(p);
-}
-//------------------------------------------------------------------------------
-void RightPanel::fillModulesList()
-{
-    //    QStringList t_listModules;
-    //    QStringList files;
-    //    files = recursiveFind(Config::configuration()->getAppDir());
-
-    //    for(int i = 0; i < files.size(); i++)
-    //    {
-    //        if(files.at(i).indexOf(GL_FORMAT_NOTES) >= 0)
-    //        {
-    //            // hindi
-    //            // get type module and module name
-    //            QStringList t_list = QStringList
-    //                    (
-    //                        QString(files.at(i)).remove(Config::configuration()->getAppDir())
-    //                        .split("/")
-    //                        );
-    //            m_notes[t_list.at(1)] == t_list.at(0);
-    //            t_listModules << t_list.at(1);
-    //        }
-    //    }
-
-    //    // получить список модулей в папках которых есть заметки
-    //    // добавить в combobox
-    //    // для текущего модуля загружать заметки, если нет, то показывать пустой список
-
-    //    ui->comBModules->setModel(new QStringListModel(t_listModules, this));
 }
 //------------------------------------------------------------------------------
 void RightPanel::sLoadNotes()

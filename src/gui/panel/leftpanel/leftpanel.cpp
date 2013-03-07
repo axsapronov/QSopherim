@@ -475,6 +475,8 @@ void LeftPanel::refreshWordListFromDict(const QString curText)
 {
     QString t_pathToFile = QString(Config::configuration()->getDictDir() +
                                    curText + "/dict" + GL_FORMAT_TEXT);
+
+//    getListWordFromDict(t_pathToFile, &m_listDictWord);
     QStringList wordList = getListWord(t_pathToFile);
 
     QStandardItemModel* modelWord = new QStandardItemModel;
