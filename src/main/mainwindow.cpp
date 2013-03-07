@@ -553,7 +553,7 @@ void MainWindow::convertModules(const QString f_type)
             or (!Config::configuration()->getBookDir().isEmpty() and f_type == "Book")
             or (!Config::configuration()->getCommentsDir().isEmpty() and f_type == "Comments")
             or (!Config::configuration()->getApocryphaDir().isEmpty() and f_type == "Apocrypha")
-            or (!Config::configuration()->getDictDir().isEmpty() and f_type == "Dictionary")
+            or (!Config::configuration()->getImportDictDir().isEmpty() and f_type == "Dictionary")
             )
 
     {
@@ -601,8 +601,7 @@ void MainWindow::convertModules(const QString f_type)
         if (f_type == "Dictionary")
         {
             listModules = getListModulesFromPath(
-                        Config::configuration()->getDictDir()
-                        , ".idx");
+                        Config::configuration()->getImportDictDir(), ".idx");
             for (int i = 0; i < listModules.size(); i++)
             {
                 prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteDictModule);

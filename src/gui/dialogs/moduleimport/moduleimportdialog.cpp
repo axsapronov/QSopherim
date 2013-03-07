@@ -76,7 +76,7 @@ void ModuleImportDialog::sConvertModules()
 
             if (ui->comBType->currentText() == tr("Dictionary"))
             {
-                Config::configuration()->setDictDir(ui->LEPath->text());
+                Config::configuration()->setImportDictDir(ui->LEPath->text());
                 emit SIGNAL_StartConvertDict();
             }
 

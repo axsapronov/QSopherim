@@ -35,8 +35,7 @@ void BibleQuoteDictModule::parseModule(QString pathToModule)
     name = QString(name).split(".").first();
     m_name = name;
 
-
-    QDir d(Config::configuration()->getDictDir() + name);
+    QDir d(Config::configuration()->getDictDir()+ name);
     if (!d.exists())
     {
 
@@ -74,7 +73,7 @@ bool BibleQuoteDictModule::createIniFile()
             "\nNumbering= " + m_numbering +
             "\nPathToModule = " + "dictionary/" +  m_name + "/module" + GL_FORMAT_MODULE;
     //    myDebug() << m_bookPath;
-    QString t_pathToIniFile = QString(Config::configuration()->getAppDir() + GL_MODULE_PATH + m_type.toLower() + "/" +
+    QString t_pathToIniFile = QString(Config::configuration()->getDictDir() +
                                       m_name + "/module" + GL_FORMAT_MODULE);
     if (QFile::exists(t_pathToIniFile))
     {

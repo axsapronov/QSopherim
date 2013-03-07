@@ -193,3 +193,6 @@ TRANSLATIONS += \
         resources/lang/QSopherim_ru.ts \
         resources/lang/QSopherim_de.ts \
         resources/lang/QSopherim_fr.ts
+
+RC_FILE += resources/icon.rc
+OTHER_FILES += resources/icon.rc

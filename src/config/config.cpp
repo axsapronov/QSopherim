@@ -134,12 +134,6 @@ void Config::loadSettings()
 #endif
 
     m_appLogLevel = settings.value(QString("log/app")).toInt();
-
-    m_bibleDir = settings.value(QString("dir/bible")).toString();
-    m_dictDir = settings.value(QString("dir/dict")).toString();
-    m_otherDir = settings.value(QString("dir/other")).toString();
-    m_apocryphaDir = settings.value(QString("dir/apocrypha")).toString();
-    m_commentsDir = settings.value(QString("dir/comments")).toString();
     m_appLang = settings.value(QString("language/lang")).toString();
     if (m_appLang.isEmpty())
         m_appLang = "Russian";
@@ -255,11 +249,6 @@ void Config::saveSettings()
     settings.setValue(QString("log/app"), m_appLogLevel);
 
     settings.setValue(QString("language/lang"), m_appLang);
-    settings.setValue(QString("dir/bible"), m_bibleDir);
-    settings.setValue(QString("dir/other"), m_otherDir);
-    settings.setValue(QString("dir/dict"), m_dictDir);
-    settings.setValue(QString("dir/comments"), m_commentsDir);
-    settings.setValue(QString("dir/apocrypha"), m_apocryphaDir);
 
     // viewer
     settings.setValue(QString("viewer/color"), m_viewerColor);
@@ -740,5 +729,15 @@ QString Config::getTypeOfModule(const QString f_module)
         return "Apocrypha";
 
     return r_str;
+}
+//------------------------------------------------------------------------------
+QString Config::getImportDictDir()
+{
+    return m_importDirDict;
+}
+//------------------------------------------------------------------------------
+void Config::setImportDictDir(const QString newDir)
+{
+    m_importDirDict = newDir;
 }
 //------------------------------------------------------------------------------

@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 //    a.setOrganizationName(GL_AUTHOR);
     a.setApplicationName(GL_PROG_NAME);
+    a.setWindowIcon(QIcon(":/icons/images/logo.png"));
 
     QTextCodec * codec = QTextCodec::codecForName("UTF-8"); // set encoding for prog
     QTextCodec::setCodecForCStrings(codec);

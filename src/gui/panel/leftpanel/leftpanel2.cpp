@@ -138,6 +138,8 @@ void LeftPanel2::showChapterFromPlan(QModelIndex ind)
     pos = str.indexOf(":");
     QString chapterValue = QString(str).mid(0, pos);
 
+    bookName = getBookNameForNumberForModule(Config::configuration()->getLastModule(), bookName);
+
     if (Config::configuration()->isExistLastChapter())
         emit SIGNAL_ShowChapterFrom(Config::configuration()->getLastModule(), bookName, chapterValue);
 }

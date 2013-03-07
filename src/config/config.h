@@ -173,6 +173,9 @@ public:
      * @return
      */
     QString getLastBook();
+
+    QString getImportDictDir();
+    void setImportDictDir(const QString newDir);
     /**
      * @brief getLastModule
      * @return
@@ -374,6 +377,8 @@ private:
 
     QString appLogFN;
     int m_appLogLevel;
+
+    QString m_importDirDict;
 
 };
 

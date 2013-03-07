@@ -799,3 +799,22 @@ bool toLog(QString logFN, QString logMessage)
     return true;
 }
 //-------------------------------------------------------------------------------
+QString getBookNameForNumberForModule(const QString f_module, const QString f_bookName)
+{
+    QString r_str = f_bookName;
+
+    QStringList t_list = Config::configuration()->getListModulesFromMap(Config::configuration()->getTypeOfModule(f_module))
+            ->getModuleWithName(f_module)->getBookList();
+    int t_number = getNumberOfBook(f_bookName);
+
+    for (int i = 0; i < t_list.size(); i++)
+    {
+        if (t_number == getNumberOfBook(t_list.at(i)))
+        {
+            r_str = t_list.at(i);
+            break;
+        }
+    }
+    return r_str;
+}
+//-------------------------------------------------------------------------------

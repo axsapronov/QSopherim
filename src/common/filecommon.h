@@ -271,4 +271,5 @@ QStringList getReadingPlanForDayFromFile(const int f_day, const QString f_path);
 QString getCommentForChapter(const QString f_path, const QString f_book, const QString f_chapter);
 bool isExistBook(const QString f_path, const QString f_book, QString *r_bookName);
 bool toLog(QString logFN, QString logMessage); //добавляет в журнал строку в формате "Дата Время Сообщение"
+QString getBookNameForNumberForModule(const QString f_module, const QString f_bookName);
 #endif // __FILECOMMON__H

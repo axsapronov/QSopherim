@@ -230,7 +230,8 @@ void RightPanel::sDeleteNote()
 //------------------------------------------------------------------------------
 void RightPanel::sEditNote()
 {
-    sEditNote(ui->ListNotes->currentIndex());
+    if (!ui->ListNotes->currentIndex().data().toString().isEmpty())
+        sEditNote(ui->ListNotes->currentIndex());
 }
 //------------------------------------------------------------------------------
 void RightPanel::sShowNoteList(QString f_module,
