@@ -145,12 +145,12 @@ void Config::loadSettings()
         m_appLang = "Russian";
 
     QDir dir;
-    dir.mkpath(getAppDir() + "bible");
-    dir.mkpath(getAppDir() + "dictionary");
-    dir.mkpath(getAppDir() + "other");
-    dir.mkpath(getAppDir() + "book");
-    dir.mkpath(getAppDir() + "comments");
-    dir.mkpath(getAppDir() + "apocrypha");
+    dir.mkpath(getAppDir() + GL_MODULE_PATH + "bible");
+    dir.mkpath(getAppDir() + GL_MODULE_PATH + "dictionary");
+    dir.mkpath(getAppDir() + GL_MODULE_PATH + "other");
+    dir.mkpath(getAppDir() + GL_MODULE_PATH + "book");
+    dir.mkpath(getAppDir() + GL_MODULE_PATH + "comments");
+    dir.mkpath(getAppDir() + GL_MODULE_PATH + "apocrypha");
     dir.mkpath(getAppDir() + "strongs");
     dir.mkpath(getAppDir() + "plans");
 
@@ -727,16 +727,16 @@ QString Config::getTypeOfModule(const QString f_module)
     if (m_listMap["Bible"]->isExist(f_module))
         return "Bible";
 
-    if (m_listMap["Book"]->getCurNumberModule() and m_listMap["Book"]->isExist(f_module))
+    if (m_listMap["Book"]->isExist(f_module))
         return "Book";
 
-    if (m_listMap["Comments"]->getCurNumberModule() and m_listMap["Comments"]->isExist(f_module))
+    if (m_listMap["Comments"]->isExist(f_module))
         return "Comments";
 
-    if (m_listMap["Dictionary"]->getCurNumberModule() and m_listMap["Dictionary"]->isExist(f_module))
+    if (m_listMap["Dictionary"]->isExist(f_module))
         return "Dictionary";
 
-    if (m_listMap["Apocrypha"]->getCurNumberModule() and m_listMap["Apocrypha"]->isExist(f_module))
+    if (m_listMap["Apocrypha"]->isExist(f_module))
         return "Apocrypha";
 
     return r_str;

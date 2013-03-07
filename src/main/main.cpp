@@ -25,6 +25,7 @@ int main(int argc, char *argv[])
     Config *conf = new Config();
     conf->setAppDir(QDir::currentPath() + "/");
     conf->setStrongDir(QDir::currentPath() + "/strongs/");
+    conf->setDictDir(QDir::currentPath() + "/" + GL_MODULE_PATH + "dictionary/");
     conf->setAppLogFN(conf->getAppDir() + "project.log");
 
 #ifdef Q_OS_WIN

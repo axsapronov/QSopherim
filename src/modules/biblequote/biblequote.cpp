@@ -32,13 +32,13 @@ void BibleQuoteModule::parseModule(QString pathToModule)
     //    myDebug() << readInfo(pathToModule).name() << readInfo(pathToModule).shortName();
 
     QDir d;
-    d = QDir(QString(Config::configuration()->getAppDir() + "%1/" + parseInfo.shortName()).arg(m_typeModule.toLower()));
+    d = QDir(QString(Config::configuration()->getAppDir() + GL_MODULE_PATH +  "%1/" + parseInfo.shortName()).arg(m_typeModule.toLower()));
 
     if (!d.exists())
     {
         //        emit SIGNAL_CreateFolderForModule(parseInfo.shortName());
         QDir dir;
-        dir.mkpath(QString(Config::configuration()->getAppDir() + "%1/" + parseInfo.shortName()).arg(m_typeModule.toLower()));
+        dir.mkpath(QString(Config::configuration()->getAppDir() + GL_MODULE_PATH + "%1/" + parseInfo.shortName()).arg(m_typeModule.toLower()));
 
         if (createIniFile(parseInfo))
         {
@@ -200,7 +200,7 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
     }
 
     //    myDebug() << m_bookPath;
-    QString t_pathToIniFile = QString(QString(Config::configuration()->getAppDir() + "%1/" +
+    QString t_pathToIniFile = QString(QString(Config::configuration()->getAppDir() + GL_MODULE_PATH + "%1/" +
                                                                 info.shortName() + "/module" + GL_FORMAT_MODULE).arg(m_typeModule.toLower()));
 
     if (QFile::exists(t_pathToIniFile))
@@ -210,7 +210,7 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
 
 
 
-    QString r_str = QString(Config::configuration()->getAppDir() + "%1/" +
+    QString r_str = QString(Config::configuration()->getAppDir() + GL_MODULE_PATH + "%1/" +
                            info.shortName() + "/module" + GL_FORMAT_MODULE)
                        .arg(m_typeModule.toLower());
 
@@ -222,7 +222,7 @@ bool BibleQuoteModule::createIniFile(MetaInfo info)
 bool BibleQuoteModule::createBookFiles(QString pathToFiles)
 {
     Q_UNUSED (pathToFiles)
-    QString t_pathToXmlFile = QString(QString(Config::configuration()->getAppDir() + "%1/" +
+    QString t_pathToXmlFile = QString(QString(Config::configuration()->getAppDir() + GL_MODULE_PATH + "%1/" +
                                               m_moduleShortName + "/text" + GL_FORMAT_TEXT).arg(m_typeModule.toLower()));
 
     if (QFile::exists(t_pathToXmlFile))
@@ -550,7 +550,7 @@ int BibleQuoteModule::readBook(const int id)
     }
     //    myDebug() << chapterText;
 
-    QString t_pathToXmlFile =  QString(Config::configuration()->getAppDir() + "%1/" +
+    QString t_pathToXmlFile =  QString(Config::configuration()->getAppDir() + GL_MODULE_PATH + "%1/" +
                                        m_moduleShortName + "/text" + GL_FORMAT_TEXT).arg(m_typeModule.toLower());
     //    myDebug() << t_pathToXmlFile;
     //    qDebug() << m_book.size();

@@ -465,7 +465,7 @@ QString getParamModule(QString filename, QString param)
     }
     else
     {
-        qDebug() << "Error";
+        myDebug() << "Error: not get param. Param: " << param;
     }
     return str;
 }

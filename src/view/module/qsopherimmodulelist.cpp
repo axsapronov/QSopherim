@@ -61,7 +61,7 @@ void QSopherimModuleList::refreshList(QString what)
      *создать его
      *и добавить в список
      */
-    QString t_pathToIniFile = QString(Config::configuration()->getAppDir() + what);
+    QString t_pathToIniFile = QString(Config::configuration()->getAppDir() + GL_MODULE_PATH + what);
     findModules(t_pathToIniFile);
 }
 //------------------------------------------------------------------------------
@@ -124,7 +124,7 @@ void QSopherimModuleList::deleteModule(QString nameModule)
     {
         if (m_moduleList.at(i)->getModuleName() == nameModule)
         {
-            QString t_path = Config::configuration()->getAppDir() + m_moduleList.at(i)->getModulePath();
+            QString t_path = Config::configuration()->getAppDir() + GL_MODULE_PATH + m_moduleList.at(i)->getModulePath();
             QFile::remove(t_path);
             t_path.replace("module" + GL_FORMAT_MODULE, "text" + GL_FORMAT_TEXT);
             QFile::remove(QString(t_path).replace("module" + GL_FORMAT_MODULE, "text" + GL_FORMAT_TEXT));

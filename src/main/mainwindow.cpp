@@ -45,18 +45,20 @@ MainWindow::MainWindow(QWidget *parent) :
     // load modules
     GUI_LeftPanel->setFirstLaunch(true);
 
-    GUI_LeftPanel->loadModules();
-    GUI_LeftPanel->loadBooks();
-    GUI_LeftPanel->loadDictionaries();
-    GUI_LeftPanel->loadComments();
-    GUI_LeftPanel->loadApocrypha();
+    GUI_LeftPanel->sRefreshModules();
+//    GUI_LeftPanel->loadModules();
+//    GUI_LeftPanel->loadBooks();
+//    GUI_LeftPanel->loadDictionaries();
+//    GUI_LeftPanel->loadComments();
+//    GUI_LeftPanel->loadApocrypha();
 
     GUI_LeftPanel2->loadJournal();
+
+    GUI_LeftPanel->setFirstLaunch(false);
 
     if (Config::configuration()->isExistLastChapter())
     {
         // open last text
-        GUI_LeftPanel->setFirstLaunch(false);
         GUI_ModuleViewer->openLastChapter();
         GUI_LeftPanel->sUpdateGUI();
         GUI_RightPanel->loadFirstSettings();
@@ -65,8 +67,6 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         GUI_LeftPanel->loadFirstBook();
     }
-
-    GUI_LeftPanel->setFirstLaunch(false);
 
     //    loadModules();
     //        debug();
@@ -312,11 +312,8 @@ void MainWindow::createConnects()
     connect(GUI_Settings, SIGNAL(SIGNAL_RetranslateGUI(QString)), SLOT(retranslate(QString)));
 
     // manager module
-    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(loadDictionaries()));
-    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(loadModules()));
-    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(loadBooks()));
-    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(loadApocrypha()));
-    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(loadComments()));
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(sRefreshModules()));
+
 
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetGreekStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongGreek(QString)));
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetHebrewStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongHebrew(QString)));
@@ -360,6 +357,8 @@ void MainWindow::createConnects()
     // connect find dialog to left2 panel
     connect(GUI_FindDialog, SIGNAL(SIGNAL_ShowChapter(QString, QString, QString)),
             GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
+
+    connect(GUI_FindDialog, SIGNAL(SIGNAL_UpdateGUI()), GUI_LeftPanel, SLOT(sUpdateGUI()));
 
 
     connect(GUI_RightPanel, SIGNAL(SIGNAL_OpenBookmark(QString, QString, QString)),

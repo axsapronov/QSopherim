@@ -56,6 +56,8 @@ public slots:
     void loadApocrypha();
     void loadBooks();
 
+    void sRefreshModules();
+
 signals:
     void SIGNAL_AddRecordToJournal(QString, QString, QString);
     void SIGNAL_ShowHideLeftPanel2(bool);

@@ -107,12 +107,10 @@ void ModuleViewer::showChapter(const QString f_module, const QString f_nameBook,
 {
     //    myDebug() << f_module << f_nameBook << f_numberchapter;
 
-    QString pathToFile = Config::configuration()->getAppDir() +
+    QString pathToFile = Config::configuration()->getAppDir() + GL_MODULE_PATH +
             Config::configuration()->getListModulesFromMap(f_type)->getModuleWithName(f_module)->getModulePath();
 
-    pathToFile.replace("module" + GL_FORMAT_MODULE
-                       , "text" + GL_FORMAT_TEXT);
-    //    myDebug() << f_module << pathToFile << f_nameBook << f_numberchapter;
+    pathToFile.replace("module" + GL_FORMAT_MODULE, "text" + GL_FORMAT_TEXT);
 
     QXmlStreamReader xmlReader;
     xmlReader.addData(getTextFromHtmlFile(pathToFile));
@@ -197,7 +195,7 @@ void ModuleViewer::showChapter(const QString f_module, const QString f_nameBook,
         Config::configuration()->setLastType(f_type);
         // todo
     }
-//    emit SIGNAL_ShowChapterFinish();
+    //    emit SIGNAL_ShowChapterFinish();
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::setModuleName(QString newModule)
@@ -509,7 +507,7 @@ void ModuleViewer::openLastChapter()
         m_curModule = Config::configuration()->getLastModule();
         m_curBook = Config::configuration()->getLastBook();
         m_curChapter = Config::configuration()->getLastChapter();
-        QString t_type = Config::configuration()->getLastType();
+        QString t_type = Config::configuration()->getTypeOfModule(m_curModule);
 
         showChapter(m_curModule, m_curBook, m_curChapter.toInt(), t_type);
     }

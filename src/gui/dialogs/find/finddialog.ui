@@ -101,7 +101,7 @@
         <enum>Qt::Horizontal</enum>
        </property>
        <property name="standardButtons">
-        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+        <set>QDialogButtonBox::Ok</set>
        </property>
       </widget>
      </item>
@@ -132,6 +132,15 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>pBFind</tabstop>
+  <tabstop>comBBook</tabstop>
+  <tabstop>comBChapter</tabstop>
+  <tabstop>tableFiles</tabstop>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>comBModule</tabstop>
+  <tabstop>LEFind</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

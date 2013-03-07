@@ -298,7 +298,7 @@ void LeftPanel::showChapter(const QModelIndex ind, const QString f_type)
         t_curModule = ui->comBModulesApocrypha->currentText();
     }
 
-    QString t_pathToModule = Config::configuration()->getAppDir() +
+    QString t_pathToModule = Config::configuration()->getAppDir() + GL_MODULE_PATH +
             Config::configuration()->getListModulesFromMap(f_type)->getModuleWithName(t_curModule)->getModulePath();
 
     for( int i = 0; i < selectedList.count(); i++)
@@ -440,13 +440,7 @@ void LeftPanel::showChapterFromJournal(const QString f_module, const QString f_b
     if (!t_type.isEmpty())
     {
         m_fromJournal = true;
-        QString t_pathToModule = Config::configuration()->getAppDir() +
-                Config::configuration()->getListModulesFromMap(t_type)->getModuleWithName(f_module)->getModulePath();
-
-        t_pathToModule.replace("module" + GL_FORMAT_MODULE
-                               , "text" + GL_FORMAT_TEXT);
         m_lastNameOfBook  = f_book;
-
 
         // refresh tab for bible modules or book modules
 //        refreshBookList(f_module, t_type);
@@ -471,14 +465,15 @@ void LeftPanel::showChapterFromJournal(const QString f_module, const QString f_b
 
         ModuleViewer::viewer()->setModuleName(f_module);
         ModuleViewer::viewer()->showChapter(f_module, f_book,
-                                            f_chapter.toInt());
+                                            f_chapter.toInt(),
+                                            t_type);
         sUpdateGUIFromJournal();
     }
 }
 //------------------------------------------------------------------------------
 void LeftPanel::refreshWordListFromDict(const QString curText)
 {
-    QString t_pathToFile = QString(Config::configuration()->getAppDir() + "dictionary/" +
+    QString t_pathToFile = QString(Config::configuration()->getDictDir() +
                                    curText + "/dict" + GL_FORMAT_TEXT);
     QStringList wordList = getListWord(t_pathToFile);
 
@@ -496,7 +491,7 @@ void LeftPanel::refreshWordListFromDict(const QString curText)
 //------------------------------------------------------------------------------
 void LeftPanel::showDescriptionWord(const QString word)
 {
-    QString t_pathToFile = QString(Config::configuration()->getAppDir() + "dictionary/" +
+    QString t_pathToFile = QString(Config::configuration()->getDictDir() +
                                    ui->comBDictList->currentText() + "/dict" + GL_FORMAT_TEXT);
 
     QString t_text = QString(tr("<b>Word: <i>%1</i></b><br><br>")).arg(word) + getDescriptionForWordFromDict(t_pathToFile, word);
@@ -505,7 +500,7 @@ void LeftPanel::showDescriptionWord(const QString word)
 //------------------------------------------------------------------------------
 void LeftPanel::showDescriptionWordFromOtherModules(const QString word)
 {
-    QString t_pathToFile = QString(Config::configuration()->getAppDir() + "dictionary/" +
+    QString t_pathToFile = QString(Config::configuration()->getDictDir() +
                                    ui->comBDictListFindWord->currentText() + "/dict" + GL_FORMAT_TEXT);
 
     QString t_text = getDescriptionForWordFromDict(t_pathToFile, word);
@@ -528,7 +523,7 @@ QStringList LeftPanel::getListDictWithWord(const QString word)
 {
     QStringList r_list;
 
-    QStringList t_list = recursiveFind(Config::configuration()->getAppDir() + "dictionary/");
+    QStringList t_list = recursiveFind(Config::configuration()->getDictDir());
     for (int var = 0; var < t_list.size(); var++)
     {
         if (t_list.at(var).indexOf("dict.xml") >= 0)
@@ -785,13 +780,36 @@ void LeftPanel::sUpdateGUIDayMode()
     ui->comBModulesApocrypha->setPalette(p);
     ui->tableBookApocrypha->setPalette(p);
     ui->tableChapterApocrypha->setPalette(p);
+
+
+    QString str = ""
+    "QTableView::item:hover {"
+    "    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #e7effd, stop: 1 #cbdaf1);"
+    "    border: 1px solid #bfcde4;"
+    "}"
+    " "
+    "QTableView::item:selected {"
+    "    border: 1px solid #567dbc;"
+    "}"
+    " "
+    "QTableView::item:selected:active{"
+    "    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6ea1f1, stop: 1 #567dbc);"
+    "}"
+    " "
+    "QTableView::item:selected:!active {"
+    "    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);"
+    "}";
+
+    ui->tableBook->setStyleSheet(str);
+//    myDebug() << str;
+
 }
 //------------------------------------------------------------------------------
 void LeftPanel::sSetCommentsFromModule(const QString f_nameModule)
 {
     if (Config::configuration()->isExistLastChapter())
     {
-        ui->textBrComments->setText(getCommentForChapter(Config::configuration()->getAppDir() + Config::configuration()->getListComments()->getModuleWithName(f_nameModule)->getModulePath()
+        ui->textBrComments->setText(getCommentForChapter(Config::configuration()->getAppDir() + GL_MODULE_PATH + Config::configuration()->getListComments()->getModuleWithName(f_nameModule)->getModulePath()
                                                          , Config::configuration()->getLastBook()
                                                          , Config::configuration()->getLastChapter()));
     }
@@ -885,5 +903,17 @@ void LeftPanel::setFirstLaunch(bool state)
 {
     // hack
     m_firstLaunch = state;
+}
+//------------------------------------------------------------------------------
+void LeftPanel::sRefreshModules()
+{
+    m_firstLaunch = true;
+    loadModules();
+    loadBooks();
+    loadDictionaries();
+    loadApocrypha();
+    loadComments();
+    m_firstLaunch = false;
+    sUpdateGUI();
 }
 //------------------------------------------------------------------------------

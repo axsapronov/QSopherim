@@ -18,7 +18,7 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tabBible">
        <attribute name="title">
@@ -29,7 +29,7 @@
          <widget class="QTableView" name="tableChapter">
           <property name="maximumSize">
            <size>
-            <width>60</width>
+            <width>80</width>
             <height>16777215</height>
            </size>
           </property>
@@ -50,6 +50,9 @@
           </property>
           <attribute name="horizontalHeaderVisible">
            <bool>false</bool>
+          </attribute>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>100</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -117,7 +120,7 @@
          <widget class="QTableView" name="tableChapterBook">
           <property name="maximumSize">
            <size>
-            <width>60</width>
+            <width>80</width>
             <height>16777215</height>
            </size>
           </property>
@@ -229,7 +232,7 @@
          <widget class="QTableView" name="tableChapterApocrypha">
           <property name="maximumSize">
            <size>
-            <width>60</width>
+            <width>80</width>
             <height>16777215</height>
            </size>
           </property>

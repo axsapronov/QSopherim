@@ -117,24 +117,35 @@ void ManagerModules::deleteSelectedModules()
 void ManagerModules::updateList()
 {
     modelBiblies->clear();
+
+    QString t_type;
     for(int i = 0; i < m_listModule->getSize(); i++)
     {
         modelBiblies->setItem(i, 0, new QStandardItem(m_listModule->getModule(i)->getModuleName()));
 
-        if (m_listModule->getModule(i)->getModuleType() == "Bible")
-            modelBiblies->setItem(i, 1, new QStandardItem(tr("bible")));
+        t_type = m_listModule->getModule(i)->getModuleType();
+        if (!t_type.isEmpty())
+        {
+            if (t_type == "Bible")
+                modelBiblies->setItem(i, 1, new QStandardItem(tr("bible")));
 
-        if (m_listModule->getModule(i)->getModuleType() == "Book")
-            modelBiblies->setItem(i, 1, new QStandardItem(tr("book")));
+            if (t_type == "Book")
+                modelBiblies->setItem(i, 1, new QStandardItem(tr("book")));
 
-        if (m_listModule->getModule(i)->getModuleType() == "Comments")
-            modelBiblies->setItem(i, 1, new QStandardItem(tr("comments")));
+            if (t_type == "Comments")
+                modelBiblies->setItem(i, 1, new QStandardItem(tr("comments")));
 
-        if (m_listModule->getModule(i)->getModuleType() == "Apocrypha")
-            modelBiblies->setItem(i, 1, new QStandardItem(tr("apocrypha")));
+            if (t_type == "Apocrypha")
+                modelBiblies->setItem(i, 1, new QStandardItem(tr("apocrypha")));
 
-        if (m_listModule->getModule(i)->getModuleType() == "Dictionary")
-            modelBiblies->setItem(i, 1, new QStandardItem(tr("dictionaries")));
+            if (t_type == "Dictionary")
+                modelBiblies->setItem(i, 1, new QStandardItem(tr("dictionaries")));
+        }
+        else
+        {
+            QString t_str = Config::configuration()->getTypeOfModule(m_listModule->getModule(i)->getModuleName()).toLower();
+            modelBiblies->setItem(i, 1, new QStandardItem(t_str));
+        }
 
         // set hide show
         if (!Config::configuration()->getListHiddenModules()->contains(m_listModule->getModule(i)->getModuleName()))
@@ -287,7 +298,9 @@ void ManagerModules::loadStrongList()
     QXmlStreamReader xmlReader;
     xmlReader.addData(getTextFromHtmlFile(Config::configuration()->getAppDir()
                                           + "strongs.xml"));
-    // get strongs
+    QString t_hebrew;
+    QString t_greek;
+
     while(!xmlReader.atEnd())
     {
         if(xmlReader.isStartElement())
@@ -297,10 +310,18 @@ void ManagerModules::loadStrongList()
             QXmlStreamAttributes attrs = xmlReader.attributes();
             if (attrs.value("language").toString() == "hebrew")
             {
+                if (Config::configuration()->getStrongDir() + attrs.value("path").toString() ==
+                        Config::configuration()->getStrongHebrew())
+                    t_hebrew = attrs.value("name").toString();
+
                 m_hebrewList << attrs.value("name").toString();
             }
             else
             {
+                if (Config::configuration()->getStrongDir() + attrs.value("path").toString() ==
+                        Config::configuration()->getStrongGreek())
+                    t_greek = attrs.value("name").toString();
+
                 m_greekList << attrs.value("name").toString();
             }
         }
@@ -317,6 +338,9 @@ void ManagerModules::loadStrongList()
     // add to combo
     ui->comBGreekStrong->addItems(m_greekList);
     ui->comBHebrewStrong->addItems(m_hebrewList);
+
+    ui->comBGreekStrong->setCurrentIndex(ui->comBGreekStrong->findText(t_greek));
+    ui->comBHebrewStrong->setCurrentIndex(ui->comBHebrewStrong->findText(t_hebrew));
 
     // add to list widget
     ui->ListWGreek->addItems(m_greekList);
