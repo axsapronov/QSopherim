@@ -151,10 +151,9 @@ void Config::loadSettings()
     // viewer settings
     m_viewerColor = qVariantValue<QColor> (settings.value("viewer/color"));
     m_optionChangeTextColor = settings.value("viewer/colorchanging").toBool();
-<<<<<<< HEAD
-=======
+
     m_optionAutoChapter = settings.value("viewer/autochapter").toBool();
->>>>>>> next
+
 
     // font settings for viewer
     m_fontColor = qVariantValue<QColor> (settings.value("font/color"));

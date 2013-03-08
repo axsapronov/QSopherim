@@ -127,8 +127,6 @@ void Settings::saveSettings()
     Config::configuration()->setFontStrike(ui->chBStrike->checkState());
     Config::configuration()->setFontUnderline(ui->chBUnderline->checkState());
 
-<<<<<<< HEAD
-=======
     Config::configuration()->setOptionChangeTextColor(ui->chBChangindTextColor->checkState());
     Config::configuration()->setOptionAutoChapter(ui->chBOptionAutoChapter->checkState());
 
@@ -137,7 +135,6 @@ void Settings::saveSettings()
 
     Config::configuration()->setAppLogLevel(ui->sBAppLogLevel->value());
 
->>>>>>> next
     //    ui->sBFontSize->setValue(Config::configuration()->getFontSize());
 
     //    ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
