@@ -5,6 +5,8 @@
 #include "debughelper.h"
 #include "defines.h"
 
+#include <QMessageBox>
+
 //------------------------------------------------------------------------------
 QString getEncodingFromFile(QString file, QString language)
 {
@@ -96,24 +98,56 @@ QStringList getListWord(QString filename)
 void getListWordFromDict(const QString f_path, QMap<QString, QString>* f_map)
 {
     f_map->clear();
-    QXmlStreamReader xmlReader;
-    xmlReader.addData(getTextFromHtmlFile(f_path));
 
-    while(!xmlReader.atEnd())
+    QFile* xmlFile = new QFile(f_path);
+    if (!xmlFile->open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        if(xmlReader.isStartElement())
-        {
-            QStringList sl;
-            sl << xmlReader.name().toString();
-            QXmlStreamAttributes attrs = xmlReader.attributes();
-//            myDebug() << attrs.value("name").toString();
-
-
-            // todo
-            (*f_map)[attrs.value("name").toString()] = "Lol";
-        }
-        xmlReader.readNext();
+        return;
     }
+    QXmlStreamReader* xmlReader = new QXmlStreamReader(xmlFile);
+
+
+    //Parse the XML until we reach end of it
+    while(!xmlReader->atEnd() && !xmlReader->hasError())
+    {
+        // Read next element
+        QXmlStreamReader::TokenType token = xmlReader->readNext();
+        //If token is just StartDocument - go to next
+        if(token == QXmlStreamReader::StartDocument)
+        {
+            continue;
+        }
+        //If token is StartElement - read it
+        if(token == QXmlStreamReader::StartElement)
+        {
+
+            if(xmlReader->name() == "word")
+            {
+                QXmlStreamAttributes attrs = xmlReader->attributes();
+
+                QStringList t_list;
+                QString t_text;
+                t_list << xmlReader->readElementText().split("\n");
+                removeEmptyQStringFromQStringList(&t_list);
+
+                for (int i = 0; i < t_list.size(); i++)
+                {
+                    t_text.append(QString(t_list.at(i)).replace("    ", "") + "\n");
+                }
+
+                f_map->insert(attrs.value("name").toString(), t_text);
+            }
+        }
+    }
+
+    if(xmlReader->hasError())
+    {
+        return;
+    }
+
+    //close reader and flush file
+    xmlReader->clear();
+    xmlFile->close();
 }
 //------------------------------------------------------------------------------
 bool createEmptyHtml(QString fileName, QString title, QString text)

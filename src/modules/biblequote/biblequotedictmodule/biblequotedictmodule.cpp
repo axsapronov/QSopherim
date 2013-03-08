@@ -130,9 +130,9 @@ void BibleQuoteDictModule::writeDictFile(QHash<int, WordDictList> *wordList)
         {
             WordDictList t_list = wordList->value(i);
             ts << tab
-               << "<word name=\""
+               << "<word name=\'"
                << t_list.word
-               << "\">"
+               << "\'>"
                << t_list.text
                << tab << "</word>"
                << endl;

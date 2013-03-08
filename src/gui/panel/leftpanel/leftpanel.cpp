@@ -12,6 +12,7 @@
 
 #include <QStandardItemModel>
 #include <QStringListModel>
+#include <QMapIterator>
 
 #define GUI_TAB_BIBLE 0
 #define GUI_TAB_BOOK 1
@@ -476,16 +477,20 @@ void LeftPanel::refreshWordListFromDict(const QString curText)
     QString t_pathToFile = QString(Config::configuration()->getDictDir() +
                                    curText + "/dict" + GL_FORMAT_TEXT);
 
-//    getListWordFromDict(t_pathToFile, &m_listDictWord);
+    getListWordFromDict(t_pathToFile, &m_listDictWord);
     QStringList wordList = getListWord(t_pathToFile);
 
     QStandardItemModel* modelWord = new QStandardItemModel;
-    for (int i = 0; i < wordList.size() - 1; i++)
-    {
-        modelWord->setItem(i, 0, new QStandardItem(wordList.at(i)));
-        //        myDebug() << "yes";
-    }
 
+
+    int i = -1;
+    QMapIterator<QString, QString> t_i(m_listDictWord);
+    while (t_i.hasNext())
+    {
+        t_i.next();
+        i++;
+        modelWord->setItem(i, 0, new QStandardItem(t_i.key()));
+    }
     ui->ListViewWordList->setModel(modelWord);
 
     // find desc from other dict
@@ -493,10 +498,7 @@ void LeftPanel::refreshWordListFromDict(const QString curText)
 //------------------------------------------------------------------------------
 void LeftPanel::showDescriptionWord(const QString word)
 {
-    QString t_pathToFile = QString(Config::configuration()->getDictDir() +
-                                   ui->comBDictList->currentText() + "/dict" + GL_FORMAT_TEXT);
-
-    QString t_text = QString(tr("<b>Word: <i>%1</i></b><br><br>")).arg(word) + getDescriptionForWordFromDict(t_pathToFile, word);
+    QString t_text = QString(tr("<b>Word: <i>%1</i></b><br><br>")).arg(word) + m_listDictWord[word];
     ui->view->setText(t_text);
 }
 //------------------------------------------------------------------------------
