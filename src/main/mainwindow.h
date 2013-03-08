@@ -26,8 +26,9 @@ QT_END_NAMESPACE
 #include "debughelper.h"
 #include "qsopherimmodulelist.h"
 #include "finddialog.h"
-#include "noteeditor.h"
+//#include "noteeditor.h"
 #include "managermodules.h"
+#include "moduleimportdialog.h"
 
 class MainWindow : public QMainWindow
 {
@@ -100,10 +101,7 @@ private slots:
       */
     void showHelp();
 
-    void processFinishModule();
-    void processFinishDict();
-
-    void createNote();
+//    void createNote();
 
     /**
      * @brief retranslate
@@ -117,14 +115,26 @@ private slots:
      * @functon
      * Load modules from path and add to list in app
      */
-    void loadModulesFromFolder();
+    void convertModulesFromFolder();
 
     /**
      * @brief loadDictFromFolder
      * @function
      * Load dictionaryes from path and add to list in app
      */
-    void loadDictFromFolder();
+    void convertDictFromFolder();
+
+    void convertCommentsFromFolder();
+    void convertApocryphaFromFolder();
+    void convertBooksFromFolder();
+
+    /**
+     * @brief showHideTray
+     * @param state
+     */
+    void showHideTray();
+
+    void sUpdateGUIFont();
 
 //    void loadModules();
 
@@ -143,9 +153,10 @@ private:
     LeftPanel2 *GUI_LeftPanel2;
     BottomPanel *GUI_BottomPanel;
     ModuleViewer *GUI_ModuleViewer;
-    NoteEditor *GUI_NoteEditor;
+//    NoteEditor *GUI_NoteEditor;
     ManagerModules *GUI_ManagerModules;
     FindDialog *GUI_FindDialog;
+    ModuleImportDialog *GUI_ModuleImportDialog;
 
     //tray
     QSystemTrayIcon *trIcon;
@@ -156,6 +167,8 @@ private:
     QAction *quitAction;
 
     ProcessModule* prModule;
+
+    void convertModules(const QString f_type);
 
     /**
       @function
@@ -183,7 +196,6 @@ private:
       @function
       */
     void saveSettings();
-
 
 };
 

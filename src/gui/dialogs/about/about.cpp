@@ -24,6 +24,7 @@
 
 #include "about.h"
 #include "ui_about.h"
+#include "defines.h"
 
 
 AboutDialog::AboutDialog(QWidget *parent) :
@@ -31,6 +32,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui(new Ui::AboutDialog)
 {
     ui -> setupUi(this);
+    setWindowTitle(QString(tr("About") + " | %1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
 }
 //------------------------------------------------------------------------------
 AboutDialog::~AboutDialog()

@@ -24,9 +24,9 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="tabStrongs">
        <attribute name="title">
         <string>Strongs</string>
        </attribute>
@@ -36,23 +36,31 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
-       <attribute name="title">
-        <string>Notes</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
-         <widget class="QListView" name="ListViewNote"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="tab_3">
+      <widget class="QWidget" name="tabJournal">
        <attribute name="title">
         <string>Journal</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="0" column="0">
-         <widget class="QListView" name="ListViewJournal"/>
+         <widget class="QListView" name="ListViewJournal">
+          <property name="editTriggers">
+           <set>QAbstractItemView::DoubleClicked</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabReadingPlan">
+       <attribute name="title">
+        <string>Reading plan</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0">
+         <widget class="QListView" name="ListViewReadingPlan">
+          <property name="editTriggers">
+           <set>QAbstractItemView::DoubleClicked</set>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

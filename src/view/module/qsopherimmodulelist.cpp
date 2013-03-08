@@ -2,6 +2,7 @@
 #include "debughelper.h"
 #include "filecommon.h"
 #include "config.h"
+#include "defines.h"
 
 #include <QVector>
 #include <QDir>
@@ -15,15 +16,15 @@ QSopherimModuleList::QSopherimModuleList()
 //------------------------------------------------------------------------------
 QSopherimModuleList::~QSopherimModuleList()
 {
-    for (int i = 0; i < moduleList.size(); i++)
+    for (int i = 0; i < m_moduleList.size(); i++)
     {
-        delete moduleList.at(i);
+        delete m_moduleList.at(i);
     }
 }
 //------------------------------------------------------------------------------
 void QSopherimModuleList::addModule(QSopherimModule * module)
 {
-    moduleList.push_back(module);
+    m_moduleList.push_back(module);
     cur_int++;
 }
 //------------------------------------------------------------------------------
@@ -34,18 +35,18 @@ int QSopherimModuleList::getCurNumberModule()
 //------------------------------------------------------------------------------
 QSopherimModule* QSopherimModuleList::getNextModule()
 {
-    return this->moduleList.at(cur_int + 1);
+    return this->m_moduleList.at(cur_int + 1);
 }
 //------------------------------------------------------------------------------
 QSopherimModule* QSopherimModuleList::getModule(int id)
 {
-    return moduleList.at(id);
+    return m_moduleList.at(id);
 }
 //------------------------------------------------------------------------------
 void QSopherimModuleList::init()
 {
-//    moduleList = new QVector<QSopherimModule*>;
-    moduleList.clear();
+    //    m_moduleList = new QVector<QSopherimModule*>;
+    m_moduleList.clear();
     cur_int = -1;
 }
 //------------------------------------------------------------------------------
@@ -60,7 +61,7 @@ void QSopherimModuleList::refreshList(QString what)
      *создать его
      *и добавить в список
      */
-    QString t_pathToIniFile = QString(Config::configuration()->getAppDir() + what);
+    QString t_pathToIniFile = QString(Config::configuration()->getAppDir() + GL_MODULE_PATH + what);
     findModules(t_pathToIniFile);
 }
 //------------------------------------------------------------------------------
@@ -73,12 +74,7 @@ void QSopherimModuleList::findModules(QString dir)
         files = getModuleFilesList(files);
         for (int i = 0; i < files.size(); i++)
         {
-
-            QSopherimModule* module = new QSopherimModule(getModuleInfo(files.at(i)));
-//            myDebug() <<  module.getBookList().size();
-
-            addModule(module);
-            //            myDebug() << getModuleInfo(files.at(i));
+            addModule(new QSopherimModule(getModuleInfo(files.at(i))));
         }
     }
 }
@@ -88,7 +84,7 @@ QStringList QSopherimModuleList::getModuleFilesList(QStringList files)
     QStringList list;
     for(int i = 0; i < files.size(); i++)
     {
-        if(files.at(i).indexOf(".ini") >= 0)
+        if(files.at(i).indexOf(GL_FORMAT_MODULE) >= 0)
         {
             list << files.at(i);
         }
@@ -98,18 +94,22 @@ QStringList QSopherimModuleList::getModuleFilesList(QStringList files)
 //------------------------------------------------------------------------------
 int QSopherimModuleList::getSize()
 {
-    return moduleList.size();
+    return m_moduleList.size();
 }
 //------------------------------------------------------------------------------
 QSopherimModule* QSopherimModuleList::getModuleWithName(QString name)
 {
-    for (int i = 0; moduleList.size(); i++)
+    if (!name.isEmpty())
     {
-        if (name == getModule(i)->getModuleName())
-            return getModule(i);
+        for (int i = 0; i < m_moduleList.size(); i++)
+        {
+            if (name == getModule(i)->getModuleName())
+                return getModule(i);
+        }
     }
     QSopherimModule *tes = new QSopherimModule();
     return tes;
+
 }
 //------------------------------------------------------------------------------
 QStringList QSopherimModuleList::getModuleBooks(QString nameOfModule)
@@ -120,21 +120,21 @@ QStringList QSopherimModuleList::getModuleBooks(QString nameOfModule)
 //------------------------------------------------------------------------------
 void QSopherimModuleList::deleteModule(QString nameModule)
 {
-    for (int i = 0; i < moduleList.size(); i++)
+    for (int i = 0; i < m_moduleList.size(); i++)
     {
-        if (moduleList.at(i)->getModuleName() == nameModule)
+        if (m_moduleList.at(i)->getModuleName() == nameModule)
         {
-            QString t_path = Config::configuration()->getAppDir() + moduleList.at(i)->getModulePath();
+            QString t_path = Config::configuration()->getAppDir() + GL_MODULE_PATH + m_moduleList.at(i)->getModulePath();
             QFile::remove(t_path);
-            t_path.replace("module.ini", "text.xml");
-            QFile::remove(QString(t_path).replace("module.ini", "text.xml"));
-            t_path.replace("text.xml", "dict.xml");
-            QFile::remove(QString(t_path).replace("module.ini", "dict.xml"));
-            t_path.remove("dict.xml");
+            t_path.replace("module" + GL_FORMAT_MODULE, "text" + GL_FORMAT_TEXT);
+            QFile::remove(QString(t_path).replace("module" + GL_FORMAT_MODULE, "text" + GL_FORMAT_TEXT));
+            t_path.replace("text" + GL_FORMAT_TEXT, "dict" + GL_FORMAT_TEXT);
+            QFile::remove(QString(t_path).replace("module" + GL_FORMAT_MODULE, "dict" + GL_FORMAT_TEXT));
+            t_path.remove("dict" + GL_FORMAT_TEXT);
             QDir dir (t_path);
 
             dir.rmpath(t_path);
-            moduleList.remove(i);
+            m_moduleList.remove(i);
         }
     }
     cur_int--;
@@ -142,9 +142,9 @@ void QSopherimModuleList::deleteModule(QString nameModule)
 //------------------------------------------------------------------------------
 void QSopherimModuleList::hideModule(QString nameModule)
 {
-    for (int i = 0; i < moduleList.size(); i++)
+    for (int i = 0; i < m_moduleList.size(); i++)
     {
-        if (moduleList.at(i)->getModuleName() == nameModule)
+        if (m_moduleList.at(i)->getModuleName() == nameModule)
         {
             Config::configuration()->addHiddenModule(nameModule);
         }
@@ -153,9 +153,9 @@ void QSopherimModuleList::hideModule(QString nameModule)
 //------------------------------------------------------------------------------
 void QSopherimModuleList::showModule(QString nameModule)
 {
-    for (int i = 0; i < moduleList.size(); i++)
+    for (int i = 0; i < m_moduleList.size(); i++)
     {
-        if (moduleList.at(i)->getModuleName() == nameModule)
+        if (m_moduleList.at(i)->getModuleName() == nameModule)
         {
             Config::configuration()->showHiddenModule(nameModule);
         }
@@ -164,6 +164,19 @@ void QSopherimModuleList::showModule(QString nameModule)
 //------------------------------------------------------------------------------
 void QSopherimModuleList::clearList()
 {
-    moduleList.clear();
+    m_moduleList.clear();
+}
+//------------------------------------------------------------------------------
+bool QSopherimModuleList::isExist(const QString nameModule)
+{
+    if (this->m_moduleList.size())
+    {
+        for (int i = 0; i < this->m_moduleList.size(); i++)
+        {
+            if (nameModule == getModule(i)->getModuleName())
+                return true;
+        }
+    }
+    return false;
 }
 //------------------------------------------------------------------------------

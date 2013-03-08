@@ -44,6 +44,13 @@ public:
     void showModule(QString nameModule);
 
     /**
+     * @brief isExist
+     * @param nameModule
+     * @return
+     */
+    bool isExist(const QString nameModule);
+
+    /**
      * @brief getCurNumberModule
      * @return
      */
@@ -73,7 +80,7 @@ public:
     void clearList();
 
 private:
-    QVector<QSopherimModule*> moduleList;
+    QVector<QSopherimModule*> m_moduleList;
     int cur_int;
     void init();
     void findModules(QString dir);

@@ -3,7 +3,7 @@
 
 #include "debughelper.h"
 #include "config.h"
-#include <QStandardItemModel>
+#include "defines.h"
 #include "filecommon.h"
 
 RightPanel::RightPanel(QWidget *parent) :
@@ -17,6 +17,38 @@ RightPanel::RightPanel(QWidget *parent) :
 RightPanel::~RightPanel()
 {
     delete ui;
+}
+//------------------------------------------------------------------------------
+void RightPanel::init()
+{
+    m_mapNotes.clear();
+    GUI_NoteEditor = new NoteEditor(this);
+
+    sUpdateGUIFont();
+    createConnect();
+    sUpdateGUIDayMode();
+
+    // Если понадобится переключаться между заметками модулей
+    // то понадобятся
+    //todo
+    ui->comBBooks->setHidden(true);
+    ui->comBModules->setHidden(true);
+    ui->sBChapter->setHidden(true);
+    ui->pBLoad->setHidden(true);
+}
+//------------------------------------------------------------------------------
+void RightPanel::createConnect()
+{
+    connect(ui->ListViewBookmark, SIGNAL(activated(QModelIndex)), SLOT(openBookmark(QModelIndex)));
+    connect(ui->pBDelete, SIGNAL(clicked()), SLOT(deleteBookmark()));
+
+    connect(ui->ListNotes, SIGNAL(doubleClicked(QModelIndex)), SLOT(sEditNote(QModelIndex)));
+    //    connect(ui->pBLoad, SIGNAL(clicked()), SLOT(sLoadNotes()));
+    connect(ui->pBDeleteNote, SIGNAL(clicked()), SLOT(sDeleteNote()));
+    connect(ui->pBEditNote, SIGNAL(clicked()), SLOT(sEditNote()));
+    connect(ui->pBNewNote, SIGNAL(clicked()), SLOT(sNewNote()));
+
+    connect(GUI_NoteEditor, SIGNAL(SIGNAL_HideNotes()), SLOT(sUpdateListNotes()));
 }
 //------------------------------------------------------------------------------
 void RightPanel::retranslate()
@@ -98,18 +130,6 @@ void RightPanel::deleteBookmark()
     ui->ListViewBookmark->setModel(modelBookmarks);
 }
 //------------------------------------------------------------------------------
-void RightPanel::init()
-{
-    createConnect();
-}
-//------------------------------------------------------------------------------
-void RightPanel::createConnect()
-{
-    connect(ui->ListViewBookmark, SIGNAL(activated(QModelIndex)),
-            SLOT(openBookmark(QModelIndex)));
-    connect(ui->pBDelete, SIGNAL(clicked()), SLOT(deleteBookmark()));
-}
-//------------------------------------------------------------------------------
 void RightPanel::openBookmark(QModelIndex ind)
 {
     QString str = ind.data(0).toString();
@@ -125,4 +145,119 @@ void RightPanel::openBookmark(QModelIndex ind)
     emit SIGNAL_OpenBookmark(moduleName, bookName, chapterValue);
 }
 //------------------------------------------------------------------------------
+void RightPanel::sEditNote(QModelIndex ind)
+{
+    GUI_NoteEditor->setModuleName(m_curModule);
+    GUI_NoteEditor->setBookName(m_curBook);
+    GUI_NoteEditor->setChapterValue(m_curChapter);
+    GUI_NoteEditor->setPath(m_curPath);
+    GUI_NoteEditor->editNote(m_mapNotes[ind.row()]);
+}
+//------------------------------------------------------------------------------
+void RightPanel::sUpdateGUIDayMode()
+{
+    QPalette p = ui->ListNotes->palette();
+    if (Config::configuration()->getDayMode())
+    {
+        p.setColor(QPalette::Base, GL_COLOR_DAY);
+    }
+    else
+    {
+        p.setColor(QPalette::Base, GL_COLOR_NIGHT);
+    }
+
+    ui->ListNotes->setPalette(p);
+    ui->comBBooks->setPalette(p);
+    ui->comBModules->setPalette(p);
+    ui->sBChapter->setPalette(p);
+    ui->ListViewBookmark->setPalette(p);
+}
+//------------------------------------------------------------------------------
+void RightPanel::sLoadNotes()
+{
+
+}
+//------------------------------------------------------------------------------
+void RightPanel::sNewNote()
+{
+    if (m_curPath.isEmpty())
+        return;
+
+    GUI_NoteEditor->setModuleName(m_curModule);
+    GUI_NoteEditor->setBookName(m_curBook);
+    GUI_NoteEditor->setChapterValue(m_curChapter);
+    GUI_NoteEditor->setPath(m_curPath);
+    GUI_NoteEditor->show();
+}
+//------------------------------------------------------------------------------
+void RightPanel::sDeleteNote()
+{
+    GUI_NoteEditor->deleteNote(m_curModule, m_curBook, m_curChapter, m_curPath,
+                               ui->ListNotes->currentIndex().data(0).toString());
+    sUpdateListNotes();
+}
+//------------------------------------------------------------------------------
+void RightPanel::sEditNote()
+{
+    if (!ui->ListNotes->currentIndex().data().toString().isEmpty())
+        sEditNote(ui->ListNotes->currentIndex());
+}
+//------------------------------------------------------------------------------
+void RightPanel::sShowNoteList(QString f_module,
+                               QString f_book,
+                               QString f_chapter,
+                               QString f_path)
+{
+    m_mapNotes = getNoteOfParams(f_module, f_book, f_chapter, f_path);
+    m_curBook = f_book;
+    m_curModule = f_module;
+    m_curChapter = f_chapter;
+    m_curPath = f_path;
+
+    if (m_mapNotes.size() != 0)
+    {
+        QStandardItemModel *model = new QStandardItemModel(m_mapNotes.size(), 0);
+        model->clear();
+        ui->ListNotes->setModel(model);
+
+        for (int i = 0; i < m_mapNotes.size(); i++)
+        {
+            QStandardItem *item = new QStandardItem();
+            QString first50Simbols = m_mapNotes[i].mid(0, 50);
+            item->setData(first50Simbols, Qt::DisplayRole );
+            item->setEditable( false );
+            model->appendRow( item );
+        }
+    }
+    else
+    {
+        // reset
+        ui->ListNotes->setModel(new QStandardItemModel());
+    }
+}
+//------------------------------------------------------------------------------
+void RightPanel::sUpdateListNotes()
+{
+    sShowNoteList(m_curModule, m_curBook, m_curChapter, m_curPath);
+}
+//------------------------------------------------------------------------------
+void RightPanel::loadFirstSettings()
+{
+    if (Config::configuration()->isExistLastChapter())
+    {
+        m_curModule = Config::configuration()->getLastModule();
+        m_curBook = Config::configuration()->getLastBook();
+        m_curChapter = Config::configuration()->getLastChapter();
+
+        m_curPath = Config::configuration()->getAppDir() + GL_MODULE_PATH
+                + Config::configuration()->getListModulesFromMap(Config::configuration()->getLastType())->getModuleWithName(m_curModule)->getModulePath();
+
+        m_curPath.replace("module" + GL_FORMAT_MODULE, "notes" + GL_FORMAT_NOTES);
+    }
+}
+//------------------------------------------------------------------------------
+void RightPanel::sUpdateGUIFont()
+{
+    ui->ListNotes->setFont(Config::configuration()->getGUIMapFont()["FontNotes"]);
+}
 //------------------------------------------------------------------------------

@@ -18,8 +18,8 @@ public:
     explicit ManagerModules(QWidget *parent = 0);
     ~ManagerModules();
 
-    void loadListModules();
     void loadStrongList();
+    void loadAllModules();
 
 signals:
     void SIGNAL_RefreshModules();
@@ -71,7 +71,7 @@ private slots:
     void sSetHebrewStrong(QString f_strong);
     void sSetGreekStrong(QString f_strong);
 
-
+    void accept();
 
 private:
     Ui::ManagerModules *ui;
@@ -101,8 +101,6 @@ private:
      */
     void deleteModule(QString moduleName);
 
-    int m_countBiblies;
-
     /**
      * @brief updateList
      * update hide/show/delete list
@@ -113,6 +111,8 @@ private:
 
     QString getFullPathToStrong(QString f_strong);
     void addStrongToConfFile(QString f_name, QString f_language);
+
+    void loadModules(const QString f_type);
 
 };
 

@@ -1,8 +1,11 @@
 #include "filecommon.h"
 #include "stringcommon.h"
+#include "strongcommon.h"
 
 #include "debughelper.h"
+#include "defines.h"
 
+#include <QMessageBox>
 
 //------------------------------------------------------------------------------
 QString getEncodingFromFile(QString file, QString language)
@@ -70,44 +73,12 @@ QTextCodec * getCodecOfEncoding(QString encoding)
     return codec;
 }
 //------------------------------------------------------------------------------
-QStringList getFillLang()
-{
-    QStringList items;
-    items << QString ("rus")
-          << QString ("eng")
-          << QString ("ukr")
-          << QString ("he-rus")
-          << QString ("gr-rus")
-          << QString ("he");
-    return items;
-}
-//------------------------------------------------------------------------------
-QStringList getFillType()
-{
-    //    Dictionary/Справочник
-    //   Encyclopedia/Энциклопедия
-    //   Glossary/Глоссарий
-    //   Lexicon/Симфония
-    //   Thesaurus/Тезаурус
-    //   Vocabulary/Толковый
-    //   Wordbook/Словарь
-    QStringList items;
-    items << QString::fromUtf8( ("Dictionary/Справочник"))
-          << QString::fromUtf8( ("Encyclopedia/Энциклопедия"))
-          << QString::fromUtf8( ("Glossary/Глоссарий"))
-          << QString::fromUtf8( ("Lexicon/Симфония"))
-          << QString::fromUtf8( ("Thesaurus/Тезаурус"))
-          << QString::fromUtf8( ("Vocabulary/Толковый"))
-          << QString::fromUtf8( ("Wordbook/Словарь"));
-    return items;
-}
-//------------------------------------------------------------------------------
 QStringList getListWord(QString filename)
 {
     QStringList r_list;
     QXmlStreamReader xmlReader;
-    xmlReader.addData(getTextFromHtmlFile(filename));
 
+    xmlReader.addData(getTextFromHtmlFile(filename));
     while(!xmlReader.atEnd())
     {
         if(xmlReader.isStartElement())
@@ -118,17 +89,66 @@ QStringList getListWord(QString filename)
             //         myDebug() << attrs.value("name").toString();
             r_list.append(attrs.value("name").toString());
         }
-
-        //        if (xmlReader.isEndElement())
-        //        {
-
-        //        }
         xmlReader.readNext();
     }
     r_list = removeEmptyQStringFromQStringList(&r_list);
     return r_list;
 }
+//------------------------------------------------------------------------------
+void getListWordFromDict(const QString f_path, QMap<QString, QString>* f_map)
+{
+    f_map->clear();
 
+    QFile* xmlFile = new QFile(f_path);
+    if (!xmlFile->open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        return;
+    }
+    QXmlStreamReader* xmlReader = new QXmlStreamReader(xmlFile);
+
+
+    //Parse the XML until we reach end of it
+    while(!xmlReader->atEnd() && !xmlReader->hasError())
+    {
+        // Read next element
+        QXmlStreamReader::TokenType token = xmlReader->readNext();
+        //If token is just StartDocument - go to next
+        if(token == QXmlStreamReader::StartDocument)
+        {
+            continue;
+        }
+        //If token is StartElement - read it
+        if(token == QXmlStreamReader::StartElement)
+        {
+
+            if(xmlReader->name() == "word")
+            {
+                QXmlStreamAttributes attrs = xmlReader->attributes();
+
+                QStringList t_list;
+                QString t_text;
+                t_list << xmlReader->readElementText().split("\n");
+                removeEmptyQStringFromQStringList(&t_list);
+
+                for (int i = 0; i < t_list.size(); i++)
+                {
+                    t_text.append(QString(t_list.at(i)).replace("    ", "") + "\n");
+                }
+
+                f_map->insert(attrs.value("name").toString(), t_text);
+            }
+        }
+    }
+
+    if(xmlReader->hasError())
+    {
+        return;
+    }
+
+    //close reader and flush file
+    xmlReader->clear();
+    xmlFile->close();
+}
 //------------------------------------------------------------------------------
 bool createEmptyHtml(QString fileName, QString title, QString text)
 {
@@ -250,13 +270,6 @@ QString getTextFromHtmlFile(QString filePath)
             QTextStream stream(&file);
             stream.setCodec(getCodecOfEncoding(getEncodingFromFile(filePath)));
             str = stream.readAll();
-            //        //        qDebug() << "str = " << str;
-            //        int body = QString("<body>").length();
-            //        int posBegin = str.indexOf("<body>");
-
-            //        int posEnd = str.indexOf("</body>");
-            //        str = str.mid(posBegin + body,
-            //                      posEnd - posBegin - body);
             file.close();
         }
         else
@@ -264,7 +277,6 @@ QString getTextFromHtmlFile(QString filePath)
             myDebug() << "Error: not open file(getTextFromHtmlFile):" << filePath;
         }
     }
-
     return str;
 }
 //------------------------------------------------------------------------------
@@ -373,11 +385,11 @@ bool createEmptyXML(QString fileName)
             //try to open or create file
             QTextStream ts(&file);
             ts.setCodec("UTF-8");
-//            ts << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl;
-//            ts << "<!DOCTYPE xbel>" << endl;
-//            ts << "<xbel version=\"1.0\">" << endl;
+            //            ts << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl;
+            //            ts << "<!DOCTYPE xbel>" << endl;
+            //            ts << "<xbel version=\"1.0\">" << endl;
             ts << "<xml>" << endl;
-//            ts << "</xml>" << endl;
+            //            ts << "</xml>" << endl;
             file.close();
             ret = true;
         }
@@ -445,7 +457,7 @@ bool endXML(QString fileName)
             //try to open or create file
             QTextStream ts(&file);
             ts.setCodec("UTF-8");
-//            ts << "</xbel>" << endl;
+            //            ts << "</xbel>" << endl;
             ts << "</xml>" << endl;
             file.close();
             ret = true;
@@ -482,26 +494,33 @@ QSopherimModuleInfo getModuleInfo(QString fileName)
 QString getParamModule(QString filename, QString param)
 {
     // translate to hindi
+
     QString str = "";
     QString line;
     QString parama = param + " = ";
+
     QFile file(filename);
-    file.close();
+
+    if (file.isOpen())
+        file.close();
+
     if (file.open(QIODevice::ReadOnly))
     {
         QTextStream stream( &file );
-        do {
+        do
+        {
             line = stream.readLine();
             if (line.indexOf(parama) >= 0)
             {
                 str = line.remove(parama);
             }
         } while (str.isEmpty() and !line.isNull());
+
         file.close();
     }
     else
     {
-        qDebug() << "Error";
+        myDebug() << "Error: not get param. Param: " << param;
     }
     return str;
 }
@@ -512,7 +531,7 @@ QStringList getBookList(QString file)
     QString param = "BookList";
     // translate to hindi
     QString str = getParamModule(file, param);
-    bookList << str.split(":");
+    bookList << str.split(GL_SYMBOL_SPLIT_BOOK);
     bookList = removeEmptyQStringFromQStringList(&bookList);
     return bookList;
 }
@@ -524,7 +543,7 @@ QHash<QString, int> getNumberOfChaptersInBook(QString filename)
     QString param = "NumberChapter";
     //     translate to hindi
     QString str = getParamModule(filename, param);
-    bookList << str.split("::");
+    bookList << str.split(GL_SYMBOL_SPLIT_CHAPTER);
     bookList = removeEmptyQStringFromQStringList(&bookList);
     QHash<QString, int> list;
 
@@ -570,60 +589,17 @@ QStringList recursiveFind(QString directory)
     return list;
 }
 //-------------------------------------------------------------------------------
-QHash<int, QString> getNoteOfParams(QString curPath,
-                                    QString curModule,
-                                    QString curBook,
-                                    QString curChapter,
-                                    QString firstVerse)
-{
-    QHash<int, QString> hash;
-    Q_UNUSED (firstVerse)
+//QString getVerseNumberFromNote(QString* line)
+//{
 
-    QString text = getTextFromHtmlFile(curPath);
-    QStringList list;
-    int count = 0;
-    text.remove("<xml>").remove("</xml>");
+//    QString str = *line;
+//    QString t_str ="verse=\"";
+//    int pos = str.indexOf(t_str);
+//    int pos2 = str.indexOf("\"", pos + t_str.length());
 
-    list << text.split("</note>");
-    list = removeEmptyQStringFromQStringList(&list);
-    for (int i = 0; i < list.size(); i++)
-    {
-        QString str1 = "module=\"" + curModule + "\"";
-        QString str2 = "book=\"" + curBook + "\"";
-        QString str3 = "chapter=\"" + curChapter + "\"";
-        QString line = list.at(i);
-        if (line.contains(str1) &&
-                line.contains(str2) &&
-                line.contains(str3) &&
-                getVerseNumberFromNote(&line) == firstVerse)
-        {
-            //            QString text = "<note " + str1 + str2 + str3;
-            //            hash[count] = strat.remove(text).remove("</note>");
-//            myDebug() << getVerseBeginNumberFromNote(&line) << getVerseEndNumberFromNote(&line);
-
-            /// remove tag before text
-            int pos = line.indexOf(">");
-            line.remove(0, pos + 1);
-            hash[count] = line;
-            count++;
-        }
-    }
-    return hash;
-}
-
-//-------------------------------------------------------------------------------
-QString getVerseNumberFromNote(QString* line)
-{
-
-    QString str = *line;
-    QString t_str ="verse=\"";
-    int pos = str.indexOf(t_str);
-    int pos2 = str.indexOf("\"", pos + t_str.length());
-
-    str = str.mid(pos + t_str.length(), pos2  - pos - t_str.length());
-    return str;
-}
-
+//    str = str.mid(pos + t_str.length(), pos2  - pos - t_str.length());
+//    return str;
+//}
 //-------------------------------------------------------------------------------
 QString getDescriptionForWordFromDict(QString t_pathToFile, QString word)
 {
@@ -644,10 +620,10 @@ QString getDescriptionForWordFromDict(QString t_pathToFile, QString word)
                 break;
             }
         }
-//        if (xmlReader.isEndElement())
-//        {
+        //        if (xmlReader.isEndElement())
+        //        {
 
-//        }
+        //        }
         xmlReader.readNext();
     }
     return r_str;
@@ -656,7 +632,7 @@ QString getDescriptionForWordFromDict(QString t_pathToFile, QString word)
 QStringList getBookmarks(QString pathToFile)
 {
     QXmlStreamReader xmlReader;
-//    QString r_str;
+    //    QString r_str;
     QStringList r_list;
     xmlReader.addData(getTextFromHtmlFile(pathToFile));
     while(!xmlReader.atEnd())
@@ -668,10 +644,10 @@ QStringList getBookmarks(QString pathToFile)
             QXmlStreamAttributes attrs = xmlReader.attributes();
             r_list  << attrs.value("name").toString();
         }
-//        if (xmlReader.isEndElement())
-//        {
+        //        if (xmlReader.isEndElement())
+        //        {
 
-//        }
+        //        }
         xmlReader.readNext();
     }
     r_list = removeEmptyQStringFromQStringList(&r_list);
@@ -718,5 +694,182 @@ QString getModuleNameFromIni(const QString f_filePath)
         }
     }
     return r_moduleName;
+}
+//------------------------------------------------------------------------------
+QStringList getReadinPlanForDay(const int f_mount, const int f_day, const QString f_type)
+{
+    QStringList r_list;
+
+    switch (f_mount)
+    {
+    case MOUNT_JANUARY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/01.xml"); break;
+    case MOUNT_FEBRUARY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/02.xml"); break;
+    case MOUNT_MARCH: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/03.xml"); break;
+    case MOUNT_APRIL: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/04.xml"); break;
+    case MOUNT_MAY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/05.xml"); break;
+    case MOUNT_JUNE: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/06.xml"); break;
+    case MOUNT_JULY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/07.xml"); break;
+    case MOUNT_AUGUST: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/08.xml"); break;
+    case MOUNT_SEPTEMBEER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/09.xml"); break;
+    case MOUNT_OCTOBER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/10.xml"); break;
+    case MOUNT_NOVEMBER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/11.xml"); break;
+    case MOUNT_DECEMBER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/12.xml"); break;
+    default:
+        break;
+    }
+
+    return r_list;
+}
+//------------------------------------------------------------------------------
+QStringList getReadingPlanForDayFromFile(const int f_day, const QString f_path)
+{
+    QStringList r_list;
+    QStringList t_list(getTextFromHtmlFile(f_path).split("\n"));
+
+    for (int i = 0; i < t_list.size(); i++)
+    {
+        if (t_list.at(i).indexOf(QString("day=\'%1\'").arg(f_day)) >= 0)
+        {
+            int pos1 = t_list.at(i).indexOf(">") + 1;
+            int pos2 = t_list.at(i).indexOf("<", pos1);
+
+            r_list << t_list.at(i).mid(pos1, pos2 - pos1);
+        }
+    }
+    return r_list;
+}
+//------------------------------------------------------------------------------
+QString getCommentForChapter(const QString f_path, const QString f_book, const QString f_chapter)
+{
+    // hindi
+    QString r_str = "";
+
+    //    myDebug() << isExistBook(f_path, f_book);
+
+    QString t_findBook;
+    if (isExistBook(f_path, f_book, &t_findBook));
+    {
+        if (!t_findBook.isEmpty())
+        {
+            QString t_path = f_path;
+            t_path.replace("module" + GL_FORMAT_MODULE
+                           , "text" + GL_FORMAT_TEXT);
+
+            QXmlStreamReader xmlReader;
+            xmlReader.addData(getTextFromHtmlFile(t_path));
+
+            bool flag = false;
+            while(!xmlReader.atEnd() and !flag)
+            {
+                if(xmlReader.isStartElement())
+                {
+                    QStringList sl;
+                    sl << xmlReader.name().toString();
+                    QXmlStreamAttributes attrs = xmlReader.attributes();
+                    if (attrs.value("name").toString() == t_findBook)
+                    {
+                        while(!xmlReader.atEnd() and !flag)
+                        {
+                            if (xmlReader.attributes().value("number") == f_chapter)
+                            {
+                                flag = true;
+                                QString str = xmlReader.readElementText();
+                                str.remove("    ");
+                                r_str = str;
+                            }
+                            xmlReader.readNext();
+                        }
+                    }
+                }
+                xmlReader.readNext();
+            }
+        }
+    }
+    return r_str;
+}
+//------------------------------------------------------------------------------
+bool isExistBook(const QString f_path, const QString f_book, QString* r_bookName)
+{
+    bool r_bool = false;
+    QString t_str = getParamModule(f_path, "BookList");
+    QStringList t_list(t_str.split(GL_SYMBOL_SPLIT_BOOK));
+    int t_number = getNumberOfBook(f_book);
+    int i = 0;
+    do
+    {
+        if (!t_list.at(i).isEmpty()
+                and getNumberOfBook(t_list.at(i)) == t_number)
+        {
+            r_bool = true;
+            *r_bookName = t_list.at(i);
+        }
+        i++;
+    } while (!r_bool and i < t_list.size());
+
+    return r_bool;
+}
+//------------------------------------------------------------------------------
+QMap<int, QString> getNoteOfParams(QString f_module, QString f_book, QString f_chapter, QString f_path)
+{
+    QMap<int, QString> r_map;
+
+    QString t_text = getTextFromHtmlFile(f_path);
+    QStringList t_list;
+    int t_count = 0;
+    t_text.remove("<xml>").remove("</xml>");
+    t_list << t_text.split("</note>");
+    t_list = removeEmptyQStringFromQStringList(&t_list);
+    for (int i = 0; i < t_list.size(); i++)
+    {
+        QString str1 = "module=\"" + f_module + "\"";
+        QString str2 = "book=\"" + f_book + "\"";
+        QString str3 = "chapter=\"" + f_chapter + "\"";
+        QString t_line = t_list.at(i);
+        if (t_line.contains(str1) &&
+                t_line.contains(str2) &&
+                t_line.contains(str3))
+        {
+            // remove tag before text
+            int pos = t_line.indexOf(">");
+            t_line.remove(0, pos + 1);
+            r_map[t_count] = t_line;
+            t_count++;
+        }
+    }
+    return r_map;
+}
+//-------------------------------------------------------------------------------
+bool toLog(QString logFN, QString logMessage)
+{
+    QFile file(logFN);
+    if(!file.open(QIODevice::Append | QIODevice::Text))
+    {
+        return false;
+    }
+    QTextStream ts(&file);
+    //ts.setCodec("UTF-8"); //do not set codec, write in system codepage yet
+    QDateTime dt = QDateTime::currentDateTime();
+    ts << dt.toString("yyyy.MM.dd hh:mm:ss  ") << logMessage << endl;
+    file.close();
+    return true;
+}
+//-------------------------------------------------------------------------------
+QString getBookNameForNumberForModule(const QString f_module, const QString f_bookName)
+{
+    QString r_str = f_bookName;
+
+    QStringList t_list = Config::configuration()->getListModulesFromMap(Config::configuration()->getTypeOfModule(f_module))
+            ->getModuleWithName(f_module)->getBookList();
+    int t_number = getNumberOfBook(f_bookName);
+
+    for (int i = 0; i < t_list.size(); i++)
+    {
+        if (t_number == getNumberOfBook(t_list.at(i)))
+        {
+            r_str = t_list.at(i);
+            break;
+        }
+    }
+    return r_str;
 }
 //-------------------------------------------------------------------------------

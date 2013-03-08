@@ -3,7 +3,10 @@
 
 #include <QDialog>
 
-namespace Ui {
+#include "fontdialog.h"
+
+namespace Ui
+{
 class Settings;
 }
 
@@ -46,33 +49,24 @@ public:
 
 signals:
     void SIGNAL_RetranslateGUI(QString);
-    void SIGNAL_ReLoadModules();
     void SIGNAL_ReLoadFontSettings();
+    void SIGNAL_UpdateTray();
+    void SIGNAL_UpdateDayMode();
 
 private slots:
     void accept();
-    /**
-       @function
-       Browse path to dict modules
-       */
-    void browseDictDir();
-    /**
-       @function
-       Browse path to bible modules
-       */
-    void browseBibleDir();
-    /**
-       @function
-       Browse path to other modules
-       */
-    void browseOtherDir();
     void selectFontColor();
+
+    void fontSettings();
+    void updateFontSettings();
 
 private:
     Ui::Settings *ui;
     QString m_APP_Lang;
     QColor m_fontColor;
     QColor m_viewerColor;
+
+    FontDialog *GUI_Font;
     /**
       @function
       Debug function
@@ -90,6 +84,8 @@ private:
       */
     bool getModifySettings();
     void setParams();
+
+
 };
 
 #endif // Settings_H

@@ -4,33 +4,12 @@
 
 #include "config.h"
 
+#include "debughelper.h"
+
 
 //-------------------------------------------------------------------------------
-QVector<StrongList> getListStrongs(QString pathToFile)
+void getMapStrongs(const QString pathToFile, QMap<int, StrongList> &r_map)
 {
-    QVector<StrongList> list;
-
-    //QXmlStreamReader xmlReader;
-    //xmlReader.addData(getTextFromHtmlFile(pathToFile));
-//    while(!xmlReader.atEnd())
-//    {
-//        if(xmlReader.isStartElement())
-//        {
-//            StrongList t_list;
-//            QXmlStreamAttributes attrs = xmlReader.attributes();
-//            if (xmlReader.name().toString() == "strong")
-//            {
-//                t_list.number = attrs.value("number").toString().toInt();
-//                QString str = xmlReader.readElementText();
-//                str.remove("    ");
-//                t_list.text = str;
-//            }
-//            list.push_back(t_list);
-//        }
-//        xmlReader.readNext();
-//    }
-
-
     QString t_text = getTextFromHtmlFile(pathToFile);
     QStringList t_list = t_text.split("\n");
 
@@ -46,30 +25,9 @@ QVector<StrongList> getListStrongs(QString pathToFile)
             QString str = t_list.at(i).mid(pos2 + 3, t_list.at(i).length() - pos2 - 3 - 9 ); // 9 - length </strong>
             str.remove("    ");
             t_strong.text = str;
+            r_map[t_strong.number] = t_strong;
         }
-        list.push_back(t_strong);
     }
-    return list;
-}
-//-------------------------------------------------------------------------------
-void createListStrongs(QString f_path)
-{
-    QString text = getTextFromHtmlFile(f_path);
-    QStringList list;
-    QHash<int, StrongList> strong;
-    list = text.split("<h4>");
-
-    for (int i = 0; i < list.size() - 1; i++)
-    {
-        QString line = list.at(i + 1);
-        QStringList t_strong;
-        t_strong = line.split("</h4>");
-        StrongList t_list;
-        t_list.number = t_strong.at(0).toInt();
-        t_list.text = getCoolLine(t_strong.at(1));
-        strong[i] = t_list;
-    }
-    writeXmlStrongFile(&strong);
 }
 //-------------------------------------------------------------------------------
 void createListStrongs(QString f_path, QString f_nameStrong)
@@ -109,55 +67,60 @@ void writeXmlStrongFile(QHash<int, StrongList> *strong, QString f_path)
 
         for (int i = 0; i < strong->size(); i++)
         {
-            ///    <strong number='value'> text </strong>
+            //    <strong number='value'> text </strong>
             StrongList t_list = strong->value(i);
             ts << tab
-               << "<strong number=\""
-               << t_list.number
-               << "\">"
-               << t_list.text
-               << tab << "</strong>"
+               << "<strong number=\'"
+               << QString("%1").arg(t_list.number, 5, 10, QChar('0'))
+               << "\'>"
+               << t_list.text.remove("    ")
+               << "</strong>"
                << endl;
         }
         ts << "</xml>" << endl;
     }
 }
 //-------------------------------------------------------------------------------
-void writeXmlStrongFile(QHash<int, StrongList> *strong)
+QString getTypeStrong()
 {
-    QString path;
-    path = Config::configuration()->getStrongDir() + "strong";
+    QString r_str = "";
 
+    QString t_lastBook = Config::configuration()->getLastBook();
+    int t_numberBook = getNumberOfBook(t_lastBook);
+
+    if (t_numberBook <= 66 )
+        r_str = "Hebrew";
+
+    if (t_numberBook > 66 and t_numberBook <= 77)
+        r_str = "Greek";
+
+    return r_str;
+}
+//-------------------------------------------------------------------------------
+int getNumberOfBook(const QString f_book)
+{
+    int r_number = 0;
+    QString t_name = "numberBook.txt";
+
+    QString t_text = getTextFromHtmlFile(Config::configuration()->getStrongDir() + t_name);
+    QStringList t_list;
+    t_list << t_text.split("\n");
+
+    int i = 0;
+    QString t_str;
+    bool flag = false;
     do
     {
-        path.append("0");
-    } while ( QFile(path + ".xml" ).exists());
-    path.append(".xml");
-
-    QFile file(path);
-    if (file.exists())
-        file.remove();
-
-    if(file.open(QIODevice::WriteOnly))
-    {
-        QString tab = "    ";
-        QTextStream ts(&file);
-        ts.setCodec(getCodecOfEncoding("UTF-8"));
-        ts << "<xml>" << endl;
-
-        for (int i = 0; i < strong->size(); i++)
+        t_str = getParamFromStr(&t_list.at(i), f_book);
+        if (t_str != t_list.at(i))
         {
-            ///    <strong number='value'> text </strong>
-            StrongList t_list = strong->value(i);
-            ts << tab
-               << "<strong number=\""
-               << t_list.number
-               << "\">"
-               << t_list.text
-               << tab << "</strong>"
-               << endl;
+            r_number = t_str.toInt();
         }
-        ts << "</xml>" << endl;
-    }
-}
 
+        i++;
+    } while (!flag and i < t_list.size() );
+
+    return r_number;
+}
+//-------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------

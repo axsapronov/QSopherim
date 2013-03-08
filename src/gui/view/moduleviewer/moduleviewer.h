@@ -39,12 +39,21 @@ public:
     void setPath(QString newPath);
     QString getPath();
 
-    void showChapter(QString pathToFile, QString nameBook, int numberchapter);
+    void showChapter(const QString f_module
+                     , const QString f_nameBook
+                     , const int f_numberchapter
+                     , const QString f_type = "Bible");
 
     void setStrongList(QString path);
     void retranslate();
 
-    QString getLastNumberLine();
+//    QString getLastNumberLine();
+
+    /**
+     * function for open last chapter (get last chapter from settings)
+     * @brief openLastChapter
+     */
+    void openLastChapter();
 
 public slots:
 
@@ -73,9 +82,11 @@ signals:
     void SIGNAL_AddNewBookmark(QString);
 
 //    void SIGNAL_AddNote(QString, QString, QString, QString, QString);
-    void SIGNAL_AddNote();
+//    void SIGNAL_AddNote();
 
     void SIGNAL_ShowStrong(QString);
+
+    void SIGNAL_ShowChapterFinish();
 
 private slots:
     /**
@@ -96,7 +107,7 @@ private slots:
      */
     void sFind(QString, bool forward = false, bool backward = false);
 
-    void sAddNote();
+//    void sAddNote();
 protected:
     //    void contextMenuEvent(QContextMenuEvent *event);
 //    bool eventFilter(QObject *obj, QEvent *ev);
@@ -110,7 +121,7 @@ private:
     QHash< QString, QVector<int> > m_strongs;
 
     QAction *act_addBookmarks;
-    QAction *act_addNote;
+//    QAction *act_addNote;
 
     void init();
     void createActions();
@@ -132,7 +143,9 @@ private:
 
     QString m_backupChapter;
 
-    void showNoteList();
+
+    bool m_firstLaunch;
+//    void showNoteList();
     void showStrong();
     void debug();
 

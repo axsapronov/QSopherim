@@ -9,10 +9,14 @@ class QStandardItemModel;
 class QModelIndex;
 class QStringListModel;
 
-namespace Ui {
-class LeftPanel;
+namespace Ui
+{
+    class LeftPanel;
 }
+
 class QSopherimModuleList;
+
+
 class LeftPanel : public QDockWidget
 {
     Q_OBJECT
@@ -20,31 +24,52 @@ class LeftPanel : public QDockWidget
 public:
     explicit LeftPanel(QWidget *parent = 0);
     ~LeftPanel();
-
-    void refreshBookList(QSopherimModuleList* list);
-    void refreshListModule(QSopherimModuleList* list);
-    void refreshListDict(QSopherimModuleList* list);
-
-    void setListModuleFromList();
-
     /**
      * @brief retranslate
      * retranslate gui
      */
     void retranslate();
+
+    void loadFirstBook();
+
+    void setFirstLaunch(bool state);
+
 public slots:
-    void showChapterFromJournal(QString module, QString book, QString chapter);
+    /**
+     * @brief showChapterFromJournal
+     * @param module
+     * @param book
+     * @param chapter
+     */
+    void showChapterFromJournal(const QString f_module, const QString f_book, const QString f_chapter);
+    /**
+     * @brief sUpdateGUI
+     */
+    void sUpdateGUI();
+
+    void sUpdateGUIDayMode();
+    void sUpdateGUIFont();
+
+    void loadModules();
+    void loadDictionaries();
+    void loadComments();
+    void loadApocrypha();
+    void loadBooks();
+
+    void sRefreshModules();
 
 signals:
     void SIGNAL_AddRecordToJournal(QString, QString, QString);
     void SIGNAL_ShowHideLeftPanel2(bool);
+    void SIGNAL_ShowNotes(QString, QString, QString, QString);
 
 private slots:
 
     /**
      * @brief refreshChapterList
      */
-    void refreshChapterList(QModelIndex);
+    void refreshChapterList(const QModelIndex f_ind);
+
     /**
      * @brief refreshBookList
      * @param nameOfModule
@@ -53,34 +78,36 @@ private slots:
     /**
      * @brief refreshBookList
      */
-    void refreshBookList(QString nameOfModule, QString f_type);
+    void refreshBookList(const QString nameOfModule, const QString f_type);
     /**
      * @brief showChapter
      */
-    void showChapter(QModelIndex);
+    void showChapter(const QModelIndex);
     /**
      * @brief showWord
      */
-    void showWord(QModelIndex);
+    void showWord(const QModelIndex);
 
     /**
      * @brief refreshWordListFromDict
      */
-    void refreshWordListFromDict(QString);
+    void refreshWordListFromDict(const QString);
 
     /**
      * @brief showDescriptionWordFromOtherModules
      * @param word
      */
-    void showDescriptionWordFromOtherModules(QString word);
+    void showDescriptionWordFromOtherModules(const QString word);
 
     /**
      * @brief showDescriptionWord
      * @param word
      */
-    void showDescriptionWord(QString word);
+    void showDescriptionWord(const QString word);
 
-    void sShowHideLeftPanel2(int f_tab);
+    void sShowHideLeftPanel2(const int f_tab);
+
+    void sSetCommentsFromModule(const QString);
 
 private:
     Ui::LeftPanel *ui;
@@ -94,14 +121,30 @@ private:
 
     QStringListModel *typeModel;
     QStringListModel *typeModelBook;
+    bool m_firstLaunch;
+
+    QMap<QString, QString> m_listDictWord;
 
     QString m_curWord;
+    bool m_fromJournal;
     /**
      * @brief init
      * @function
      * initall function
      */
     void init();
+
+
+    /**
+     * check current module, current book, current chapter and
+     * Config::configuration()->getLastModule and other
+     * @brief checkedNewAndOldChapter
+     * @return
+     */
+    bool checkedNewAndOldChapter();
+
+    void sUpdateGUIFromJournal();
+    bool m_journal;
 
     /**
      * @brief createConnects
@@ -110,7 +153,20 @@ private:
 
     void refreshComboBooks();
 
-    QStringList getListDictWithWord(QString word);
+    void showHideTabs();
+
+    void refreshChapterList(const QString f_type, const QModelIndex f_ind);
+
+    QStringList getListDictWithWord(const QString word);
+
+    void makeOptionAutoChapter(const QString f_bookName);
+
+    void showChapter(const QModelIndex ind, const QString f_type);
+
+    void refreshListModule(QSopherimModuleList* list, const QString f_type);
+    void refreshListDict(QSopherimModuleList* list);
+    void refreshListComments(QSopherimModuleList* list);
+
 };
 
 #endif // LEFTPANEL_H

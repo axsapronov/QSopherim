@@ -13,11 +13,25 @@
 #include <QXmlStreamReader>
 
 #include <QStringList>
+#include <QDateTime>
 
 #include <QDebug>
 #include "book.h"
 #include "qsopherimmodule.h" /// QSopherimModuleInfo
 
+
+#define MOUNT_JANUARY 1
+#define MOUNT_FEBRUARY 2
+#define MOUNT_MARCH 3
+#define MOUNT_APRIL 4
+#define MOUNT_MAY 5
+#define MOUNT_JUNE 6
+#define MOUNT_JULY 7
+#define MOUNT_AUGUST 8
+#define MOUNT_SEPTEMBEER 9
+#define MOUNT_OCTOBER 10
+#define MOUNT_NOVEMBER 11
+#define MOUNT_DECEMBER 12
 
 
 typedef struct WordDictList
@@ -25,6 +39,8 @@ typedef struct WordDictList
     QString word;
     QString text;
 } WordDictList;
+
+
 /**
   \brief
   @function
@@ -42,18 +58,6 @@ QString getEncodingFromFile(QString file, QString language="russian");
   @return encoding(Codec)
    */
 QTextCodec* getCodecOfEncoding(QString encoding); // получает строку с названием кодировки и возвращает кодес с этй кодировкой ( написана для уменьшения дублирования кода)
-/**
-  @fucnction
-  Return list of lang
-  @retun list
-  */
-QStringList getFillLang();
-/**
-    @fucnction
-    Return list of type dict
-    @return list
-    */
-QStringList getFillType();
 /**
   @function
   Return list words from dict
@@ -194,7 +198,7 @@ QHash<QString, int> getNumberOfChaptersInBook(QString filename);
  * @param format
  * @return
  */
-QStringList getListModulesFromPath(QString path, QString format=".ini");
+QStringList getListModulesFromPath(QString path, QString format=".qsi");
 /**
  * @brief recursiveFind
  * @param directory
@@ -216,6 +220,10 @@ QHash<int, QString> getNoteOfParams(QString curPath,
                                     QString curBook,
                                     QString curChapter,
                                     QString firstVerse);
+
+QMap<int, QString> getNoteOfParams(QString f_module, QString f_book, QString f_chapter,
+                                   QString f_path);
+
 /**
  * @brief getVerseNumberFromNote
  * @param line
@@ -257,4 +265,12 @@ void addToListBibleModule(const QString shortName);
  * @return
  */
 QString getModuleNameFromIni(const QString f_filePath);
+
+QStringList getReadinPlanForDay(const int f_mount, const int f_day, const QString f_type);
+QStringList getReadingPlanForDayFromFile(const int f_day, const QString f_path);
+QString getCommentForChapter(const QString f_path, const QString f_book, const QString f_chapter);
+bool isExistBook(const QString f_path, const QString f_book, QString *r_bookName);
+bool toLog(QString logFN, QString logMessage); //добавляет в журнал строку в формате "Дата Время Сообщение"
+QString getBookNameForNumberForModule(const QString f_module, const QString f_bookName);
+void getListWordFromDict(const QString f_path, QMap<QString, QString> *f_map);
 #endif // __FILECOMMON__H

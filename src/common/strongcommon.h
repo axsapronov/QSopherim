@@ -14,18 +14,13 @@ typedef struct StrongList
 } StrongList;
 
 
+/**
+ * @brief getMapStrongs
+ * @param pathToFile
+ * @param r_map
+ */
+void getMapStrongs(QString pathToFile, QMap<int, StrongList>& r_map);
 
-/**
- * @brief getListStrongs
- * @param path
- * @return
- */
-QVector<StrongList> getListStrongs(QString path);
-/**
- * @brief createListStrongs
- * @param path
- */
-void createListStrongs(QString f_path);
 /**
  * @brief createListStrongs
  * @param path
@@ -36,11 +31,10 @@ void createListStrongs(QString f_path, QString f_nameStrong);
  * @param strong
  */
 void writeXmlStrongFile(QHash<int, StrongList> *strong, QString f_path);
-/**
- * @brief writeXmlStrongFile
- * @param strong
- */
-void writeXmlStrongFile(QHash<int, StrongList> *strong);
+
+QString getTypeStrong();
+
+int getNumberOfBook(const QString f_book);
 
 
 #endif

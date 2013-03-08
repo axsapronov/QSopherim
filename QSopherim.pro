@@ -22,6 +22,8 @@ DEPENDPATH += \
         src/gui/panel/bottompanel/ \
         src/gui/dialogs/lansettings \
         src/gui/dialogs/managermodules \
+        src/gui/dialogs/moduleimport \
+        src/gui/dialogs/font \
         src/gui/dialogs/find \
         src/main \
         src/modules/biblequote \
@@ -48,10 +50,12 @@ INCLUDEPATH += \
         src/gui/dialogs/about \
         src/gui/dialogs/settings \
         src/gui/panel/leftpanel/ \
+        src/gui/dialogs/moduleimport \
         src/gui/panel/rightpanel/ \
         src/gui/panel/bottompanel/ \
         src/gui/dialogs/lansettings \
         src/gui/dialogs/find \
+        src/gui/dialogs/font \
         src/gui/dialogs/managermodules \
         src/modules/metainfo \
         src/gui/view/moduleviewer \
@@ -116,7 +120,9 @@ SOURCES  += \
         noteeditor.cpp \
         managermodules.cpp \
         biblequotedictmodule.cpp \
-        finddialog.cpp
+        finddialog.cpp \
+        fontdialog.cpp \
+        moduleimportdialog.cpp
 
 HEADERS  += \
         mainwindow.h \
@@ -162,8 +168,9 @@ HEADERS  += \
         noteeditor.h \
         managermodules.h \
         biblequotedictmodule.h \
-        finddialog.h
-
+        finddialog.h \
+        fontdialog.h \
+        moduleimportdialog.h
 FORMS    += \
         mainwindow.ui \
         about.ui \
@@ -175,7 +182,9 @@ FORMS    += \
         moduleviewer.ui \
         noteeditor.ui \
         managermodules.ui \
-        finddialog.ui
+        finddialog.ui \
+        fontdialog.ui \
+        moduleimportdialog.ui
 
 RESOURCES += \
         resources/resources.qrc
@@ -184,3 +193,6 @@ TRANSLATIONS += \
         resources/lang/QSopherim_ru.ts \
         resources/lang/QSopherim_de.ts \
         resources/lang/QSopherim_fr.ts
+
+RC_FILE += resources/icon.rc
+OTHER_FILES += resources/icon.rc

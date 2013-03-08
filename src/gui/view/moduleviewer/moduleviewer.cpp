@@ -5,6 +5,7 @@
 
 #include "stringcommon.h"
 #include "filecommon.h"
+#include "defines.h"
 
 
 #include <QMenu>
@@ -29,119 +30,9 @@ ModuleViewer::ModuleViewer(QWidget *parent) :
 //------------------------------------------------------------------------------
 ModuleViewer::~ModuleViewer()
 {
+    delete act_addBookmarks;
+    delete autoHideTimer;
     delete ui;
-}
-//------------------------------------------------------------------------------
-void ModuleViewer::createActions()
-{
-    act_addBookmarks = new QAction(tr("&Add bookmarks"), this);
-    connect(act_addBookmarks, SIGNAL(triggered()), this, SLOT(sAddBookmark()));
-
-
-    act_addNote= new QAction(tr("&Add note"), this);
-    connect(act_addNote, SIGNAL(triggered()), this, SLOT(sAddNote()));
-}
-//------------------------------------------------------------------------------
-void ModuleViewer::sShowContextMenu(QPoint pt)
-{
-    QMenu *menu = ui->viewer->createStandardContextMenu();
-    menu->addSeparator();
-    menu->addAction(act_addBookmarks);
-    menu->addAction(act_addNote);
-    menu->addSeparator();
-
-    QAction *act = new QAction(QString(m_curModule
-                                       + " : "
-                                       + m_curBook
-                                       + " : "
-                                       + m_curChapter), this);
-    menu->addAction(act);
-    menu->exec(ui->viewer->mapToGlobal(pt));
-}
-//------------------------------------------------------------------------------
-ModuleViewer *ModuleViewer::viewer()
-{
-    Q_ASSERT( static_viewer );
-    return static_viewer;
-}
-//------------------------------------------------------------------------------
-void ModuleViewer::showChapter(QString pathToFile, QString nameBook, int numberchapter)
-{
-    //    myDebug() << pathToFile << nameBook << numberchapter;
-
-    QXmlStreamReader xmlReader;
-    xmlReader.addData(getTextFromHtmlFile(pathToFile));
-
-    /* если есть стронги,
-     *то надо их при чтении xml'я
-     *обрабатыванит и приписывать соответств слову
-     *
-     *
-     *Для стронгов:
-     *Запоминаем текст с числами
-     *Убираем числа из текста и показываем.
-     *Когда пользователь ведет мышь по строке n
-     *Берем из сохранившего текста нужную строку и делаем в ней замену стронгов
-     *По номеру колонки определяем нужное слово и показываем уже стронги
-     */
-
-    // брать параметр стронгов из файла конфигурации
-    m_strong = false;
-
-    bool flag = false;
-    while(!xmlReader.atEnd() and !flag)
-    {
-        if(xmlReader.isStartElement())
-        {
-            QStringList sl;
-            sl << xmlReader.name().toString();
-            QXmlStreamAttributes attrs = xmlReader.attributes();
-            if (attrs.value("name") == nameBook)
-            {
-                while(!xmlReader.atEnd() and !flag)
-                {
-                    if (xmlReader.attributes().value("number") ==
-                            QString::number(numberchapter))
-                    {
-                        flag = true;
-                        QString str = xmlReader.readElementText();
-                        str.remove("    ");
-
-                        // gen colors (divs)
-                        if (Config::configuration()->getOptionChangeTextColor())
-                            genInterchangeableColorsIntext(&str, 5);
-                        else
-                            genInterchangeableColorsIntext(&str, 1);
-
-                        if (m_strong)
-                        {
-                            m_backupChapter = str;
-
-                            ////                            myDebug() << "yes" << str;
-                            //                            QRegExp rx("(\\d+)");
-                            //                            int pos = 0;
-                            //                            while ((pos = rx.indexIn(str, pos)) != -1)
-                            //                            {
-                            //                                //        list << rx.cap(1);
-                            //                                myDebug() << "1";
-                            //                                str.replace(rx.cap(1), "<sup>" + rx.cap(1) + "</sup>");
-                            //                                pos += rx.matchedLength() + 11;
-                            //                            }
-                            //                            myDebug() << "yes";
-                        }
-                        ui->viewer->setText(str);
-                    }
-                    xmlReader.readNext();
-                }
-            }
-        }
-        xmlReader.readNext();
-    }
-    m_curBook = nameBook;
-    m_curPath = pathToFile;
-    m_curChapter = QString::number(numberchapter);
-    ui->LAStatus->setText(m_curModule + " : " + m_curBook + " : " + m_curChapter );
-
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::init()
@@ -177,6 +68,135 @@ void ModuleViewer::init()
     connect(ui->viewer, SIGNAL(customContextMenuRequested(QPoint)),
             this,SLOT(sShowContextMenu(QPoint)));
 
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::createActions()
+{
+    act_addBookmarks = new QAction(tr("&Add bookmarks"), this);
+    connect(act_addBookmarks, SIGNAL(triggered()), this, SLOT(sAddBookmark()));
+
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::sShowContextMenu(QPoint pt)
+{
+    QMenu *menu = ui->viewer->createStandardContextMenu();
+    menu->addSeparator();
+    menu->addAction(act_addBookmarks);
+    menu->addSeparator();
+
+
+    if (!m_curBook.isEmpty())
+    {
+        QAction *act = new QAction(QString(m_curModule
+                                           + " : "
+                                           + m_curBook
+                                           + " : "
+                                           + m_curChapter), this);
+        menu->addAction(act);
+    }
+    menu->exec(ui->viewer->mapToGlobal(pt));
+}
+//------------------------------------------------------------------------------
+ModuleViewer *ModuleViewer::viewer()
+{
+    Q_ASSERT( static_viewer );
+    return static_viewer;
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::showChapter(const QString f_module, const QString f_nameBook, const int f_numberchapter, const QString f_type)
+{
+    //    myDebug() << f_module << f_nameBook << f_numberchapter;
+
+    QString pathToFile = Config::configuration()->getAppDir() + GL_MODULE_PATH +
+            Config::configuration()->getListModulesFromMap(f_type)->getModuleWithName(f_module)->getModulePath();
+
+    pathToFile.replace("module" + GL_FORMAT_MODULE, "text" + GL_FORMAT_TEXT);
+
+    QXmlStreamReader xmlReader;
+    xmlReader.addData(getTextFromHtmlFile(pathToFile));
+
+    /* если есть стронги,
+     *то надо их при чтении xml'я
+     *обрабатыванит и приписывать соответств слову
+     *
+     *
+     *Для стронгов:
+     *Запоминаем текст с числами
+     *Убираем числа из текста и показываем.
+     *Когда пользователь ведет мышь по строке n
+     *Берем из сохранившего текста нужную строку и делаем в ней замену стронгов
+     *По номеру колонки определяем нужное слово и показываем уже стронги
+     */
+
+    // брать параметр стронгов из файла конфигурации
+    m_strong = false;
+
+    bool flag = false;
+    while(!xmlReader.atEnd() and !flag)
+    {
+        if(xmlReader.isStartElement())
+        {
+            QStringList sl;
+            sl << xmlReader.name().toString();
+            QXmlStreamAttributes attrs = xmlReader.attributes();
+            if (attrs.value("name") == f_nameBook)
+            {
+                while(!xmlReader.atEnd() and !flag)
+                {
+                    if (xmlReader.attributes().value("number") ==
+                            QString::number(f_numberchapter))
+                    {
+                        flag = true;
+                        QString str = xmlReader.readElementText();
+                        str.remove("    ");
+
+                        // gen colors (divs)
+                        if (Config::configuration()->getOptionChangeTextColor())
+                            genInterchangeableColorsIntext(&str, 5);
+                        else
+                            genInterchangeableColorsIntext(&str, 1);
+
+                        if (m_strong)
+                        {
+                            m_backupChapter = str;
+
+                            ////                            myDebug() << "yes" << str;
+                            //                            QRegExp rx("(\\d+)");
+                            //                            int pos = 0;
+                            //                            while ((pos = rx.indexIn(str, pos)) != -1)
+                            //                            {
+                            //                                //        list << rx.cap(1);
+                            //                                myDebug() << "1";
+                            //                                str.replace(rx.cap(1), "<sup>" + rx.cap(1) + "</sup>");
+                            //                                pos += rx.matchedLength() + 11;
+                            //                            }
+                            //                            myDebug() << "yes";
+                        }
+                        ui->viewer->setText(str);
+                    }
+                    xmlReader.readNext();
+                }
+            }
+        }
+        xmlReader.readNext();
+    }
+    m_curBook = f_nameBook;
+    m_curPath = pathToFile;
+    m_curChapter = QString::number(f_numberchapter);
+
+    if (!m_curBook.isEmpty())
+    {
+        ui->LAStatus->setText(m_curModule + " : " + m_curBook + " : " + m_curChapter );
+
+        // make 3 in 1?
+        Config::configuration()->setLastChapter(m_curChapter);
+        Config::configuration()->setLastBook(m_curBook);
+        Config::configuration()->setLastModule(m_curModule);
+        Config::configuration()->setLastType(f_type);
+        // todo
+    }
+
+    //    emit SIGNAL_ShowChapterFinish();
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::setModuleName(QString newModule)
@@ -219,28 +239,28 @@ QString ModuleViewer::getPath()
     return m_curPath;
 }
 //------------------------------------------------------------------------------
-void ModuleViewer::showNoteList()
-{
-    /* по названию модуля
-     * книги
-     *главы
-     *и номера начального стиха
-     *получаем список заметок
-     *создаем лист для каждой из заметок
-     *в элемент листа пишем по 50 первых символов
-     *при нажатии на элемент листа
-     *открываем диалог с редактированием заметки
-     */
+//void ModuleViewer::showNoteList()
+//{
+//    /* по названию модуля
+//     * книги
+//     *главы
+//     *и номера начального стиха
+//     *получаем список заметок
+//     *создаем лист для каждой из заметок
+//     *в элемент листа пишем по 50 первых символов
+//     *при нажатии на элемент листа
+//     *открываем диалог с редактированием заметки
+//     */
 
-    QString path = m_curPath;
-    path.replace("text.xml", "notes.xml");
-    emit SIGNAL_ShowNoteList(m_curModule,
-                             m_curBook,
-                             m_curChapter,
-                             path,
-                             QString::number(m_lastLine));
+////    QString path = m_curPath;
+////    path.replace("text" + GL_FORMAT_TEXT, "notes" + GL_FORMAT_NOTES);
+////    emit SIGNAL_ShowNoteList(m_curModule,
+////                             m_curBook,
+////                             m_curChapter,
+////                             path,
+////                             QString::number(m_lastLine));
 
-}
+//}
 //------------------------------------------------------------------------------
 bool ModuleViewer::event(QEvent* event)
 {
@@ -256,12 +276,6 @@ bool ModuleViewer::event(QEvent* event)
                 //QToolTip::showText(helpEvent->globalPos(), cursor.selectedText());
                 emit SIGNAL_ShowStrong(cursor.selectedText());
             }
-
-
-
-            // show notes
-            m_lastLine = cursor.blockNumber() + 1;
-            showNoteList();
         }
         else
         {
@@ -341,14 +355,16 @@ void ModuleViewer::retranslate()
 void ModuleViewer::updateFontSettings()
 {
     setStyleSettings();
-    showChapter(m_curPath, m_curBook, m_curChapter.toInt());
+    if (!m_curChapter.isEmpty())
+        showChapter(m_curModule, m_curBook, m_curChapter.toInt(),
+                    Config::configuration()->getTypeOfModule(m_curModule));
 }
 //------------------------------------------------------------------------------
 void ModuleViewer::sAddBookmark()
 {
-    QString bookm = m_curModule + " : "
-            + m_curBook + " : "
-            + m_curChapter;
+    QString bookm = Config::configuration()->getLastModule() + " : "
+            + Config::configuration()->getLastModule() + " : "
+            + Config::configuration()->getLastChapter();
     emit SIGNAL_AddNewBookmark(bookm);
 }
 //------------------------------------------------------------------------------
@@ -421,15 +437,15 @@ void ModuleViewer::sFind(QString ttf, bool forward, bool backward)
         autoHideTimer -> start();
 }
 //------------------------------------------------------------------------------
-void ModuleViewer::sAddNote()
-{
-    emit SIGNAL_AddNote();
-}
+//void ModuleViewer::sAddNote()
+//{
+//    emit SIGNAL_AddNote();
+//}
 //------------------------------------------------------------------------------
-QString ModuleViewer::getLastNumberLine()
-{
-    return QString::number(m_lastLine);
-}
+//QString ModuleViewer::getLastNumberLine()
+//{
+//    return QString::number(m_lastLine);
+//}
 //------------------------------------------------------------------------------
 void ModuleViewer::setStyleSettings()
 {
@@ -479,5 +495,23 @@ void ModuleViewer::setStyleSettings()
         sheet.append(t_color + "\n");
     }
     ui->viewer->document()->setDefaultStyleSheet(sheet);
+
+    QPalette p = ui->viewer->palette();
+    p.setColor(QPalette::Base, Config::configuration()->getViewerColor());
+    ui->viewer->setPalette(p);
+}
+//------------------------------------------------------------------------------
+void ModuleViewer::openLastChapter()
+{
+    if (!Config::configuration()->getLastChapter().isEmpty())
+    {
+        m_firstLaunch = true;
+        m_curModule = Config::configuration()->getLastModule();
+        m_curBook = Config::configuration()->getLastBook();
+        m_curChapter = Config::configuration()->getLastChapter();
+        QString t_type = Config::configuration()->getTypeOfModule(m_curModule);
+
+        showChapter(m_curModule, m_curBook, m_curChapter.toInt(), t_type);
+    }
 }
 //------------------------------------------------------------------------------

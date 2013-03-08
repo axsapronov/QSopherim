@@ -70,6 +70,7 @@ private slots:
 
 signals:
     void SIGNAL_ShowChapter(QString module, QString book, QString chapter);
+    void SIGNAL_UpdateGUI();
 
 private:
     Ui::FindDialog *ui;

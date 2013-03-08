@@ -39,8 +39,35 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowTitle(QString("%1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
     init();
-    loadModulesFromFolder();
-    loadDictFromFolder();
+    //    convertModulesFromFolder();
+    //    convertDictFromFolder();
+
+    // load modules
+//    GUI_LeftPanel->setFirstLaunch(true);
+
+    GUI_LeftPanel->sRefreshModules();
+//    GUI_LeftPanel->loadModules();
+//    GUI_LeftPanel->loadBooks();
+//    GUI_LeftPanel->loadDictionaries();
+//    GUI_LeftPanel->loadComments();
+//    GUI_LeftPanel->loadApocrypha();
+
+    GUI_LeftPanel2->loadJournal();
+
+//    GUI_LeftPanel->setFirstLaunch(false);
+
+    if (Config::configuration()->isExistLastChapter())
+    {
+        // open last text
+        GUI_ModuleViewer->openLastChapter();
+        GUI_LeftPanel->sUpdateGUI();
+        GUI_RightPanel->loadFirstSettings();
+    }
+    else
+    {
+        GUI_LeftPanel->loadFirstBook();
+    }
+
     //    loadModules();
     //        debug();
 }
@@ -56,9 +83,9 @@ MainWindow::~MainWindow()
     delete GUI_LeftPanel;
     delete GUI_LeftPanel2;
     delete GUI_ModuleViewer;
-    delete GUI_NoteEditor;
     delete GUI_ManagerModules;
     delete GUI_FindDialog;
+    delete GUI_ModuleImportDialog;
 
     delete trayIconMenu;
     delete trIcon;
@@ -66,6 +93,7 @@ MainWindow::~MainWindow()
     delete maximizeAction;
     delete restoreAction;
     delete quitAction;
+
     delete prModule;
 
     delete ui;
@@ -78,6 +106,7 @@ void MainWindow::init()
 
     GUI_ManagerModules = new ManagerModules(this);
     GUI_FindDialog = new FindDialog(this);
+    GUI_ModuleImportDialog = new ModuleImportDialog(this);
 
     /// panel init
     GUI_RightPanel = new RightPanel(this);
@@ -95,25 +124,27 @@ void MainWindow::init()
     GUI_LeftPanel->setTitleBarWidget(t_emptyWidget);
     delete t_titleBar;
 
-    t_titleBar = GUI_RightPanel->titleBarWidget();
-    QWidget* t_emptyWidget3 = new QWidget();
-    GUI_RightPanel->setTitleBarWidget(t_emptyWidget3);
-    delete t_titleBar;
+    //    t_titleBar = GUI_RightPanel->titleBarWidget();
+    //    QWidget* t_emptyWidget3 = new QWidget();
+    //    GUI_RightPanel->setTitleBarWidget(t_emptyWidget3);
+    //    delete t_titleBar;
 
     GUI_RightPanel->loadBookmarks();
     //    GUI_BottomPanel = new BottomPanel(this);
 
     GUI_RightPanel->setMinimumWidth(250);
     GUI_LeftPanel->setMinimumWidth(300);
+    //    GUI_LeftPanel->setMaximumWidth(350);
+    //    GUI_LeftPanel2->setMaximumWidth(350);
     GUI_LeftPanel2->setMinimumWidth(300);
 
     //    GUI_BottomPanel->setMinimumHeight(100);
     addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel);
     addDockWidget(Qt::LeftDockWidgetArea, GUI_LeftPanel2);
     addDockWidget(Qt::RightDockWidgetArea, GUI_RightPanel);
-    //    addDockWidget(Qt::BottomDockWidgetArea, GUI_BottomPanel);
+    //        addDockWidget(Qt::BottomDockWidgetArea, GUI_BottomPanel);
 
-    GUI_RightPanel->hide();
+    //    GUI_RightPanel->hide();
     prModule = new ProcessModule();
 
     //    centralWidget()->setAttribute(Qt::WA_TransparentForMouseEvents);
@@ -141,10 +172,8 @@ void MainWindow::init()
         setLangFr();
     }
 
-
     //    ui->centralWidget->setMouseTracking(true);
     GUI_ModuleViewer = new ModuleViewer(this);
-    GUI_NoteEditor = new NoteEditor(this);
 
     //    GUI_ModuleViewer->setMouseTracking(true);
     this->setCentralWidget(GUI_ModuleViewer);
@@ -163,17 +192,15 @@ void MainWindow::init()
 
     createActions(); // create action for tray
     createTrayIcon(); // add actionts to tray menu
+
     createConnects(); // moved func
-    trIcon->show();  //display tray
 
-
+    showHideTray();
 }
 //------------------------------------------------------------------------------
 void MainWindow::debug()
 {
-    QStringList fileName;
-
-
+    //    QStringList fileName;
     //    fileName << "/home/files/Documents/Bible/unrar/Book_Spurgeon/bibleqt.ini";
     //    fileName << "/home/files/Documents/Bible/unrar/my/BIBLEQT.INI";
     //    fileName << "/home/files/Documents/Bible/unrar/NT_Russian_Kassian/Bibleqt.ini";
@@ -228,7 +255,7 @@ void MainWindow::debug()
     //    //        myDebug() << "yes";
     //    //    }
 
-    //    //    loadModulesFromFolder();
+    //    //    convertModulesFromFolder();
     //    //    for (int i = 0; i < fileName.size(); i++)
     //    //    {
     //    //        prModule->processing(fileName.at(i), OBVCore::Type_BibleQuoteModule);
@@ -245,14 +272,20 @@ void MainWindow::debug()
 //------------------------------------------------------------------------------
 void MainWindow::createConnects()
 {
-    //tray
-    connect(trIcon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)), SLOT(showHide(QSystemTrayIcon::ActivationReason)));
+    if (Config::configuration()->getGuiTray())
+    {
+        //tray
+        connect(trIcon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)), SLOT(showHide(QSystemTrayIcon::ActivationReason)));
+    }
 
     // menu file
     connect(ui->action_File_Close, SIGNAL(triggered()), this, SLOT(close()));
 
     // menu settings
     connect(ui->action_Settings_General, SIGNAL(triggered()), SLOT(showSettings()));
+    connect(GUI_Settings, SIGNAL(SIGNAL_UpdateTray()), SLOT(showHideTray()));
+
+    connect(ui->action_Settings_Module_Import, SIGNAL(triggered()), GUI_ModuleImportDialog, SLOT(show()));
 
     // manager module
     connect(ui->action_Settings_Module, SIGNAL(triggered()), SLOT(showModuleManager()));
@@ -263,11 +296,6 @@ void MainWindow::createConnects()
     connect(ui->action_Settings_Language_Deutsch, SIGNAL(triggered()), SLOT(setLangDe()) );
     connect(ui->action_Settings_Language_France, SIGNAL(triggered()),  SLOT(setLangFr()) );
 
-    // menu search
-
-    // toolbar
-    connect(ui->actionAction_Other_Create_Note, SIGNAL(triggered()), SLOT(createNote()));
-    connect(ui->actionAction_Other_Update_List_Module, SIGNAL(triggered()), SLOT(loadModulesFromFolder()));
 
     // menu about
     connect(ui->action_About_About, SIGNAL(triggered()), GUI_About, SLOT(show()));
@@ -275,60 +303,70 @@ void MainWindow::createConnects()
     connect(ui->action_About_Site, SIGNAL(triggered()), this, SLOT(aboutOpenSite()));
     connect(ui->action_About_Help, SIGNAL(triggered()), SLOT(showHelp()));
 
-    // other
-    connect(prModule, SIGNAL(SIGNAL_ProcessModuleOk()), SLOT(processFinishModule()));
-    connect(prModule, SIGNAL(SIGNAL_ProcessDictOk()), SLOT(processFinishDict()));
-
-
     // module viewer
-    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowNoteList(QString,QString,QString,QString,QString)),
-            GUI_LeftPanel2, SLOT(showNoteList(QString,QString,QString,QString,QString)));
-    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowStrong(QString)),
-            GUI_LeftPanel2, SLOT(showStrong(QString)));
-    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNote()), SLOT(createNote()));
+    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowStrong(QString)), GUI_LeftPanel2, SLOT(showStrong(QString)));
+    connect(GUI_ModuleViewer, SIGNAL(SIGNAL_ShowChapterFinish()), GUI_LeftPanel, SLOT(sUpdateGUI()));
 
     // settings
-    connect(GUI_Settings, SIGNAL(SIGNAL_RetranslateGUI(QString)),
-            SLOT(retranslate(QString)));
-    connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadModules()), SLOT(loadModulesFromFolder()));
-
+    connect(GUI_Settings, SIGNAL(SIGNAL_RetranslateGUI(QString)), SLOT(retranslate(QString)));
 
     // manager module
-
-    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), SLOT(processFinishDict()));
-    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), SLOT(processFinishModule()));
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(sRefreshModules()));
+//    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(loadModules()));
 
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetGreekStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongGreek(QString)));
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetHebrewStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongHebrew(QString)));
 
+    // import modules
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertModules()), SLOT(convertModulesFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertDict()), SLOT(convertDictFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertComments()), SLOT(convertCommentsFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertApocrypha()), SLOT(convertApocryphaFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertBook()), SLOT(convertBooksFromFolder()));
 
     // connect fron left1 to left2 panels
-    connect(GUI_LeftPanel, SIGNAL(SIGNAL_AddRecordToJournal(QString,QString,QString)),
-            GUI_LeftPanel2, SLOT(addRecordToJournal(QString,QString,QString)));
+    connect(GUI_LeftPanel, SIGNAL(SIGNAL_AddRecordToJournal(QString,QString,QString))
+            , GUI_LeftPanel2, SLOT(addRecordToJournal(QString,QString,QString)));
 
-    connect(GUI_LeftPanel2, SIGNAL(SIGNAL_ShowChapterFromJournal(QString,QString,QString)),
-            GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
+    connect(GUI_LeftPanel2, SIGNAL(SIGNAL_ShowChapterFrom(QString,QString,QString))
+            , GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
 
-    connect(GUI_LeftPanel, SIGNAL(SIGNAL_ShowHideLeftPanel2(bool)), GUI_LeftPanel2,
-            SLOT(setHidden(bool)));
+    connect(GUI_LeftPanel, SIGNAL(SIGNAL_ShowHideLeftPanel2(bool))
+            , GUI_LeftPanel2, SLOT(setHidden(bool)));
+
 
     // connect settings and module viewer
     connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadFontSettings()), GUI_ModuleViewer,
             SLOT(updateFontSettings()));
 
+    connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadFontSettings()), GUI_LeftPanel, SLOT(sUpdateGUIFont()));
+    connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadFontSettings()), GUI_LeftPanel2, SLOT(sUpdateGUIFont()));
+    connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadFontSettings()), GUI_RightPanel, SLOT(sUpdateGUIFont()));
+    connect(GUI_Settings, SIGNAL(SIGNAL_ReLoadFontSettings()), SLOT(sUpdateGUIFont()));
+
     connect(GUI_ModuleViewer, SIGNAL(SIGNAL_AddNewBookmark(QString)),
             GUI_RightPanel, SLOT(addNewBookmark(QString)));
+
+
+    connect(GUI_Settings, SIGNAL(SIGNAL_UpdateDayMode()), GUI_LeftPanel, SLOT(sUpdateGUIDayMode()));
+    connect(GUI_Settings, SIGNAL(SIGNAL_UpdateDayMode()), GUI_LeftPanel2, SLOT(sUpdateGUIDayMode()));
+    connect(GUI_Settings, SIGNAL(SIGNAL_UpdateDayMode()), GUI_RightPanel, SLOT(sUpdateGUIDayMode()));
+
 
     // connect find dialog to left2 panel
     connect(GUI_FindDialog, SIGNAL(SIGNAL_ShowChapter(QString, QString, QString)),
             GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
 
+    connect(GUI_FindDialog, SIGNAL(SIGNAL_UpdateGUI()), GUI_LeftPanel, SLOT(sUpdateGUI()));
 
 
     connect(GUI_RightPanel, SIGNAL(SIGNAL_OpenBookmark(QString, QString, QString)),
             GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
     connect(GUI_RightPanel, SIGNAL(SIGNAL_OpenBookmark(QString, QString, QString)),
             GUI_LeftPanel2, SLOT(addRecordToJournal(QString,QString,QString)));
+
+    connect(GUI_LeftPanel, SIGNAL(SIGNAL_ShowNotes(QString, QString, QString, QString))
+            , GUI_RightPanel, SLOT(sShowNoteList(QString, QString, QString, QString)));
 
     // menu search
     connect(ui->action_Search_Find_In_Text, SIGNAL(triggered()), GUI_ModuleViewer,
@@ -453,9 +491,11 @@ void MainWindow::showSettings()
 void MainWindow::showModuleManager()
 {
     //set sett
-    GUI_LeftPanel->setListModuleFromList();
-    GUI_ManagerModules->loadListModules();
+    //    GUI_LeftPanel->setListModuleFromList();
+    //    GUI_ManagerModules->loadListModules();
+    GUI_ManagerModules->loadAllModules();
     GUI_ManagerModules->loadStrongList();
+
     GUI_ManagerModules->show();
 }
 //------------------------------------------------------------------------------
@@ -504,77 +544,119 @@ void MainWindow::showHelp()
     //    HtmlHelp(NULL, "help.chm", HH_DISPLAY_TOPIC, 0);
 }
 //------------------------------------------------------------------------------
-void MainWindow::processFinishModule()
+void MainWindow::convertModules(const QString f_type)
 {
-    QSopherimModuleList* list = new QSopherimModuleList();
-    list->refreshList();
-    GUI_LeftPanel->refreshListModule(list);
-}
-//------------------------------------------------------------------------------
-void MainWindow::processFinishDict()
-{
-    QSopherimModuleList* list = new QSopherimModuleList();
-    list->refreshList("dictionary/");
-    GUI_LeftPanel->refreshListDict(list);
-}
-//------------------------------------------------------------------------------
-void MainWindow::loadModulesFromFolder()
-{
-    if (!Config::configuration()->getBibleDir().isEmpty())
+    // hindi
+    if (
+            (!Config::configuration()->getBibleDir().isEmpty() and f_type == "Bible")
+            or (!Config::configuration()->getBookDir().isEmpty() and f_type == "Book")
+            or (!Config::configuration()->getCommentsDir().isEmpty() and f_type == "Comments")
+            or (!Config::configuration()->getApocryphaDir().isEmpty() and f_type == "Apocrypha")
+            or (!Config::configuration()->getImportDictDir().isEmpty() and f_type == "Dictionary")
+            )
+
     {
         QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
         loadProgress.setValue(0);
-        loadProgress.setGeometry(750, 300, 400, 170);
+        loadProgress.setMinimumWidth(300);
+        // move center
+        QRect rect = QApplication::desktop()->availableGeometry(this);
+        loadProgress.move(rect.width() / 2 - loadProgress.width() / 2,
+                          rect.height() / 2 - loadProgress.height() / 2 );
+        loadProgress.setWindowTitle(tr("Convert") + QString(" | %1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
         loadProgress.show();
 
-        QLabel overallLabel(&loadProgress);
-        overallLabel.setGeometry(11, 10, 378, 20);
-        overallLabel.setText(tr("Convert: bible modules"));
 
+        QLabel overallLabel(&loadProgress);
+        overallLabel.setGeometry(11, 10, 400, 20);
+        QStringList listModules;
+        overallLabel.setText(tr("Convert: %1 modules").arg(f_type));
         overallLabel.show();
 
-        QStringList listModules = getListModulesFromPath(Config::configuration()->getBibleDir());
-        for (int i = 0; i < listModules.size(); i++)
+        if (f_type == "Bible")
         {
-            prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
-            loadProgress.setValue(100 * i / listModules.size());
-            QApplication::processEvents();
+            listModules = getListModulesFromPath(Config::configuration()->getBibleDir(), ".ini");
+            for (int i = 0; i < listModules.size(); i++)
+            {
+                prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteModule);
+                loadProgress.setValue(100 * i / listModules.size());
+                QApplication::processEvents();
+            }
+            GUI_LeftPanel->loadModules();
         }
+
+        if (f_type == "Book")
+        {
+            listModules = getListModulesFromPath(Config::configuration()->getBookDir(), ".ini");
+            for (int i = 0; i < listModules.size(); i++)
+            {
+                prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteBook);
+                loadProgress.setValue(100 * i / listModules.size());
+                QApplication::processEvents();
+            }
+            GUI_LeftPanel->loadBooks();
+        }
+
+        if (f_type == "Dictionary")
+        {
+            listModules = getListModulesFromPath(
+                        Config::configuration()->getImportDictDir(), ".idx");
+            for (int i = 0; i < listModules.size(); i++)
+            {
+                prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteDictModule);
+                loadProgress.setValue(100 * i / listModules.size());
+                QApplication::processEvents();
+            }
+            GUI_LeftPanel->loadDictionaries();
+        }
+
+        if (f_type == "Comments")
+        {
+            listModules = getListModulesFromPath(
+                        Config::configuration()->getCommentsDir()
+                        , ".ini");
+            for (int i = 0; i < listModules.size(); i++)
+            {
+                prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteComments);
+                loadProgress.setValue(100 * i / listModules.size());
+                QApplication::processEvents();
+            }
+            GUI_LeftPanel->loadComments();
+        }
+
+        if (f_type == "Apocrypha")
+        {
+            listModules = getListModulesFromPath(Config::configuration()->getApocryphaDir(), ".ini");
+            for (int i = 0; i < listModules.size(); i++)
+            {
+                prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteApocrypha);
+                loadProgress.setValue(100 * i / listModules.size());
+                QApplication::processEvents();
+            }
+            GUI_LeftPanel->loadApocrypha();
+        }
+
+        QMessageBox::information(this, tr("Convert complete"), tr("Convert complete"));
     }
     else
     {
-        processFinishModule();
+        GUI_LeftPanel->loadModules();
     }
 }
 //------------------------------------------------------------------------------
-void MainWindow::loadDictFromFolder()
+void MainWindow::convertModulesFromFolder()
 {
-    if (!Config::configuration()->getDictDir().isEmpty())
-    {
-        QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
-        loadProgress.setValue(0);
-        loadProgress.setGeometry(750, 300, 400, 170);
-        loadProgress.show();
-
-        QLabel overallLabel(&loadProgress);
-        overallLabel.setGeometry(11, 10, 378, 20);
-        overallLabel.setText(tr("Convert: dictionary modules"));
-        overallLabel.show();
-
-        QStringList listModules = getListModulesFromPath(
-                    Config::configuration()->getDictDir()
-                    , ".idx");
-        for (int i = 0; i < listModules.size(); i++)
-        {
-            prModule->processing(listModules.at(i), OBVCore::Type_BibleQuoteDictModule);
-            loadProgress.setValue(100 * i / listModules.size());
-            QApplication::processEvents();
-        }
-    }
-    else
-    {
-        processFinishDict();
-    }
+    convertModules("Bible");
+}
+//------------------------------------------------------------------------------
+void MainWindow::convertBooksFromFolder()
+{
+    convertModules("Book");
+}
+//------------------------------------------------------------------------------
+void MainWindow::convertDictFromFolder()
+{
+    convertModules("Dictionary");
 }
 //------------------------------------------------------------------------------
 //void MainWindow::loadModules()
@@ -609,21 +691,21 @@ void MainWindow::loadDictFromFolder()
 //    }
 
 //}
-//------------------------------------------------------------------------------
-void MainWindow::createNote()
-{
-    if (GUI_ModuleViewer->getModuleName().isEmpty())
-        return;
-    if (GUI_ModuleViewer->getChapterValue().isEmpty())
-        return;
+////------------------------------------------------------------------------------
+//void MainWindow::createNote()
+//{
+//    if (GUI_ModuleViewer->getModuleName().isEmpty())
+//        return;
+//    if (GUI_ModuleViewer->getChapterValue().isEmpty())
+//        return;
 
-    GUI_NoteEditor->setPath(GUI_ModuleViewer->getPath());
-    GUI_NoteEditor->setModuleName(GUI_ModuleViewer->getModuleName());
-    GUI_NoteEditor->setBookName(GUI_ModuleViewer->getBookName());
-    GUI_NoteEditor->setChapterValue(GUI_ModuleViewer->getChapterValue());
-    GUI_NoteEditor->setVerse(GUI_ModuleViewer->getLastNumberLine());
-    GUI_NoteEditor->show();
-}
+//    GUI_NoteEditor->setPath(GUI_ModuleViewer->getPath());
+//    GUI_NoteEditor->setModuleName(GUI_ModuleViewer->getModuleName());
+//    GUI_NoteEditor->setBookName(GUI_ModuleViewer->getBookName());
+//    GUI_NoteEditor->setChapterValue(GUI_ModuleViewer->getChapterValue());
+////    GUI_NoteEditor->setVerse(GUI_ModuleViewer->getLastNumberLine());
+//    GUI_NoteEditor->show();
+//}
 //------------------------------------------------------------------------------
 void MainWindow::retranslate(QString t_lang)
 {
@@ -651,7 +733,7 @@ void MainWindow::retranslate(QString t_lang)
     GUI_LeftPanel2->retranslate();
     //    GUI_BottomPanel->retranslate();
     GUI_ModuleViewer->retranslate();
-    GUI_NoteEditor->retranslate();
+    //    GUI_NoteEditor->retranslate();
 
 }
 //------------------------------------------------------------------------------
@@ -659,5 +741,32 @@ void MainWindow::findInModules()
 {
     GUI_FindDialog->preShowDialog();
     GUI_FindDialog->show();
+}
+//------------------------------------------------------------------------------
+void MainWindow::showHideTray()
+{
+    if (Config::configuration()->getGuiTray())
+    {
+        trIcon->show();  //display tray
+    }
+    else
+    {
+        trIcon->hide();
+    }
+}
+//------------------------------------------------------------------------------
+void MainWindow::convertCommentsFromFolder()
+{
+    convertModules("Comments");
+}
+//------------------------------------------------------------------------------
+void MainWindow::convertApocryphaFromFolder()
+{
+    convertModules("Apocrypha");
+}
+//------------------------------------------------------------------------------
+void MainWindow::sUpdateGUIFont()
+{
+    ui->menuBar->setFont(Config::configuration()->getGUIMapFont()["FontMenu"]);
 }
 //------------------------------------------------------------------------------

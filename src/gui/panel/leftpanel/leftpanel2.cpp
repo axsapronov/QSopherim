@@ -5,6 +5,15 @@
 #include "debughelper.h"
 #include "strongcommon.h"
 
+#include "defines.h"
+
+#include <QDate>
+
+
+
+
+// panel for info:
+// strongs , journal, and other
 
 LeftPanel2::LeftPanel2(QWidget *parent) :
     QDockWidget(parent),
@@ -13,20 +22,17 @@ LeftPanel2::LeftPanel2(QWidget *parent) :
     ui->setupUi(this);
     init();
     createConnects();
+
+    setReadingPlanForCurrentDay();
 }
 //------------------------------------------------------------------------------
 LeftPanel2::~LeftPanel2()
 {
-    delete m_modelNotes;
-    delete GUI_NoteEditor;
     delete ui;
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::init()
 {
-    m_data.clear();
-    GUI_NoteEditor = new NoteEditor(this);
-
     //    QString path = m_curPath;
     if (Config::configuration()->getStrongHebrew().isEmpty())
     {
@@ -34,7 +40,7 @@ void LeftPanel2::init()
     }
     else
     {
-        m_listStrongHebrew = getListStrongs(Config::configuration()->getStrongHebrew());
+        getMapStrongs(Config::configuration()->getStrongHebrew(), m_mapStrongHebrew);
         m_strongHebrew_on = true;
     }
 
@@ -44,32 +50,20 @@ void LeftPanel2::init()
     }
     else
     {
-        m_listStrongGreek = getListStrongs(Config::configuration()->getStrongGreek());
+        getMapStrongs(Config::configuration()->getStrongGreek(), m_mapStrongGreek);
         m_strongGreek_on = true;
     }
+
+    m_journalList.clear();
+    sUpdateGUIDayMode();
+    sUpdateGUIFont();
 
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::createConnects()
 {
-    connect(ui->ListViewNote, SIGNAL(clicked(QModelIndex)),
-            SLOT(editNote(QModelIndex)));
-
-    connect(ui->ListViewJournal, SIGNAL(clicked(QModelIndex)),
-            SLOT(showChapterFromJournal(QModelIndex)));
-}
-//------------------------------------------------------------------------------
-void LeftPanel2::editNote(QModelIndex ind)
-{
-    GUI_NoteEditor->setModuleName(m_curModule);
-    GUI_NoteEditor->setBookName(m_curBook);
-    GUI_NoteEditor->setChapterValue(m_curChapter);
-    GUI_NoteEditor->setPath(m_curPath);
-    GUI_NoteEditor->setVerse(m_verse);
-    //    myDebug() << ind.row() << m_data[ind.row()];
-    //    QString str = *(m_data[ind.row()]);
-    GUI_NoteEditor->editNote(m_data[ind.row()]);
-
+    connect(ui->ListViewJournal, SIGNAL(clicked(QModelIndex)), SLOT(showChapterFromJournal(QModelIndex)));
+    connect(ui->ListViewReadingPlan, SIGNAL(clicked(QModelIndex)), SLOT(showChapterFromPlan(QModelIndex)));
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::retranslate()
@@ -87,35 +81,36 @@ void LeftPanel2::addRecordToJournal(QString modulename,
             bookname + ":" +
             chaptervalue;
 
-    QStringList t_list;
-    m_journalList << t_record;
     QStandardItemModel *model = new QStandardItemModel(m_journalList.size(), 0);
     model->clear();
     ui->ListViewJournal->setModel(model);
 
-    int i = m_journalList.size();
-    int count = 10;  // last 10 chapters to history
-    while(i > 0 and count != 0)
+    QStringList t_list;
+    t_list << t_record;
+
+    int count = 10;
+
+    for (int i = 0; i < count - 1 && i < m_journalList.size(); i++)
     {
-        QStandardItem *item = new QStandardItem();
-        item->setData(m_journalList.at(i -1 ), Qt::DisplayRole );
-        item->setEditable( false );
-        model->appendRow( item );
-        t_list << m_journalList.at(i-1);
-        i--;
-        count--;
+        t_list << m_journalList.at(i);
+        // add to model
+        model->appendRow( new QStandardItem(t_list.at(i)));
     }
+    //add to model last elem
+    model->appendRow( new QStandardItem(t_list.at(t_list.size() - 1)));
+
+    // or this - this is add to model
+    //    for (int i = 0; i < count && i < t_list.size(); i++)
+    //    {
+    //        model->appendRow( new QStandardItem(t_list.at(i)));
+    //    }
+
     m_journalList = t_list;
+    Config::configuration()->setJournalHistory(&m_journalList);
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::showChapterFromJournal(QModelIndex ind)
 {
-    //    GUI_NoteEditor->setModuleName(m_curModule);
-    //    GUI_NoteEditor->setBookName(m_curBook);
-    //    GUI_NoteEditor->setChapterValue(m_curChapter);
-    //    GUI_NoteEditor->setPath(m_curPath);
-
-
     // parse journal item
     // get module name, book name, chapter value
     QString str = ui->ListViewJournal->model()->data(ind).toString();
@@ -128,102 +123,115 @@ void LeftPanel2::showChapterFromJournal(QModelIndex ind)
     str.remove(bookName + ":");
     QString chapterValue = str;
 
-    emit SIGNAL_ShowChapterFromJournal(moduleName, bookName, chapterValue);
+    emit SIGNAL_ShowChapterFrom(moduleName, bookName, chapterValue);
 }
 //------------------------------------------------------------------------------
-void LeftPanel2::showNoteList(QString curModule,
-                              QString curBook,
-                              QString curChapter,
-                              QString curPath,
-                              QString firstVerse)
+void LeftPanel2::showChapterFromPlan(QModelIndex ind)
 {
-    m_data = getNoteOfParams(curPath,
-                             curModule,
-                             curBook,
-                             curChapter,
-                             firstVerse);
+    // parse journal item
+    // get module name, book name, chapter value
+    QString str = ui->ListViewReadingPlan->model()->data(ind).toString();
 
-    m_curModule = curModule;
-    m_curBook = curBook;
-    m_curChapter = curChapter;
-    m_curPath = curPath;
-    m_verse = firstVerse;
+    int pos = str.indexOf(":");
+    QString bookName = QString(str).mid(0, pos);
+    str.remove(bookName + ":");
+    pos = str.indexOf(":");
+    QString chapterValue = QString(str).mid(0, pos);
 
-    if (m_data.size() != 0)
-    {
-        QStandardItemModel *model = new QStandardItemModel(m_data.size(), 0);
-        model->clear();
-        ui->ListViewNote->setModel(model);
+    bookName = getBookNameForNumberForModule(Config::configuration()->getLastModule(), bookName);
 
-        for (int i = 0; i < m_data.size(); i++)
-        {
-            QStandardItem *item = new QStandardItem();
-            QString first50Simbols = m_data[i].mid(0, 50);
-            item->setData(first50Simbols, Qt::DisplayRole );
-            item->setEditable( false );
-            model->appendRow( item );
-        }
-
-    }
-    else
-    {
-        // reset
-        ui->ListViewNote->setModel(new QStandardItemModel());
-    }
+    if (Config::configuration()->isExistLastChapter())
+        emit SIGNAL_ShowChapterFrom(Config::configuration()->getLastModule(), bookName, chapterValue);
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::showStrong(QString number)
 {
-    // добавить вывод сразу и гречески и иврит
-    //    if (m_strongGreek_on)
-    //    {
-    //        //    myDebug() << m_listStrong.size();
-    //        int i = 0;
-    //        do
-    //        {
-    //            if (m_listStrongGreek.at(i).number == number.toInt())
-    //            {
-    //    QString str =
-    //            tr("Strong number: ")
-    //            + number
-    //            + "\n<br>"
-    //            + m_listStrongHebrew.at(i).text;
-    //    ui->textBrStrong->setHtml(str);
-    //            }
-    //            i++;
-    //        } while (i < m_listStrongGreek.size());
-    //    }
-
-    if (m_strongHebrew_on)
+    if (getTypeStrong() == "Hebrew"
+            and m_strongHebrew_on)
     {
-        int i = 0;
-        do
-        {
-            if (m_listStrongHebrew.at(i).number == number.toInt())
-            {
-                QString str =
-                        tr("Strong number: ")
-                        + number
-                        + "\n<br>"
-                        + m_listStrongHebrew.at(i).text;
-                ui->textBrStrong->setHtml(str);
-            }
-            i++;
-        } while (i < m_listStrongHebrew.size());
+        ui->textBrStrong->setFont(Config::configuration()->getGUIMapFont()["FontStrongsHebrew"]);
+        QString str =
+                tr("Strong number: ")
+                + "<b>" + number + "</b>"
+                + "\n<br>"
+                + m_mapStrongHebrew[number.toInt()].text;
+        ui->textBrStrong->setHtml(str);
     }
 
+    if (getTypeStrong() == "Greek"
+            and m_strongHebrew_on)
+    {
+        ui->textBrStrong->setFont(Config::configuration()->getGUIMapFont()["FontStrongsGreek"]);
+        QString str =
+                tr("Strong number: ")
+                + "<b>" + number + "</b>"
+                + "\n<br>"
+                + m_mapStrongGreek[number.toInt()].text;
+        ui->textBrStrong->setHtml(str);
+    }
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::sSetStrongHebrew(QString path)
 {
-    m_listStrongHebrew = getListStrongs(path);
+    getMapStrongs(path, m_mapStrongHebrew );
     m_strongHebrew_on = true;
 }
 //------------------------------------------------------------------------------
 void LeftPanel2::sSetStrongGreek(QString path)
 {
-    m_listStrongGreek = getListStrongs(path);
+    getMapStrongs(path, m_mapStrongGreek);
     m_strongGreek_on = true;
 }
 //------------------------------------------------------------------------------
+void LeftPanel2::loadJournal()
+{
+    m_journalList = *(Config::configuration()->getJournalHistory());
+    QStandardItemModel *model = new QStandardItemModel(m_journalList.size(), 0);
+    model->clear();
+    ui->ListViewJournal->setModel(model);
+
+    int count = 10;
+    for (int i = 0; i < count && i < m_journalList.size(); i++)
+    {
+        // add to model
+        model->appendRow( new QStandardItem(m_journalList.at(i)));
+    }
+}
+//------------------------------------------------------------------------------
+void LeftPanel2::sUpdateGUIDayMode()
+{
+    QPalette p = ui->ListViewJournal->palette();
+    if (Config::configuration()->getDayMode())
+    {
+        p.setColor(QPalette::Base, GL_COLOR_DAY);
+    }
+    else
+    {
+        p.setColor(QPalette::Base, GL_COLOR_NIGHT);
+    }
+    ui->ListViewJournal->setPalette(p);
+    ui->textBrStrong->setPalette(p);
+    ui->ListViewReadingPlan->setPalette(p);
+}
+//------------------------------------------------------------------------------
+void LeftPanel2::setReadingPlanForCurrentDay()
+{
+    QDate t_date;
+    m_readingPlanList = getReadinPlanForDay(t_date.currentDate().month(), t_date.currentDate().day(), "family");
+
+    QStandardItemModel *model = new QStandardItemModel(m_readingPlanList.size(), 0);
+    model->clear();
+    ui->ListViewReadingPlan->setModel(model);
+
+    for (int i = 0; i < m_readingPlanList.size(); i++)
+    {
+        // add to model
+        model->appendRow( new QStandardItem(m_readingPlanList.at(i)));
+    }
+}
+//------------------------------------------------------------------------------
+void LeftPanel2::sUpdateGUIFont()
+{
+    ui->ListViewJournal->setFont(Config::configuration()->getGUIMapFont()["FontJournal"]);
+}
 //------------------------------------------------------------------------------

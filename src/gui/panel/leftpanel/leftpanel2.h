@@ -9,8 +9,6 @@
 #include <QStandardItem>
 #include <QStandardItemModel>
 
-#include "noteeditor.h"
-
 
 class StrongList;
 
@@ -31,64 +29,63 @@ public:
      */
     void retranslate();
 
+    /**
+     * @brief loadJournal
+     */
+    void loadJournal();
+
+
+
 signals:
-    void SIGNAL_ShowChapterFromJournal(QString, QString, QString);
+    void SIGNAL_ShowChapterFrom(QString, QString, QString);
 
 public slots:
 
-    void showNoteList(QString curModule,
-                      QString curBook,
-                      QString curChapter,
-                      QString curPath,
-                      QString verse);
-
-    void showStrong(QString number);
 
     void sSetStrongHebrew(QString path);
     void sSetStrongGreek(QString path);
-
-private slots:
-
-    // notes slots
-    void editNote(QModelIndex ind);
 
 
     // journals slots
     void addRecordToJournal(QString modulename,
                             QString bookname,
                             QString chaptervalue);
+private slots:
+
+
+    void sUpdateGUIDayMode();
+
+    void sUpdateGUIFont();
+
+
+    void showStrong(QString number);
 
     /**
      \brief
      If select item in journal, then open this item
      */
     void showChapterFromJournal(QModelIndex);
+    void showChapterFromPlan(QModelIndex);
 
 private:
     Ui::LeftPanel2 *ui;
 
-    QHash<int, QString> m_data;
-
     QVector<StrongList> m_listStrongGreek;
     QVector<StrongList> m_listStrongHebrew;
 
-    QStandardItemModel *m_modelNotes;
-
-    NoteEditor *GUI_NoteEditor;
-
-    QString m_curModule;
-    QString m_curBook;
-    QString m_curChapter;
-    QString m_curPath;
-    QString m_verse;
+    QMap<int, StrongList> m_mapStrongGreek;
+    QMap<int, StrongList> m_mapStrongHebrew;
 
     QStringList m_journalList;
+    QStringList m_readingPlanList;
 
     bool m_strongGreek_on;
     bool m_strongHebrew_on;
 
     void init();
     void createConnects();
+
+    void setReadingPlanForCurrentDay();
 };
 
 #endif // LEFTPANEL2_H

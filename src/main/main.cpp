@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 //    a.setOrganizationName(GL_AUTHOR);
     a.setApplicationName(GL_PROG_NAME);
+    a.setWindowIcon(QIcon(":/icons/images/logo.png"));
 
     QTextCodec * codec = QTextCodec::codecForName("UTF-8"); // set encoding for prog
     QTextCodec::setCodecForCStrings(codec);
@@ -25,6 +26,8 @@ int main(int argc, char *argv[])
     Config *conf = new Config();
     conf->setAppDir(QDir::currentPath() + "/");
     conf->setStrongDir(QDir::currentPath() + "/strongs/");
+    conf->setDictDir(QDir::currentPath() + "/" + GL_MODULE_PATH + "dictionary/");
+    conf->setAppLogFN(conf->getAppDir() + "project.log");
 
 #ifdef Q_OS_WIN
     QString t_settings = "settings.ini";
@@ -47,6 +50,10 @@ int main(int argc, char *argv[])
     if (lang == "Deutch") translator.load("QSopherim_de",":lang/lang");
     if (lang == "Français") translator.load("QSopherim_fr",":lang/lang");
     a.installTranslator(&translator);
+
+
+    toLog(conf -> AppLogFN(), "-------");
+    toLog(conf -> AppLogFN(), "Project started.");
 
     MainWindow w;
     w.show();

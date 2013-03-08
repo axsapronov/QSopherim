@@ -41,7 +41,7 @@ public:
     /**
      * @brief setTypeModule
      */
-    void setModuleType(QString);
+    void setModuleType(const QString);
 
     /**
      * @brief getModuleShortName
@@ -101,11 +101,15 @@ public:
      */
     int getValueChapterForBookFromModule(QString nameOfBook);
 
+//    void setStrongType(const QString state);
+//    QString getStrongType();
+
 private:
     QString m_moduleName;
     QString m_moduleShortName;
     QString m_modulePath;
     QStringList m_bookList;
+//    QString m_strongType;
     int m_bookValue;
     QString m_moduleType;
     QHash<QString, int> m_numberOfChaptersInBook;

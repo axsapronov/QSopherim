@@ -6,6 +6,8 @@
 #include "filecommon.h"
 #include "stringcommon.h"
 
+#include "defines.h" // GL_
+
 #include <QStandardItemModel>
 
 FindDialog::FindDialog(QWidget *parent) :
@@ -13,6 +15,9 @@ FindDialog::FindDialog(QWidget *parent) :
     ui(new Ui::FindDialog)
 {
     ui->setupUi(this);
+
+    setWindowTitle(QString(tr("Find") + " | %1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
+
     init();
 }
 //------------------------------------------------------------------------------
@@ -25,7 +30,7 @@ FindDialog::~FindDialog()
 //------------------------------------------------------------------------------
 void FindDialog::preShowDialog()
 {
-    m_currentDir.setPath(Config::configuration()->getAppDir() + "/");
+    m_currentDir.setPath(Config::configuration()->getAppDir() + GL_MODULE_PATH + "/");
     updateComBModule();
 }
 //------------------------------------------------------------------------------
@@ -69,6 +74,7 @@ void FindDialog::find()
         data.chapter = find.chapters;
         updateItemforTable(data);
         showFiles(data);
+        QMessageBox::information(this, tr("Search is completed"), tr("Search is completed"));
     }
 }
 //------------------------------------------------------------------------------
@@ -82,7 +88,7 @@ FindData FindDialog::findFiles(const QStringList &files, const QString &text)
     progressDialog.setWindowTitle(tr("Find Files"));
 
     QStringList foundFiles;
-    QStringList verses;
+    //    QStringList verses;
     QStringList books;
     QStringList chapters;
 
@@ -95,8 +101,13 @@ FindData FindDialog::findFiles(const QStringList &files, const QString &text)
         progressDialog.setLabelText(tr("Searching file number %1 of %2...")
                                     .arg(i).arg(files.size()));
         qApp->processEvents();
+
         if (progressDialog.wasCanceled())
             break;
+
+        if (files.at(i).indexOf(GL_MODULE_PATH) == -1)
+            continue;
+
         QFile file(m_currentDir.absoluteFilePath(files[i]));
         if (file.open(QIODevice::ReadOnly))
         {
@@ -129,6 +140,8 @@ FindData FindDialog::findFiles(const QStringList &files, const QString &text)
                                 )
                             )
                     {
+                        if (curChapter.isEmpty())
+                            continue;
                         foundFiles << files[i];
                         books << curBook;
                         chapters << curChapter;
@@ -159,7 +172,7 @@ void FindDialog::updateComBModule()
     listModules << tr("All modules");
 
     // get all modules
-    QStringList t_list = getListModulesFromPath(Config::configuration()->getAppDir());
+    QStringList t_list = getListModulesFromPath(Config::configuration()->getAppDir() + GL_MODULE_PATH);
     QString t_moduleName;
 
     for (int i = 0; i < t_list.size(); i++)
@@ -177,11 +190,21 @@ void FindDialog::updateComBBook(int f_moduleIndex)
     t_list << tr("All books");
     if (f_moduleIndex != 0)
     {
-        t_list.append(getBookList(Config::configuration()->getAppDir() + "bible/" + ui->comBModule->currentText() + "/module.ini"));
+        t_list.append(getBookList(Config::configuration()->getAppDir() + GL_MODULE_PATH +
+                                  Config::configuration()->getListModulesFromMap
+                                  (
+                                      Config::configuration()->getTypeOfModule(ui->comBModule->currentText())
+                                      )
+                                  ->getModuleWithName(ui->comBModule->currentText())
+                                  ->getModulePath()));
+
     }
+
     ui->comBBook->clear();
     ui->comBBook->addItems(t_list);
-    updateComBChapter(1);
+
+    if (f_moduleIndex != 0)
+        updateComBChapter(1);
 }
 //------------------------------------------------------------------------------
 void FindDialog::updateComBChapter(int f_bookIndex)
@@ -190,7 +213,16 @@ void FindDialog::updateComBChapter(int f_bookIndex)
     listChapters << tr("All chapters");
     if (f_bookIndex != 0)
     {
-        QHash<QString, int> t_hash = getNumberOfChaptersInBook(Config::configuration()->getAppDir() + "bible/" + ui->comBModule->currentText() + "/module.ini");
+        QHash<QString, int> t_hash = getNumberOfChaptersInBook
+                (
+                    Config::configuration()->getAppDir() + GL_MODULE_PATH +
+                                                      Config::configuration()->getListModulesFromMap
+                                                      (
+                                                          Config::configuration()->getTypeOfModule(ui->comBModule->currentText())
+                                                          )
+                                                      ->getModuleWithName(ui->comBModule->currentText())
+                                                      ->getModulePath()
+                    );
 
         int countChapters = t_hash[ui->comBBook->currentText()];
 
@@ -198,11 +230,10 @@ void FindDialog::updateComBChapter(int f_bookIndex)
         {
             listChapters << QString::number(i + 1);
         }
-
     }
+
     ui->comBChapter->clear();
     ui->comBChapter->addItems(listChapters);
-
 }
 //------------------------------------------------------------------------------
 void FindDialog::accept ()
@@ -222,10 +253,14 @@ void FindDialog::reject ()
 QString FindDialog::getPathFind()
 {
     QString str;
-    str = Config::configuration()->getAppDir() + "/bible";
+    str = Config::configuration()->getAppDir() + GL_MODULE_PATH + "/";
 
     if (ui->comBModule->currentIndex() != 0)
-        str.append("/").append(ui->comBModule->currentText());
+        str.append(Config::configuration()->getListModulesFromMap(Config::configuration()->getTypeOfModule(ui->comBModule->currentText()))
+                   ->getModuleWithName(ui->comBModule->currentText())->getModulePath().remove("module" + GL_FORMAT_MODULE));
+    else
+        str.append("");
+
     return str;
 }
 //------------------------------------------------------------------------------
@@ -278,7 +313,7 @@ void FindDialog::updateItemforTable(SearchData &data)
     {
         QString str = data.files.at(i);
         QStringList list;
-        // path to file text.xml
+        // path to file text.qst
         list << str.split("/");
         // case intens
         app[2] = list.last().remove(".htm").remove(".html").remove(".HTML").remove(".HTM");
@@ -289,7 +324,7 @@ void FindDialog::updateItemforTable(SearchData &data)
         {
             prev = data.files.at(i);
             QString t_str = data.files.at(i);
-            t_str.replace("text.xml", "module.ini");
+            t_str.replace("text" + GL_FORMAT_TEXT, "module" + GL_FORMAT_MODULE);
             curModuleName = getModuleNameFromIni(t_str);
         }
         app[1] = curModuleName;
@@ -324,9 +359,10 @@ void FindDialog::showChapter(QModelIndex f_ind)
     QString chapter = ui->tableFiles->model()->index(f_ind.row(), 2).data().toString();
     QString type = ui->tableFiles->model()->index(f_ind.row(), 3).data().toString();
 
-    if (type == "bible")
+    if (type == "bible" or type == "apocrypha" or type == "book")
     {
         emit SIGNAL_ShowChapter(module, book, chapter);
+        emit SIGNAL_UpdateGUI();
     }
 }
 //------------------------------------------------------------------------------

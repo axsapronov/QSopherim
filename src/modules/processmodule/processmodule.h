@@ -21,11 +21,18 @@ public:
 signals:
     void SIGNAL_ProcessModuleOk();
     void SIGNAL_ProcessDictOk();
+    void SIGNAL_ProcessCommentsOk();
+    void SIGNAL_ProcessApocryphaOk();
+
 private slots:
     void createFolderForModule(QString shortname);
+
 private:
-    BibleQuoteModule* m_biblequote;
-    BibleQuoteDictModule* m_biblequotedictmodule;
+    BibleQuoteModule* m_BibleQuote;
+    BibleQuoteModule* m_BibleQuoteComments;
+    BibleQuoteModule* m_BibleQuoteBook;
+    BibleQuoteModule* m_BibleQuoteApocrypha;
+    BibleQuoteDictModule* m_BibleQuoteDictModule;
     void createConnects();
     void init();
     QString p_pathToModule;
