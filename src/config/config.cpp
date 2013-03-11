@@ -30,6 +30,12 @@ Config::Config()
         QFont t_GUIFontJournal = QFont("Tahoma");
         QFont t_GUIFontNotes = QFont("Tahoma");
         QFont t_GUIFontReadingPlan = QFont("Tahoma");
+
+        m_pathMap["bible"] = m_appDir + GL_MODULE_PATH + "bible";
+        m_pathMap["book"] = m_appDir + GL_MODULE_PATH + "book";
+        m_pathMap["dictionary"] = m_appDir + GL_MODULE_PATH + "dictionary";
+        m_pathMap["apocrypha"] = m_appDir + GL_MODULE_PATH + "apocrypha";
+        m_pathMap["comments"] = m_appDir + GL_MODULE_PATH + "comments";
 #endif
 
 #ifdef Q_OS_LINUX
@@ -41,7 +47,22 @@ Config::Config()
         QFont t_GUIFontJournal = QFont("Sans Serif");
         QFont t_GUIFontNotes = QFont("Sans Serif");
         QFont t_GUIFontReadingPlan = QFont("Sans Serif");
+
+        QString m_setupAppDir;
+
+        //setup
+//        m_setupAppDir = "usr/share/QSopherim/";
+        m_setupAppDir = QDir::currentPath() + "/";
+        myDebug() << QDir::currentPath();
+
+        m_pathMap["bible"] = m_setupAppDir + GL_MODULE_PATH + "bible";
+        m_pathMap["book"] = m_setupAppDir + GL_MODULE_PATH + "book";
+        m_pathMap["dictionary"] = m_setupAppDir + GL_MODULE_PATH + "dictionary";
+        m_pathMap["apocrypha"] = m_setupAppDir + GL_MODULE_PATH + "apocrypha";
+        m_pathMap["comments"] = m_setupAppDir + GL_MODULE_PATH + "comments";
 #endif
+
+
 
         t_GUIFontReadingPlan.setPointSize(9);
         t_GUIFontNotes.setPointSize(9);
@@ -164,7 +185,15 @@ void Config::loadSettings()
     m_fontUnderline = settings.value("font/underline").toBool();
     m_fontStrike = settings.value("font/strike").toBool();
 
+    // dirs
 
+    settings.beginGroup("dir");
+    QStringList keysDir = settings.childKeys();
+    foreach (QString key, keysDir)
+    {
+        m_pathMap[key] = qVariantValue<QString> (settings.value(key));
+    }
+    settings.endGroup();
     // font settings
 
     settings.beginGroup("fonts");
@@ -277,6 +306,17 @@ void Config::saveSettings()
         ++i;
     }
     settings.endGroup();
+
+
+    settings.beginGroup("dir");
+    QMap<QString, QString>::const_iterator idir = m_pathMap.constBegin();
+    while (idir != m_pathMap.constEnd())
+    {
+        settings.setValue(idir.key(), idir.value());
+        ++idir;
+    }
+    settings.endGroup();
+
 
     // strongs settings
     settings.setValue(QString("strongs/hebrew"), m_strongHebrew);
@@ -741,5 +781,65 @@ QString Config::getImportDictDir()
 void Config::setImportDictDir(const QString newDir)
 {
     m_importDirDict = newDir;
+}
+//------------------------------------------------------------------------------
+void Config::setPathBibleDir(const QString newState)
+{
+    m_pathMap["bible"] = newState;
+}
+//------------------------------------------------------------------------------
+void Config::setPathBookDir(const QString newState)
+{
+    m_pathMap["book"] = newState;
+}
+//------------------------------------------------------------------------------
+void Config::setPathDictDir(const QString newState)
+{
+    m_pathMap["dictionary"] = newState;
+}
+//------------------------------------------------------------------------------
+void Config::setPathCommentsDir(const QString newState)
+{
+    m_pathMap["comments"] = newState;
+}
+//------------------------------------------------------------------------------
+void Config::setPathApocryphaDir(const QString newState)
+{
+    m_pathMap["apocrypha"] = newState;
+}
+//------------------------------------------------------------------------------
+QString Config::getPathBibleDir()
+{
+    return m_pathMap["bible"];
+}
+//------------------------------------------------------------------------------
+QString Config::getPathBookDir()
+{
+    return m_pathMap["book"];
+}
+//------------------------------------------------------------------------------
+QString Config::getPathDictDir()
+{
+    return m_pathMap["dictionary"];
+}
+//------------------------------------------------------------------------------
+QString Config::getPathCommentsDir()
+{
+    return m_pathMap["comments"];
+}
+//------------------------------------------------------------------------------
+QString Config::getPathApocryphaDir()
+{
+    return m_pathMap["apocrypha"];
+}
+//------------------------------------------------------------------------------
+QString Config::getPathType(const QString f_type)
+{
+    return m_pathMap[f_type];
+}
+//------------------------------------------------------------------------------
+void Config::setPathType(const QString f_type, const QString f_newPath)
+{
+    m_pathMap[f_type] = f_newPath;
 }
 //------------------------------------------------------------------------------

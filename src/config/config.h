@@ -317,6 +317,23 @@ public:
     void setListModulesToMap(const QString f_type, QSopherimModuleList* f_newList);
     QString getTypeOfModule(const QString f_module);
 
+
+    QString getPathBibleDir();
+    QString getPathBookDir();
+    QString getPathDictDir();
+    QString getPathCommentsDir();
+    QString getPathApocryphaDir();
+
+    QString getPathType(const QString f_type);
+
+    void setPathType(const QString f_type, const QString f_newPath);
+
+    void setPathBibleDir(const QString newState);
+    void setPathBookDir(const QString newState);
+    void setPathDictDir(const QString newState);
+    void setPathCommentsDir(const QString newState);
+    void setPathApocryphaDir(const QString newState);
+
 private:
     QString m_appDir;
 
@@ -380,6 +397,7 @@ private:
 
     QString m_importDirDict;
 
+    QMap<QString, QString> m_pathMap;
 };
 
 #endif // __CONFIG__H

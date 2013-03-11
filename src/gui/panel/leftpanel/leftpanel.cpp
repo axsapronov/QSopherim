@@ -822,21 +822,21 @@ void LeftPanel::sSetCommentsFromModule(const QString f_nameModule)
 void LeftPanel::loadComments()
 {
     QSopherimModuleList* list = new QSopherimModuleList();
-    list->refreshList("comments/");
+    list->refreshList("comments");
     refreshListComments(list);
 }
 //------------------------------------------------------------------------------
 void LeftPanel::loadDictionaries()
 {
     QSopherimModuleList* list = new QSopherimModuleList();
-    list->refreshList("dictionary/");
+    list->refreshList("dictionary");
     refreshListDict(list);
 }
 //------------------------------------------------------------------------------
 void LeftPanel::loadModules()
 {
     QSopherimModuleList* list = new QSopherimModuleList();
-    list->refreshList();
+    list->refreshList("bible");
     if (list->getSize())
     {
         Config::configuration()->setListBibles(list);
@@ -847,7 +847,7 @@ void LeftPanel::loadModules()
 void LeftPanel::loadBooks()
 {
     QSopherimModuleList* list = new QSopherimModuleList();
-    list->refreshList("book/");
+    list->refreshList("book");
     if (list->getSize())
     {
         Config::configuration()->setListBook(list);
@@ -858,7 +858,7 @@ void LeftPanel::loadBooks()
 void LeftPanel::loadApocrypha()
 {
     QSopherimModuleList* list = new QSopherimModuleList();
-    list->refreshList("apocrypha/");
+    list->refreshList("apocrypha");
     if (list->getSize())
     {
         Config::configuration()->setListApocrypha(list);

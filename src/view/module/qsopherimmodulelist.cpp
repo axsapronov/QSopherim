@@ -61,7 +61,8 @@ void QSopherimModuleList::refreshList(QString what)
      *создать его
      *и добавить в список
      */
-    QString t_pathToIniFile = QString(Config::configuration()->getAppDir() + GL_MODULE_PATH + what);
+
+    QString t_pathToIniFile = Config::configuration()->getPathType(what);
     findModules(t_pathToIniFile);
 }
 //------------------------------------------------------------------------------

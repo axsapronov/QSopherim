@@ -60,6 +60,8 @@ private slots:
     void fontSettings();
     void updateFontSettings();
 
+    void sBrowseDir();
+
 private:
     Ui::Settings *ui;
     QString m_APP_Lang;
