@@ -51,9 +51,8 @@ Config::Config()
         QString m_setupAppDir;
 
         //setup
-//        m_setupAppDir = "usr/share/QSopherim/";
-        m_setupAppDir = QDir::currentPath() + "/";
-        myDebug() << QDir::currentPath();
+        m_setupAppDir = "usr/share/QSopherim/";
+//        m_setupAppDir = QDir::currentPath() + "/";
 
         m_pathMap["bible"] = m_setupAppDir + GL_MODULE_PATH + "bible";
         m_pathMap["book"] = m_setupAppDir + GL_MODULE_PATH + "book";

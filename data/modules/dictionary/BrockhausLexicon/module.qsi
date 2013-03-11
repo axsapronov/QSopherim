@@ -1,0 +1,10 @@
+////Module for QSopherim
+ModuleName = BrockhausLexicon
+Author = 
+Revision = 2.0
+Language = Ru
+Type = Dictionary
+Description = 
+Right = Text copyrighted
+Numbering= RST
+PathToModule = dictionary/BrockhausLexicon/module.qsi
