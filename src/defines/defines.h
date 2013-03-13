@@ -1,11 +1,11 @@
 #ifndef __DEFINES_H
 #define __DEFINES_H
 
-#define GL_PROG_VERSION_STR	"pre-alpha-3"
-#define GL_PROG_BUILD_STR	"2013.03.08"
-#define GL_PROG_NAME            "QSopherim"
-#define GL_PROG_AUTHOR          "Sapronov Alexander"
-#define GL_WEB_SITE             "http://warmonger1.github.com/QSopherim"
+#define GL_PROG_VERSION_STR	QString("pre-alpha-3")
+#define GL_PROG_BUILD_STR	QString("2013.03.08")
+#define GL_PROG_NAME            QString("QSopherim")
+#define GL_PROG_AUTHOR          QString("Sapronov Alexander")
+#define GL_WEB_SITE             QString("http://warmonger1.github.com/QSopherim")
 
 //
 

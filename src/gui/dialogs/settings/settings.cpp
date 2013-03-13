@@ -181,7 +181,7 @@ void Settings::accept()
 {
     if (getModifySettings())
     {
-        int ret = QMessageBox::warning(this, tr(GL_PROG_NAME),
+        int ret = QMessageBox::warning(this, GL_PROG_NAME,
                                        tr("Settings has been modified.\n"
                                           "Do you want to save your changes?"),
                                        QMessageBox::Save

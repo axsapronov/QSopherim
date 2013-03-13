@@ -122,7 +122,8 @@ SOURCES  += \
         biblequotedictmodule.cpp \
         finddialog.cpp \
         fontdialog.cpp \
-        moduleimportdialog.cpp
+        moduleimportdialog.cpp \
+        anyoption.cpp
 
 HEADERS  += \
         mainwindow.h \
@@ -170,7 +171,9 @@ HEADERS  += \
         biblequotedictmodule.h \
         finddialog.h \
         fontdialog.h \
-        moduleimportdialog.h
+        moduleimportdialog.h \
+        anyoption.h
+
 FORMS    += \
         mainwindow.ui \
         about.ui \

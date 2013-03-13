@@ -1,7 +1,8 @@
 #include "mainwindow.h"
 #include "defines.h"
 #include "config.h"
-
+#include "debughelper.h"
+#include "anyoption.h"
 
 #include <QtGui/QApplication>
 
@@ -11,10 +12,48 @@
 
 #include <QDebug>
 
+
+//------------------------------------------------------------------------------
+bool removeDir(const QString &dirName)
+{
+    bool result = true;
+    QDir dir(dirName);
+
+    if(dir.exists(dirName)) {
+        foreach(const QFileInfo & info, dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst)) {
+            if(info.isDir()) {
+                result = removeDir(info.absoluteFilePath());
+            } else {
+                result = QFile::remove(info.absoluteFilePath());
+            }
+            if(!result) {
+                return result;
+            }
+        }
+        result = dir.rmdir(dirName);
+    }
+    return result;
+}
+//------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 //    a.setOrganizationName(GL_AUTHOR);
+    AnyOption *opt = new AnyOption();
+    const QString s =  GL_PROG_NAME + GL_PROG_VERSION_STR;
+    opt->addUsage(s.toStdString().c_str());
+    opt->addUsage("Usage: ");
+    opt->addUsage("");
+    opt->addUsage(" -h  --help                 Prints this help ");
+    opt->addUsage(" --configPath 	        Path to config files ");
+    opt->addUsage("");
+    opt->setFlag("help", 'h');
+    opt->setOption("configPath");
+    opt->processCommandArgs(argc, argv);
+    if(opt->getValue("help") != NULL) {
+        opt->printUsage();
+        return 0;
+    }
     a.setApplicationName(GL_PROG_NAME);
     a.setWindowIcon(QIcon(":/icons/images/logo.png"));
 
@@ -61,3 +100,4 @@ int main(int argc, char *argv[])
     return a.exec();
 //    return 0;
 }
+//------------------------------------------------------------------------------
