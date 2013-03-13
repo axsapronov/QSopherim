@@ -109,6 +109,8 @@ void MainWindow::init()
     GUI_LeftPanel = new LeftPanel(this);
     GUI_LeftPanel2 = new LeftPanel2(this);
 
+    GUI_ManagerModules = new ManagerModules(this);
+
     // to hide the title bar completely must replace the default widget with a generic one
     QWidget* t_titleBar = GUI_LeftPanel2->titleBarWidget();
     QWidget* t_emptyWidget2 = new QWidget();
@@ -184,8 +186,10 @@ void MainWindow::init()
 
     createActions(); // create action for tray
     createTrayIcon(); // add actionts to tray menu
-
     createConnects(); // moved func
+
+    //hack
+    GUI_ManagerModules->loadStrongList();
 
     showHideTray();
 }
@@ -288,6 +292,10 @@ void MainWindow::createConnects()
     connect(ui->action_Settings_Language_Deutsch, SIGNAL(triggered()), SLOT(setLangDe()) );
     connect(ui->action_Settings_Language_France, SIGNAL(triggered()),  SLOT(setLangFr()) );
 
+    // manager module
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(sRefreshModules()));
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetGreekStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongGreek(QString)));
+    connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetHebrewStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongHebrew(QString)));
 
     // menu about
     connect(ui->action_About_About, SIGNAL(triggered()), GUI_About, SLOT(show()));
@@ -463,17 +471,17 @@ void MainWindow::showModuleManager()
     //set sett
     //    GUI_LeftPanel->setListModuleFromList();
     //    GUI_ManagerModules->loadListModules();
-    if (GUI_ManagerModules == NULL)
-    {
-        // init manager modules
+    //    if (GUI_ManagerModules == NULL)
+    //    {
+    //        // init manager modules
 
-        GUI_ManagerModules = new ManagerModules(this);
+    //        GUI_ManagerModules = new ManagerModules(this);
 
-        // manager module
-        connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(sRefreshModules()));
-        connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetGreekStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongGreek(QString)));
-        connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetHebrewStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongHebrew(QString)));
-    }
+    //        // manager module
+    //        connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(sRefreshModules()));
+    //        connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetGreekStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongGreek(QString)));
+    //        connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetHebrewStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongHebrew(QString)));
+    //    }
 
     GUI_ManagerModules->loadAllModules();
     GUI_ManagerModules->loadStrongList();
