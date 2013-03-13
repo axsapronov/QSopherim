@@ -51,8 +51,8 @@ Config::Config()
         QString m_setupAppDir;
 
         //setup
-        m_setupAppDir = "usr/share/QSopherim/";
-//        m_setupAppDir = QDir::currentPath() + "/";
+//        m_setupAppDir = "usr/share/QSopherim/";
+        m_setupAppDir = QDir::currentPath() + "/";
 
         m_pathMap["bible"] = m_setupAppDir + GL_MODULE_PATH + "bible";
         m_pathMap["book"] = m_setupAppDir + GL_MODULE_PATH + "book";
@@ -88,7 +88,7 @@ Config::Config()
         m_fontUnderline = false;
         m_optionChangeTextColor = true;
         m_guiTray = true;
-        m_optionAutoChapter = true;
+        m_optionAutoChapter = false;
 
         m_lastChapter = "";
         m_lastBook = "";
