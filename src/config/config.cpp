@@ -5,6 +5,7 @@
 
 #include "defines.h"
 
+#include <QFSFileEngine>
 #include <QSettings>
 #include <QDir>
 
@@ -52,15 +53,16 @@ Config::Config()
 
         //setup
 //        m_setupAppDir = "usr/share/QSopherim/";
-        m_setupAppDir = QDir::currentPath() + "/";
+//        m_setupAppDir = QDir::currentPath() + "/";
+        m_setupAppDir = m_dataPath;
+        m_dataPath = QFSFileEngine::homePath() + "/.local/share" + "/qsopherim/";
 
-        m_pathMap["bible"] = m_setupAppDir + GL_MODULE_PATH + "bible";
-        m_pathMap["book"] = m_setupAppDir + GL_MODULE_PATH + "book";
-        m_pathMap["dictionary"] = m_setupAppDir + GL_MODULE_PATH + "dictionary";
-        m_pathMap["apocrypha"] = m_setupAppDir + GL_MODULE_PATH + "apocrypha";
-        m_pathMap["comments"] = m_setupAppDir + GL_MODULE_PATH + "comments";
+        m_pathMap["bible"] = m_dataPath + GL_MODULE_PATH + "bible";
+        m_pathMap["book"] = m_dataPath + GL_MODULE_PATH + "book";
+        m_pathMap["dictionary"] = m_dataPath + GL_MODULE_PATH + "dictionary";
+        m_pathMap["apocrypha"] = m_dataPath + GL_MODULE_PATH + "apocrypha";
+        m_pathMap["comments"] = m_dataPath + GL_MODULE_PATH + "comments";
 #endif
-
 
 
         t_GUIFontReadingPlan.setPointSize(9);
@@ -89,6 +91,7 @@ Config::Config()
         m_optionChangeTextColor = true;
         m_guiTray = true;
         m_optionAutoChapter = false;
+        m_dayMode = true;
 
         m_lastChapter = "";
         m_lastBook = "";
@@ -109,6 +112,8 @@ Config::Config()
         m_listMap["Apocrypha"] = m_listApocrypha;
         m_listMap["Comments"] = m_listComments;
         m_listMap["Dictionary"] = m_listDictinaries;
+
+        m_dataDefaultPath = "usr/share/qsopherim/";
     }
     else
     {
@@ -150,7 +155,7 @@ void Config::loadSettings()
     QSettings settings("settings.ini", QSettings::IniFormat);
 #endif
 #ifdef Q_OS_LINUX
-    QSettings settings("settings.conf", QSettings::NativeFormat);
+    QSettings settings(m_configPath + "/settings.conf", QSettings::NativeFormat);
 #endif
 
     m_appLogLevel = settings.value(QString("log/app")).toInt();
@@ -159,14 +164,14 @@ void Config::loadSettings()
         m_appLang = "Russian";
 
     QDir dir;
-    dir.mkpath(getAppDir() + GL_MODULE_PATH + "bible");
-    dir.mkpath(getAppDir() + GL_MODULE_PATH + "dictionary");
-    dir.mkpath(getAppDir() + GL_MODULE_PATH + "other");
-    dir.mkpath(getAppDir() + GL_MODULE_PATH + "book");
-    dir.mkpath(getAppDir() + GL_MODULE_PATH + "comments");
-    dir.mkpath(getAppDir() + GL_MODULE_PATH + "apocrypha");
-    dir.mkpath(getAppDir() + "strongs");
-    dir.mkpath(getAppDir() + "plans");
+    dir.mkpath(getDataPath() + GL_MODULE_PATH + "bible");
+    dir.mkpath(getDataPath() + GL_MODULE_PATH + "dictionary");
+    dir.mkpath(getDataPath() + GL_MODULE_PATH + "other");
+    dir.mkpath(getDataPath() + GL_MODULE_PATH + "book");
+    dir.mkpath(getDataPath() + GL_MODULE_PATH + "comments");
+    dir.mkpath(getDataPath() + GL_MODULE_PATH + "apocrypha");
+    dir.mkpath(getDataPath() + "strongs");
+    dir.mkpath(getDataPath() + "plans");
 
     // viewer settings
     m_viewerColor = qVariantValue<QColor> (settings.value("viewer/color"));
@@ -217,8 +222,8 @@ void Config::loadSettings()
     m_lastType = settings.value("history/type").toString();
 
     // strongs
-    if (!QFile::exists(m_appDir + "strongs.xml"))
-        createEmptyXML(m_appDir + "strongs.xml");
+    if (!QFile::exists(m_dataPath + "strongs.xml"))
+        createEmptyXML(m_dataPath + "strongs.xml");
 
 
     // hide settings
@@ -273,8 +278,11 @@ void Config::saveSettings()
     QSettings settings("settings.ini", QSettings::IniFormat);
 #endif
 #ifdef Q_OS_LINUX
-    QSettings settings("settings.conf", QSettings::NativeFormat);
+    QSettings settings(m_configPath + "/settings.conf", QSettings::NativeFormat);
 #endif
+
+    settings.setValue(QString("app/version"), GL_PROG_VERSION_STR);
+    settings.setValue(QString("app/name"), GL_PROG_NAME);
 
     settings.setValue(QString("log/app"), m_appLogLevel);
 
@@ -840,5 +848,30 @@ QString Config::getPathType(const QString f_type)
 void Config::setPathType(const QString f_type, const QString f_newPath)
 {
     m_pathMap[f_type] = f_newPath;
+}
+//------------------------------------------------------------------------------
+void Config::setConfigPath(const QString f_path)
+{
+    m_configPath = f_path;
+}
+//------------------------------------------------------------------------------
+void Config::setDataPath(const QString f_path)
+{
+    m_dataPath = f_path;
+}
+//------------------------------------------------------------------------------
+QString Config::getConfigPath()
+{
+    return m_configPath;
+}
+//------------------------------------------------------------------------------
+QString Config::getDataPath()
+{
+    return m_dataPath;
+}
+//------------------------------------------------------------------------------
+QString Config::getDataDefaultPath()
+{
+    return m_dataDefaultPath;
 }
 //------------------------------------------------------------------------------

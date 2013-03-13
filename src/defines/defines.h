@@ -23,5 +23,6 @@
 #define GL_COLOR_NIGHT_TEXT QColor(204, 204, 204)
 
 #define GL_MODULE_PATH QString("modules/")
+#define GL_PLAN_PATH QString("plans/")
 
 #endif // __DEFINES_H

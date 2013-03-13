@@ -2,9 +2,9 @@
 #include "defines.h"
 #include "config.h"
 #include "debughelper.h"
-#include "anyoption.h"
 
 #include <QtGui/QApplication>
+#include <QtCore/QFSFileEngine>
 
 #include <QTextCodec>
 #include <QTranslator>
@@ -19,14 +19,20 @@ bool removeDir(const QString &dirName)
     bool result = true;
     QDir dir(dirName);
 
-    if(dir.exists(dirName)) {
-        foreach(const QFileInfo & info, dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst)) {
-            if(info.isDir()) {
+    if(dir.exists(dirName))
+    {
+        foreach(const QFileInfo & info, dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst))
+        {
+            if(info.isDir())
+            {
                 result = removeDir(info.absoluteFilePath());
-            } else {
+            }
+            else
+            {
                 result = QFile::remove(info.absoluteFilePath());
             }
-            if(!result) {
+            if(!result)
+            {
                 return result;
             }
         }
@@ -38,22 +44,8 @@ bool removeDir(const QString &dirName)
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-//    a.setOrganizationName(GL_AUTHOR);
-    AnyOption *opt = new AnyOption();
-    const QString s =  GL_PROG_NAME + GL_PROG_VERSION_STR;
-    opt->addUsage(s.toStdString().c_str());
-    opt->addUsage("Usage: ");
-    opt->addUsage("");
-    opt->addUsage(" -h  --help                 Prints this help ");
-    opt->addUsage(" --configPath 	        Path to config files ");
-    opt->addUsage("");
-    opt->setFlag("help", 'h');
-    opt->setOption("configPath");
-    opt->processCommandArgs(argc, argv);
-    if(opt->getValue("help") != NULL) {
-        opt->printUsage();
-        return 0;
-    }
+    //    a.setOrganizationName(GL_AUTHOR);
+
     a.setApplicationName(GL_PROG_NAME);
     a.setWindowIcon(QIcon(":/icons/images/logo.png"));
 
@@ -63,19 +55,41 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(codec);
 
     Config *conf = new Config();
-    conf->setAppDir(QDir::currentPath() + "/");
-    conf->setStrongDir(QDir::currentPath() + "/strongs/");
-    conf->setDictDir(QDir::currentPath() + "/" + GL_MODULE_PATH + "dictionary/");
-    conf->setAppLogFN(conf->getAppDir() + "project.log");
 
 #ifdef Q_OS_WIN
     QString t_settings = "settings.ini";
+    // добавить сюда confighomepath and datahomepath = current path
 #endif
 #ifdef Q_OS_LINUX
     QString t_settings = "settings.conf";
+    QString t_homeDataPath = QFSFileEngine::homePath() + "/.qsopherim/";
 #endif
 
-    if (QFile::exists(conf->getAppDir() + t_settings))
+    QString t_configHomePath = QFSFileEngine::homePath() + "/.config" + "/qsopherim/";
+    QString t_dataHomePath = QFSFileEngine::homePath() + "/.local/share" + "/qsopherim/";
+
+    QDir dir(t_homeDataPath);
+    if(!dir.exists(t_homeDataPath))
+        dir.mkpath(t_homeDataPath);
+
+    if(!dir.exists(t_configHomePath))
+        dir.mkpath(t_configHomePath);
+
+    if(!dir.exists(t_dataHomePath))
+        dir.mkpath(t_dataHomePath);
+
+    conf->setConfigPath(t_configHomePath);
+    conf->setDataPath(t_dataHomePath);
+    conf->setAppDir(t_homeDataPath);
+
+    QString t_homepath = QDir::currentPath();
+    conf->setAppDir(t_homepath + "/");
+
+    conf->setStrongDir(conf->getDataPath() + "strongs/");
+    conf->setDictDir(conf->getDataPath() + GL_MODULE_PATH + "dictionary/");
+    conf->setAppLogFN(conf->getConfigPath() + "project.log");
+
+    if (QFile::exists(conf->getConfigPath() + t_settings))
     {
         conf -> loadSettings();
     }
@@ -98,6 +112,6 @@ int main(int argc, char *argv[])
     w.show();
 
     return a.exec();
-//    return 0;
+    //    return 0;
 }
 //------------------------------------------------------------------------------

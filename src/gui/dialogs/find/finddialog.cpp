@@ -30,7 +30,7 @@ FindDialog::~FindDialog()
 //------------------------------------------------------------------------------
 void FindDialog::preShowDialog()
 {
-    m_currentDir.setPath(Config::configuration()->getAppDir() + GL_MODULE_PATH + "/");
+    m_currentDir.setPath(Config::configuration()->getDataPath() + GL_MODULE_PATH + "/");
     updateComBModule();
 }
 //------------------------------------------------------------------------------
@@ -172,7 +172,7 @@ void FindDialog::updateComBModule()
     listModules << tr("All modules");
 
     // get all modules
-    QStringList t_list = getListModulesFromPath(Config::configuration()->getAppDir() + GL_MODULE_PATH);
+    QStringList t_list = getListModulesFromPath(Config::configuration()->getDataPath() + GL_MODULE_PATH);
     QString t_moduleName;
 
     for (int i = 0; i < t_list.size(); i++)
@@ -190,7 +190,7 @@ void FindDialog::updateComBBook(int f_moduleIndex)
     t_list << tr("All books");
     if (f_moduleIndex != 0)
     {
-        t_list.append(getBookList(Config::configuration()->getAppDir() + GL_MODULE_PATH +
+        t_list.append(getBookList(Config::configuration()->getDataPath() + GL_MODULE_PATH +
                                   Config::configuration()->getListModulesFromMap
                                   (
                                       Config::configuration()->getTypeOfModule(ui->comBModule->currentText())
@@ -215,7 +215,7 @@ void FindDialog::updateComBChapter(int f_bookIndex)
     {
         QHash<QString, int> t_hash = getNumberOfChaptersInBook
                 (
-                    Config::configuration()->getAppDir() + GL_MODULE_PATH +
+                    Config::configuration()->getDataPath() + GL_MODULE_PATH +
                                                       Config::configuration()->getListModulesFromMap
                                                       (
                                                           Config::configuration()->getTypeOfModule(ui->comBModule->currentText())
@@ -253,7 +253,7 @@ void FindDialog::reject ()
 QString FindDialog::getPathFind()
 {
     QString str;
-    str = Config::configuration()->getAppDir() + GL_MODULE_PATH + "/";
+    str = Config::configuration()->getDataPath() + GL_MODULE_PATH + "/";
 
     if (ui->comBModule->currentIndex() != 0)
         str.append(Config::configuration()->getListModulesFromMap(Config::configuration()->getTypeOfModule(ui->comBModule->currentText()))

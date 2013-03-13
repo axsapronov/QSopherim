@@ -702,18 +702,18 @@ QStringList getReadinPlanForDay(const int f_mount, const int f_day, const QStrin
 
     switch (f_mount)
     {
-    case MOUNT_JANUARY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/01.xml"); break;
-    case MOUNT_FEBRUARY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/02.xml"); break;
-    case MOUNT_MARCH: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/03.xml"); break;
-    case MOUNT_APRIL: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/04.xml"); break;
-    case MOUNT_MAY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/05.xml"); break;
-    case MOUNT_JUNE: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/06.xml"); break;
-    case MOUNT_JULY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/07.xml"); break;
-    case MOUNT_AUGUST: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/08.xml"); break;
-    case MOUNT_SEPTEMBEER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/09.xml"); break;
-    case MOUNT_OCTOBER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/10.xml"); break;
-    case MOUNT_NOVEMBER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/11.xml"); break;
-    case MOUNT_DECEMBER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getAppDir() + "/plans/" + f_type + "/12.xml"); break;
+    case MOUNT_JANUARY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getDataPath() + GL_PLAN_PATH + f_type + "/01.xml"); break;
+    case MOUNT_FEBRUARY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getDataPath() + GL_PLAN_PATH + f_type + "/02.xml"); break;
+    case MOUNT_MARCH: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getDataPath() + GL_PLAN_PATH + f_type + "/03.xml"); break;
+    case MOUNT_APRIL: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getDataPath() + GL_PLAN_PATH + f_type + "/04.xml"); break;
+    case MOUNT_MAY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getDataPath() + GL_PLAN_PATH + f_type + "/05.xml"); break;
+    case MOUNT_JUNE: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getDataPath() + GL_PLAN_PATH + f_type + "/06.xml"); break;
+    case MOUNT_JULY: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getDataPath() + GL_PLAN_PATH + f_type + "/07.xml"); break;
+    case MOUNT_AUGUST: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getDataPath() + GL_PLAN_PATH + f_type + "/08.xml"); break;
+    case MOUNT_SEPTEMBEER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getDataPath() + GL_PLAN_PATH + f_type + "/09.xml"); break;
+    case MOUNT_OCTOBER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getDataPath() + GL_PLAN_PATH + f_type + "/10.xml"); break;
+    case MOUNT_NOVEMBER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getDataPath() + GL_PLAN_PATH + f_type + "/11.xml"); break;
+    case MOUNT_DECEMBER: r_list = getReadingPlanForDayFromFile(f_day, Config::configuration()->getDataPath() + GL_PLAN_PATH + f_type + "/12.xml"); break;
     default:
         break;
     }

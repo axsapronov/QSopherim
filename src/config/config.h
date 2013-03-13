@@ -334,6 +334,13 @@ public:
     void setPathCommentsDir(const QString newState);
     void setPathApocryphaDir(const QString newState);
 
+    void setConfigPath(const QString newState);
+    void setDataPath(const QString newState);
+    QString getConfigPath();
+    QString getDataPath();
+
+    QString getDataDefaultPath();
+
 private:
     QString m_appDir;
 
@@ -396,6 +403,9 @@ private:
     int m_appLogLevel;
 
     QString m_importDirDict;
+    QString m_configPath;
+    QString m_dataPath;
+    QString m_dataDefaultPath;
 
     QMap<QString, QString> m_pathMap;
 };

@@ -299,7 +299,7 @@ void LeftPanel::showChapter(const QModelIndex ind, const QString f_type)
         t_curModule = ui->comBModulesApocrypha->currentText();
     }
 
-    QString t_pathToModule = Config::configuration()->getAppDir() + GL_MODULE_PATH +
+    QString t_pathToModule = Config::configuration()->getDataPath() + GL_MODULE_PATH +
             Config::configuration()->getListModulesFromMap(f_type)->getModuleWithName(t_curModule)->getModulePath();
 
     for( int i = 0; i < selectedList.count(); i++)
@@ -813,7 +813,7 @@ void LeftPanel::sSetCommentsFromModule(const QString f_nameModule)
 {
     if (Config::configuration()->isExistLastChapter())
     {
-        ui->textBrComments->setText(getCommentForChapter(Config::configuration()->getAppDir() + GL_MODULE_PATH + Config::configuration()->getListComments()->getModuleWithName(f_nameModule)->getModulePath()
+        ui->textBrComments->setText(getCommentForChapter(Config::configuration()->getDataPath() + GL_MODULE_PATH + Config::configuration()->getListComments()->getModuleWithName(f_nameModule)->getModulePath()
                                                          , Config::configuration()->getLastBook()
                                                          , Config::configuration()->getLastChapter()));
     }

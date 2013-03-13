@@ -34,14 +34,14 @@ public:
      * @brief deleteModule
      * @param nameModule
      */
-    void deleteModule(QString nameModule);
+    void deleteModule(const QString nameModule);
     /**
      * @brief hideModule
      * @param nameModule
      */
-    void hideModule(QString nameModule);
+    void hideModule(const QString nameModule);
 
-    void showModule(QString nameModule);
+    void showModule(const QString nameModule);
 
     /**
      * @brief isExist
@@ -59,7 +59,7 @@ public:
     /**
      * @brief refreshList
      */
-    void refreshList(QString = "bible/");
+    void refreshList(const QString = "bible/");
     /**
      * @brief getSize
      * @return
@@ -70,12 +70,12 @@ public:
      * @param name
      * @return
      */
-    QSopherimModule* getModuleWithName(QString name);
+    QSopherimModule* getModuleWithName(const QString name);
     /**
      * @brief getModuleBooks
      * @return
      */
-    QStringList getModuleBooks(QString nameOfModule);
+    QStringList getModuleBooks(const QString nameOfModule);
 
     void clearList();
 

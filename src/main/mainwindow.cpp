@@ -43,18 +43,18 @@ MainWindow::MainWindow(QWidget *parent) :
     //    convertDictFromFolder();
 
     // load modules
-//    GUI_LeftPanel->setFirstLaunch(true);
+    //    GUI_LeftPanel->setFirstLaunch(true);
 
     GUI_LeftPanel->sRefreshModules();
-//    GUI_LeftPanel->loadModules();
-//    GUI_LeftPanel->loadBooks();
-//    GUI_LeftPanel->loadDictionaries();
-//    GUI_LeftPanel->loadComments();
-//    GUI_LeftPanel->loadApocrypha();
+    //    GUI_LeftPanel->loadModules();
+    //    GUI_LeftPanel->loadBooks();
+    //    GUI_LeftPanel->loadDictionaries();
+    //    GUI_LeftPanel->loadComments();
+    //    GUI_LeftPanel->loadApocrypha();
 
     GUI_LeftPanel2->loadJournal();
 
-//    GUI_LeftPanel->setFirstLaunch(false);
+    //    GUI_LeftPanel->setFirstLaunch(false);
 
     if (Config::configuration()->isExistLastChapter())
     {
@@ -104,11 +104,7 @@ void MainWindow::init()
     GUI_About = new AboutDialog(this);
     GUI_Settings = new Settings(this);
 
-    GUI_ManagerModules = new ManagerModules(this);
-    GUI_FindDialog = new FindDialog(this);
-    GUI_ModuleImportDialog = new ModuleImportDialog(this);
-
-    /// panel init
+    // panel init
     GUI_RightPanel = new RightPanel(this);
     GUI_LeftPanel = new LeftPanel(this);
     GUI_LeftPanel2 = new LeftPanel2(this);
@@ -144,11 +140,7 @@ void MainWindow::init()
     addDockWidget(Qt::RightDockWidgetArea, GUI_RightPanel);
     //        addDockWidget(Qt::BottomDockWidgetArea, GUI_BottomPanel);
 
-    //    GUI_RightPanel->hide();
-    prModule = new ProcessModule();
-
-    //    centralWidget()->setAttribute(Qt::WA_TransparentForMouseEvents);
-    //    setMouseTracking(true);
+    GUI_RightPanel->hide();
 
     // load settings
     // replace to QString t_lang = GUI_Settings->getAppLang()
@@ -285,7 +277,7 @@ void MainWindow::createConnects()
     connect(ui->action_Settings_General, SIGNAL(triggered()), SLOT(showSettings()));
     connect(GUI_Settings, SIGNAL(SIGNAL_UpdateTray()), SLOT(showHideTray()));
 
-    connect(ui->action_Settings_Module_Import, SIGNAL(triggered()), GUI_ModuleImportDialog, SLOT(show()));
+    connect(ui->action_Settings_Module_Import, SIGNAL(triggered()), SLOT(showModuleImport()));
 
     // manager module
     connect(ui->action_Settings_Module, SIGNAL(triggered()), SLOT(showModuleManager()));
@@ -309,20 +301,6 @@ void MainWindow::createConnects()
 
     // settings
     connect(GUI_Settings, SIGNAL(SIGNAL_RetranslateGUI(QString)), SLOT(retranslate(QString)));
-
-    // manager module
-    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(sRefreshModules()));
-//    connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(loadModules()));
-
-    connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetGreekStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongGreek(QString)));
-    connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetHebrewStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongHebrew(QString)));
-
-    // import modules
-    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertModules()), SLOT(convertModulesFromFolder()));
-    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertDict()), SLOT(convertDictFromFolder()));
-    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertComments()), SLOT(convertCommentsFromFolder()));
-    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertApocrypha()), SLOT(convertApocryphaFromFolder()));
-    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertBook()), SLOT(convertBooksFromFolder()));
 
     // connect fron left1 to left2 panels
     connect(GUI_LeftPanel, SIGNAL(SIGNAL_AddRecordToJournal(QString,QString,QString))
@@ -351,14 +329,6 @@ void MainWindow::createConnects()
     connect(GUI_Settings, SIGNAL(SIGNAL_UpdateDayMode()), GUI_LeftPanel, SLOT(sUpdateGUIDayMode()));
     connect(GUI_Settings, SIGNAL(SIGNAL_UpdateDayMode()), GUI_LeftPanel2, SLOT(sUpdateGUIDayMode()));
     connect(GUI_Settings, SIGNAL(SIGNAL_UpdateDayMode()), GUI_RightPanel, SLOT(sUpdateGUIDayMode()));
-
-
-    // connect find dialog to left2 panel
-    connect(GUI_FindDialog, SIGNAL(SIGNAL_ShowChapter(QString, QString, QString)),
-            GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
-
-    connect(GUI_FindDialog, SIGNAL(SIGNAL_UpdateGUI()), GUI_LeftPanel, SLOT(sUpdateGUI()));
-
 
     connect(GUI_RightPanel, SIGNAL(SIGNAL_OpenBookmark(QString, QString, QString)),
             GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
@@ -493,6 +463,18 @@ void MainWindow::showModuleManager()
     //set sett
     //    GUI_LeftPanel->setListModuleFromList();
     //    GUI_ManagerModules->loadListModules();
+    if (GUI_ManagerModules == NULL)
+    {
+        // init manager modules
+
+        GUI_ManagerModules = new ManagerModules(this);
+
+        // manager module
+        connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(sRefreshModules()));
+        connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetGreekStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongGreek(QString)));
+        connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetHebrewStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongHebrew(QString)));
+    }
+
     GUI_ManagerModules->loadAllModules();
     GUI_ManagerModules->loadStrongList();
 
@@ -739,6 +721,17 @@ void MainWindow::retranslate(QString t_lang)
 //------------------------------------------------------------------------------
 void MainWindow::findInModules()
 {
+    if (GUI_FindDialog == NULL)
+    {
+        GUI_FindDialog = new FindDialog(this);
+        // connect find dialog to left2 panel
+        connect(GUI_FindDialog, SIGNAL(SIGNAL_ShowChapter(QString, QString, QString)),
+                GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
+
+        connect(GUI_FindDialog, SIGNAL(SIGNAL_UpdateGUI()), GUI_LeftPanel, SLOT(sUpdateGUI()));
+    }
+
+
     GUI_FindDialog->preShowDialog();
     GUI_FindDialog->show();
 }
@@ -768,5 +761,22 @@ void MainWindow::convertApocryphaFromFolder()
 void MainWindow::sUpdateGUIFont()
 {
     ui->menuBar->setFont(Config::configuration()->getGUIMapFont()["FontMenu"]);
+}
+//------------------------------------------------------------------------------
+void MainWindow::showModuleImport()
+{
+    if (GUI_ModuleImportDialog == NULL)
+    {
+        GUI_ModuleImportDialog = new ModuleImportDialog(this);
+        prModule = new ProcessModule();
+
+        // import modules
+        connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertModules()), SLOT(convertModulesFromFolder()));
+        connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertDict()), SLOT(convertDictFromFolder()));
+        connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertComments()), SLOT(convertCommentsFromFolder()));
+        connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertApocrypha()), SLOT(convertApocryphaFromFolder()));
+        connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertBook()), SLOT(convertBooksFromFolder()));
+    }
+    GUI_ModuleImportDialog->show();
 }
 //------------------------------------------------------------------------------

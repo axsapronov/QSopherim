@@ -60,6 +60,8 @@ private slots:
       */
     void showModuleManager();
 
+    void showModuleImport();
+
     //tray
     void showHide(QSystemTrayIcon::ActivationReason);
 

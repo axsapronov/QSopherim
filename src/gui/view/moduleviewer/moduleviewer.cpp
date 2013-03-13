@@ -107,7 +107,7 @@ void ModuleViewer::showChapter(const QString f_module, const QString f_nameBook,
 {
     //    myDebug() << f_module << f_nameBook << f_numberchapter;
 
-    QString pathToFile = Config::configuration()->getAppDir() + GL_MODULE_PATH +
+    QString pathToFile = Config::configuration()->getDataPath() + GL_MODULE_PATH +
             Config::configuration()->getListModulesFromMap(f_type)->getModuleWithName(f_module)->getModulePath();
 
     pathToFile.replace("module" + GL_FORMAT_MODULE, "text" + GL_FORMAT_TEXT);
