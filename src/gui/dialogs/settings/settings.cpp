@@ -18,7 +18,7 @@ Settings::Settings(QWidget *parent) :
 
     setWindowTitle(QString(tr("Settings") + " | %1 - %2").arg(GL_PROG_NAME).arg(GL_PROG_VERSION_STR));
 
-    ui->tabWidget->removeTab(3);
+    ui->tabWidget->removeTab(ui->tabWidget->indexOf(ui->tabNetwork));
     init();
     createConnect();
 }
@@ -31,7 +31,6 @@ Settings::~Settings()
 //------------------------------------------------------------------------------
 void Settings::debug()
 {
-
     myDebug() << "debug: appwsettings";
 }
 //------------------------------------------------------------------------------
@@ -95,11 +94,11 @@ void Settings::loadSettings()
     ui->sBAppLogLevel->setValue(Config::configuration()->AppLogLevel());
 
     // dirs
-    ui->LEDirApocrypha->setText(Config::configuration()->getPathApocryphaDir());
-    ui->LEDirBible->setText(Config::configuration()->getPathBibleDir());
-    ui->LEDirBook->setText(Config::configuration()->getPathBookDir());
-    ui->LEDirDictionary->setText(Config::configuration()->getPathDictDir());
-    ui->LEDirComments->setText(Config::configuration()->getPathCommentsDir());
+//    ui->LEDirApocrypha->setText(Config::configuration()->getPathApocryphaDir());
+//    ui->LEDirBible->setText(Config::configuration()->getPathBibleDir());
+//    ui->LEDirBook->setText(Config::configuration()->getPathBookDir());
+//    ui->LEDirDictionary->setText(Config::configuration()->getPathDictDir());
+//    ui->LEDirComments->setText(Config::configuration()->getPathCommentsDir());
 
     updateFontSettings();
 
@@ -142,11 +141,11 @@ void Settings::saveSettings()
 
     Config::configuration()->setAppLogLevel(ui->sBAppLogLevel->value());
 
-    Config::configuration()->setPathApocryphaDir(ui->LEDirApocrypha->text());
-    Config::configuration()->setPathBookDir(ui->LEDirBook->text());
-    Config::configuration()->setPathBibleDir(ui->LEDirBible->text());
-    Config::configuration()->setPathDictDir(ui->LEDirDictionary->text());
-    Config::configuration()->setPathCommentsDir(ui->LEDirComments->text());
+//    Config::configuration()->setPathApocryphaDir(ui->LEDirApocrypha->text());
+//    Config::configuration()->setPathBookDir(ui->LEDirBook->text());
+//    Config::configuration()->setPathBibleDir(ui->LEDirBible->text());
+//    Config::configuration()->setPathDictDir(ui->LEDirDictionary->text());
+//    Config::configuration()->setPathCommentsDir(ui->LEDirComments->text());
 
     //    ui->sBFontSize->setValue(Config::configuration()->getFontSize());
 
@@ -168,11 +167,11 @@ void Settings::createConnect()
     connect(ui->pBFontNotes, SIGNAL(clicked()), SLOT(fontSettings()));
     connect(ui->pBFontReadingPlan, SIGNAL(clicked()), SLOT(fontSettings()));
 
-    connect(ui->pBBrowseDirApocrypha, SIGNAL(clicked()), SLOT(sBrowseDir()));
-    connect(ui->pBBrowseDirBible, SIGNAL(clicked()), SLOT(sBrowseDir()));
-    connect(ui->pBBrowseDirBook, SIGNAL(clicked()), SLOT(sBrowseDir()));
-    connect(ui->pBBrowseDirComments, SIGNAL(clicked()), SLOT(sBrowseDir()));
-    connect(ui->pBBrowseDirDictionary, SIGNAL(clicked()), SLOT(sBrowseDir()));
+//    connect(ui->pBBrowseDirApocrypha, SIGNAL(clicked()), SLOT(sBrowseDir()));
+//    connect(ui->pBBrowseDirBible, SIGNAL(clicked()), SLOT(sBrowseDir()));
+//    connect(ui->pBBrowseDirBook, SIGNAL(clicked()), SLOT(sBrowseDir()));
+//    connect(ui->pBBrowseDirComments, SIGNAL(clicked()), SLOT(sBrowseDir()));
+//    connect(ui->pBBrowseDirDictionary, SIGNAL(clicked()), SLOT(sBrowseDir()));
 
     connect(GUI_Font, SIGNAL(SIGNAL_SendInfo()), SLOT(updateFontSettings()));
 }
@@ -249,11 +248,11 @@ bool Settings::getModifySettings()
             || ui->chBOptionAutoChapter->checkState() != Config::configuration()->getOptionAutoChapter()
 
 
-            || ui->LEDirApocrypha->text() != Config::configuration()->getPathApocryphaDir()
-            || ui->LEDirBible->text() != Config::configuration()->getPathBibleDir()
-            || ui->LEDirBook->text() != Config::configuration()->getPathBookDir()
-            || ui->LEDirComments->text() != Config::configuration()->getPathCommentsDir()
-            || ui->LEDirDictionary->text() != Config::configuration()->getPathDictDir()
+//            || ui->LEDirApocrypha->text() != Config::configuration()->getPathApocryphaDir()
+//            || ui->LEDirBible->text() != Config::configuration()->getPathBibleDir()
+//            || ui->LEDirBook->text() != Config::configuration()->getPathBookDir()
+//            || ui->LEDirComments->text() != Config::configuration()->getPathCommentsDir()
+//            || ui->LEDirDictionary->text() != Config::configuration()->getPathDictDir()
             )
     {
         return true;

@@ -36,6 +36,10 @@ void FindDialog::preShowDialog()
 //------------------------------------------------------------------------------
 void FindDialog::init()
 {
+    ui->tableFiles->setColumnWidth(0, 400); // module name
+    ui->tableFiles->setColumnWidth(1, 150); // book name
+    ui->tableFiles->setColumnWidth(2, 110); // chapter value
+    ui->tableFiles->setColumnWidth(3, 110); // type module
     createConnects();
 }
 //------------------------------------------------------------------------------
@@ -298,7 +302,7 @@ void FindDialog::showFiles(const SearchData &data)
     ui->tableFiles->resizeColumnsToContents();
 
     ui->LAFilesFoundLabel->setText(tr("%1 file(s) found").arg(data.files.size()) +
-                                   (" (Double click on a file to open it)"));
+                                   tr(" (Double click on a file to open it)"));
 }
 //------------------------------------------------------------------------------
 void FindDialog::updateItemforTable(SearchData &data)
@@ -366,4 +370,5 @@ void FindDialog::showChapter(QModelIndex f_ind)
     }
 }
 //------------------------------------------------------------------------------
+
 
