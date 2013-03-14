@@ -168,7 +168,7 @@ private:
     QAction *restoreAction;
     QAction *quitAction;
 
-    ProcessModule* prModule;
+//    ProcessModule* prModule;
 
     void convertModules(const QString f_type);
 

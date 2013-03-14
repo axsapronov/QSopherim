@@ -94,8 +94,6 @@ MainWindow::~MainWindow()
     delete restoreAction;
     delete quitAction;
 
-    delete prModule;
-
     delete ui;
 }
 //------------------------------------------------------------------------------
@@ -110,6 +108,7 @@ void MainWindow::init()
     GUI_LeftPanel2 = new LeftPanel2(this);
 
     GUI_ManagerModules = new ManagerModules(this);
+    GUI_ModuleImportDialog = new ModuleImportDialog(this);
 
     // to hide the title bar completely must replace the default widget with a generic one
     QWidget* t_titleBar = GUI_LeftPanel2->titleBarWidget();
@@ -296,6 +295,13 @@ void MainWindow::createConnects()
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_RefreshModules()), GUI_LeftPanel, SLOT(sRefreshModules()));
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetGreekStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongGreek(QString)));
     connect(GUI_ManagerModules, SIGNAL(SIGNAL_SetHebrewStrong(QString)), GUI_LeftPanel2, SLOT(sSetStrongHebrew(QString)));
+
+    // import modules
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertModules()), SLOT(convertModulesFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertDict()), SLOT(convertDictFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertComments()), SLOT(convertCommentsFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertApocrypha()), SLOT(convertApocryphaFromFolder()));
+    connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertBook()), SLOT(convertBooksFromFolder()));
 
     // menu about
     connect(ui->action_About_About, SIGNAL(triggered()), GUI_About, SLOT(show()));
@@ -546,6 +552,9 @@ void MainWindow::convertModules(const QString f_type)
             )
 
     {
+
+        ProcessModule* prModule = new ProcessModule();
+
         QProgressDialog loadProgress("", "It's not Cancel", 0, 100);
         loadProgress.setValue(0);
         loadProgress.setMinimumWidth(300);
@@ -627,6 +636,7 @@ void MainWindow::convertModules(const QString f_type)
         }
 
         QMessageBox::information(this, tr("Convert complete"), tr("Convert complete"));
+        delete prModule;
     }
     else
     {
@@ -773,18 +783,6 @@ void MainWindow::sUpdateGUIFont()
 //------------------------------------------------------------------------------
 void MainWindow::showModuleImport()
 {
-    if (GUI_ModuleImportDialog == NULL)
-    {
-        GUI_ModuleImportDialog = new ModuleImportDialog(this);
-        prModule = new ProcessModule();
-
-        // import modules
-        connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertModules()), SLOT(convertModulesFromFolder()));
-        connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertDict()), SLOT(convertDictFromFolder()));
-        connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertComments()), SLOT(convertCommentsFromFolder()));
-        connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertApocrypha()), SLOT(convertApocryphaFromFolder()));
-        connect(GUI_ModuleImportDialog, SIGNAL(SIGNAL_StartConvertBook()), SLOT(convertBooksFromFolder()));
-    }
     GUI_ModuleImportDialog->show();
 }
 //------------------------------------------------------------------------------
