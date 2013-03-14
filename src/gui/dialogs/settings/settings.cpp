@@ -93,23 +93,7 @@ void Settings::loadSettings()
 
     ui->sBAppLogLevel->setValue(Config::configuration()->AppLogLevel());
 
-    // dirs
-//    ui->LEDirApocrypha->setText(Config::configuration()->getPathApocryphaDir());
-//    ui->LEDirBible->setText(Config::configuration()->getPathBibleDir());
-//    ui->LEDirBook->setText(Config::configuration()->getPathBookDir());
-//    ui->LEDirDictionary->setText(Config::configuration()->getPathDictDir());
-//    ui->LEDirComments->setText(Config::configuration()->getPathCommentsDir());
-
     updateFontSettings();
-
-    // replace to AppDir/*  if empty
-    //    QDir::currentPath();
-
-    //    myDebug() << settings->value("language/lang");
-    //    if (lang.isEmpty())
-    //        lang = "Russian";
-    //    setAPPLang(lang);
-    //    ui->comBLanguage->setCurrentIndex(ui->comBLanguage->findText(lang));
 }
 //------------------------------------------------------------------------------
 void Settings::saveSettings()
@@ -141,12 +125,6 @@ void Settings::saveSettings()
 
     Config::configuration()->setAppLogLevel(ui->sBAppLogLevel->value());
 
-//    Config::configuration()->setPathApocryphaDir(ui->LEDirApocrypha->text());
-//    Config::configuration()->setPathBookDir(ui->LEDirBook->text());
-//    Config::configuration()->setPathBibleDir(ui->LEDirBible->text());
-//    Config::configuration()->setPathDictDir(ui->LEDirDictionary->text());
-//    Config::configuration()->setPathCommentsDir(ui->LEDirComments->text());
-
     //    ui->sBFontSize->setValue(Config::configuration()->getFontSize());
 
     //    ui->fontComB->setCurrentFont(QFont(Config::configuration()->getFontFamily()));
@@ -166,12 +144,6 @@ void Settings::createConnect()
     connect(ui->pBFontJornal, SIGNAL(clicked()), SLOT(fontSettings()));
     connect(ui->pBFontNotes, SIGNAL(clicked()), SLOT(fontSettings()));
     connect(ui->pBFontReadingPlan, SIGNAL(clicked()), SLOT(fontSettings()));
-
-//    connect(ui->pBBrowseDirApocrypha, SIGNAL(clicked()), SLOT(sBrowseDir()));
-//    connect(ui->pBBrowseDirBible, SIGNAL(clicked()), SLOT(sBrowseDir()));
-//    connect(ui->pBBrowseDirBook, SIGNAL(clicked()), SLOT(sBrowseDir()));
-//    connect(ui->pBBrowseDirComments, SIGNAL(clicked()), SLOT(sBrowseDir()));
-//    connect(ui->pBBrowseDirDictionary, SIGNAL(clicked()), SLOT(sBrowseDir()));
 
     connect(GUI_Font, SIGNAL(SIGNAL_SendInfo()), SLOT(updateFontSettings()));
 }
@@ -247,12 +219,6 @@ bool Settings::getModifySettings()
             || ui->chBDayMode->checkState() != Config::configuration()->getDayMode()
             || ui->chBOptionAutoChapter->checkState() != Config::configuration()->getOptionAutoChapter()
 
-
-//            || ui->LEDirApocrypha->text() != Config::configuration()->getPathApocryphaDir()
-//            || ui->LEDirBible->text() != Config::configuration()->getPathBibleDir()
-//            || ui->LEDirBook->text() != Config::configuration()->getPathBookDir()
-//            || ui->LEDirComments->text() != Config::configuration()->getPathCommentsDir()
-//            || ui->LEDirDictionary->text() != Config::configuration()->getPathDictDir()
             )
     {
         return true;
@@ -343,33 +309,5 @@ void Settings::updateFontSettings()
     ui->sBFontJournalSize->setValue(Config::configuration()->getGUIMapFont()["FontJournal"].pointSize());
     ui->sBFontNotesSize->setValue(Config::configuration()->getGUIMapFont()["FontNotes"].pointSize());
     ui->sBFontReadingPlanSize->setValue(Config::configuration()->getGUIMapFont()["FontReadingPlan"].pointSize());
-}
-//-------------------------------------------------------------------------------
-void Settings::sBrowseDir()
-{
-
-    QFileDialog::Options options = QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly;
-    QString directory = QFileDialog::getExistingDirectory(this,
-                                                          tr("Select dir for modules"),
-                                                          Config::configuration()->getAppDir(),
-                                                          options);
-    if (!directory.isEmpty())
-    {
-        QPushButton *button = (QPushButton *)sender();
-        if (button == ui->pBBrowseDirApocrypha)
-            ui->LEDirApocrypha->setText(directory);
-
-        if (button == ui->pBBrowseDirBible)
-            ui->LEDirBible->setText(directory);
-
-        if (button == ui->pBBrowseDirComments)
-            ui->LEDirComments->setText(directory);
-
-        if (button == ui->pBBrowseDirBook)
-            ui->LEDirBook->setText(directory);
-
-        if (button == ui->pBBrowseDirDictionary)
-            ui->LEDirDictionary->setText(directory);
-    }
 }
 //-------------------------------------------------------------------------------

@@ -49,12 +49,6 @@ Config::Config()
         QFont t_GUIFontNotes = QFont("Sans Serif");
         QFont t_GUIFontReadingPlan = QFont("Sans Serif");
 
-        QString m_setupAppDir;
-
-        //setup
-//        m_setupAppDir = "usr/share/QSopherim/";
-//        m_setupAppDir = QDir::currentPath() + "/";
-        m_setupAppDir = m_dataPath;
         m_dataPath = QFSFileEngine::homePath() + "/.local/share" + "/qsopherim/";
 
         m_pathMap["bible"] = m_dataPath + GL_MODULE_PATH + "bible";
@@ -189,15 +183,6 @@ void Config::loadSettings()
     m_fontUnderline = settings.value("font/underline").toBool();
     m_fontStrike = settings.value("font/strike").toBool();
 
-    // dirs
-
-    settings.beginGroup("dir");
-    QStringList keysDir = settings.childKeys();
-    foreach (QString key, keysDir)
-    {
-        m_pathMap[key] = qVariantValue<QString> (settings.value(key));
-    }
-    settings.endGroup();
     // font settings
 
     settings.beginGroup("fonts");
@@ -311,16 +296,6 @@ void Config::saveSettings()
     {
         settings.setValue(i.key(), i.value());
         ++i;
-    }
-    settings.endGroup();
-
-
-    settings.beginGroup("dir");
-    QMap<QString, QString>::const_iterator idir = m_pathMap.constBegin();
-    while (idir != m_pathMap.constEnd())
-    {
-        settings.setValue(idir.key(), idir.value());
-        ++idir;
     }
     settings.endGroup();
 
