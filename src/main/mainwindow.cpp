@@ -107,6 +107,8 @@ void MainWindow::init()
     GUI_LeftPanel = new LeftPanel(this);
     GUI_LeftPanel2 = new LeftPanel2(this);
 
+    GUI_FindDialog = new FindDialog(this);
+
     GUI_ManagerModules = new ManagerModules(this);
     GUI_ModuleImportDialog = new ModuleImportDialog(this);
 
@@ -284,6 +286,11 @@ void MainWindow::createConnects()
 
     // manager module
     connect(ui->action_Settings_Module, SIGNAL(triggered()), SLOT(showModuleManager()));
+
+    connect(GUI_FindDialog, SIGNAL(SIGNAL_ShowChapter(QString, QString, QString)),
+            GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
+
+    connect(GUI_FindDialog, SIGNAL(SIGNAL_UpdateGUI()), GUI_LeftPanel, SLOT(sUpdateGUI()));
 
     //menu settings -> lang
     connect(ui->action_Settings_Language_Russian, SIGNAL(triggered()), SLOT(setLangRu()) );
@@ -739,15 +746,12 @@ void MainWindow::retranslate(QString t_lang)
 //------------------------------------------------------------------------------
 void MainWindow::findInModules()
 {
-    if (GUI_FindDialog == NULL)
-    {
-        GUI_FindDialog = new FindDialog(this);
-        // connect find dialog to left2 panel
-        connect(GUI_FindDialog, SIGNAL(SIGNAL_ShowChapter(QString, QString, QString)),
-                GUI_LeftPanel, SLOT(showChapterFromJournal(QString,QString,QString)));
+//    if (GUI_FindDialog == NULL)
+//    {
 
-        connect(GUI_FindDialog, SIGNAL(SIGNAL_UpdateGUI()), GUI_LeftPanel, SLOT(sUpdateGUI()));
-    }
+        // connect find dialog to left2 panel
+
+//    }
 
 
     GUI_FindDialog->preShowDialog();

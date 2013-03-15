@@ -58,9 +58,10 @@ int main(int argc, char *argv[])
 
 #ifdef Q_OS_WIN
     QString t_settings = "settings.ini";
-    QString t_homeDataPath = QDir::currentPath();
-    QString t_configHomePath = QDir::currentPath();
-    QString t_dataHomePath = QDir::currentPath();
+    QString t_homeDataPath = QDir::currentPath() + "/";
+    QString t_configHomePath = QDir::currentPath() + "/";
+    QString t_dataHomePath = QDir::currentPath() + "/";
+    QDir dir(t_homeDataPath);
 #endif
 #ifdef Q_OS_LINUX
     QString t_settings = "settings.conf";
@@ -84,6 +85,7 @@ int main(int argc, char *argv[])
     conf->setDataPath(t_dataHomePath);
     conf->setAppDir(t_homeDataPath);
 
+    myDebug() << t_dataHomePath;
     if(!dir.exists(conf->getDataPath() + "strongs/"))
         dir.mkpath(conf->getDataPath() + "strongs/");
 
