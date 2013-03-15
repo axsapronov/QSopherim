@@ -58,7 +58,6 @@ int main(int argc, char *argv[])
 
 #ifdef Q_OS_WIN
     QString t_settings = "settings.ini";
-    // добавить сюда confighomepath and datahomepath = current path
     QString t_homeDataPath = QDir::currentPath();
     QString t_configHomePath = QDir::currentPath();
     QString t_dataHomePath = QDir::currentPath();
@@ -80,6 +79,11 @@ int main(int argc, char *argv[])
     if(!dir.exists(t_dataHomePath))
         dir.mkpath(t_dataHomePath);
 
+#endif
+    conf->setConfigPath(t_configHomePath);
+    conf->setDataPath(t_dataHomePath);
+    conf->setAppDir(t_homeDataPath);
+
     if(!dir.exists(conf->getDataPath() + "strongs/"))
         dir.mkpath(conf->getDataPath() + "strongs/");
 
@@ -88,12 +92,6 @@ int main(int argc, char *argv[])
 
     if(!dir.exists(conf->getDataPath() + "modules/"))
         dir.mkpath(conf->getDataPath() + "modules/");
-
-#endif
-
-    conf->setConfigPath(t_configHomePath);
-    conf->setDataPath(t_dataHomePath);
-    conf->setAppDir(t_homeDataPath);
 
     conf->setStrongDir(conf->getDataPath() + "strongs/");
     conf->setDictDir(conf->getDataPath() + GL_MODULE_PATH + "dictionary/");
