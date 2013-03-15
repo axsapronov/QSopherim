@@ -363,7 +363,7 @@ void ModuleViewer::updateFontSettings()
 void ModuleViewer::sAddBookmark()
 {
     QString bookm = Config::configuration()->getLastModule() + " : "
-            + Config::configuration()->getLastModule() + " : "
+            + Config::configuration()->getLastBook() + " : "
             + Config::configuration()->getLastChapter();
     emit SIGNAL_AddNewBookmark(bookm);
 }

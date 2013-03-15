@@ -79,6 +79,16 @@ int main(int argc, char *argv[])
 
     if(!dir.exists(t_dataHomePath))
         dir.mkpath(t_dataHomePath);
+
+    if(!dir.exists(conf->getDataPath() + "strongs/"))
+        dir.mkpath(conf->getDataPath() + "strongs/");
+
+    if(!dir.exists(conf->getDataPath() + "plans/"))
+        dir.mkpath(conf->getDataPath() + "plans/");
+
+    if(!dir.exists(conf->getDataPath() + "modules/"))
+        dir.mkpath(conf->getDataPath() + "modules/");
+
 #endif
 
     conf->setConfigPath(t_configHomePath);

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Categories=Office;Viewer;
+Encoding=UTF-8
+Name=QSopherim
+GenericName=Holy Bible reader
+Type=Application
+Exec=/usr/bin/QSopherim
+Icon=QSopherim_logo.png
+

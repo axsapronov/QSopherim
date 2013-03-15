@@ -204,7 +204,8 @@ void ManagerModules::sAddStrongToGreek()
 
         if (ui->comBGreekStrong->count() == 1)
         {
-            emit SIGNAL_SetGreekStrong(t_str);
+            sSetGreekStrong(ui->LEStrongName->text());
+            //            emit SIGNAL_SetGreekStrong(t_str);
         }
     }
 }
@@ -226,46 +227,28 @@ void ManagerModules::sAddStrongToHebrew()
 
         addStrongToConfFile(ui->LEStrongName->text(), "hebrew");
 
-        if (ui->comBGreekStrong->count() == 1)
+        if (ui->comBHebrewStrong->count() == 1)
         {
-            emit SIGNAL_SetHebrewStrong(t_str);
+            sSetHebrewStrong(ui->LEStrongName->text());
+            //            emit SIGNAL_SetHebrewStrong(t_str);
         }
     }
 }
 //------------------------------------------------------------------------------
 void ManagerModules::sSetGreekStrong(QString f_strong)
 {
-    QString t_str = getFullPathToStrong(f_strong);
+    QString t_str = Config::configuration()->getStrongDir() + f_strong + ".xml";
     Config::configuration()->setStrongGreek(t_str);
-    emit SIGNAL_SetGreekStrong(getFullPathToStrong(f_strong));
+    emit SIGNAL_SetGreekStrong(t_str);
 }
 //------------------------------------------------------------------------------
 void ManagerModules::sSetHebrewStrong(QString f_strong)
 {
-    QString t_str = getFullPathToStrong(f_strong);
+    QString t_str = Config::configuration()->getStrongDir() + f_strong + ".xml";
     Config::configuration()->setStrongHebrew(t_str);
     emit SIGNAL_SetHebrewStrong(t_str);
     //    fileStrong = "/home/files/Develop/git/QSopherim/QSopherim-build-desktop/build/bin/strongs/strong.xml";
     //    GUI_ModuleViewer->setStrongList(fileStrong);
-}
-//------------------------------------------------------------------------------
-QString ManagerModules::getFullPathToStrong(QString f_strong)
-{
-    QString r_path;
-
-    QString t_path = Config::configuration()->getDataPath() + "/strongs.xml";
-    QStringList t_list = QStringList(getTextFromHtmlFile(t_path).split("\n"));
-    for (int i = 0; i < t_list.size(); i++)
-    {
-        if (t_list.at(i).contains(f_strong))
-        {
-            QString t_str = t_list.at(i);
-            int pos1 = t_str.indexOf("path=\""); // leng = 6
-            int pos2 = t_str.indexOf("\"><"); // leng = 3
-            r_path = t_str.mid(pos1 + 6, pos2 - pos1 - 6);
-        }
-    }
-    return Config::configuration()->getStrongDir() + r_path;
 }
 //------------------------------------------------------------------------------
 void ManagerModules::addStrongToConfFile(QString f_name, QString f_language)
@@ -295,70 +278,74 @@ void ManagerModules::loadStrongList()
     ui->ListWGreek->clear();
     ui->ListWHebrew->clear();
 
-    QXmlStreamReader xmlReader;
-    xmlReader.addData(getTextFromHtmlFile(Config::configuration()->getDataPath()
-                                          + "strongs.xml"));
-    QString t_hebrew;
-    QString t_greek;
-
-    while(!xmlReader.atEnd())
+    if (QFile(Config::configuration()->getDataPath()
+              + "strongs.xml").exists())
     {
-        if(xmlReader.isStartElement())
+        QXmlStreamReader xmlReader;
+        xmlReader.addData(getTextFromHtmlFile(Config::configuration()->getDataPath()
+                                              + "strongs.xml"));
+        QString t_hebrew;
+        QString t_greek;
+
+        while(!xmlReader.atEnd())
         {
-            QStringList sl;
-            sl << xmlReader.name().toString();
-            QXmlStreamAttributes attrs = xmlReader.attributes();
-            if (attrs.value("language").toString() == "hebrew")
+            if(xmlReader.isStartElement())
             {
-                if (Config::configuration()->getStrongDir() + attrs.value("path").toString() ==
-                        Config::configuration()->getStrongHebrew())
-                    t_hebrew = attrs.value("name").toString();
+                QStringList sl;
+                sl << xmlReader.name().toString();
+                QXmlStreamAttributes attrs = xmlReader.attributes();
+                if (attrs.value("language").toString() == "hebrew")
+                {
+                    if (Config::configuration()->getStrongDir() + attrs.value("path").toString() ==
+                            Config::configuration()->getStrongHebrew())
+                        t_hebrew = attrs.value("name").toString();
 
-                m_hebrewList << attrs.value("name").toString();
-            }
-            else
-            {
-                if (Config::configuration()->getStrongDir() + attrs.value("path").toString() ==
-                        Config::configuration()->getStrongGreek())
-                    t_greek = attrs.value("name").toString();
+                    m_hebrewList << attrs.value("name").toString();
+                }
+                else
+                {
+                    if (Config::configuration()->getStrongDir() + attrs.value("path").toString() ==
+                            Config::configuration()->getStrongGreek())
+                        t_greek = attrs.value("name").toString();
 
-                m_greekList << attrs.value("name").toString();
+                    m_greekList << attrs.value("name").toString();
+                }
             }
+            xmlReader.readNext();
         }
-        xmlReader.readNext();
-    }
-    // clear empty
-    m_hebrewList = removeEmptyQStringFromQStringList(&m_hebrewList);
-    m_greekList = removeEmptyQStringFromQStringList(&m_greekList);
+        // clear empty
+        m_hebrewList = removeEmptyQStringFromQStringList(&m_hebrewList);
+        m_greekList = removeEmptyQStringFromQStringList(&m_greekList);
 
-    // clear
-    ui->comBGreekStrong->clear();
-    ui->comBHebrewStrong->clear();
+        // clear
+        ui->comBGreekStrong->clear();
+        ui->comBHebrewStrong->clear();
 
-    // add to combo
-    ui->comBGreekStrong->addItems(m_greekList);
-    ui->comBHebrewStrong->addItems(m_hebrewList);
+        // add to combo
+        ui->comBGreekStrong->addItems(m_greekList);
+        ui->comBHebrewStrong->addItems(m_hebrewList);
 
-    ui->comBGreekStrong->setCurrentIndex(ui->comBGreekStrong->findText(t_greek));
-    ui->comBHebrewStrong->setCurrentIndex(ui->comBHebrewStrong->findText(t_hebrew));
+        ui->comBGreekStrong->setCurrentIndex(ui->comBGreekStrong->findText(t_greek));
+        ui->comBHebrewStrong->setCurrentIndex(ui->comBHebrewStrong->findText(t_hebrew));
 
-    // add to list widget
-    ui->ListWGreek->addItems(m_greekList);
-    ui->ListWHebrew->addItems(m_hebrewList);
+        // add to list widget
+        ui->ListWGreek->addItems(m_greekList);
+        ui->ListWHebrew->addItems(m_hebrewList);
 
-    // select strongs if not select
-    if (ui->comBGreekStrong->currentIndex() == -1
-            and m_greekList.size())
-    {
-        ui->comBGreekStrong->setCurrentIndex(0);
-        sSetGreekStrong(m_greekList.at(0));
-    }
+        // select strongs if not select
+        if (ui->comBGreekStrong->currentIndex() == -1
+                and m_greekList.size())
+        {
+            ui->comBGreekStrong->setCurrentIndex(0);
+            sSetGreekStrong(m_greekList.at(0));
+        }
 
-    if (ui->comBHebrewStrong->currentIndex() == -1
-            and m_hebrewList.size())
-    {
-        ui->comBHebrewStrong->setCurrentIndex(0);
-        sSetHebrewStrong(m_hebrewList.at(0));
+        if (ui->comBHebrewStrong->currentIndex() == -1
+                and m_hebrewList.size())
+        {
+            ui->comBHebrewStrong->setCurrentIndex(0);
+            sSetHebrewStrong(m_hebrewList.at(0));
+        }
     }
 }
 //------------------------------------------------------------------------------
