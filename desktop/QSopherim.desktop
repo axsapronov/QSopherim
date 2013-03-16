@@ -4,6 +4,6 @@ Encoding=UTF-8
 Name=QSopherim
 GenericName=Holy Bible reader
 Type=Application
-Exec=/usr/bin/QSopherim
+Exec=QSopherim
 Icon=QSopherim_logo.png
 
