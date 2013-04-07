@@ -1,22 +1,5 @@
 <RCC>
-    <qresource prefix="/lang">
-        <file>lang/QSopherim_ru.qm</file>
-        <file>lang/QSopherim_fr.qm</file>
-        <file>lang/QSopherim_de.qm</file>
-        <file>lang/QSopherim_en.qm</file>
-    </qresource>
-    <qresource prefix="/icons">
-        <file>images/qt-logo.png</file>
-        <file>images/logo.png</file>
-        <file>images/iconFind.png</file>
-        <file>images/iconManagerModules.png</file>
-        <file>images/iconSettings.png</file>
-        <file>images/iconModuleImport.png</file>
-    </qresource>
-    <qresource prefix="/images">
-        <file>images/img.png</file>
-        <file>images/searchnext.png</file>
-        <file>images/searchprevious.png</file>
-        <file>images/close.png</file>
+    <qresource prefix="/view">
+        <file>view/mainwindow.qml</file>
     </qresource>
 </RCC>
