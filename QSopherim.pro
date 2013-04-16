@@ -49,7 +49,10 @@ SOURCES += main.cpp\
     src/model/modelstatic/module/abstractmodule.cpp \
     src/model/modelstatic/module/bookmodule.cpp \
     src/model/modelstatic/module/biblemodule.cpp \
-    src/model/modelstatic/module/dictionarymodule.cpp
+    src/model/modelstatic/module/dictionarymodule.cpp \
+    src/model/modelstatic/module/convertermodule.cpp \
+    src/model/modelstatic/modelstatic.cpp \
+    src/model/modelstatic/module/loadermodule.cpp
 
 HEADERS  += mainwindow.h \
     src/model/abstractmodel.h \
@@ -62,7 +65,10 @@ HEADERS  += mainwindow.h \
     src/model/modelstatic/module/abstractmodule.h \
     src/model/modelstatic/module/bookmodule.h \
     src/model/modelstatic/module/biblemodule.h \
-    src/model/modelstatic/module/dictionarymodule.h
+    src/model/modelstatic/module/dictionarymodule.h \
+    src/model/modelstatic/module/convertermodule.h \
+    src/model/modelstatic/modelstatic.h \
+    src/model/modelstatic/module/loadermodule.h
 
 
 OTHER_FILES += \
