@@ -24,12 +24,14 @@ DEPENDPATH += \
         src/observer \
         src/observable \
         src/debug \
-        src/view
+        src/view \
+        src/modelstatic
 
 INCLUDEPATH += \
         src/model \
         src/main \
         src/view \
+        src/modelstatic \
         src/controller \
         src/observer \
         src/observable \
@@ -42,7 +44,8 @@ SOURCES += main.cpp\
     src/observer/observer.cpp \
     src/observable/observable.cpp \
     src/view/abstractview.cpp \
-    src/debug/debughelper.cpp
+    src/debug/debughelper.cpp \
+    src/model/modelstatic/moduleinfo.cpp
 
 HEADERS  += mainwindow.h \
     src/model/abstractmodel.h \
@@ -50,7 +53,8 @@ HEADERS  += mainwindow.h \
     src/observer/observer.h \
     src/observable/observable.h \
     src/view/abstractview.h \
-    src/debug/debughelper.h
+    src/debug/debughelper.h \
+    src/model/modelstatic/moduleinfo.h
 
 
 OTHER_FILES += \
