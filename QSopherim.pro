@@ -45,7 +45,11 @@ SOURCES += main.cpp\
     src/observable/observable.cpp \
     src/view/abstractview.cpp \
     src/debug/debughelper.cpp \
-    src/model/modelstatic/moduleinfo.cpp
+    src/model/modelstatic/moduleinfo.cpp \
+    src/model/modelstatic/module/abstractmodule.cpp \
+    src/model/modelstatic/module/bookmodule.cpp \
+    src/model/modelstatic/module/biblemodule.cpp \
+    src/model/modelstatic/module/dictionarymodule.cpp
 
 HEADERS  += mainwindow.h \
     src/model/abstractmodel.h \
@@ -54,7 +58,11 @@ HEADERS  += mainwindow.h \
     src/observable/observable.h \
     src/view/abstractview.h \
     src/debug/debughelper.h \
-    src/model/modelstatic/moduleinfo.h
+    src/model/modelstatic/moduleinfo.h \
+    src/model/modelstatic/module/abstractmodule.h \
+    src/model/modelstatic/module/bookmodule.h \
+    src/model/modelstatic/module/biblemodule.h \
+    src/model/modelstatic/module/dictionarymodule.h
 
 
 OTHER_FILES += \
